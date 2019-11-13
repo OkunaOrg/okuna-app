@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 
 import '../../../../../../../../../provider.dart';
 
-class OBCommunityFavorite extends StatelessWidget {
+class OBCommunitySubscription extends StatelessWidget {
   final Community community;
 
-  const OBCommunityFavorite(this.community);
+  const OBCommunitySubscription(this.community);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class OBCommunityFavorite extends StatelessWidget {
       initialData: community,
       builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
         Community community = snapshot.data;
-        if (community.isFavorite == null || !community.isFavorite)
+        if (community.isSubscribed == null || !community.isSubscribed)
           return const SizedBox();
 
         return Row(
@@ -28,7 +28,7 @@ class OBCommunityFavorite extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             OBIcon(
-              OBIcons.favoriteCommunity,
+              OBIcons.notifications,
               themeColor: OBIconThemeColor.primaryAccent,
               size: OBIconSize.small,
             ),
@@ -36,7 +36,7 @@ class OBCommunityFavorite extends StatelessWidget {
               width: 10,
             ),
             OBText(
-              localizationService.community__details_favorite,
+              localizationService.community__details_subscribed,
               style: TextStyle(fontSize: 16),
             ),
             const SizedBox(

@@ -882,6 +882,14 @@ class LocalizationService {
     return Intl.message("Members", name: 'community__members_capitalized');
   }
 
+  String get community__details_favorite {
+    return Intl.message("In favorites", name: 'community__details_favorite');
+  }
+
+  String get community__details_subscribed {
+    return Intl.message("Subscribed", name: 'community__details_subscribed');
+  }
+
   String get community__admin_desc {
     return Intl.message(
         "This will allow the member to edit the community details, administrators, moderators and banned users.",
@@ -1262,6 +1270,24 @@ class LocalizationService {
         desc:
             'Egs. Search moderated communities, See list_search_text in user_search.arb ',
         name: 'community__moderated_communities');
+  }
+
+  String get community__subscribed_title {
+    return Intl.message("Subscribed", name: 'community__subscribed_title');
+  }
+
+  String get community__subscribed_community {
+    return Intl.message("joined community",
+        desc:
+            'Currently unsused, reserved for potential use. Could be used as Showing 1 subscribed community',
+        name: 'community__subscribed_community');
+  }
+
+  String get community__subscribed_communities {
+    return Intl.message("subscribed communities",
+        desc:
+        'Egs. Search subscribed communities',
+        name: 'community__subscribed_communities');
   }
 
   String get community__joined_title {

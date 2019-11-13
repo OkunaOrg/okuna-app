@@ -1399,6 +1399,15 @@ class UserService {
     return CommunitiesList.fromJson(json.decode(response.body));
   }
 
+  Future<CommunitiesList> getSubscribedCommunities({int offset}) async {
+    HttpieResponse response =
+        await _communitiesApiService.getSubscribedCommunities(offset: offset);
+
+    _checkResponseIsOk(response);
+
+    return CommunitiesList.fromJson(json.decode(response.body));
+  }
+
   Future<CommunitiesList> searchJoinedCommunities(
       {@required String query, int count, Community withCommunity}) async {
     HttpieResponse response = await _communitiesApiService

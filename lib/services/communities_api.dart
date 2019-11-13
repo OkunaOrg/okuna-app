@@ -14,8 +14,9 @@ class CommunitiesApiService {
   static const GET_TRENDING_COMMUNITIES_PATH = 'api/communities/trending/';
   static const GET_SUGGESTED_COMMUNITIES_PATH = 'api/communities/suggested/';
   static const GET_JOINED_COMMUNITIES_PATH = 'api/communities/joined/';
-  static const SEARCH_JOINED_COMMUNITIES_PATH =
-      'api/communities/joined/search/';
+  static const GET_SUBSCRIBED_COMMUNITIES_PATH = 'api/communities/subscribed/';
+  static const SEARCH_JOINED_COMMUNITIES_PATH = 'api/communities/joined/search/';
+  static const SEARCH_SUBSCRIBED_COMMUNITIES_PATH = 'api/communities/subscribed/search/';
   static const CHECK_COMMUNITY_NAME_PATH = 'api/communities/name-check/';
   static const CREATE_COMMUNITY_PATH = 'api/communities/';
   static const DELETE_COMMUNITY_PATH = 'api/communities/{communityName}/';
@@ -406,6 +407,13 @@ class CommunitiesApiService {
   Future<HttpieResponse> getJoinedCommunities(
       {bool authenticatedRequest = true, int offset}) {
     return _httpService.get('$apiURL$GET_JOINED_COMMUNITIES_PATH',
+        appendAuthorizationToken: authenticatedRequest,
+        queryParameters: {'offset': offset});
+  }
+
+  Future<HttpieResponse> getSubscribedCommunities(
+      {bool authenticatedRequest = true, int offset}) {
+    return _httpService.get('$apiURL$GET_SUBSCRIBED_COMMUNITIES_PATH',
         appendAuthorizationToken: authenticatedRequest,
         queryParameters: {'offset': offset});
   }

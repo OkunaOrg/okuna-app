@@ -1,6 +1,7 @@
 import 'package:Okuna/models/community.dart';
 import 'package:Okuna/pages/home/pages/community/widgets/community_card/widgets/community_details/widgets/community_favorite.dart';
 import 'package:Okuna/pages/home/pages/community/widgets/community_card/widgets/community_details/widgets/community_members_count.dart';
+import 'package:Okuna/pages/home/pages/community/widgets/community_card/widgets/community_details/widgets/community_subscription.dart';
 import 'package:Okuna/pages/home/pages/community/widgets/community_card/widgets/community_details/widgets/community_type.dart';
 import 'package:flutter/material.dart';
 
@@ -23,12 +24,12 @@ class OBCommunityDetails extends StatelessWidget {
             Flexible(
               child: SizedBox(
                 child: Wrap(
-                  spacing: 10.0,
-                  runSpacing: 10.0,
+                  spacing: 0.0,
                   children: <Widget>[
                     OBCommunityType(community),
                     OBCommunityMembersCount(community),
-                    OBCommunityFavorite(community)
+                    OBCommunityFavorite(community),
+                    OBCommunitySubscription(community)
                   ],
                 ),
               ),
