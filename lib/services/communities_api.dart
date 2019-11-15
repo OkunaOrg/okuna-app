@@ -52,9 +52,11 @@ class CommunitiesApiService {
   static const GET_EXCLUDED_COMMUNITIES_PATH = 'api/communities/top-posts/exclusions/';
   static const SEARCH_EXCLUDED_COMMUNITIES_PATH = 'api/communities/top-posts/exclusions/search/';
   static const GET_FAVORITE_COMMUNITIES_PATH = 'api/communities/favorites/';
-  static const GET_ADMINISTRATED_COMMUNITIES_PATH =
-      'api/communities/administrated/';
+  static const SEARCH_FAVORITE_COMMUNITIES_PATH = 'api/communities/favorites/search/';
+  static const GET_ADMINISTRATED_COMMUNITIES_PATH = 'api/communities/administrated/';
+  static const SEARCH_ADMINISTRATED_COMMUNITIES_PATH = 'api/communities/administrated/search/';
   static const GET_MODERATED_COMMUNITIES_PATH = 'api/communities/moderated/';
+  static const SEARCH_MODERATED_COMMUNITIES_PATH = 'api/communities/moderated/search/';
   static const GET_COMMUNITY_POSTS_PATH =
       'api/communities/{communityName}/posts/';
   static const CREATE_COMMUNITY_POST_PATH =
@@ -418,6 +420,18 @@ class CommunitiesApiService {
         queryParameters: {'offset': offset});
   }
 
+  Future<HttpieResponse> searchSubscribedCommunities({
+    @required String query,
+    int count,
+  }) {
+    Map<String, dynamic> queryParams = {'query': query};
+
+    if (count != null) queryParams['count'] = count;
+
+    return _httpService.get(_makeApiUrl('$SEARCH_SUBSCRIBED_COMMUNITIES_PATH'),
+        queryParameters: queryParams, appendAuthorizationToken: true);
+  }
+
   Future<HttpieResponse> searchJoinedCommunities({
     @required String query,
     int count,
@@ -573,6 +587,16 @@ class CommunitiesApiService {
         queryParameters: {'offset': offset});
   }
 
+  Future<HttpieResponse> searchFavoriteCommunities(
+      {@required String query, int count}) {
+    Map<String, dynamic> queryParams = {'query': query};
+
+    if (count != null) queryParams['count'] = count;
+
+    return _httpService.get('$apiURL$SEARCH_FAVORITE_COMMUNITIES_PATH',
+        queryParameters: queryParams, appendAuthorizationToken: true);
+  }
+
   Future<HttpieResponse> favoriteCommunity({@required String communityName}) {
     String path = _makeFavoriteCommunityPath(communityName);
     return _httpService.putJSON(_makeApiUrl(path),
@@ -631,6 +655,26 @@ class CommunitiesApiService {
     return _httpService.get('$apiURL$GET_ADMINISTRATED_COMMUNITIES_PATH',
         appendAuthorizationToken: authenticatedRequest,
         queryParameters: {'offset': offset});
+  }
+
+  Future<HttpieResponse> searchAdministratedCommunities(
+      {@required String query, int count}) {
+    Map<String, dynamic> queryParams = {'query': query};
+
+    if (count != null) queryParams['count'] = count;
+
+    return _httpService.get('$apiURL$SEARCH_ADMINISTRATED_COMMUNITIES_PATH',
+        queryParameters: queryParams, appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> searchModeratedCommunities(
+      {@required String query, int count}) {
+    Map<String, dynamic> queryParams = {'query': query};
+
+    if (count != null) queryParams['count'] = count;
+
+    return _httpService.get('$apiURL$SEARCH_MODERATED_COMMUNITIES_PATH',
+        queryParameters: queryParams, appendAuthorizationToken: true);
   }
 
   Future<HttpieResponse> getModeratedCommunities(

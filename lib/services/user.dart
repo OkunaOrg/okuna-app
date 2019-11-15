@@ -1408,6 +1408,14 @@ class UserService {
     return CommunitiesList.fromJson(json.decode(response.body));
   }
 
+  Future<CommunitiesList> searchSubscribedCommunities(
+      {@required String query, int count}) async {
+    HttpieResponse response = await _communitiesApiService
+        .searchSubscribedCommunities(query: query, count: count);
+    _checkResponseIsOk(response);
+    return CommunitiesList.fromJson(json.decode(response.body));
+  }
+
   Future<CommunitiesList> searchJoinedCommunities(
       {@required String query, int count, Community withCommunity}) async {
     HttpieResponse response = await _communitiesApiService
@@ -1561,6 +1569,15 @@ class UserService {
     return CommunitiesList.fromJson(json.decode(response.body));
   }
 
+  Future<CommunitiesList> searchFavoriteCommunities({String query, int count}) async {
+    HttpieResponse response =
+        await _communitiesApiService.searchFavoriteCommunities(query: query, count: count);
+
+    _checkResponseIsOk(response);
+
+    return CommunitiesList.fromJson(json.decode(response.body));
+  }
+
   Future<void> favoriteCommunity(Community community) async {
     HttpieResponse response = await _communitiesApiService.favoriteCommunity(
         communityName: community.name);
@@ -1600,9 +1617,28 @@ class UserService {
     return CommunitiesList.fromJson(json.decode(response.body));
   }
 
+
+  Future<CommunitiesList> searchAdministratedCommunities({String query, int count}) async {
+    HttpieResponse response =
+    await _communitiesApiService.searchAdministratedCommunities(query: query, count: count);
+
+    _checkResponseIsOk(response);
+
+    return CommunitiesList.fromJson(json.decode(response.body));
+  }
+
   Future<CommunitiesList> getModeratedCommunities({int offset}) async {
     HttpieResponse response =
         await _communitiesApiService.getModeratedCommunities(offset: offset);
+
+    _checkResponseIsOk(response);
+
+    return CommunitiesList.fromJson(json.decode(response.body));
+  }
+
+  Future<CommunitiesList> searchModeratedCommunities({String query, int count}) async {
+    HttpieResponse response =
+    await _communitiesApiService.searchModeratedCommunities(query: query, count: count);
 
     _checkResponseIsOk(response);
 

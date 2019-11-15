@@ -78,6 +78,8 @@ class OBMyCommunitiesState extends State<OBMyCommunities>
                   groupName: _localizationService.community__favorite_communities,
                   groupItemName: _localizationService.community__favorite_community,
                   maxGroupListPreviewItems: 5,
+                  communityGroupListSearcher: _searchFavoriteCommunities,
+                  communitySearchResultListItemBuilder: _buildFavoriteCommunityListItem,
                   communityGroupListItemBuilder:
                       _buildFavoriteCommunityListItem,
                   communityGroupListRefresher: _refreshFavoriteCommunities,
@@ -91,6 +93,8 @@ class OBMyCommunitiesState extends State<OBMyCommunities>
                     groupName: _localizationService.community__administrated_communities,
                     groupItemName: _localizationService.community__administrated_community,
                     maxGroupListPreviewItems: 5,
+                    communityGroupListSearcher: _searchAdministratedCommunities,
+                    communitySearchResultListItemBuilder: _buildAdministratedCommunityListItem,
                     communityGroupListItemBuilder:
                         _buildAdministratedCommunityListItem,
                     communityGroupListRefresher:
@@ -104,6 +108,8 @@ class OBMyCommunitiesState extends State<OBMyCommunities>
                   groupName: _localizationService.community__moderated_communities,
                   groupItemName: _localizationService.community__moderated_community,
                   maxGroupListPreviewItems: 5,
+                  communityGroupListSearcher: _searchModeratedCommunities,
+                  communitySearchResultListItemBuilder: _buildModeratedCommunityListItem,
                   communityGroupListItemBuilder:
                       _buildModeratedCommunityListItem,
                   communityGroupListRefresher: _refreshModeratedCommunities,
@@ -117,6 +123,8 @@ class OBMyCommunitiesState extends State<OBMyCommunities>
                   groupName: _localizationService.community__joined_communities,
                   groupItemName: _localizationService.community__joined_community,
                   maxGroupListPreviewItems: 5,
+                  communityGroupListSearcher: _searchJoinedCommunities,
+                  communitySearchResultListItemBuilder: _buildJoinedCommunityListItem,
                   communityGroupListItemBuilder: _buildJoinedCommunityListItem,
                   communityGroupListRefresher: _refreshJoinedCommunities,
                   communityGroupListOnScrollLoader: _loadMoreJoinedCommunities,
@@ -130,6 +138,8 @@ class OBMyCommunitiesState extends State<OBMyCommunities>
                   groupName: _localizationService.community__subscribed_communities,
                   groupItemName: _localizationService.community__subscribed_community,
                   maxGroupListPreviewItems: 5,
+                  communityGroupListSearcher: _searchSubscribedCommunities,
+                  communitySearchResultListItemBuilder: _buildSubscribedCommunityListItem,
                   communityGroupListItemBuilder: _buildSubscribedCommunityListItem,
                   communityGroupListRefresher: _refreshSubscribedCommunities,
                   communityGroupListOnScrollLoader: _loadMoreSubscribedCommunities,
@@ -305,6 +315,36 @@ class OBMyCommunitiesState extends State<OBMyCommunities>
             : const SizedBox();
       },
     );
+  }
+
+  Future<List<Community>> _searchFavoriteCommunities(String query) async {
+    CommunitiesList results = await _userService.searchFavoriteCommunities(query: query);
+
+    return results.communities;
+  }
+
+  Future<List<Community>> _searchAdministratedCommunities(String query) async {
+    CommunitiesList results = await _userService.searchAdministratedCommunities(query: query);
+
+    return results.communities;
+  }
+
+  Future<List<Community>> _searchModeratedCommunities(String query) async {
+    CommunitiesList results = await _userService.searchModeratedCommunities(query: query);
+
+    return results.communities;
+  }
+
+  Future<List<Community>> _searchJoinedCommunities(String query) async {
+    CommunitiesList results = await _userService.searchJoinedCommunities(query: query);
+
+    return results.communities;
+  }
+
+  Future<List<Community>> _searchSubscribedCommunities(String query) async {
+    CommunitiesList results = await _userService.searchSubscribedCommunities(query: query);
+
+    return results.communities;
   }
 
   Widget _buildCommunityListItem(Community community) {
