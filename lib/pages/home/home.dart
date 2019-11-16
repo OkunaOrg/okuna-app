@@ -335,8 +335,8 @@ class OBHomePageState extends State<OBHomePage>
   }
 
   Future _logout() async {
-    _pushNotificationsService.unsubscribeFromPushNotifications();
-    _intercomService.disableIntercom();
+    await _pushNotificationsService.unsubscribeFromPushNotifications();
+    await _intercomService.disableIntercom();
     await _userService.logout();
   }
 
