@@ -64,6 +64,7 @@ import 'package:Okuna/services/posts_api.dart';
 import 'package:Okuna/services/push_notifications/push_notifications.dart';
 import 'package:Okuna/services/storage.dart';
 import 'package:Okuna/services/user_invites_api.dart';
+import 'package:Okuna/services/user_preferences.dart';
 import 'package:Okuna/services/waitlist_service.dart';
 import 'package:crypto/crypto.dart';
 import 'package:device_info/device_info.dart';
@@ -101,6 +102,7 @@ class UserService {
   CreateAccountBloc _createAccountBlocService;
   WaitlistApiService _waitlistApiService;
   LocalizationService _localizationService;
+  UserPreferencesService _preferenceService;
   DraftService _draftService;
   PushNotificationsService _pushNotificationService;
 
@@ -197,6 +199,10 @@ class UserService {
     _localizationService = localizationService;
   }
 
+  void setUserPreferenceService(UserPreferencesService preferenceService) {
+    _preferenceService = preferenceService;
+  }
+
   void setDraftService(DraftService draftService) {
     _draftService = draftService;
   }
@@ -212,6 +218,7 @@ class UserService {
     await _removeStoredUserData();
     await _removeStoredAuthToken();
     _httpieService.removeAuthorizationToken();
+    await _preferenceService.clearUrlConfirmationPreferences();
     _draftService.clear();
     _pushNotificationService.clearPromptedUserForPermission();
     _removeLoggedInUser();

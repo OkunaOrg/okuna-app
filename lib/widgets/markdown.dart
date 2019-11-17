@@ -11,9 +11,14 @@ class OBMarkdown extends StatelessWidget {
   final String data;
   final OBTheme theme;
   final bool onlyBody;
+  final bool linksRequireConfirmation;
 
   const OBMarkdown(
-      {Key key, @required this.data, this.theme, this.onlyBody = false})
+      {Key key,
+      @required this.data,
+      this.theme,
+      this.onlyBody = false,
+      this.linksRequireConfirmation = true})
       : super(key: key);
 
   @override
@@ -101,7 +106,11 @@ class OBMarkdown extends StatelessWidget {
     Function onTapLink = (String tappedLink) async {
       bool canLaunchUrl = await urlLauncherService.canLaunchUrl(tappedLink);
       if (canLaunchUrl) {
-        urlLauncherService.launchUrl(tappedLink);
+        if (linksRequireConfirmation) {
+          urlLauncherService.launchUrlWithConfirmation(tappedLink, context);
+        } else {
+          urlLauncherService.launchUrlWithoutConfirmation(tappedLink);
+        }
       }
     };
 

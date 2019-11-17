@@ -78,5 +78,58 @@
   "@comment_sort_oldest_first": {
     "type": "text",
     "placeholders": {}
+  },
+  "trusted_domains_title": "Manage trusted domains",
+  "@trusted_domains_title": {
+    "description": "Title for the Trusted Domains settings page.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "ask_for_urls": "Link confirmation",
+  "@ask_for_urls": {
+    "description": "Header for the \"ask to open URLs\" and \"trusted domains\" settings.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "ask_for_urls_setting": "Ask to open links",
+  "@ask_for_urls_setting": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "trusted_domains_text": "Trusted domains",
+  "@trusted_domains_text": {
+    "description": "Text on the button to the Trusted Domains settings page.",
+    "type": "text",
+    "placeholders": {}
+  },
+  "trusted_domains_desc": "Manage web domains you have marked as trusted.",
+  "@trusted_domains_desc": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "trusted_domains_resource": "trusted domains",
+  "@trusted_domains_resource": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "delete_domain_failure": "Could not delete the trusted domain",
+  "@delete_domain_failure": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "confirm_url_enabled": "Only untrusted",
+  "@confirm_url_enabled": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "confirm_url_disabled": "Never",
+  "@confirm_url_disabled": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "delete_domain": "Delete",
+  "@delete_domain": {
+    "type": "text",
+    "placeholders": {}
   }
 }

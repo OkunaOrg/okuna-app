@@ -45,7 +45,7 @@ class OBUsefulLinksPage extends StatelessWidget {
                   subtitle: OBSecondaryText(
                       _localizationService.drawer__useful_links_guidelines_github_desc),
                   onTap: () {
-                    urlLauncherService.launchUrl(
+                    urlLauncherService.launchUrlWithoutConfirmation(
                         'https://github.com/orgs/OkunaOrg/projects/3');
                   },
                 ),
@@ -55,7 +55,7 @@ class OBUsefulLinksPage extends StatelessWidget {
                   subtitle: OBSecondaryText(
                       _localizationService.drawer__useful_links_guidelines_feature_requests_desc),
                   onTap: () {
-                    urlLauncherService.launchUrl(
+                    urlLauncherService.launchUrlWithoutConfirmation(
                         'https://okuna.canny.io/feature-requests');
                   },
                 ),
@@ -65,8 +65,8 @@ class OBUsefulLinksPage extends StatelessWidget {
                   subtitle:
                       OBSecondaryText(_localizationService.drawer__useful_links_guidelines_bug_tracker_desc),
                   onTap: () {
-                    urlLauncherService
-                        .launchUrl('https://okuna.canny.io/bugs');
+                    urlLauncherService.launchUrlWithoutConfirmation(
+                        'https://okuna.canny.io/bugs');
                   },
                 ),
                 ListTile(
@@ -75,7 +75,8 @@ class OBUsefulLinksPage extends StatelessWidget {
                   subtitle: OBSecondaryText(
                      _localizationService.drawer__useful_links_guidelines_handbook_desc),
                   onTap: () {
-                    urlLauncherService.launchUrl('https://okuna.support/');
+                    urlLauncherService.
+                        launchUrlWithoutConfirmation('https://okuna.support/');
                   },
                 ),
                 ListTile(
@@ -84,7 +85,7 @@ class OBUsefulLinksPage extends StatelessWidget {
                   subtitle: OBSecondaryText(
                       _localizationService.drawer__useful_links_slack_channel_desc),
                   onTap: () {
-                    urlLauncherService.launchUrl(
+                    urlLauncherService.launchUrlWithoutConfirmation(
                         'https://join.slack.com/t/okuna/shared_invite/enQtNDI2NjI3MDM0MzA2LTYwM2E1Y2NhYWRmNTMzZjFhYWZlYmM2YTQ0MWEwYjYyMzcxMGI0MTFhNTIwYjU2ZDI1YjllYzlhOWZjZDc4ZWY');
                   },
                 ),
@@ -94,7 +95,8 @@ class OBUsefulLinksPage extends StatelessWidget {
                   subtitle: OBSecondaryText(
                       _localizationService.drawer__useful_links_support_desc),
                   onTap: () {
-                    urlLauncherService.launchUrl('https://www.okuna.io/en/faq');
+                    urlLauncherService.
+                        launchUrlWithoutConfirmation('https://www.okuna.io/en/faq');
                   },
                 )
               ],

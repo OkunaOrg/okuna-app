@@ -3,10 +3,12 @@ import 'dart:async';
 import 'package:Okuna/models/community.dart';
 import 'package:Okuna/models/user.dart';
 import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/bottom_sheet.dart';
 import 'package:Okuna/services/navigation_service.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/url_launcher.dart';
 import 'package:Okuna/services/user.dart';
+import 'package:Okuna/services/user_preferences.dart';
 import 'package:Okuna/widgets/theming/smart_text.dart';
 export 'package:Okuna/widgets/theming/smart_text.dart';
 import 'package:flutter/material.dart';
@@ -109,9 +111,9 @@ class OBActionableTextState extends State<OBActionableSmartText> {
     _navigationService.navigateToUserProfile(user: user, context: context);
   }
 
-  void _onLinkTapped(String link) {
+  void _onLinkTapped(String link) async {
     try {
-      _urlLauncherService.launchUrl(link);
+      _urlLauncherService.launchUrlWithConfirmation(link, context);
     } on UrlLauncherUnsupportedUrlException {
       _toastService.info(message: 'Unsupported link', context: context);
     } catch (error) {

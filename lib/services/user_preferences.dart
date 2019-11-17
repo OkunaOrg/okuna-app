@@ -4,11 +4,15 @@ import 'package:Okuna/models/post_comment.dart';
 import 'package:Okuna/services/connectivity.dart';
 import 'package:Okuna/services/storage.dart';
 import 'package:connectivity/connectivity.dart';
+import 'package:public_suffix/public_suffix.dart';
 import 'package:rxdart/rxdart.dart';
 
 import 'localization.dart';
 
 class UserPreferencesService {
+  static const keyAskToConfirmOpen = 'askToConfirmOpen';
+  static const keyAskToConfirmExceptions = 'askToConfirmExceptions';
+
   LocalizationService _localizationService;
   OBStorage _storage;
   ConnectivityService _connectivityService;
@@ -55,10 +59,11 @@ class UserPreferencesService {
   final _videosAutoPlaySettingChangeSubject =
       BehaviorSubject<VideosAutoPlaySetting>();
 
-  void setStorageService(StorageService storageService) {
-    _storage = storageService.getSystemPreferencesStorage(
-        namespace: 'userPreferences');
-  }
+  Stream<bool> get confirmUrlSettingChange =>
+      _confirmUrlSettingChangeSubject.stream;
+
+  final _confirmUrlSettingChangeSubject =
+  BehaviorSubject<bool>();
 
   // Bootstrapped after connectivity service is given in the provider
   void bootstrap() async {
@@ -82,12 +87,18 @@ class UserPreferencesService {
     _connectivityService = connectivityService;
   }
 
+  void setStorageService(StorageService storageService) {
+    _storage = storageService.getSystemPreferencesStorage(
+        namespace: 'userPreferences');
+  }
+
   void dispose() {
     _connectivityChangeSubscription?.cancel();
     _linkPreviewsEnabledChangeSubject.close();
     _videosSoundSettingChangeSubject.close();
     _videosAutoPlaySettingChangeSubject.close();
     _videosAutoPlayEnabledChangeSubject.close();
+    _confirmUrlSettingChangeSubject.close();
   }
 
   bool getLinkPreviewsAreEnabled() {
@@ -218,6 +229,71 @@ class UserPreferencesService {
             (currentVideosAutoPlaySetting == VideosAutoPlaySetting.wifiOnly &&
                 _currentConnectivity == ConnectivityResult.wifi);
     _videosAutoPlayEnabledChangeSubject.add(_videosAutoPlayAreEnabled);
+  }
+
+  Future setAskToConfirmOpenUrl(bool ask,
+      {PublicSuffix host, String hostAsString}) async {
+    var domain = (host != null ? host.domain : hostAsString);
+    domain = domain?.toLowerCase();
+
+    Future status = Future.value(true);
+    if (host == null && hostAsString == null) {
+      status = _storage?.set(keyAskToConfirmOpen, ask.toString());
+      _confirmUrlSettingChangeSubject.add(ask);
+    } else if (domain != null) {
+      List<String> exceptions =
+          await _storage?.getList(keyAskToConfirmExceptions) ?? <String>[];
+
+      var hasException = exceptions.contains(domain);
+
+      if (!hasException && !ask) {
+        exceptions.add(domain);
+        status = _storage?.setList(keyAskToConfirmExceptions, exceptions);
+      } else if (hasException && ask) {
+        exceptions.remove(domain);
+        status = _storage?.setList(keyAskToConfirmExceptions, exceptions);
+      }
+    }
+
+    return status;
+  }
+
+  Future<bool> getAskToConfirmOpenUrl({PublicSuffix host}) async {
+    String ask = await _storage?.get(keyAskToConfirmOpen);
+    bool shouldAsk = true;
+
+    if (ask != null && ask.toLowerCase() == "false") {
+      shouldAsk = false;
+    } else if (host != null && host.domain != null) {
+      List<String> exceptions =
+      await _storage?.getList(keyAskToConfirmExceptions);
+
+      if (exceptions != null &&
+          exceptions.contains(host.domain.toLowerCase())) {
+        shouldAsk = false;
+      }
+    }
+
+    return shouldAsk;
+  }
+
+  Map<bool, String> getConfirmUrlSettingLocalizationMap() {
+    return {
+      true:
+      _localizationService.application_settings__confirm_url_enabled,
+      false:
+      _localizationService.application_settings__confirm_url_disabled
+    };
+  }
+
+  Future<List<String>> getTrustedDomains() async {
+    var domains = await _storage?.getList(keyAskToConfirmExceptions);
+    return domains ?? <String>[];
+  }
+
+  Future clearUrlConfirmationPreferences() async {
+    _storage?.setList(keyAskToConfirmExceptions, null);
+    _storage?.set(keyAskToConfirmOpen, null);
   }
 
   Future clear() {

@@ -161,6 +161,7 @@ class OBIcons {
   static const location = OBIconData(nativeIcon: Icons.location_on);
   static const link = OBIconData(nativeIcon: Icons.link);
   static const linkOff = OBIconData(nativeIcon: Icons.link_off);
+  static const url = OBIconData(nativeIcon: Icons.public);
   static const email = OBIconData(nativeIcon: Icons.email);
   static const lock = OBIconData(nativeIcon: Icons.lock);
   static const bio = OBIconData(nativeIcon: Icons.bookmark);

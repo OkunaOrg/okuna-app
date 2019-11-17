@@ -2,13 +2,12 @@
 
 import 'dart:async';
 
+import 'package:Okuna/locale/messages_all.dart';
 import 'package:Okuna/models/user.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/translation/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
-import 'package:Okuna/locale/messages_all.dart';
 
 import '../main.dart';
 
@@ -2206,6 +2205,31 @@ class LocalizationService {
         name: 'post__time_short_now_text');
   }
 
+  String get post__open_url_message {
+    return Intl.message("Do you want to open this link in your browser?",
+        name: "post__open_url_message");
+  }
+
+  String get post__open_url_continue {
+    return Intl.message("Continue",
+        name: "post__open_url_continue");
+  }
+
+  String get post__open_url_cancel {
+    return Intl.message("Cancel",
+        name: "post__open_url_cancel");
+  }
+
+  String get post__open_url_dont_ask_again {
+    return Intl.message("Never ask again",
+        name: "post__open_url_dont_ask_again");
+  }
+
+  String get post__open_url_dont_ask_again_for {
+    return Intl.message("Trust this domain",
+        name: "post__open_url_dont_ask_again_for");
+  }
+
   String get user__thousand_postfix {
     return Intl.message("k",
         desc: 'For eg. communty has 3k members',
@@ -3031,8 +3055,7 @@ class LocalizationService {
   }
 
   String get user__clear_app_preferences_desc {
-    return Intl.message(
-        "Clear the application preferences. Currently this is only the preferred order of comments.",
+    return Intl.message("Clear the application preferences. Currently only the preferred order of comments and the list of trusted domains.",
         name: 'user__clear_app_preferences_desc');
   }
 
@@ -3870,6 +3893,58 @@ class LocalizationService {
   String get application_settings__comment_sort_oldest_first {
     return Intl.message("Oldest first",
         name: 'application_settings__comment_sort_oldest_first');
+  }
+
+  String get application_settings__trusted_domains_title {
+    return Intl.message("Manage trusted domains",
+        name: 'application_settings__trusted_domains_title',
+        desc: 'Title for the Trusted Domains settings page.');
+  }
+
+  String get application_settings__ask_for_urls {
+    return Intl.message("Link confirmation",
+        name: 'application_settings__ask_for_urls',
+        desc: 'Header for the "ask to open URLs" and "trusted domains" settings.');
+  }
+
+  String get application_settings__ask_for_urls_setting {
+    return Intl.message("Ask to open links",
+        name: 'application_settings__ask_for_urls_setting');
+  }
+
+  String get application_settings__trusted_domains_text {
+    return Intl.message("Trusted domains",
+        name: 'application_settings__trusted_domains_text',
+        desc: 'Text on the button to the Trusted Domains settings page.');
+  }
+
+  String get application_settings__trusted_domains_desc {
+    return Intl.message("Manage web domains you have marked as trusted.",
+        name: 'application_settings__trusted_domains_desc');
+  }
+
+  String get application_settings__trusted_domains_resource {
+    return Intl.message("trusted domains",
+        name: 'application_settings__trusted_domains_resource');
+  }
+
+  String get application_settings__delete_domain_failure {
+    return Intl.message("Could not delete the trusted domain",
+        name: 'application_settings__delete_domain_failure');
+  }
+
+  String get application_settings__confirm_url_enabled {
+    return Intl.message("Only untrusted",
+        name: "application_settings__confirm_url_enabled");
+  }
+
+  String get application_settings__confirm_url_disabled {
+    return Intl.message("Never",
+        name: "application_settings__confirm_url_disabled");
+  }
+
+  String get application_settings__delete_domain {
+    return Intl.message("Delete", name: 'application_settings__delete_domain');
   }
 
   String get media_service__crop_image {

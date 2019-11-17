@@ -11,6 +11,7 @@ class OBCheckboxField extends StatelessWidget {
   final String subtitle;
   final bool isDisabled;
   final TextStyle titleStyle;
+  final TextStyle subtitleStyle;
 
   OBCheckboxField(
       {@required this.value,
@@ -19,7 +20,8 @@ class OBCheckboxField extends StatelessWidget {
       this.leading,
       @required this.title,
       this.isDisabled = false,
-      this.titleStyle});
+      this.titleStyle,
+      this.subtitleStyle,});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +36,7 @@ class OBCheckboxField extends StatelessWidget {
             title,
             style: finalTitleStyle,
           ),
-          subtitle: subtitle != null ? OBText(subtitle) : null,
+          subtitle: subtitle != null ? OBText(subtitle, style: subtitleStyle,) : null,
           trailing: Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[

@@ -94,6 +94,7 @@ class OBAuthGuidelinesStepPageState extends State<OBAuthGuidelinesStepPage> {
                           )
                         : OBMarkdown(
                             onlyBody: true,
+                            linksRequireConfirmation: false,
                             data: _communityGuidelines,
                             theme: OBTheme(
                               primaryTextColor: '#ffffff',

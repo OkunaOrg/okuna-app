@@ -125,6 +125,7 @@ class OBConfirmReportObjectState extends State<OBConfirmReportObject> {
                       height: 20,
                     ),
                     OBMarkdown(
+                        linksRequireConfirmation: false,
                         onlyBody: true,
                         data: _localizationService.moderation__confirm_report_provide_happen_next_desc)
                   ],

@@ -6,8 +6,6 @@ import 'package:Okuna/widgets/theming/smart_text.dart';
 import 'package:flutter/material.dart';
 import 'package:html/parser.dart' as parser;
 import 'package:html/dom.dart';
-import 'package:flutter/services.dart' show rootBundle;
-import 'package:public_suffix/public_suffix_io.dart';
 
 class LinkPreviewService {
   ValidationService _validationService;
@@ -18,16 +16,6 @@ class LinkPreviewService {
 
   static RegExp allowedProtocolsPattern =
       RegExp('http|https', caseSensitive: false);
-
-  LinkPreviewService() {
-    _initPublicSuffixes();
-  }
-
-  void _initPublicSuffixes() async {
-    String publicSuffixes =
-        await rootBundle.loadString('assets/other/public_suffix_list.dat');
-    SuffixRules.initFromString(publicSuffixes);
-  }
 
   void setTrustedProxyUrl(String proxyUrl) {
     _trustedProxyUrl = proxyUrl;

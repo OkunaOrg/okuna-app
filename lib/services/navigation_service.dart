@@ -47,15 +47,16 @@ import 'package:Okuna/pages/home/pages/menu/pages/my_moderation_tasks/my_moderat
 import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/account_settings/account_settings.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/account_settings/pages/blocked_users.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/account_settings/pages/user_language_settings/user_language_settings.dart';
-import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/application_settings.dart';
+import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/application_settings/application_settings.dart';
+import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/application_settings/pages/trusted_domains.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/developer_settings.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/explore_settings/explore_settings.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/explore_settings/widgets/top_posts_excluded_communities.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/settings/settings.dart';
+import 'package:Okuna/pages/home/pages/menu/pages/themes/themes.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/useful_links.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/user_invites/pages/user_invite_detail.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/user_invites/user_invites.dart';
-import 'package:Okuna/pages/home/pages/menu/pages/themes/themes.dart';
 import 'package:Okuna/pages/home/pages/moderated_objects/moderated_objects.dart';
 import 'package:Okuna/pages/home/pages/moderated_objects/pages/moderated_object_community_review.dart';
 import 'package:Okuna/pages/home/pages/moderated_objects/pages/moderated_object_global_review.dart';
@@ -725,6 +726,18 @@ class NavigationService {
               reactionsEmojiCounts: reactionsEmojiCounts,
               reactionEmoji: reactionEmoji,
             );
+          }),
+    );
+  }
+
+  Future<void> navigateToTrustedDomainsSettings(
+      {@required BuildContext context}) {
+    return Navigator.push(
+      context,
+      OBSlideRightRoute(
+          slidableKey: _getKeyRandomisedWithWord('obTrustedDomainsPage'),
+          builder: (BuildContext context) {
+            return OBTrustedDomainsPage();
           }),
     );
   }

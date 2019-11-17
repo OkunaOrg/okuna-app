@@ -32,8 +32,16 @@ class OBStorage {
     return value;
   }
 
+  Future<List<String>> getList(String key) {
+    return this.store.getList(_makeKey(key));
+  }
+
   Future<void> set(String key, dynamic value) {
     return this.store.set(_makeKey(key), value);
+  }
+
+  Future<void> setList(String key, dynamic value) {
+    return this.store.setList(_makeKey(key), value);
   }
 
   Future<void> remove(String key) {
@@ -83,11 +91,25 @@ class _SecureStore implements _Store<String> {
     }
   }
 
+  Future<List<String>> getList(String key) {
+    throw UnimplementedError("_SecureStore.getList and .setList haven't been"
+        "implemented yet as they require custom parsing between strings and lists.");
+    // Additional note: when implemented, the parsing must be able to handle elements
+    // that contain whatever delimiter is used to separate elements.
+  }
+
   Future<void> set(String key, String value) {
     if (_storedKeys.add(key)) {
       _saveStoredKeys();
     }
     return storage.write(key: key, value: value);
+  }
+
+  Future<void> setList(String key, List<String> value) {
+    throw UnimplementedError("_SecureStore.getList and .setList haven't been"
+        "implemented yet as they require custom parsing between strings and lists.");
+    // Additional note: when implemented, the conversion from list to string must
+    // escape element separators that are found within elements themselves.
   }
 
   Future<void> remove(String key) {
@@ -121,9 +143,19 @@ class _SystemPreferencesStorage implements _Store<String> {
     return sharedPreferences.get(key);
   }
 
+  Future<List<String>> getList(String key) async {
+    SharedPreferences sharedPreferences = await _getSharedPreferences();
+    return sharedPreferences.getStringList(key);
+  }
+
   Future<void> set(String key, String value) async {
     SharedPreferences sharedPreferences = await _getSharedPreferences();
     return sharedPreferences.setString(key, value);
+  }
+
+  Future<void> setList(String key, List<String> value) async {
+    SharedPreferences sharedPreferences = await _getSharedPreferences();
+    return sharedPreferences.setStringList(key, value);
   }
 
   Future<void> remove(String key) async {
@@ -143,7 +175,11 @@ class _SystemPreferencesStorage implements _Store<String> {
 abstract class _Store<T> {
   Future<String> get(String key);
 
+  Future<List<String>> getList(String key);
+
   Future<void> set(String key, T value);
+
+  Future<void> setList(String key, List<T> value);
 
   Future<void> remove(String key);
 
