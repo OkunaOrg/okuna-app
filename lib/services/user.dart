@@ -216,7 +216,7 @@ class UserService {
 
   Future<void> logout() async {
     try {
-      await _pushNotificationService.unsubscribeFromPushNotifications();
+      await _pushNotificationService.clearPromptedUserForPermission();
       await _intercomService.disableIntercom();
     } catch (error) {
       throw error;
@@ -226,7 +226,6 @@ class UserService {
       await _removeStoredAuthToken();
       _httpieService.removeAuthorizationToken();
       _draftService.clear();
-      _pushNotificationService.clearPromptedUserForPermission();
       _removeLoggedInUser();
       await clearCache();
       User.clearSessionCache();

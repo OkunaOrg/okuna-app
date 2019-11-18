@@ -321,7 +321,7 @@ class OBHomePageState extends State<OBHomePage>
         } else if (error is HttpieRequestError) {
           HttpieResponse response = error.response;
           if (response.isForbidden() || response.isUnauthorized()) {
-            _logout();
+            _logout(unsubscribePushNotifications: true);
           } else {
             _onError(error);
           }
@@ -334,8 +334,15 @@ class OBHomePageState extends State<OBHomePage>
     _shareService.subscribe(_onShare);
   }
 
-  Future _logout() async {
-    await _userService.logout();
+  Future _logout({unsubscribePushNotifications = false}) async {
+    try {
+      if (unsubscribePushNotifications)
+        await _pushNotificationsService.unsubscribeFromPushNotifications();
+    } catch (error) {
+      throw error;
+    } finally {
+      await _userService.logout();
+    }
   }
 
   bool _backButtonInterceptor(bool stopDefaultButtonEvent) {
