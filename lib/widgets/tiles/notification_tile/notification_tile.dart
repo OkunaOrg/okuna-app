@@ -10,6 +10,7 @@ import 'package:Okuna/models/notifications/post_comment_reply_notification.dart'
 import 'package:Okuna/models/notifications/post_comment_user_mention_notification.dart';
 import 'package:Okuna/models/notifications/post_reaction_notification.dart';
 import 'package:Okuna/models/notifications/post_user_mention_notification.dart';
+import 'package:Okuna/models/notifications/user_new_post_notification.dart';
 import 'package:Okuna/widgets/theming/highlighted_box.dart';
 import 'package:Okuna/widgets/tiles/notification_tile/widgets/community_invite_notification_tile.dart';
 import 'package:Okuna/widgets/tiles/notification_tile/widgets/community_new_post_notification_tile.dart';
@@ -22,6 +23,7 @@ import 'package:Okuna/widgets/tiles/notification_tile/widgets/post_comment_reply
 import 'package:Okuna/widgets/tiles/notification_tile/widgets/post_comment_user_mention_notification_tile.dart';
 import 'package:Okuna/widgets/tiles/notification_tile/widgets/post_reaction_notification_tile.dart';
 import 'package:Okuna/widgets/tiles/notification_tile/widgets/post_user_mention_notification_tile.dart';
+import 'package:Okuna/widgets/tiles/notification_tile/widgets/user_new_post_notification_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
@@ -147,6 +149,13 @@ class OBNotificationTile extends StatelessWidget {
         notificationTile = OBCommunityNewPostNotificationTile(
           notification: notification,
           communityNewPostNotification: notificationContentObject,
+          onPressed: finalOnPressed,
+        );
+        break;
+        case UserNewPostNotification:
+        notificationTile = OBUserNewPostNotificationTile(
+          notification: notification,
+          userNewPostNotification: notificationContentObject,
           onPressed: finalOnPressed,
         );
         break;

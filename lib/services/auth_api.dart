@@ -361,6 +361,7 @@ class AuthApiService {
     bool connectionConfirmedNotifications,
     bool communityInviteNotifications,
     bool communityNewPostNotifications,
+    bool userNewPostNotifications,
   }) {
     Map<String, dynamic> body = {};
 
@@ -395,6 +396,9 @@ class AuthApiService {
 
     if (communityNewPostNotifications != null)
       body['community_new_post_notifications'] = communityNewPostNotifications;
+
+    if (userNewPostNotifications != null)
+      body['user_new_post_notifications'] = userNewPostNotifications;
 
     if (connectionConfirmedNotifications != null)
       body['connection_confirmed_notifications'] =

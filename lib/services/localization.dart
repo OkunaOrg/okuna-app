@@ -3316,6 +3316,17 @@ class LocalizationService {
         name: 'notifications__community_new_post_desc');
   }
 
+  String get notifications__user_new_post_title {
+    return Intl.message("User new post",
+        name: 'notifications__user_new_post_title');
+  }
+
+  String get notifications__user_new_post_desc {
+    return Intl.message(
+        "Be notified when there is a new post by a user you are subscribed to",
+        name: 'notifications__user_new_post_desc');
+  }
+
   String get notifications__mute_post_turn_on_post_notifications {
     return Intl.message("Turn on post notifications",
         name: 'notifications__mute_post_turn_on_post_notifications');
@@ -3771,6 +3782,18 @@ class LocalizationService {
     return Intl.message("[name] [username] mentioned you on a post.",
         desc: "Eg.: James @jamest mentioned you on a post.",
         name: 'notifications__mentioned_in_post_tile');
+  }
+
+  String get notifications__user_new_post_world_tile {
+    return Intl.message("[name] [username] posted to World.",
+        desc: "Eg.: James @jamest mentioned you on a post.",
+        name: 'notifications__user_new_post_world_tile');
+  }
+
+  String get notifications__user_new_post_circle_tile {
+    return Intl.message("[name] [username] posted to a circle.",
+        desc: "Eg.: James @jamest mentioned you on a post.",
+        name: 'notifications__user_new_post_circle_tile');
   }
 
   String get contextual_account_search_box__suggestions {
