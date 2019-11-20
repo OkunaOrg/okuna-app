@@ -37,6 +37,8 @@ class AuthApiService {
   static const SEARCH_FOLLOWERS_PATH = 'api/auth/followers/search/';
   static const GET_FOLLOWINGS_PATH = 'api/auth/followings/';
   static const SEARCH_FOLLOWINGS_PATH = 'api/auth/followings/search/';
+  static const GET_USER_SUBSCRIPTIONS_PATH = 'api/auth/user-subscriptions/';
+  static const SEARCH_USER_SUBSCRIPTIONS_PATH = 'api/auth/user-subscriptions/search/';
   static const LOGIN_PATH = 'api/auth/login/';
   static const REQUEST_RESET_PASSWORD_PATH = 'api/auth/password/reset/';
   static const VERIFY_RESET_PASSWORD_PATH = 'api/auth/password/verify/';
@@ -302,6 +304,15 @@ class AuthApiService {
         queryParameters: queryParams, appendAuthorizationToken: true);
   }
 
+  Future<HttpieResponse> searchUserSubscriptions({@required String query, int count}) {
+    Map<String, dynamic> queryParams = {'query': query};
+
+    if (count != null) queryParams['count'] = count;
+
+    return _httpService.get('$apiURL$SEARCH_USER_SUBSCRIPTIONS_PATH',
+        queryParameters: queryParams, appendAuthorizationToken: true);
+  }
+
   Future<HttpieResponse> getFollowings({
     bool authenticatedRequest = true,
     int maxId,
@@ -314,6 +325,21 @@ class AuthApiService {
     if (maxId != null) queryParams['max_id'] = maxId;
 
     return _httpService.get('$apiURL$GET_FOLLOWINGS_PATH',
+        queryParameters: queryParams,
+        appendAuthorizationToken: authenticatedRequest);
+  }
+
+  Future<HttpieResponse> getUserSubscriptions({
+    bool authenticatedRequest = true,
+    int maxId,
+    int count,
+  }) {
+    Map<String, dynamic> queryParams = {};
+
+    if (count != null) queryParams['count'] = count;
+    if (maxId != null) queryParams['max_id'] = maxId;
+
+    return _httpService.get('$apiURL$GET_USER_SUBSCRIPTIONS_PATH',
         queryParameters: queryParams,
         appendAuthorizationToken: authenticatedRequest);
   }

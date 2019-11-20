@@ -1027,6 +1027,24 @@ class UserService {
     return UsersList.fromJson(json.decode(response.body));
   }
 
+  Future<UsersList> searchUserSubscriptions(
+      {@required String query, int count}) async {
+    HttpieResponse response =
+        await _authApiService.searchUserSubscriptions(query: query, count: count);
+    _checkResponseIsOk(response);
+    return UsersList.fromJson(json.decode(response.body));
+  }
+
+  Future<UsersList> getUserSubscriptions(
+      {bool authenticatedRequest = true,
+      int maxId,
+      int count}) async {
+    HttpieResponse response =
+        await _authApiService.getUserSubscriptions(count: count, maxId: maxId);
+    _checkResponseIsOk(response);
+    return UsersList.fromJson(json.decode(response.body));
+  }
+
   Future<Follow> followUserWithUsername(String username,
       {List<FollowsList> followsLists = const []}) async {
     HttpieResponse response = await _followsApiService.followUserWithUsername(

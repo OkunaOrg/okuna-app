@@ -56,6 +56,7 @@ import 'package:Okuna/pages/home/pages/menu/pages/useful_links.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/user_invites/pages/user_invite_detail.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/user_invites/user_invites.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/themes/themes.dart';
+import 'package:Okuna/pages/home/pages/menu/pages/user_subscriptions.dart';
 import 'package:Okuna/pages/home/pages/moderated_objects/moderated_objects.dart';
 import 'package:Okuna/pages/home/pages/moderated_objects/pages/moderated_object_community_review.dart';
 import 'package:Okuna/pages/home/pages/moderated_objects/pages/moderated_object_global_review.dart';
@@ -461,6 +462,17 @@ class NavigationService {
           slidableKey: _getKeyRandomisedWithWord('followingPageRoute'),
           builder: (BuildContext context) {
             return OBFollowingPage();
+          }),
+    );
+  }
+
+  Future navigateToUserSubscriptionsPage({@required BuildContext context}) {
+    return Navigator.push(
+      context,
+      OBSlideRightRoute<dynamic>(
+          slidableKey: _getKeyRandomisedWithWord('userSubscriptionsPageRoute'),
+          builder: (BuildContext context) {
+            return OBUserSubscriptionsPage();
           }),
     );
   }

@@ -124,6 +124,14 @@ class OBMainMenuPage extends StatelessWidget {
                             count: user.activeModerationPenaltiesCount,
                           ),
                         ),
+                        ListTile(
+                          leading: const OBIcon(OBIcons.notifications),
+                          title: OBText(localizationService.drawer__my_user_subscriptions),
+                          onTap: () {
+                            navigationService.navigateToUserSubscriptionsPage(
+                                context: context);
+                          },
+                        ),
                         OBTileGroupTitle(
                           title: localizationService.drawer__app_account_text,
                         ),

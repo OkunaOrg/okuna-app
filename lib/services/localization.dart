@@ -616,6 +616,10 @@ class LocalizationService {
     return Intl.message("My following", name: 'drawer__my_following');
   }
 
+  String get drawer__my_user_subscriptions {
+    return Intl.message("My user subscriptions", name: 'drawer__my_user_subscriptions');
+  }
+
   String get drawer__my_invites {
     return Intl.message("My invites", name: 'drawer__my_invites');
   }
@@ -2388,6 +2392,14 @@ class LocalizationService {
     return Intl.message("Unfollow", name: 'user__follow_button_unfollow_text');
   }
 
+  String get user__subscribe_button_subscribe_text {
+    return Intl.message("Subscribe", name: 'user__subscribe_button_subscribe_text');
+  }
+
+  String get user__unsubscribe_button_unsubscribe_text {
+    return Intl.message("Unsubscribe", name: 'user__unsubscribe_button_unsubscribe_text');
+  }
+
   String get user__edit_profile_username {
     return Intl.message("Username", name: 'user__edit_profile_username');
   }
@@ -2573,10 +2585,20 @@ class LocalizationService {
     return Intl.message("Following", name: 'user__following_text');
   }
 
+  String get user__user_subscriptions_text {
+    return Intl.message("User subscriptions", name: 'user__user_subscriptions_text');
+  }
+
   String get user__following_resource_name {
     return Intl.message("followed users",
         desc: 'Eg: Search followed users.., No followed users found. etc ',
         name: 'user__following_resource_name');
+  }
+
+  String get user__user_subscriptions_resource_name {
+    return Intl.message("user subscriptions",
+        desc: 'Eg: Search user subscriptions.., No user subscriptions found. etc ',
+        name: 'user__user_subscriptions_resource_name');
   }
 
   String get user__tile_delete {
