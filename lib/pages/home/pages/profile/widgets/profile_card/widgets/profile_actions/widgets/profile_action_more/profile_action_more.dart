@@ -4,12 +4,12 @@ import 'package:Okuna/pages/home/pages/profile/widgets/profile_card/widgets/prof
 import 'package:Okuna/pages/home/pages/profile/widgets/profile_card/widgets/profile_actions/widgets/profile_action_more/widgets/disconnect_from_user_tile.dart';
 import 'package:Okuna/pages/home/pages/profile/widgets/profile_card/widgets/profile_actions/widgets/profile_action_more/widgets/add_account_to_list_tile.dart';
 import 'package:Okuna/pages/home/pages/profile/widgets/profile_card/widgets/profile_actions/widgets/profile_action_more/widgets/remove_account_from_lists_tile.dart';
+import 'package:Okuna/pages/home/pages/profile/widgets/profile_card/widgets/profile_actions/widgets/profile_action_more/widgets/subscribe_user_tile.dart';
 import 'package:Okuna/pages/home/pages/profile/widgets/profile_card/widgets/profile_actions/widgets/profile_action_more/widgets/update_connection_with_user_tile.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/theming/primary_color_container.dart';
-import 'package:Okuna/widgets/theming/text.dart';
 import 'package:Okuna/widgets/tiles/actions/block_user_tile.dart';
 import 'package:Okuna/widgets/tiles/actions/report_user_tile.dart';
 import 'package:flutter/material.dart';
@@ -55,6 +55,22 @@ class OBProfileActionMore extends StatelessWidget {
                 onRemovedAccountFromLists: _dismissModalBottomSheet,
               ));
             }
+
+            moreTiles.add(OBSubscribeToUserTile(
+              user: user,
+              onSubscribedUser: () {
+                // Bottom sheet
+                Navigator.pop(context);
+                openbookProvider.toastService
+                    .success(message: localizationService.user__profile_action_user_subscribed, context: context);
+              },
+              onUnsubscribedUser: () {
+                // Bottom sheet
+                Navigator.pop(context);
+                openbookProvider.toastService
+                    .success(message: localizationService.user__profile_action_user_unsubscribed, context: context);
+              },
+            ));
 
             if (user.isConnected &&
                 !user.isFullyConnected &&
