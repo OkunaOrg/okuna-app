@@ -71,7 +71,7 @@ class OBUserSubscriptionsPageState extends State<OBUserSubscriptionsPage> {
         onUserTilePressed: _onSubscribeListItemPressed,
         trailing: OBUserSubscribeButton(
           user,
-          size: OBButtonSize.small,
+          size: OBButtonSize.medium,
           unsubscribeButtonType: OBButtonType.highlight,
         ));
   }
