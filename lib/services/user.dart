@@ -945,6 +945,20 @@ class UserService {
     return User.fromJson(json.decode(response.body));
   }
 
+  Future<User> subscribeUser(User user) async {
+    HttpieResponse response =
+        await _authApiService.subscribeUserWithUsername(user.username);
+    _checkResponseIsCreated(response);
+    return User.fromJson(json.decode(response.body));
+  }
+
+  Future<User> unsubscribeUser(User user) async {
+    HttpieResponse response =
+        await _authApiService.unsubscribeUserWithUsername(user.username);
+    _checkResponseIsOk(response);
+    return User.fromJson(json.decode(response.body));
+  }
+
   Future<UsersList> searchBlockedUsers(
       {@required String query, int count}) async {
     HttpieResponse response =

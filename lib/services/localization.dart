@@ -2340,6 +2340,26 @@ class LocalizationService {
         name: 'user__profile_action_user_unblocked');
   }
 
+  String get user__profile_action_user_subscribed {
+    return Intl.message("User subscribed",
+        name: 'user__profile_action_user_subscribed');
+  }
+
+  String get user__profile_action_user_unsubscribed {
+    return Intl.message("User unsubscribed",
+        name: 'user__profile_action_user_unsubscribed');
+  }
+
+  String get user__profile_subscribed {
+    return Intl.message("Subscribed",
+        name: 'user__profile_subscribed');
+  }
+
+  String get user__profile_in_circles {
+    return Intl.message("In circles",
+        name: 'user__profile_in_circles');
+  }
+
   String get user__profile_action_cancel_connection {
     return Intl.message("Cancel connection request",
         name: 'user__profile_action_cancel_connection');
@@ -3144,6 +3164,14 @@ class LocalizationService {
 
   String get user__unblock_user {
     return Intl.message("Unblock user", name: 'user__unblock_user');
+  }
+
+  String get user__subscribe_user {
+    return Intl.message("Subscribe to user", name: 'user__subscribe_user');
+  }
+
+  String get user__unsubscribe_user {
+    return Intl.message("Unsubscribe from user", name: 'user__unsubscribe_user');
   }
 
   String user__disconnect_from_user(String userName) {

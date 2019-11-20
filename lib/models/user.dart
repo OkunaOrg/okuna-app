@@ -34,6 +34,7 @@ class User extends UpdatableModel<User> {
   int pendingCommunitiesModeratedObjectsCount;
   int activeModerationPenaltiesCount;
   bool areGuidelinesAccepted;
+  bool isSubscribed;
   bool isFollowing;
   bool isConnected;
   bool isReported;
@@ -90,6 +91,7 @@ class User extends UpdatableModel<User> {
       'pending_communities_moderated_objects_count': pendingCommunitiesModeratedObjectsCount,
       'active_moderation_penalties_count': activeModerationPenaltiesCount,
       'are_guidelines_accepted': areGuidelinesAccepted,
+      'is_subscribed': isSubscribed,
       'is_following': isFollowing,
       'is_connected': isConnected,
       'is_reported': isReported,
@@ -127,6 +129,7 @@ class User extends UpdatableModel<User> {
       this.unreadNotificationsCount,
       this.postsCount,
       this.inviteCount,
+      this.isSubscribed,
       this.isFollowing,
       this.isBlocked,
       this.isGlobalModerator,
@@ -180,6 +183,7 @@ class User extends UpdatableModel<User> {
       unreadNotificationsCount = json['unread_notifications_count'];
     if (json.containsKey('posts_count')) postsCount = json['posts_count'];
     if (json.containsKey('invite_count')) inviteCount = json['invite_count'];
+    if (json.containsKey('is_subscribed')) isSubscribed = json['is_subscribed'];
     if (json.containsKey('is_following')) isFollowing = json['is_following'];
     if (json.containsKey('is_connected')) isConnected = json['is_connected'];
     if (json.containsKey('is_global_moderator'))
