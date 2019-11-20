@@ -15,12 +15,14 @@ class OBPostImagePreviewer extends StatelessWidget {
 
   final double buttonSize = 30.0;
 
-  OBPostImagePreviewer(
-      {this.onRemove,
-      @required this.onPostImageEdited,
-      this.onWillEditImage,
+  const OBPostImagePreviewer(
+      {Key key,
+      this.postImage,
       this.postImageFile,
-      this.postImage});
+      this.onRemove,
+      this.onWillEditImage,
+      this.onPostImageEdited})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

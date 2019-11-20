@@ -12,10 +12,12 @@ import 'package:Okuna/services/devices_api.dart';
 import 'package:Okuna/services/dialog.dart';
 import 'package:Okuna/services/documents.dart';
 import 'package:Okuna/services/draft.dart';
+import 'package:Okuna/services/explore_timeline_preferences.dart';
 import 'package:Okuna/services/intercom.dart';
 import 'package:Okuna/services/link_preview.dart';
 import 'package:Okuna/services/moderation_api.dart';
 import 'package:Okuna/services/notifications_api.dart';
+import 'package:Okuna/services/permissions.dart';
 import 'package:Okuna/services/push_notifications/push_notifications.dart';
 import 'package:Okuna/services/share.dart';
 import 'package:Okuna/services/text_account_autocompletion.dart';
@@ -68,6 +70,8 @@ class OpenbookProvider extends StatefulWidget {
 
 class OpenbookProviderState extends State<OpenbookProvider> {
   UserPreferencesService userPreferencesService = UserPreferencesService();
+  ExploreTimelinePreferencesService exploreTimelinePreferencesService =
+      ExploreTimelinePreferencesService();
   CreateAccountBloc createAccountBloc = CreateAccountBloc();
   ValidationService validationService = ValidationService();
   HttpieService httpService = HttpieService();
@@ -85,6 +89,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   DatePickerService datePickerService = DatePickerService();
   EmojiPickerService emojiPickerService = EmojiPickerService();
   FollowsApiService followsApiService = FollowsApiService();
+  PermissionsService permissionService = PermissionsService();
   CommunitiesApiService communitiesApiService = CommunitiesApiService();
   CategoriesApiService categoriesApiService = CategoriesApiService();
   NotificationsApiService notificationsApiService = NotificationsApiService();
@@ -124,6 +129,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     imageCache.maximumSize = 200 << 20; // 200MB
     userPreferencesService.setStorageService(storageService);
     userPreferencesService.setConnectivityService(connectivityService);
+    exploreTimelinePreferencesService.setStorageService(storageService);
     connectionsCirclesApiService.setHttpService(httpService);
     httpService.setUtilsService(utilsService);
     connectionsCirclesApiService
@@ -141,6 +147,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     createAccountBloc.setAuthApiService(authApiService);
     createAccountBloc.setUserService(userService);
     userService.setAuthApiService(authApiService);
+    userService.setPushNotificationsService(pushNotificationsService);
     userService.setPostsApiService(postsApiService);
     userService.setEmojisApiService(emojisApiService);
     userService.setHttpieService(httpService);
@@ -174,11 +181,13 @@ class OpenbookProviderState extends State<OpenbookProvider> {
         .setConnectionsCirclesApiService(connectionsCirclesApiService);
     themeService.setStorageService(storageService);
     pushNotificationsService.setUserService(userService);
+    pushNotificationsService.setStorageService(storageService);
     intercomService.setUserService(userService);
     dialogService.setThemeService(themeService);
     dialogService.setThemeValueParserService(themeValueParserService);
     mediaService.setValidationService(validationService);
     mediaService.setBottomSheetService(bottomSheetService);
+    mediaService.setUtilsService(utilsService);
     documentsService.setHttpService(httpService);
     moderationApiService.setStringTemplateService(stringTemplateService);
     moderationApiService.setHttpieService(httpService);
@@ -188,6 +197,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     shareService.setMediaService(mediaService);
     shareService.setToastService(toastService);
     shareService.setValidationService(validationService);
+    permissionService.setToastService(toastService);
   }
 
   void initAsyncState() async {
@@ -250,6 +260,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     userPreferencesService.setLocalizationService(localizationService);
     shareService.setLocalizationService(localizationService);
     mediaService.setLocalizationService(localizationService);
+    permissionService.setLocalizationService(localizationService);
   }
 
   setValidationService(ValidationService newValidationService) {

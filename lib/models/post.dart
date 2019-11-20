@@ -80,7 +80,6 @@ class Post extends UpdatableModel<Post> {
       'language': language?.toJson(),
       'status': status?.code,
       'media': media?.postMedia?.map((PostMedia mediaObj) => mediaObj.toJson())?.toList(),
-      'link_preview': linkPreview,
       'comments_list': commentsList?.comments?.map((PostComment comment) => comment.toJson())?.toList(),
       'community': community?.toJson(),
       'is_muted': isMuted,

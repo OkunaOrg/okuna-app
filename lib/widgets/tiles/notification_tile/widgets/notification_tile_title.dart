@@ -1,12 +1,6 @@
-import 'package:Okuna/models/community.dart';
-import 'package:Okuna/models/post.dart';
-import 'package:Okuna/models/post_comment.dart';
 import 'package:Okuna/models/theme.dart';
 import 'package:Okuna/models/user.dart';
 import 'package:Okuna/provider.dart';
-import 'package:Okuna/widgets/icon.dart';
-import 'package:Okuna/widgets/theming/secondary_text.dart';
-import 'package:Okuna/widgets/user_badge.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 

@@ -23,10 +23,10 @@ PODS:
     - TOCropViewController (~> 2.5.1)
   - image_picker (0.0.1):
     - Flutter
-  - Intercom (5.5.1)
-  - intercom_flutter (1.0.7):
+  - Intercom (5.5.2)
+  - "intercom_flutter (2.0.5+2)":
     - Flutter
-    - Intercom
+    - Intercom (~> 5.5.1)
   - libwebp (1.0.3):
     - libwebp/demux (= 1.0.3)
     - libwebp/mux (= 1.0.3)
@@ -40,10 +40,10 @@ PODS:
     - Mantle/extobjc (= 2.1.0)
   - Mantle/extobjc (2.1.0)
   - mobile-ffmpeg-full-gpl (4.2.2.LTS)
-  - OneSignal (2.11.0)
-  - onesignal_flutter (2.1.0):
+  - OneSignal (2.11.2)
+  - onesignal_flutter (2.2.0):
     - Flutter
-    - OneSignal (= 2.11.0)
+    - OneSignal (= 2.11.2)
   - package_info (0.0.1):
     - Flutter
   - path_provider (0.0.1):
@@ -58,7 +58,7 @@ PODS:
   - sqflite (0.0.1):
     - Flutter
     - FMDB (~> 2.7.2)
-  - TOCropViewController (2.5.1)
+  - TOCropViewController (2.5.2)
   - uni_links (0.0.1):
     - Flutter
   - url_launcher (0.0.1):
@@ -99,16 +99,15 @@ DEPENDENCIES:
   - wakelock (from `.symlinks/plugins/wakelock/ios`)
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  trunk:
     - FMDB
     - Intercom
     - libwebp
     - Mantle
+    - mobile-ffmpeg-full-gpl
     - OneSignal
     - Reachability
     - TOCropViewController
-  trunk:
-    - mobile-ffmpeg-full-gpl
     - VIMediaCache
 
 EXTERNAL SOURCES:
@@ -167,22 +166,22 @@ SPEC CHECKSUMS:
   flutter_secure_storage: 7953c38a04c3fdbb00571bcd87d8e3b5ceb9daec
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   image_cropper: 966bf742cd9cee8d78010ec5c67dd9e7826e6b19
-  image_picker: 16e5fec1fbc87fd3b297c53e4048521eaf17cd06
-  Intercom: a9dac939be35ba163304fbbdc101817a47992992
-  intercom_flutter: 46ce58645b14bb02ede6d4982268d4796ee39427
+  image_picker: e3eacd46b94694dde7cf2705955cece853aa1a8f
+  Intercom: 1151a15e5e7931d8e401671a4357239d44325159
+  intercom_flutter: bfadb1c7e3d0af65b91cef2a53a29f5a9abc32c1
   libwebp: 057912d6d0abfb6357d8bb05c0ea470301f5d61e
   Mantle: 2fa750afa478cd625a94230fbf1c13462f29395b
   mobile-ffmpeg-full-gpl: efbd28ed385c931e90421f4f3a78a2349c3c76d0
-  OneSignal: 1e2ed98358f87cb755e7262412ddb2949b8e5c55
-  onesignal_flutter: 4b1a299c510913d6ab15ee493b554b3a4f33f43c
+  OneSignal: 4e3e68bb6c29975286a2fa910cb49132bc6e20bb
+  onesignal_flutter: 5a6041629e3f93a61cf7ae8193c3d1702f2ef78d
   package_info: 78cabb3c322943c55d39676f4a5bfc748c01d055
-  path_provider: f96fff6166a8867510d2c25fdcc346327cc4b259
+  path_provider: fb74bd0465e96b594bb3b5088ee4a4e7bb1f2a9d
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   screen: abd91ca7bf3426e1cc3646d27e9b2358d6bf07b0
   share: 7d22fe8baedfe93aefd864bf0b73f29711fbb0a3
   shared_preferences: 1feebfa37bb57264736e16865e7ffae7fc99b523
   sqflite: ff1d9da63c06588cc8d1faf7256d741f16989d5a
-  TOCropViewController: 00dc36c4e4a0f4a45efa91adbf22df8a4fae01d3
+  TOCropViewController: e9da34f484aedd4e5d5a8ab230ba217cfe16c729
   uni_links: d97da20c7701486ba192624d99bffaaffcfc298a
   url_launcher: 0067ddb8f10d36786672aa0722a21717dba3a298
   video_player: fd8b6188941ec5a530d6ab0830a34f78faa0452e
@@ -190,6 +189,6 @@ SPEC CHECKSUMS:
   VIMediaCache: aa650f82cb114c68a343beb4e67416cf5eb2f3a2
   wakelock: da5012e206ec8978df58d8642e4cdd4fe506185f
 
-PODFILE CHECKSUM: 5f4cabfb25d3e76acb1bae39e628b8a679491baa
+PODFILE CHECKSUM: 19fc3c8c5b57454c416c7e16986dc7dd8aa66d48
 
 COCOAPODS: 1.8.1

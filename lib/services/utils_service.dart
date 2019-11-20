@@ -39,7 +39,7 @@ class UtilsService {
       mimeType = await _getFileMimeTypeFromMagicHeaders(file);
     }
 
-    return mimeType;
+    return mimeType ?? 'application/octet-stream';
   }
 
   // LocalizationService localizationService

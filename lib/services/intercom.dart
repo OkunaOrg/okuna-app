@@ -40,7 +40,7 @@ class IntercomService {
     assert(loggedInUser.uuid != null && loggedInUser.id != null);
 
     String userId = _makeUserId(loggedInUser);
-    return Intercom.registerIdentifiedUser(userId);
+    return Intercom.registerIdentifiedUser(userId: userId);
   }
 
   Future disableIntercom() {
