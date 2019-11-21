@@ -62,8 +62,8 @@ class OBSubscribeCommunityTileState extends State<OBSubscribeCommunityTile> {
           enabled: !_requestInProgress,
           leading: OBIcon(isSubscribed ? OBIcons.notifications_off : OBIcons.notifications),
           title: OBText(isSubscribed
-              ? _localizationService.community__actions_unsubscribe_from_community_title
-              : _localizationService.community__actions_subscribe_to_community_title),
+              ? _localizationService.community__actions_disable_new_post_notifications_title
+              : _localizationService.community__actions_enable_new_post_notifications_title),
           subtitle: isSubscribed ? widget.unsubscribeSubtitle : widget.subscribeSubtitle,
           onTap: isSubscribed ? _unsubscribeCommunity : _subscribeCommunity,
         );
@@ -75,7 +75,7 @@ class OBSubscribeCommunityTileState extends State<OBSubscribeCommunityTile> {
     _setRequestInProgress(true);
     try {
       await _userService.subscribeToCommunity(widget.community);
-      _toastService.success(message: _localizationService.community__actions_subscribe_to_community_success, context: context);
+      _toastService.success(message: _localizationService.community__actions_enable_new_post_notifications_success, context: context);
     } catch(e) {
       _onError(e);
     } finally {
@@ -88,7 +88,7 @@ class OBSubscribeCommunityTileState extends State<OBSubscribeCommunityTile> {
     _setRequestInProgress(true);
     try {
       await _userService.unsubscribeToCommunity(widget.community);
-      _toastService.success(message: _localizationService.community__actions_unsubscribe_from_community_success, context: context);
+      _toastService.success(message: _localizationService.community__actions_disable_new_post_notifications_success, context: context);
     } catch(e) {
       _onError(e);
     } finally {

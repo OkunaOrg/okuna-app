@@ -60,9 +60,7 @@ class OBUserNewPostNotificationTile extends StatelessWidget {
       title: OBNotificationTileTitle(
         onUsernamePressed: navigateToCreatorProfile,
         user: userNewPostNotification.post.creator,
-        text: post.isEncircledPost() ? 
-        TextSpan(text: _localizationService.notifications__user_new_post_circle_tile) : 
-        TextSpan(text: _localizationService.notifications__user_new_post_world_tile),
+        text: TextSpan(text: _localizationService.notifications__user_new_post_tile),
       ),
       trailing: postImagePreview,
       subtitle: OBSecondaryText(

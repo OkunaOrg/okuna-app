@@ -62,13 +62,13 @@ class OBProfileActionMore extends StatelessWidget {
                 // Bottom sheet
                 Navigator.pop(context);
                 openbookProvider.toastService
-                    .success(message: localizationService.user__profile_action_user_subscribed, context: context);
+                    .success(message: localizationService.user__profile_action_user_post_notifications_enabled, context: context);
               },
               onUnsubscribedUser: () {
                 // Bottom sheet
                 Navigator.pop(context);
                 openbookProvider.toastService
-                    .success(message: localizationService.user__profile_action_user_unsubscribed, context: context);
+                    .success(message: localizationService.user__profile_action_user_post_notifications_disabled, context: context);
               },
             ));
 

@@ -9,7 +9,6 @@ import 'package:Okuna/pages/home/pages/profile/widgets/profile_card/widgets/prof
 import 'package:Okuna/pages/home/pages/profile/widgets/profile_card/widgets/profile_details/profile_details.dart';
 import 'package:Okuna/pages/home/pages/profile/widgets/profile_card/widgets/profile_in_lists.dart';
 import 'package:Okuna/pages/home/pages/profile/widgets/profile_card/widgets/profile_name.dart';
-import 'package:Okuna/pages/home/pages/profile/widgets/profile_card/widgets/profile_subscribed.dart';
 import 'package:Okuna/pages/home/pages/profile/widgets/profile_card/widgets/profile_username.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/toast.dart';
@@ -61,7 +60,6 @@ class OBProfileCard extends StatelessWidget {
                   OBProfileDetails(user),
                   OBProfileCounts(user),
                   OBProfileConnectedIn(user),
-                  OBProfileSubscribed(user),
                   OBProfileConnectionRequest(user),
                   OBProfileInLists(user)
                 ],

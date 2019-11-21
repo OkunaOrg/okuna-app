@@ -1297,24 +1297,6 @@ class LocalizationService {
         name: 'community__moderated_communities');
   }
 
-  String get community__subscribed_title {
-    return Intl.message("Subscribed", name: 'community__subscribed_title');
-  }
-
-  String get community__subscribed_community {
-    return Intl.message("joined community",
-        desc:
-            'Currently unsused, reserved for potential use. Could be used as Showing 1 subscribed community',
-        name: 'community__subscribed_community');
-  }
-
-  String get community__subscribed_communities {
-    return Intl.message("subscribed communities",
-        desc:
-        'Egs. Search subscribed communities',
-        name: 'community__subscribed_communities');
-  }
-
   String get community__joined_title {
     return Intl.message("Joined", name: 'community__joined_title');
   }
@@ -1543,24 +1525,24 @@ class LocalizationService {
         name: 'community__actions_invite_people_title');
   }
 
-  String get community__actions_subscribe_to_community_title {
-    return Intl.message("Subscribe to community posts",
-        name: 'community__actions_subscribe_to_community_title');
+  String get community__actions_enable_new_post_notifications_title {
+    return Intl.message("Enable new post notifications",
+        name: 'community__actions_enable_new_post_notifications_title');
   }
 
-  String get community__actions_subscribe_to_community_success {
-    return Intl.message("You're now subscribed to this community",
-        name: 'community__actions_subscribe_to_community_success');
+  String get community__actions_enable_new_post_notifications_success {
+    return Intl.message("You'll now get new post notifications",
+        name: 'community__actions_enable_new_post_notifications_success');
   }
 
-  String get community__actions_unsubscribe_from_community_title {
-    return Intl.message("Unsubscribe from community posts",
-        name: 'community__actions_unsubscribe_from_community_title');
+  String get community__actions_disable_new_post_notifications_title {
+    return Intl.message("Disable new post notifications",
+        name: 'community__actions_disable_new_post_notifications_title');
   }
 
-  String get community__actions_unsubscribe_from_community_success {
-    return Intl.message("You're now unsubscribed from this community",
-        name: 'community__actions_unsubscribe_from_community_success');
+  String get community__actions_disable_new_post_notifications_success {
+    return Intl.message("Successfully disabled notifications",
+        name: 'community__actions_disable_new_post_notifications_success');
   }
 
   String get community__join_community {
@@ -2344,19 +2326,14 @@ class LocalizationService {
         name: 'user__profile_action_user_unblocked');
   }
 
-  String get user__profile_action_user_subscribed {
-    return Intl.message("User subscribed",
-        name: 'user__profile_action_user_subscribed');
+  String get user__profile_action_user_post_notifications_enabled {
+    return Intl.message("New post notifications enabled",
+        name: 'user__profile_action_user_post_notifications_enabled');
   }
 
-  String get user__profile_action_user_unsubscribed {
-    return Intl.message("User unsubscribed",
-        name: 'user__profile_action_user_unsubscribed');
-  }
-
-  String get user__profile_subscribed {
-    return Intl.message("Subscribed",
-        name: 'user__profile_subscribed');
+  String get user__profile_action_user_post_notifications_disabled {
+    return Intl.message("New post notifications disabled",
+        name: 'user__profile_action_user_post_notifications_disabled');
   }
 
   String get user__profile_in_circles {
@@ -3188,12 +3165,12 @@ class LocalizationService {
     return Intl.message("Unblock user", name: 'user__unblock_user');
   }
 
-  String get user__subscribe_user {
-    return Intl.message("Subscribe to user", name: 'user__subscribe_user');
+  String get user__enable_new_post_notifications {
+    return Intl.message("Enable new post notifications", name: 'user__enable_new_post_notifications');
   }
 
-  String get user__unsubscribe_user {
-    return Intl.message("Unsubscribe from user", name: 'user__unsubscribe_user');
+  String get user__disable_new_post_notifications {
+    return Intl.message("Disable new post notifications", name: 'user__disable_new_post_notifications');
   }
 
   String user__disconnect_from_user(String userName) {
@@ -3806,16 +3783,10 @@ class LocalizationService {
         name: 'notifications__mentioned_in_post_tile');
   }
 
-  String get notifications__user_new_post_world_tile {
-    return Intl.message("[name] [username] posted to World.",
-        desc: "Eg.: James @jamest mentioned you on a post.",
-        name: 'notifications__user_new_post_world_tile');
-  }
-
-  String get notifications__user_new_post_circle_tile {
-    return Intl.message("[name] [username] posted to a circle.",
-        desc: "Eg.: James @jamest mentioned you on a post.",
-        name: 'notifications__user_new_post_circle_tile');
+  String get notifications__user_new_post_tile {
+    return Intl.message("[name] [username] posted something.",
+        desc: "Eg.: James @jamest posted something.",
+        name: 'notifications__user_new_post_tile');
   }
 
   String get contextual_account_search_box__suggestions {

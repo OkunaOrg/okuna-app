@@ -27,7 +27,6 @@ class OBMyCommunitiesState extends State<OBMyCommunities>
     with AutomaticKeepAliveClientMixin {
   OBMyCommunitiesGroupController _favoriteCommunitiesGroupController;
   OBMyCommunitiesGroupController _joinedCommunitiesGroupController;
-  OBMyCommunitiesGroupController _subscribedCommunitiesGroupController;
   OBMyCommunitiesGroupController _moderatedCommunitiesGroupController;
   OBMyCommunitiesGroupController _administratedCommunitiesGroupController;
   NavigationService _navigationService;
@@ -42,7 +41,6 @@ class OBMyCommunitiesState extends State<OBMyCommunities>
     super.initState();
     _favoriteCommunitiesGroupController = OBMyCommunitiesGroupController();
     _joinedCommunitiesGroupController = OBMyCommunitiesGroupController();
-    _subscribedCommunitiesGroupController = OBMyCommunitiesGroupController();
     _moderatedCommunitiesGroupController = OBMyCommunitiesGroupController();
     _administratedCommunitiesGroupController = OBMyCommunitiesGroupController();
     _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
@@ -130,19 +128,6 @@ class OBMyCommunitiesState extends State<OBMyCommunities>
                   communityGroupListOnScrollLoader: _loadMoreJoinedCommunities,
                   noGroupItemsFallbackBuilder:
                       _buildNoJoinedCommunitiesFallback,
-                ),
-                OBMyCommunitiesGroup(
-                  key: Key('SubscribedCommunitiesGroup'),
-                  controller: _subscribedCommunitiesGroupController,
-                  title: _localizationService.community__subscribed_title,
-                  groupName: _localizationService.community__subscribed_communities,
-                  groupItemName: _localizationService.community__subscribed_community,
-                  maxGroupListPreviewItems: 5,
-                  communityGroupListSearcher: _searchSubscribedCommunities,
-                  communitySearchResultListItemBuilder: _buildSubscribedCommunityListItem,
-                  communityGroupListItemBuilder: _buildSubscribedCommunityListItem,
-                  communityGroupListRefresher: _refreshSubscribedCommunities,
-                  communityGroupListOnScrollLoader: _loadMoreSubscribedCommunities,
                 )
               ],
             )
@@ -163,21 +148,6 @@ class OBMyCommunitiesState extends State<OBMyCommunities>
     CommunitiesList moreJoinedCommunitiesList =
         await _userService.getJoinedCommunities(offset: offset);
     return moreJoinedCommunitiesList.communities;
-  }
-
-  Future<List<Community>> _refreshSubscribedCommunities() async {
-    CommunitiesList subscribedCommunitiesList =
-        await _userService.getSubscribedCommunities();
-    return subscribedCommunitiesList.communities;
-  }
-
-  Future<List<Community>> _loadMoreSubscribedCommunities(
-      List<Community> currentSubscribedCommunities) async {
-    int offset = currentSubscribedCommunities.length;
-
-    CommunitiesList moreSubscribedCommunitiesList =
-        await _userService.getSubscribedCommunities(offset: offset);
-    return moreSubscribedCommunitiesList.communities;
   }
 
   Future<List<Community>> _refreshFavoriteCommunities() async {
@@ -239,22 +209,6 @@ class OBMyCommunitiesState extends State<OBMyCommunities>
   }
 
   Widget _buildJoinedCommunityListItem(
-      BuildContext context, Community community) {
-    return StreamBuilder(
-      stream: community.updateSubject,
-      initialData: community,
-      builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
-        Community latestCommunity = snapshot.data;
-
-        User loggedInUser = _userService.getLoggedInUser();
-        return latestCommunity.isMember(loggedInUser)
-            ? _buildCommunityListItem(community)
-            : const SizedBox();
-      },
-    );
-  }
-
-  Widget _buildSubscribedCommunityListItem(
       BuildContext context, Community community) {
     return StreamBuilder(
       stream: community.updateSubject,
@@ -337,12 +291,6 @@ class OBMyCommunitiesState extends State<OBMyCommunities>
 
   Future<List<Community>> _searchJoinedCommunities(String query) async {
     CommunitiesList results = await _userService.searchJoinedCommunities(query: query);
-
-    return results.communities;
-  }
-
-  Future<List<Community>> _searchSubscribedCommunities(String query) async {
-    CommunitiesList results = await _userService.searchSubscribedCommunities(query: query);
 
     return results.communities;
   }

@@ -58,8 +58,8 @@ class OBSubscribeToUserTileState extends State<OBSubscribeToUserTile> {
           isLoading: _requestInProgress,
           leading: OBIcon(isSubscribed ? OBIcons.notifications_off : OBIcons.notifications),
           title: OBText(isSubscribed
-              ? _localizationService.user__unsubscribe_user
-              : _localizationService.user__subscribe_user),
+              ? _localizationService.user__disable_new_post_notifications
+              : _localizationService.user__enable_new_post_notifications),
           onTap: isSubscribed ? _unsubscribeUser : _susbcribeUser,
         );
       },
