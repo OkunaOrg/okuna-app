@@ -63,7 +63,6 @@ class User extends UpdatableModel<User> {
 
     User user = navigationUsersFactory.getItemWithIdFromCache(userId) ??
         sessionUsersFactory.getItemWithIdFromCache(userId);
-
     if (user != null) {
       user.update(json);
       return user;
@@ -617,6 +616,7 @@ class UserFactory extends UpdatableModelFactory<User> {
         language: parseLanguage(json['language']),
         followingCount: json['following_count'],
         isFollowing: json['is_following'],
+        isSubscribed: json['is_subscribed'],
         isConnected: json['is_connected'],
         isGlobalModerator: json['is_global_moderator'],
         isBlocked: json['is_blocked'],
