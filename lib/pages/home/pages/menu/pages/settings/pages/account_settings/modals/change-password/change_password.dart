@@ -169,7 +169,7 @@ class OBChangePasswordModalState extends State<OBChangePasswordModal> {
       _toastService.error(
           message: error.toHumanReadableMessage(), context: context);
     } else if (error is HttpieRequestError) {
-      HttpieResponse response = error.response;
+      HttpieBaseResponse response = error.response;
       if (response.isUnauthorized()) {
         // Meaning password didnt match
         _setIsPasswordValid(false);
