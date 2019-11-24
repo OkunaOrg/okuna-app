@@ -5,7 +5,6 @@ import 'package:Okuna/pages/auth/create_account/create_account.dart';
 import 'package:Okuna/pages/auth/create_account/done_step/done_step.dart';
 import 'package:Okuna/pages/auth/create_account/email_step.dart';
 import 'package:Okuna/pages/auth/create_account/guidelines_step.dart';
-import 'package:Okuna/pages/auth/create_account/register_token_invalid.dart';
 import 'package:Okuna/pages/auth/create_account/suggested_communities/suggested_communities.dart';
 import 'package:Okuna/pages/auth/create_account/username_step.dart';
 import 'package:Okuna/pages/auth/reset_password/forgot_password_step.dart';
@@ -158,10 +157,6 @@ class _MyAppState extends State<MyApp> {
               '/auth/token': (BuildContext context) {
                 bootstrapOpenbookProviderInContext(context);
                 return OBAuthCreateAccountPage();
-              },
-              '/auth/invalid_token': (BuildContext context) {
-                bootstrapOpenbookProviderInContext(context);
-                return OBAuthRegisterTokenInvalidPage();
               },
               '/auth/get-started': (BuildContext context) {
                 bootstrapOpenbookProviderInContext(context);

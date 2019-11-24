@@ -115,9 +115,9 @@ class LocalizationService {
         name: 'auth__create_acc__welcome_to_beta');
   }
 
-  String get auth__create_acc__invalid_token_title {
-    return Intl.message("Oops!",
-        name: 'auth__create_acc__invalid_token_title');
+  String get auth__create_acc__invalid_token {
+    return Intl.message("Invalid token",
+        name: 'auth__create_acc__invalid_token');
   }
 
   String get auth__create_acc__validating_token {
@@ -160,7 +160,7 @@ class LocalizationService {
   }
 
   String get auth__create_acc__link_invalid_error {
-    return Intl.message("This link appears to be invalid.",
+    return Intl.message("This link is invalid.",
         name: 'auth__create_acc__link_invalid_error');
   }
 

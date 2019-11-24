@@ -274,29 +274,6 @@ class CreateAccountBloc {
 
   //Password Reset Token ends
 
-  Future<bool> isTokenValid() async {
-    bool isTokenValid = false;
-    try {
-      HttpieResponse response =
-      await _authApiService.verifyRegisterToken(token: userRegistrationData.token);
-
-      if (!response.isAccepted()) throw HttpieRequestError(response);
-      isTokenValid = true;
-    } catch (error) {
-      if (error is HttpieConnectionRefusedError) {
-        _onTokenValidationError(error.toHumanReadableMessage());
-      } else if (error is HttpieRequestError) {
-        String errorMessage = await error.toHumanReadableMessage();
-        _onTokenValidationError(errorMessage);
-      } else {
-        _onTokenValidationError('Unknown error');
-        rethrow;
-      }
-    }
-
-    return isTokenValid;
-  }
-
   Future<bool> createAccount() async {
     _clearCreateAccount();
 
