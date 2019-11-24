@@ -2,10 +2,11 @@ import 'dart:io';
 
 import 'package:Okuna/delegates/localization_delegate.dart';
 import 'package:Okuna/pages/auth/create_account/create_account.dart';
-import 'package:Okuna/pages/auth/create_account/done_step.dart';
+import 'package:Okuna/pages/auth/create_account/done_step/done_step.dart';
 import 'package:Okuna/pages/auth/create_account/email_step.dart';
 import 'package:Okuna/pages/auth/create_account/guidelines_step.dart';
 import 'package:Okuna/pages/auth/create_account/register_token_invalid.dart';
+import 'package:Okuna/pages/auth/create_account/suggested_communities/suggested_communities.dart';
 import 'package:Okuna/pages/auth/create_account/username_step.dart';
 import 'package:Okuna/pages/auth/reset_password/forgot_password_step.dart';
 import 'package:Okuna/pages/auth/create_account/get_started.dart';
@@ -197,6 +198,10 @@ class _MyAppState extends State<MyApp> {
               '/auth/done_step': (BuildContext context) {
                 bootstrapOpenbookProviderInContext(context);
                 return OBAuthDonePage();
+              },
+              '/auth/suggested_communities': (BuildContext context) {
+                bootstrapOpenbookProviderInContext(context);
+                return OBSuggestedCommunitiesPage();
               },
               '/auth/login': (BuildContext context) {
                 bootstrapOpenbookProviderInContext(context);

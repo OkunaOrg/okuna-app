@@ -1,17 +1,18 @@
 import 'package:Okuna/models/communities_list.dart';
 import 'package:Okuna/models/community.dart';
-import 'package:Okuna/pages/home/pages/communities/widgets/suggested_communities/widgets/selectable_community_tile.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/user.dart';
-import 'package:Okuna/widgets/theming/text.dart';
+import 'package:Okuna/widgets/buttons/actions/join_community_button.dart';
+import 'package:Okuna/widgets/tiles/community_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class OBSuggestedCommunities extends StatefulWidget {
-  final OnCommunitySelectionInProgress onCommunitySelectionInProgress;
-  const OBSuggestedCommunities({this.onCommunitySelectionInProgress});
+  final VoidCallback onNoSuggestions;
+
+  const OBSuggestedCommunities({this.onNoSuggestions});
 
   @override
   OBSuggestedCommunitiesState createState() {
@@ -26,8 +27,6 @@ class OBSuggestedCommunitiesState extends State<OBSuggestedCommunities>
   ToastService _toastService;
   LocalizationService _localizationService;
   List<Community> _suggestedCommunities;
-  List<Community> _selectedCommunities;
-  List<Community> _requestInProgressCommunities;
   bool _requestInProgress;
 
   @override
@@ -35,8 +34,6 @@ class OBSuggestedCommunitiesState extends State<OBSuggestedCommunities>
     super.initState();
     _needsBootstrap = true;
     _suggestedCommunities = [];
-    _selectedCommunities = [];
-    _requestInProgressCommunities = [];
     _requestInProgress = false;
   }
 
@@ -51,27 +48,29 @@ class OBSuggestedCommunitiesState extends State<OBSuggestedCommunities>
       _needsBootstrap = false;
     }
 
-    return ListView(
-        shrinkWrap: true,
-        padding: EdgeInsets.all(0),
-        children: <Widget>[
-          _suggestedCommunities.isEmpty && !_requestInProgress
-              ? const CircularProgressIndicator()
-              : _buildSuggestedCommunities()
-        ],
-      );
+    return _suggestedCommunities.isEmpty
+        ? _requestInProgress ? _buildProgressIndicator() : const SizedBox()
+        : _buildSuggestedCommunities();
+  }
+
+  Widget _buildProgressIndicator() {
+    return Column(
+      children: <Widget>[
+        Row(
+          children: <Widget>[
+            Center(
+              child: const CircularProgressIndicator(),
+            )
+          ],
+        )
+      ],
+    );
   }
 
   Widget _buildSuggestedCommunities() {
-
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        OBText(_localizationService.community__suggested_desc,
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 18, color: Colors.black,),
-        ),
-        const SizedBox(height: 10.0),
         ListView.separated(
             physics: const NeverScrollableScrollPhysics(),
             separatorBuilder: _buildCommunitySeparator,
@@ -85,54 +84,14 @@ class OBSuggestedCommunitiesState extends State<OBSuggestedCommunities>
 
   Widget _buildCommunity(BuildContext context, index) {
     Community community = _suggestedCommunities[index];
-    return OBSelectableCommunityTile(
+
+    //bool communityIsJoined = _selectedCommunities?.contains(community);
+
+    return OBCommunityTile(
       community,
-      isDisabled: _requestInProgressCommunities?.contains(community),
-      isSelected: _selectedCommunities?.contains(community),
-      onCommunityPressed: (Community selectedCommunity) {
-        if (_selectedCommunities.contains(community)) {
-          _leaveCommunity(community);
-        } else {
-          _joinCommunity(community);
-        }
-      },
+      size: OBCommunityTileSize.normal,
+      trailing: OBJoinCommunityButton(community, communityThemed: false,),
     );
-  }
-
-  void _addCommunityToSelectedCommunities(Community community) {
-    setState(() {
-      _selectedCommunities.add(community);
-    });
-  }
-
-  void _removeCommunityFromSelectedCommunities(Community community) {
-    setState(() {
-      _selectedCommunities.remove(community);
-    });
-  }
-
-  void _joinCommunity(Community community) async {
-    _setRequestInProgressForCommunity(community);
-    try {
-      await _userService.joinCommunity(community);
-      _addCommunityToSelectedCommunities(community);
-    } catch (error) {
-      _onError(error);
-    } finally {
-      _removeRequestInProgressForCommunity(community);
-    }
-  }
-
-  void _leaveCommunity(Community community) async {
-    _setRequestInProgressForCommunity(community);
-    try {
-      await _userService.leaveCommunity(community);
-      _removeCommunityFromSelectedCommunities(community);
-    } catch (error) {
-      _onError(error);
-    } finally {
-      _removeRequestInProgressForCommunity(community);
-    }
   }
 
   Widget _buildCommunitySeparator(BuildContext context, int index) {
@@ -152,6 +111,8 @@ class OBSuggestedCommunitiesState extends State<OBSuggestedCommunities>
       CommunitiesList suggestedCommunitiesList =
       await _userService.getSuggestedCommunities();
       _setSuggestedCommunities(suggestedCommunitiesList.communities);
+      if (widget.onNoSuggestions != null &&
+          suggestedCommunitiesList.communities.isEmpty) widget.onNoSuggestions();
     } catch (error) {
       _onError(error);
     } finally {
@@ -185,23 +146,6 @@ class OBSuggestedCommunitiesState extends State<OBSuggestedCommunities>
     });
   }
 
-  void _setRequestInProgressForCommunity(Community community) {
-    if (widget.onCommunitySelectionInProgress != null) widget.onCommunitySelectionInProgress(true);
-    setState(() {
-      _requestInProgressCommunities.add(community);
-    });
-  }
-
-  void _removeRequestInProgressForCommunity(Community community) {
-    if (widget.onCommunitySelectionInProgress != null) widget.onCommunitySelectionInProgress(false);
-    setState(() {
-      _requestInProgressCommunities.remove(community);
-    });
-  }
-
   @override
   bool get wantKeepAlive => true;
 }
-
-
-typedef void OnCommunitySelectionInProgress(bool isInProgress);

@@ -394,8 +394,13 @@ class LocalizationService {
   }
 
   String get auth__create_acc__done_created {
-    return Intl.message("Your account has been created with username ",
+    return Intl.message("Your account has been created.",
         name: 'auth__create_acc__done_created');
+  }
+
+  String get auth__create_acc__suggested_communities {
+    return Intl.message("🥳 Get started by joining the following communities.",
+        name: 'auth__create_acc__suggested_communities');
   }
 
   String get auth__create_acc__submit_loading_title {
@@ -1320,16 +1325,6 @@ class LocalizationService {
   String community__trending_in_category(String categoryName) {
     return Intl.message("Trending in $categoryName",
         args: [categoryName], name: 'community__trending_in_category');
-  }
-
-  String get community__suggested_title {
-    return Intl.message("Recommended communities",
-        name: 'community__suggested_title');
-  }
-
-  String get community__suggested_desc {
-    return Intl.message("Some communities we highly recommend to get you started",
-        name: 'community__suggested_desc');
   }
 
   String get community__communities_title {

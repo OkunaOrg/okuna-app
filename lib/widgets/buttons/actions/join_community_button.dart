@@ -5,13 +5,15 @@ import 'package:Okuna/services/httpie.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/user.dart';
+import 'package:Okuna/widgets/buttons/button.dart';
 import 'package:Okuna/widgets/buttons/community_button.dart';
 import 'package:flutter/material.dart';
 
 class OBJoinCommunityButton extends StatefulWidget {
   final Community community;
+  final bool communityThemed;
 
-  OBJoinCommunityButton(this.community);
+  OBJoinCommunityButton(this.community, {this.communityThemed = true});
 
   @override
   OBJoinCommunityButtonState createState() {
@@ -57,12 +59,22 @@ class OBJoinCommunityButtonState extends State<OBJoinCommunityButton> {
         if (community.type == CommunityType.private && !isMember && !isInvited)
           return SizedBox();
 
-        return OBCommunityButton(
-          community: community,
-          text: isMember ? _localizationService.community__leave_community : _localizationService.community__join_community,
-          isLoading: _requestInProgress,
-          onPressed: isMember ? _leaveCommunity : _joinCommunity,
-        );
+        return widget.communityThemed
+            ? OBCommunityButton(
+                community: community,
+                text: isMember
+                    ? _localizationService.community__leave_community
+                    : _localizationService.community__join_community,
+                isLoading: _requestInProgress,
+                onPressed: isMember ? _leaveCommunity : _joinCommunity,
+              )
+            : OBButton(
+                child: Text(isMember
+                    ? _localizationService.community__leave_community
+                    : _localizationService.community__join_community),
+                isLoading: _requestInProgress,
+                onPressed: isMember ? _leaveCommunity : _joinCommunity,
+              );
       },
     );
   }
@@ -99,7 +111,8 @@ class OBJoinCommunityButtonState extends State<OBJoinCommunityButton> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: _localizationService.error__unknown_error, context: context);
+      _toastService.error(
+          message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }
