@@ -47,7 +47,7 @@ class OBAuthLegalAgeStepPageState extends State<OBAuthLegalAgeStepPage> {
                   ],
                 ))),
       ),
-      backgroundColor: Color(0xFFFF4A6B),
+      backgroundColor: Color(0xFF4B0082),
       bottomNavigationBar: BottomAppBar(
         color: Colors.transparent,
         elevation: 0.0,

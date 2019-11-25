@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 class OBAuthDonePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return OBAuthDonePageState();
   }
 }
@@ -16,6 +15,7 @@ class OBAuthDonePage extends StatefulWidget {
 class OBAuthDonePageState extends State<OBAuthDonePage> {
   LocalizationService localizationService;
   CreateAccountBloc createAccountBloc;
+  bool _isCommunitySelectionInProgress = false;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class OBAuthDonePageState extends State<OBAuthDonePage> {
                     Colors.white.withOpacity(0.1), BlendMode.dstATop),
                 image: new AssetImage('assets/images/confetti-background.gif'),
                 fit: BoxFit.cover)),
-        padding: EdgeInsets.symmetric(horizontal: 40.0),
+        padding: EdgeInsets.symmetric(horizontal: 20.0),
         child: Center(child: SingleChildScrollView(child: _buildHooray())),
       ),
       bottomNavigationBar: _buildBottomBar(),
@@ -43,28 +43,33 @@ class OBAuthDonePageState extends State<OBAuthDonePage> {
       color: Colors.transparent,
       elevation: 0.0,
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Expanded(
-              child: _buildNextButton(context: context),
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Expanded(
+                  child: _buildContinueButton(context: context),
+                ),
+              ],
             ),
           ],
-        ),
+        )
       ),
     );
   }
 
   Widget _buildHooray() {
-    String title = localizationService.trans('auth__create_acc__done_title');
-    String usernameSubtext = localizationService.trans('auth__create_acc__done_subtext');
-    String accCreated = localizationService.trans('auth__create_acc__done_created');
-
-    String username = createAccountBloc.getUsername();
+    String title = localizationService.auth__create_acc__done_title;
+    String accCreated = localizationService.auth__create_acc__done_created;
+    accCreated = 'Your acount has been created.';
 
     return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         Text(
           '🐣‍',
@@ -81,42 +86,36 @@ class OBAuthDonePageState extends State<OBAuthDonePage> {
               //color: Colors.white
             )),
         const SizedBox(
-          height: 20.0,
+          height: 10.0,
         ),
         RichText(
           textAlign: TextAlign.center,
           text: TextSpan(
               style: TextStyle(
-                fontSize: 18.0,
+                fontSize: 20.0,
                 color: Colors.black,
               ),
               children: [
                 TextSpan(text: accCreated),
-                TextSpan(
-                    text: '@$username',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
-                TextSpan(text: '.')
               ]),
         ),
-        const SizedBox(
-          height: 20.0,
-        ),
-        Text(usernameSubtext,
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 16
-                //color: Colors.white
-                )),
       ],
     );
   }
 
-  Widget _buildNextButton({@required BuildContext context}) {
-    String buttonText =
-        localizationService.trans('auth__create_acc__done_continue');
+  void onCommunitySelectionInProgress(bool isCommunitySelectionInProgress) {
+    setState(() {
+      _isCommunitySelectionInProgress = isCommunitySelectionInProgress;
+    });
+  }
+
+  Widget _buildContinueButton({@required BuildContext context}) {
+    String buttonText = localizationService.auth__login__login;
 
     return OBSuccessButton(
       minWidth: double.infinity,
       size: OBButtonSize.large,
+      isDisabled: _isCommunitySelectionInProgress,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -127,8 +126,7 @@ class OBAuthDonePageState extends State<OBAuthDonePage> {
         ],
       ),
       onPressed: () {
-        Navigator.popUntil(context, ModalRoute.withName('/auth/get-started'));
-        Navigator.pushReplacementNamed(context, '/');
+        Navigator.pushNamed(context, '/auth/suggested_communities');
       },
     );
   }

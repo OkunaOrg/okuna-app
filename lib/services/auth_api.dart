@@ -20,6 +20,7 @@ class AuthApiService {
   static const GET_NEW_LANGUAGE = 'api/auth/user/languages/';
   static const UPDATE_PASSWORD_PATH = 'api/auth/user/settings/';
   static const CREATE_ACCOUNT_PATH = 'api/auth/register/';
+  static const VERIFY_REGISTER_TOKEN = 'api/auth/register/verify-token/';
   static const DELETE_ACCOUNT_PATH = 'api/auth/user/delete/';
   static const GET_AUTHENTICATED_USER_PATH = 'api/auth/user/';
   static const UPDATE_AUTHENTICATED_USER_PATH = 'api/auth/user/';
@@ -142,6 +143,7 @@ class AuthApiService {
       {@required String email,
       @required String token,
       @required String name,
+      @required String username,
       @required bool isOfLegalAge,
       @required bool areGuidelinesAccepted,
       @required String password,
@@ -150,6 +152,7 @@ class AuthApiService {
       'email': email,
       'token': token,
       'name': name,
+      'username': username,
       'is_of_legal_age': isOfLegalAge,
       'are_guidelines_accepted': areGuidelinesAccepted,
       'password': password
@@ -160,6 +163,14 @@ class AuthApiService {
     }
 
     return _httpService.postMultiform('$apiURL$CREATE_ACCOUNT_PATH',
+        body: body);
+  }
+
+  Future<HttpieResponse> verifyRegisterToken(
+      {@required String token}) {
+    Map<String, dynamic> body = {'token': token};
+
+    return _httpService.post('$apiURL$VERIFY_REGISTER_TOKEN',
         body: body);
   }
 

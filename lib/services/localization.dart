@@ -115,6 +115,16 @@ class LocalizationService {
         name: 'auth__create_acc__welcome_to_beta');
   }
 
+  String get auth__create_acc__invalid_token {
+    return Intl.message("Invalid token",
+        name: 'auth__create_acc__invalid_token');
+  }
+
+  String get auth__create_acc__validating_token {
+    return Intl.message("Validating token...",
+        name: 'auth__create_acc__validating_token');
+  }
+
   String get auth__create_acc__previous {
     return Intl.message("Back", name: 'auth__create_acc__previous');
   }
@@ -150,7 +160,7 @@ class LocalizationService {
   }
 
   String get auth__create_acc__link_invalid_error {
-    return Intl.message("This link appears to be invalid.",
+    return Intl.message("This link is invalid.",
         name: 'auth__create_acc__link_invalid_error');
   }
 
@@ -384,8 +394,13 @@ class LocalizationService {
   }
 
   String get auth__create_acc__done_created {
-    return Intl.message("Your account has been created with username ",
+    return Intl.message("Your account has been created.",
         name: 'auth__create_acc__done_created');
+  }
+
+  String get auth__create_acc__suggested_communities {
+    return Intl.message("🥳 Get started by joining the following communities.",
+        name: 'auth__create_acc__suggested_communities');
   }
 
   String get auth__create_acc__submit_loading_title {

@@ -12,6 +12,7 @@ class CommunitiesApiService {
 
   static const SEARCH_COMMUNITIES_PATH = 'api/communities/search/';
   static const GET_TRENDING_COMMUNITIES_PATH = 'api/communities/trending/';
+  static const GET_SUGGESTED_COMMUNITIES_PATH = 'api/communities/suggested/';
   static const GET_JOINED_COMMUNITIES_PATH = 'api/communities/joined/';
   static const SEARCH_JOINED_COMMUNITIES_PATH =
       'api/communities/joined/search/';
@@ -109,6 +110,13 @@ class CommunitiesApiService {
 
     return _httpService.get('$apiURL$GET_TRENDING_COMMUNITIES_PATH',
         queryParameters: queryParams,
+        appendAuthorizationToken: authenticatedRequest);
+  }
+
+  Future<HttpieResponse> getSuggestedCommunities(
+      {bool authenticatedRequest = true}) {
+
+    return _httpService.get('$apiURL$GET_SUGGESTED_COMMUNITIES_PATH',
         appendAuthorizationToken: authenticatedRequest);
   }
 

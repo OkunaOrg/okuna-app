@@ -97,7 +97,8 @@ class OBAuthTextField extends StatelessWidget {
         border: OutlineInputBorder(),
         filled: true,
         fillColor: Colors.white,
-        errorStyle: TextStyle(color: Colors.white)
+        errorStyle: TextStyle(color: Colors.white),
+        errorMaxLines: 2
       ),
       autofocus: autofocus,
     );

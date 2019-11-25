@@ -71,18 +71,23 @@ class OBChangePasswordModalState extends State<OBChangePasswordModal> {
                       obscureText: true,
                       controller: _currentPasswordController,
                       decoration: InputDecoration(
-                        labelText: _localizationService.auth__change_password_current_pwd,
-                        hintText: _localizationService.auth__change_password_current_pwd_hint,
+                        labelText: _localizationService
+                            .auth__change_password_current_pwd,
+                        hintText: _localizationService
+                            .auth__change_password_current_pwd_hint,
                       ),
                       validator: (String password) {
                         if (!_formWasSubmitted) return null;
                         if (_isPasswordValid != null && !_isPasswordValid) {
                           _setIsPasswordValid(true);
-                          return _localizationService.auth__change_password_current_pwd_incorrect;
+                          return _localizationService
+                              .auth__change_password_current_pwd_incorrect;
                         }
                         String validatePassword =
                             _validationService.validateUserPassword(password);
                         if (validatePassword != null) return validatePassword;
+
+                        return null;
                       },
                     ),
                     OBTextFormField(
@@ -91,13 +96,16 @@ class OBChangePasswordModalState extends State<OBChangePasswordModal> {
                       controller: _newPasswordController,
                       size: OBTextFormFieldSize.large,
                       decoration: InputDecoration(
-                          labelText: _localizationService.auth__change_password_new_pwd,
-                          hintText: _localizationService.auth__change_password_new_pwd_hint),
+                          labelText: _localizationService
+                              .auth__change_password_new_pwd,
+                          hintText: _localizationService
+                              .auth__change_password_new_pwd_hint),
                       validator: (String newPassword) {
                         if (!_formWasSubmitted) return null;
                         if (!_validationService
                             .isPasswordAllowedLength(newPassword)) {
-                          return _localizationService.auth__change_password_new_pwd_error;
+                          return _localizationService
+                              .auth__change_password_new_pwd_error;
                         }
                       },
                     ),
@@ -161,7 +169,7 @@ class OBChangePasswordModalState extends State<OBChangePasswordModal> {
       _toastService.error(
           message: error.toHumanReadableMessage(), context: context);
     } else if (error is HttpieRequestError) {
-      HttpieResponse response = error.response;
+      HttpieBaseResponse response = error.response;
       if (response.isUnauthorized()) {
         // Meaning password didnt match
         _setIsPasswordValid(false);
@@ -170,7 +178,8 @@ class OBChangePasswordModalState extends State<OBChangePasswordModal> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: _localizationService.error__unknown_error, context: context);
+      _toastService.error(
+          message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

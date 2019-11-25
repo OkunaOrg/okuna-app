@@ -177,6 +177,19 @@ class ValidationService {
     }
   }
 
+  Future<bool> isInviteTokenValid(String inviteToken) async {
+    HttpieResponse response =
+        await _authApiService.verifyRegisterToken(token: inviteToken);
+
+    if (response.isAccepted()) {
+      return true;
+    } else if (response.isBadRequest()) {
+      return false;
+    } else {
+      throw HttpieRequestError(response);
+    }
+  }
+
   Future<bool> isCommunityNameTaken(String name) async {
     HttpieResponse response =
         await _communitiesApiService.checkNameIsAvailable(name: name);

@@ -37,6 +37,11 @@ class CreateAccountBloc {
 
   final _createAccountErrorFeedbackSubject = ReplaySubject<String>();
 
+  Stream<String> get tokenValidationErrorFeedback =>
+      _tokenValidationErrorFeedbackSubject.stream;
+
+  final _tokenValidationErrorFeedbackSubject = ReplaySubject<String>();
+
   // Create account ends
 
   CreateAccountBloc() {
@@ -281,6 +286,7 @@ class CreateAccountBloc {
           email: userRegistrationData.email,
           isOfLegalAge: userRegistrationData.isOfLegalAge,
           name: userRegistrationData.name,
+          username: userRegistrationData.username,
           token: userRegistrationData.token,
           password: userRegistrationData.password,
           areGuidelinesAccepted: userRegistrationData.areGuidelinesAccepted,
@@ -312,9 +318,15 @@ class CreateAccountBloc {
     _clearToken();
   }
 
+  void _onTokenValidationError(String errorMessage) {
+    _tokenValidationErrorFeedbackSubject.add(errorMessage);
+    _clearToken();
+  }
+
   void _clearCreateAccount() {
     _createAccountInProgressSubject.add(null);
     _createAccountErrorFeedbackSubject.add(null);
+    _tokenValidationErrorFeedbackSubject.add(null);
   }
 
   void clearAll() {
