@@ -2303,6 +2303,14 @@ class LocalizationService {
     return Intl.message("Follow", name: 'user__follow_button_follow_text');
   }
 
+  String get user__follow_button_follow_back_text {
+    return Intl.message("Follow back", name: 'user__follow_button_follow_back_text');
+  }
+
+  String get user__follow_button_following_text {
+    return Intl.message("Following", name: 'user__follow_button_following_text');
+  }
+
   String get user__follow_button_unfollow_text {
     return Intl.message("Unfollow", name: 'user__follow_button_unfollow_text');
   }
