@@ -55,6 +55,7 @@ class OBAuthForgotPasswordPageState extends State<OBAuthForgotPasswordPage> {
     _userService = openbookProvider.userService;
 
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Center(
         child: SingleChildScrollView(
             child: Padding(

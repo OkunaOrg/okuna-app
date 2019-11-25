@@ -24,6 +24,7 @@ class OBAuthDonePageState extends State<OBAuthDonePage> {
     createAccountBloc = openbookProvider.createAccountBloc;
 
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Container(
         decoration: BoxDecoration(
             image: DecorationImage(
