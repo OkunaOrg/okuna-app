@@ -2,7 +2,6 @@ import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/post_comment.dart';
 import 'package:Okuna/models/post_comment_reaction.dart';
 import 'package:Okuna/models/theme.dart';
-import 'package:Okuna/models/user.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/bottom_sheet.dart';
 import 'package:Okuna/services/localization.dart';

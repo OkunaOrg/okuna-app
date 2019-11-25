@@ -126,6 +126,7 @@ class _MyAppState extends State<MyApp> {
               const CupertinoLocalizationSvSEDelegate(),
             ],
             theme: new ThemeData(
+                canvasColor: Colors.transparent,
                 buttonTheme: ButtonThemeData(
                     shape: new RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(2.0))),

@@ -1,6 +1,7 @@
 import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/user.dart';
 import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/bottom_sheet.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/modal_service.dart';
 import 'package:Okuna/services/toast.dart';
@@ -25,16 +26,15 @@ class OBPostActionsBottomSheet extends StatefulWidget {
   final Function onCommunityExcluded;
   final Function onUndoCommunityExcluded;
 
-  const OBPostActionsBottomSheet(
-      {Key key,
-      @required this.post,
-      @required this.onPostReported,
-      @required this.onPostDeleted,
-      this.onCommunityExcluded,
-      this.onUndoCommunityExcluded,
-      this.isTopPost = false,
-      })
-      : super(key: key);
+  const OBPostActionsBottomSheet({
+    Key key,
+    @required this.post,
+    @required this.onPostReported,
+    @required this.onPostDeleted,
+    this.onCommunityExcluded,
+    this.onUndoCommunityExcluded,
+    this.isTopPost = false,
+  }) : super(key: key);
 
   @override
   OBPostActionsBottomSheetState createState() {
@@ -47,6 +47,7 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
   ModalService _modalService;
   ToastService _toastService;
   LocalizationService _localizationService;
+  BottomSheetService _bottomSheetService;
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +56,7 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
     _modalService = openbookProvider.modalService;
     _toastService = openbookProvider.toastService;
     _localizationService = openbookProvider.localizationService;
+    _bottomSheetService = openbookProvider.bottomSheetService;
 
     User loggedInUser = _userService.getLoggedInUser();
 
@@ -109,7 +111,7 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
             postActions.add(ListTile(
               leading: const OBIcon(OBIcons.editPost),
               title: OBText(
-               _localizationService.post__edit_title,
+                _localizationService.post__edit_title,
               ),
               onTap: _onWantsToEditPost,
             ));
@@ -142,14 +144,19 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
   }
 
   Future _onWantsToDeletePost() async {
-    try {
-      await _userService.deletePost(widget.post);
-      _toastService.success(message: _localizationService.post__actions_deleted, context: context);
-      widget.onPostDeleted(widget.post);
-      Navigator.pop(context);
-    } catch (error) {
-      _onError(error);
-    }
+    // Pop current
+    Navigator.pop(context);
+
+    _bottomSheetService.showConfirmAction(
+        context: context,
+        subtitle: _localizationService.post__actions_delete_description,
+        actionCompleter: (BuildContext context) async {
+          await _userService.deletePost(widget.post);
+          _toastService.success(
+              message: _localizationService.post__actions_deleted,
+              context: context);
+          widget.onPostDeleted(widget.post);
+        });
   }
 
   Future _onWantsToEditPost() async {
@@ -169,7 +176,8 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: _localizationService.error__unknown_error, context: context);
+      _toastService.error(
+          message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }
