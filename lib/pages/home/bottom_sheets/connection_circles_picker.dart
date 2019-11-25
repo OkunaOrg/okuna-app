@@ -1,12 +1,12 @@
 import 'package:Okuna/models/circle.dart';
 import 'package:Okuna/models/circles_list.dart';
+import 'package:Okuna/pages/home/bottom_sheets/rounded_bottom_sheet.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/modal_service.dart';
 import 'package:Okuna/services/user.dart';
 import 'package:Okuna/widgets/buttons/button.dart';
 import 'package:Okuna/widgets/circles_horizontal_list/circles_horizontal_list.dart';
 import 'package:Okuna/widgets/search_bar.dart';
-import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
@@ -64,8 +64,7 @@ class OBConnectionCirclesPickerBottomSheetState
       _needsBootstrap = false;
     }
 
-    return OBPrimaryColorContainer(
-      mainAxisSize: MainAxisSize.min,
+    return OBRoundedBottomSheet(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[

@@ -1,12 +1,12 @@
 import 'package:Okuna/models/community.dart';
 import 'package:Okuna/models/user.dart';
+import 'package:Okuna/pages/home/bottom_sheets/rounded_bottom_sheet.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/modal_service.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/user.dart';
 import 'package:Okuna/widgets/icon.dart';
-import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:Okuna/widgets/theming/text.dart';
 import 'package:Okuna/widgets/tiles/actions/favorite_community_tile.dart';
 import 'package:Okuna/widgets/tiles/actions/report_community_tile.dart';
@@ -76,8 +76,7 @@ class OBCommunityActionsBottomSheetState
       ));
     }
 
-    return OBPrimaryColorContainer(
-      mainAxisSize: MainAxisSize.min,
+    return OBRoundedBottomSheet(
       child: Column(
         children: communityActions,
         mainAxisSize: MainAxisSize.min,

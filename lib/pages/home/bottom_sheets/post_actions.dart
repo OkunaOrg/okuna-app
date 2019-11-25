@@ -1,5 +1,6 @@
 import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/user.dart';
+import 'package:Okuna/pages/home/bottom_sheets/rounded_bottom_sheet.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/bottom_sheet.dart';
 import 'package:Okuna/services/localization.dart';
@@ -8,7 +9,6 @@ import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/user.dart';
 import 'package:Okuna/services/httpie.dart';
 import 'package:Okuna/widgets/icon.dart';
-import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:Okuna/widgets/theming/text.dart';
 import 'package:Okuna/widgets/tiles/actions/close_post_tile.dart';
 import 'package:Okuna/widgets/tiles/actions/disable_comments_post_tile.dart';
@@ -133,8 +133,7 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
             ));
           }
 
-          return OBPrimaryColorContainer(
-            mainAxisSize: MainAxisSize.min,
+          return OBRoundedBottomSheet(
             child: Column(
               children: postActions,
               mainAxisSize: MainAxisSize.min,

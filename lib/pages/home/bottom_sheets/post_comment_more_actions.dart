@@ -1,6 +1,7 @@
 import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/post_comment.dart';
 import 'package:Okuna/models/user.dart';
+import 'package:Okuna/pages/home/bottom_sheets/rounded_bottom_sheet.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/bottom_sheet.dart';
 import 'package:Okuna/services/localization.dart';
@@ -9,7 +10,6 @@ import 'package:Okuna/services/navigation_service.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/user.dart';
 import 'package:Okuna/widgets/icon.dart';
-import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:Okuna/widgets/theming/text.dart';
 import 'package:Okuna/widgets/tiles/actions/mute_post_comment_tile.dart';
 import 'package:async/async.dart';
@@ -68,8 +68,7 @@ class OBPostCommentMoreActionsBottomSheetState
     _modalService = provider.modalService;
     _bottomSheetService = provider.bottomSheetService;
 
-    return OBPrimaryColorContainer(
-      mainAxisSize: MainAxisSize.min,
+    return OBRoundedBottomSheet(
       child: Opacity(
         opacity: _requestInProgress ? 0.5 : 1,
         child: Column(

@@ -76,8 +76,7 @@ class OBConfirmActionBottomSheetState
     List<Widget> columnItems = [
       OBText(
         confirmationText,
-        size: OBTextSize.extraLarge,
-        style: TextStyle(fontWeight: FontWeight.bold),
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
         textAlign: TextAlign.left,
       ),
     ];

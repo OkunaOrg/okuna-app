@@ -1,12 +1,12 @@
 import 'package:Okuna/models/follows_list.dart';
 import 'package:Okuna/models/follows_lists_list.dart';
+import 'package:Okuna/pages/home/bottom_sheets/rounded_bottom_sheet.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/modal_service.dart';
 import 'package:Okuna/services/user.dart';
 import 'package:Okuna/widgets/buttons/button.dart';
 import 'package:Okuna/widgets/follows_lists_horizontal_list/follows_lists_horizontal_list.dart';
 import 'package:Okuna/widgets/search_bar.dart';
-import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
@@ -60,8 +60,7 @@ class OBFollowsListsPickerBottomSheetState
       _needsBootstrap = false;
     }
 
-    return OBPrimaryColorContainer(
-      mainAxisSize: MainAxisSize.min,
+    return OBRoundedBottomSheet(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
