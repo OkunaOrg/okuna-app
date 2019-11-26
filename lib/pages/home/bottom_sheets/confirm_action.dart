@@ -1,7 +1,3 @@
-import 'package:Okuna/models/emoji.dart';
-import 'package:Okuna/models/emoji_group.dart';
-import 'package:Okuna/models/post.dart';
-import 'package:Okuna/models/post_reaction.dart';
 import 'package:Okuna/pages/home/bottom_sheets/rounded_bottom_sheet.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/httpie.dart';
@@ -9,8 +5,6 @@ import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/user.dart';
 import 'package:Okuna/widgets/buttons/button.dart';
-import 'package:Okuna/widgets/emoji_picker/emoji_picker.dart';
-import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:Okuna/widgets/theming/text.dart';
 import 'package:async/async.dart';
 import 'package:flutter/cupertino.dart';
@@ -64,6 +58,7 @@ class OBConfirmActionBottomSheetState
       var openbookProvider = OpenbookProvider.of(context);
       _toastService = openbookProvider.toastService;
       _localizationService = openbookProvider.localizationService;
+      _needsBootstrap = false;
     }
 
     final confirmationText = widget.title ??
@@ -159,7 +154,7 @@ class OBConfirmActionBottomSheetState
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: 'Unknown error', context: context);
+      _toastService.error(message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

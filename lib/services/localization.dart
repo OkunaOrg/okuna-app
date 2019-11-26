@@ -2108,7 +2108,7 @@ class LocalizationService {
 
   String get post__actions_delete_description {
     return Intl.message(
-        "The post, as well as comments and reactions will be permanently deleted.",
+        "The post, as well as its comments and reactions will be permanently deleted.",
         name: 'post__actions_delete_description');
   }
 
