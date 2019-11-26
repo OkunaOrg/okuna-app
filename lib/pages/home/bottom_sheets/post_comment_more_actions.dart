@@ -88,18 +88,6 @@ class OBPostCommentMoreActionsBottomSheetState
     ];
     User loggedInUser = _userService.getLoggedInUser();
 
-    if (loggedInUser.canDeletePostComment(widget.post, widget.postComment)) {
-      actionTiles.add(
-        ListTile(
-          leading: const OBIcon(OBIcons.deletePost),
-          title: OBText(
-            _localizationService.post__actions_delete_comment,
-          ),
-          onTap: _onWantsToDeletePostComment,
-        ),
-      );
-    }
-
     if (loggedInUser.canReportPostComment(widget.postComment)) {
       actionTiles.add(
         Opacity(
@@ -123,6 +111,18 @@ class OBPostCommentMoreActionsBottomSheetState
             _localizationService.post__actions_edit_comment,
           ),
           onTap: _editPostComment,
+        ),
+      );
+    }
+
+    if (loggedInUser.canDeletePostComment(widget.post, widget.postComment)) {
+      actionTiles.add(
+        ListTile(
+          leading: const OBIcon(OBIcons.deletePost),
+          title: OBText(
+            _localizationService.post__actions_delete_comment,
+          ),
+          onTap: _onWantsToDeletePostComment,
         ),
       );
     }
