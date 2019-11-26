@@ -1,3 +1,4 @@
+import 'package:Okuna/pages/home/bottom_sheets/rounded_bottom_sheet.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/user_preferences.dart';
 import 'package:Okuna/widgets/theming/primary_color_container.dart';
@@ -44,8 +45,7 @@ class OBVideosSoundSettingPickerBottomSheetState
     Map<VideosSoundSetting, String> localizationMap =
         userPreferencesService.getVideosSoundSettingLocalizationMap();
 
-    return OBPrimaryColorContainer(
-      mainAxisSize: MainAxisSize.min,
+    return OBRoundedBottomSheet(
       child: SizedBox(
         height: 216,
         child: CupertinoPicker(

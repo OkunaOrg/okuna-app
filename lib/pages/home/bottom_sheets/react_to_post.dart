@@ -2,13 +2,12 @@ import 'package:Okuna/models/emoji.dart';
 import 'package:Okuna/models/emoji_group.dart';
 import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/post_reaction.dart';
+import 'package:Okuna/pages/home/bottom_sheets/rounded_bottom_sheet.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/httpie.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/user.dart';
 import 'package:Okuna/widgets/emoji_picker/emoji_picker.dart';
-import 'package:Okuna/widgets/theming/primary_color_container.dart';
-import 'package:Okuna/widgets/theming/text.dart';
 import 'package:async/async.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -51,8 +50,7 @@ class OBReactToPostBottomSheetState extends State<OBReactToPostBottomSheet> {
 
     double screenHeight = MediaQuery.of(context).size.height;
 
-    return OBPrimaryColorContainer(
-      mainAxisSize: MainAxisSize.min,
+    return OBRoundedBottomSheet(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[

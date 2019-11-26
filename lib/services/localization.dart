@@ -2106,12 +2106,24 @@ class LocalizationService {
     return Intl.message("Delete post", name: 'post__actions_delete');
   }
 
+  String get post__actions_delete_description {
+    return Intl.message(
+        "The post, as well as its comments and reactions will be permanently deleted.",
+        name: 'post__actions_delete_description');
+  }
+
   String get post__actions_deleted {
     return Intl.message("Post deleted", name: 'post__actions_deleted');
   }
 
   String get post__actions_delete_comment {
     return Intl.message("Delete comment", name: 'post__actions_delete_comment');
+  }
+
+  String get post__actions_delete_comment_description {
+    return Intl.message(
+        "The comment, as well as its replies and reactions will be permanently deleted.",
+        name: 'post__actions_delete_comment_description');
   }
 
   String get post__actions_edit_comment {
@@ -3909,6 +3921,19 @@ class LocalizationService {
     return Intl.message(
         "We require the camera permission to allow you to take photos and record videos, please grant it in your settings.",
         name: 'permissions_service__camera_permission_denied');
+  }
+
+  String get bottom_sheets__confirm_action_are_you_sure {
+    return Intl.message("Are you sure?",
+        name: 'bottom_sheets__confirm_action_are_you_sure');
+  }
+
+  String get bottom_sheets__confirm_action_yes {
+    return Intl.message("Yes", name: 'bottom_sheets__confirm_action_yes');
+  }
+
+  String get bottom_sheets__confirm_action_no {
+    return Intl.message("No", name: 'bottom_sheets__confirm_action_no');
   }
 
   Locale getLocale() {

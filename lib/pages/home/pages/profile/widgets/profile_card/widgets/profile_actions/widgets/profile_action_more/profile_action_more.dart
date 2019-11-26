@@ -1,4 +1,5 @@
 import 'package:Okuna/models/user.dart';
+import 'package:Okuna/pages/home/bottom_sheets/rounded_bottom_sheet.dart';
 import 'package:Okuna/pages/home/pages/profile/widgets/profile_card/widgets/profile_actions/widgets/profile_action_more/widgets/confirm_connection_with_user_tile.dart';
 import 'package:Okuna/pages/home/pages/profile/widgets/profile_card/widgets/profile_actions/widgets/profile_action_more/widgets/connect_to_user_tile.dart';
 import 'package:Okuna/pages/home/pages/profile/widgets/profile_card/widgets/profile_actions/widgets/profile_action_more/widgets/disconnect_from_user_tile.dart';
@@ -8,11 +9,11 @@ import 'package:Okuna/pages/home/pages/profile/widgets/profile_card/widgets/prof
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/widgets/icon.dart';
-import 'package:Okuna/widgets/theming/primary_color_container.dart';
-import 'package:Okuna/widgets/theming/text.dart';
 import 'package:Okuna/widgets/tiles/actions/block_user_tile.dart';
 import 'package:Okuna/widgets/tiles/actions/report_user_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:Okuna/services/bottom_sheet.dart';
+
 
 class OBProfileActionMore extends StatelessWidget {
   final User user;
@@ -23,7 +24,6 @@ class OBProfileActionMore extends StatelessWidget {
   Widget build(BuildContext context) {
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
     LocalizationService localizationService = openbookProvider.localizationService;
-
     return StreamBuilder(
       stream: user.updateSubject,
       initialData: user,
@@ -112,11 +112,10 @@ class OBProfileActionMore extends StatelessWidget {
               },
             ));
 
-            showModalBottomSheet(
+            showModalBottomSheetApp(
                 context: context,
                 builder: (BuildContext context) {
-                  return OBPrimaryColorContainer(
-                    mainAxisSize: MainAxisSize.min,
+                  return OBRoundedBottomSheet(
                     child: Column(
                         mainAxisSize: MainAxisSize.min, children: moreTiles),
                   );

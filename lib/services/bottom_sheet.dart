@@ -9,6 +9,7 @@ import 'package:Okuna/models/post_comment_reaction.dart';
 import 'package:Okuna/models/post_reaction.dart';
 import 'package:Okuna/pages/home/bottom_sheets/community_actions.dart';
 import 'package:Okuna/pages/home/bottom_sheets/community_type_picker.dart';
+import 'package:Okuna/pages/home/bottom_sheets/confirm_action.dart';
 import 'package:Okuna/pages/home/bottom_sheets/connection_circles_picker.dart';
 import 'package:Okuna/pages/home/bottom_sheets/image_picker.dart';
 import 'package:Okuna/pages/home/bottom_sheets/link_previews_setting_picker.dart';
@@ -109,8 +110,8 @@ class BottomSheetService {
 
   Future<void> showLinkPreviewsSettingPicker(
       {@required BuildContext context,
-        ValueChanged<LinkPreviewsSetting> onChanged,
-        LinkPreviewsSetting initialValue}) {
+      ValueChanged<LinkPreviewsSetting> onChanged,
+      LinkPreviewsSetting initialValue}) {
     return showModalBottomSheetApp(
         context: context,
         builder: (BuildContext context) {
@@ -203,6 +204,27 @@ class BottomSheetService {
         context: context,
         builder: (BuildContext context) {
           return OBImagePickerBottomSheet();
+        });
+  }
+
+  Future<File> showConfirmAction({
+    @required BuildContext context,
+    String title,
+    String subtitle,
+    String confirmText,
+    String cancelText,
+    @required ActionCompleter actionCompleter,
+  }) {
+    return showModalBottomSheetApp(
+        context: context,
+        builder: (BuildContext context) {
+          return OBConfirmActionBottomSheet(
+            title: title,
+            subtitle: subtitle,
+            confirmText: confirmText,
+            cancelText: cancelText,
+            actionCompleter: actionCompleter,
+          );
         });
   }
 }
@@ -368,7 +390,9 @@ Future<T> showModalBottomSheetApp<T>({
       context,
       new _ModalBottomSheetRoute<T>(
         builder: builder,
-        theme: Theme.of(context, shadowThemeOnly: true),
+        theme: ThemeData(
+          canvasColor: Colors.transparent
+        ),
         barrierLabel:
             MaterialLocalizations.of(context).modalBarrierDismissLabel,
         resizeToAvoidBottomPadding: resizeToAvoidBottomPadding,
