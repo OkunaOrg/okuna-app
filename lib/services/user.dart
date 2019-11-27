@@ -75,6 +75,8 @@ export 'package:Okuna/services/httpie.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
 
+import 'intercom.dart';
+
 class UserService {
   OBStorage _userStorage;
 
@@ -103,6 +105,7 @@ class UserService {
   LocalizationService _localizationService;
   DraftService _draftService;
   PushNotificationsService _pushNotificationService;
+  IntercomService _intercomService;
 
   // If this is null, means user logged out.
   Stream<User> get loggedInUserChange => _loggedInUserChangeSubject.stream;
@@ -124,6 +127,10 @@ class UserService {
   void setPushNotificationsService(
       PushNotificationsService pushNotificationsService) {
     _pushNotificationService = pushNotificationsService;
+  }
+
+  void setIntercomService(IntercomService intercomService) {
+    _intercomService = intercomService;
   }
 
   void setModerationApiService(ModerationApiService moderationApiService) {
@@ -208,16 +215,22 @@ class UserService {
   }
 
   Future<void> logout() async {
-    _deleteCurrentDevice();
-    await _removeStoredUserData();
-    await _removeStoredAuthToken();
-    _httpieService.removeAuthorizationToken();
-    _draftService.clear();
-    _pushNotificationService.clearPromptedUserForPermission();
-    _removeLoggedInUser();
-    await clearCache();
-    User.clearSessionCache();
-    _getOrCreateCurrentDeviceCache = null;
+    try {
+      await _pushNotificationService.clearPromptedUserForPermission();
+      await _intercomService.disableIntercom();
+    } catch (error) {
+      throw error;
+    } finally {
+      _deleteCurrentDevice();
+      await _removeStoredUserData();
+      await _removeStoredAuthToken();
+      _httpieService.removeAuthorizationToken();
+      _draftService.clear();
+      _removeLoggedInUser();
+      await clearCache();
+      User.clearSessionCache();
+      _getOrCreateCurrentDeviceCache = null;
+    }
   }
 
   Future<void> clearCache() async {
