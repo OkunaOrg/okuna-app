@@ -29,7 +29,8 @@ class OBAuthSplashPageState extends State<OBAuthSplashPage> {
         decoration: BoxDecoration(
             image: DecorationImage(
                 image: new AssetImage('assets/images/splash-background.png'),
-                fit: BoxFit.cover)),
+                fit: BoxFit.cover),
+        color: Colors.white),
         padding: EdgeInsets.symmetric(horizontal: 40.0),
         child: Center(child: SingleChildScrollView(child: _buildLogo())),
       ),

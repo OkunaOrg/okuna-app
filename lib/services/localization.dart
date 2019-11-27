@@ -115,9 +115,9 @@ class LocalizationService {
         name: 'auth__create_acc__welcome_to_beta');
   }
 
-  String get auth__create_acc__invalid_token_title {
-    return Intl.message("Oops!",
-        name: 'auth__create_acc__invalid_token_title');
+  String get auth__create_acc__invalid_token {
+    return Intl.message("Invalid token",
+        name: 'auth__create_acc__invalid_token');
   }
 
   String get auth__create_acc__validating_token {
@@ -160,7 +160,7 @@ class LocalizationService {
   }
 
   String get auth__create_acc__link_invalid_error {
-    return Intl.message("This link appears to be invalid.",
+    return Intl.message("This link is invalid.",
         name: 'auth__create_acc__link_invalid_error');
   }
 
@@ -394,8 +394,13 @@ class LocalizationService {
   }
 
   String get auth__create_acc__done_created {
-    return Intl.message("Your account has been created with username ",
+    return Intl.message("Your account has been created.",
         name: 'auth__create_acc__done_created');
+  }
+
+  String get auth__create_acc__suggested_communities {
+    return Intl.message("🥳 Get started by joining the following communities.",
+        name: 'auth__create_acc__suggested_communities');
   }
 
   String get auth__create_acc__submit_loading_title {
@@ -1344,16 +1349,6 @@ class LocalizationService {
         args: [categoryName], name: 'community__trending_in_category');
   }
 
-  String get community__suggested_title {
-    return Intl.message("Recommended communities",
-        name: 'community__suggested_title');
-  }
-
-  String get community__suggested_desc {
-    return Intl.message("Some communities we highly recommend to get you started",
-        name: 'community__suggested_desc');
-  }
-
   String get community__communities_title {
     return Intl.message("Communities", name: 'community__communities_title');
   }
@@ -2153,12 +2148,24 @@ class LocalizationService {
     return Intl.message("Delete post", name: 'post__actions_delete');
   }
 
+  String get post__actions_delete_description {
+    return Intl.message(
+        "The post, as well as its comments and reactions will be permanently deleted.",
+        name: 'post__actions_delete_description');
+  }
+
   String get post__actions_deleted {
     return Intl.message("Post deleted", name: 'post__actions_deleted');
   }
 
   String get post__actions_delete_comment {
     return Intl.message("Delete comment", name: 'post__actions_delete_comment');
+  }
+
+  String get post__actions_delete_comment_description {
+    return Intl.message(
+        "The comment, as well as its replies and reactions will be permanently deleted.",
+        name: 'post__actions_delete_comment_description');
   }
 
   String get post__actions_edit_comment {
@@ -2363,6 +2370,14 @@ class LocalizationService {
 
   String get user__follow_button_follow_text {
     return Intl.message("Follow", name: 'user__follow_button_follow_text');
+  }
+
+  String get user__follow_button_follow_back_text {
+    return Intl.message("Follow back", name: 'user__follow_button_follow_back_text');
+  }
+
+  String get user__follow_button_following_text {
+    return Intl.message("Following", name: 'user__follow_button_following_text');
   }
 
   String get user__follow_button_unfollow_text {
@@ -4025,6 +4040,19 @@ class LocalizationService {
     return Intl.message(
         "We require the camera permission to allow you to take photos and record videos, please grant it in your settings.",
         name: 'permissions_service__camera_permission_denied');
+  }
+
+  String get bottom_sheets__confirm_action_are_you_sure {
+    return Intl.message("Are you sure?",
+        name: 'bottom_sheets__confirm_action_are_you_sure');
+  }
+
+  String get bottom_sheets__confirm_action_yes {
+    return Intl.message("Yes", name: 'bottom_sheets__confirm_action_yes');
+  }
+
+  String get bottom_sheets__confirm_action_no {
+    return Intl.message("No", name: 'bottom_sheets__confirm_action_no');
   }
 
   Locale getLocale() {

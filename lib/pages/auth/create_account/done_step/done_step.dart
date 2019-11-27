@@ -1,5 +1,4 @@
 import 'package:Okuna/pages/auth/create_account/blocs/create_account.dart';
-import 'package:Okuna/pages/home/pages/communities/widgets/suggested_communities/suggested_communities.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/widgets/buttons/button.dart';
@@ -25,6 +24,7 @@ class OBAuthDonePageState extends State<OBAuthDonePage> {
     createAccountBloc = openbookProvider.createAccountBloc;
 
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Container(
         decoration: BoxDecoration(
             image: DecorationImage(
@@ -64,10 +64,9 @@ class OBAuthDonePageState extends State<OBAuthDonePage> {
   }
 
   Widget _buildHooray() {
-    String title = localizationService.trans('auth__create_acc__done_title');
-    String accCreated = localizationService.trans('auth__create_acc__done_created');
-
-    String username = createAccountBloc.getUsername();
+    String title = localizationService.auth__create_acc__done_title;
+    String accCreated = localizationService.auth__create_acc__done_created;
+    accCreated = 'Your acount has been created.';
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
@@ -88,28 +87,18 @@ class OBAuthDonePageState extends State<OBAuthDonePage> {
               //color: Colors.white
             )),
         const SizedBox(
-          height: 20.0,
+          height: 10.0,
         ),
         RichText(
           textAlign: TextAlign.center,
           text: TextSpan(
               style: TextStyle(
-                fontSize: 18.0,
+                fontSize: 20.0,
                 color: Colors.black,
               ),
               children: [
                 TextSpan(text: accCreated),
-                TextSpan(
-                    text: '@$username',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
-                TextSpan(text: '.')
               ]),
-        ),
-        const SizedBox(
-          height: 20.0,
-        ),
-        OBSuggestedCommunities(
-            onCommunitySelectionInProgress: onCommunitySelectionInProgress
         ),
       ],
     );
@@ -138,8 +127,7 @@ class OBAuthDonePageState extends State<OBAuthDonePage> {
         ],
       ),
       onPressed: () {
-        Navigator.popUntil(context, ModalRoute.withName('/auth/get-started'));
-        Navigator.pushReplacementNamed(context, '/');
+        Navigator.pushNamed(context, '/auth/suggested_communities');
       },
     );
   }

@@ -36,6 +36,7 @@ class User extends UpdatableModel<User> {
   bool areGuidelinesAccepted;
   bool isSubscribed;
   bool isFollowing;
+  bool isFollowed;
   bool isConnected;
   bool isReported;
   bool isBlocked;
@@ -92,6 +93,7 @@ class User extends UpdatableModel<User> {
       'are_guidelines_accepted': areGuidelinesAccepted,
       'is_subscribed': isSubscribed,
       'is_following': isFollowing,
+      'is_followed': isFollowed,
       'is_connected': isConnected,
       'is_reported': isReported,
       'is_blocked': isBlocked,
@@ -130,6 +132,7 @@ class User extends UpdatableModel<User> {
       this.inviteCount,
       this.isSubscribed,
       this.isFollowing,
+      this.isFollowed,
       this.isBlocked,
       this.isGlobalModerator,
       this.isConnected,
@@ -184,6 +187,7 @@ class User extends UpdatableModel<User> {
     if (json.containsKey('invite_count')) inviteCount = json['invite_count'];
     if (json.containsKey('is_subscribed')) isSubscribed = json['is_subscribed'];
     if (json.containsKey('is_following')) isFollowing = json['is_following'];
+    if (json.containsKey('is_followed')) isFollowed = json['is_followed'];
     if (json.containsKey('is_connected')) isConnected = json['is_connected'];
     if (json.containsKey('is_global_moderator'))
       isGlobalModerator = json['is_global_moderator'];
@@ -616,6 +620,7 @@ class UserFactory extends UpdatableModelFactory<User> {
         language: parseLanguage(json['language']),
         followingCount: json['following_count'],
         isFollowing: json['is_following'],
+        isFollowed: json['is_followed'],
         isSubscribed: json['is_subscribed'],
         isConnected: json['is_connected'],
         isGlobalModerator: json['is_global_moderator'],

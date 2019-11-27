@@ -23,6 +23,7 @@ class OBAuthPasswordResetSuccessPageState extends State<OBAuthPasswordResetSucce
     createAccountBloc = openbookProvider.createAccountBloc;
 
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Container(
         child: Center(child: SingleChildScrollView(child: _buildAllSet(localizationService))),
       ),

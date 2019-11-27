@@ -35,6 +35,7 @@ class OBAuthSubmitPageState extends State<OBAuthSubmitPage> {
     }
 
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 40.0),
         child: Center(child: SingleChildScrollView(child: _buildStatus())),

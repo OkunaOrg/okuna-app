@@ -22,12 +22,13 @@ class OBCommunityTile extends StatelessWidget {
   final ValueChanged<Community> onCommunityTilePressed;
   final ValueChanged<Community> onCommunityTileDeleted;
   final OBCommunityTileSize size;
+  final Widget trailing;
 
   const OBCommunityTile(this.community,
       {this.onCommunityTilePressed,
       this.onCommunityTileDeleted,
       Key key,
-      this.size = OBCommunityTileSize.normal})
+      this.size = OBCommunityTileSize.normal, this.trailing})
       : super(key: key);
 
   @override
@@ -141,8 +142,11 @@ class OBCommunityTile extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(
+          trailing == null ? SizedBox(
             width: 20,
+          ) : Padding(
+            child: trailing,
+            padding: const EdgeInsets.all(20),
           )
         ],
       ),
