@@ -30,7 +30,7 @@ class AuthApiService {
   static const SEARCH_LINKED_USERS_PATH = 'api/auth/linked-users/search/';
   static const GET_BLOCKED_USERS_PATH = 'api/auth/blocked-users/';
   static const SEARCH_BLOCKED_USERS_PATH = 'api/auth/blocked-users/search/';
-  static const SUBSCRIBE_USER_PATH = 'api/auth/users/{userUsername}/subscribe/';
+  static const SUBSCRIBE_USER_NOTIFICATIONS_PATH = 'api/auth/users/{userUsername}/subscribe/notifications/';
   static const BLOCK_USER_PATH = 'api/auth/users/{userUsername}/block/';
   static const UNBLOCK_USER_PATH = 'api/auth/users/{userUsername}/unblock/';
   static const GET_FOLLOWERS_PATH = 'api/auth/followers/';
@@ -481,7 +481,7 @@ class AuthApiService {
 
   String _makeSubscribeUserWithUsernamePath(String username) {
     return _stringTemplateService
-        .parse(SUBSCRIBE_USER_PATH, {'userUsername': username});
+        .parse(SUBSCRIBE_USER_NOTIFICATIONS_PATH, {'userUsername': username});
   }
 
   String _makeReportUserPath({@required username}) {
