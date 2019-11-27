@@ -30,7 +30,7 @@ class AuthApiService {
   static const SEARCH_LINKED_USERS_PATH = 'api/auth/linked-users/search/';
   static const GET_BLOCKED_USERS_PATH = 'api/auth/blocked-users/';
   static const SEARCH_BLOCKED_USERS_PATH = 'api/auth/blocked-users/search/';
-  static const SUBSCRIBE_USER_NOTIFICATIONS_PATH = 'api/auth/users/{userUsername}/subscribe/notifications/';
+  static const SUBSCRIBE_USER_NOTIFICATIONS_PATH = 'api/auth/users/{userUsername}/notifications/subscribe/';
   static const BLOCK_USER_PATH = 'api/auth/users/{userUsername}/block/';
   static const UNBLOCK_USER_PATH = 'api/auth/users/{userUsername}/unblock/';
   static const GET_FOLLOWERS_PATH = 'api/auth/followers/';

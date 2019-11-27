@@ -46,7 +46,7 @@ class CommunitiesApiService {
   static const FAVORITE_COMMUNITY_PATH =
       'api/communities/{communityName}/favorite/';
   static const SUBSCRIBE_COMMUNITY_NOTIFICATIONS_PATH =
-      'api/communities/{communityName}/subscribe/notifications/';
+      'api/communities/{communityName}/notifications/subscribe/';
   static const EXCLUDE_COMMUNITY_PATH =
       'api/communities/{communityName}/top-posts/exclude/';
   static const GET_EXCLUDED_COMMUNITIES_PATH = 'api/communities/top-posts/exclusions/';
