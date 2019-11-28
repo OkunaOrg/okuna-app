@@ -11,6 +11,7 @@ The change log for the Okuna app.
 #### Features
  - Show suggested communities on account creation
  - Add choose username page
+ - Trending posts is now an infinite stream
 
 #### Bugs
 - Verify token on invite opened
