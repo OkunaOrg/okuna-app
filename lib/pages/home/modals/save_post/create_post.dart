@@ -1,28 +1,29 @@
 import 'dart:io';
+
 import 'package:Okuna/models/community.dart';
 import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/post_image.dart';
 import 'package:Okuna/models/post_media.dart';
 import 'package:Okuna/models/post_video.dart';
+import 'package:Okuna/pages/home/lib/draft_editing_controller.dart';
 import 'package:Okuna/pages/home/modals/save_post/widgets/create_post_text.dart';
 import 'package:Okuna/pages/home/modals/save_post/widgets/post_community_previewer.dart';
 import 'package:Okuna/pages/home/modals/save_post/widgets/post_image_previewer.dart';
 import 'package:Okuna/pages/home/modals/save_post/widgets/post_video_previewer.dart';
 import 'package:Okuna/pages/home/modals/save_post/widgets/remaining_post_characters.dart';
-import 'package:Okuna/pages/home/lib/draft_editing_controller.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/draft.dart';
 import 'package:Okuna/services/httpie.dart';
 import 'package:Okuna/services/link_preview.dart';
-import 'package:Okuna/services/media.dart';
 import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/media.dart';
 import 'package:Okuna/services/navigation_service.dart';
 import 'package:Okuna/services/share.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/user.dart';
 import 'package:Okuna/services/validation.dart';
-import 'package:Okuna/widgets/avatars/logged_in_user_avatar.dart';
 import 'package:Okuna/widgets/avatars/avatar.dart';
+import 'package:Okuna/widgets/avatars/logged_in_user_avatar.dart';
 import 'package:Okuna/widgets/buttons/button.dart';
 import 'package:Okuna/widgets/buttons/pill_button.dart';
 import 'package:Okuna/widgets/contextual_search_boxes/contextual_search_box_state.dart';
@@ -31,12 +32,12 @@ import 'package:Okuna/widgets/link_preview.dart';
 import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Okuna/widgets/new_post_data_uploader.dart';
 import 'package:Okuna/widgets/theming/primary_color_container.dart';
+import 'package:Okuna/widgets/theming/smart_text.dart';
 import 'package:Okuna/widgets/theming/text.dart';
+import 'package:async/async.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pigment/pigment.dart';
-import 'package:Okuna/widgets/theming/smart_text.dart';
-import 'package:async/async.dart';
 
 class OBSavePostModal extends StatefulWidget {
   final Community community;
@@ -99,6 +100,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
 
   bool _saveInProgress;
   CancelableOperation _saveOperation;
+  CancelableOperation _gifSharedOperation;
 
   @override
   void initState() {
@@ -528,6 +530,11 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
   }
 
   Future<bool> _onShare({String text, File image, File video}) async {
+    if (_gifSharedOperation != null) {
+      _gifSharedOperation.cancel();
+      _gifSharedOperation = null;
+    }
+
     if (image != null || video != null) {
       if (_hasImage) {
         _removePostImageFile();
@@ -550,7 +557,9 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
     if (video != null) {
       final isGif = await _mediaService.isGif(video);
       if (isGif) {
-        video = await _mediaService.convertGifToVideo(video);
+        _gifSharedOperation = CancelableOperation.fromFuture(
+            _mediaService.convertGifToVideo(video));
+        video = await _gifSharedOperation.value;
       }
 
       _setPostVideoFile(video);
