@@ -34,6 +34,7 @@ class User extends UpdatableModel<User> {
   int pendingCommunitiesModeratedObjectsCount;
   int activeModerationPenaltiesCount;
   bool areGuidelinesAccepted;
+  bool isSubscribed;
   bool isFollowing;
   bool isFollowed;
   bool isConnected;
@@ -63,7 +64,6 @@ class User extends UpdatableModel<User> {
 
     User user = navigationUsersFactory.getItemWithIdFromCache(userId) ??
         sessionUsersFactory.getItemWithIdFromCache(userId);
-
     if (user != null) {
       user.update(json);
       return user;
@@ -91,6 +91,7 @@ class User extends UpdatableModel<User> {
       'pending_communities_moderated_objects_count': pendingCommunitiesModeratedObjectsCount,
       'active_moderation_penalties_count': activeModerationPenaltiesCount,
       'are_guidelines_accepted': areGuidelinesAccepted,
+      'is_subscribed': isSubscribed,
       'is_following': isFollowing,
       'is_followed': isFollowed,
       'is_connected': isConnected,
@@ -129,6 +130,7 @@ class User extends UpdatableModel<User> {
       this.unreadNotificationsCount,
       this.postsCount,
       this.inviteCount,
+      this.isSubscribed,
       this.isFollowing,
       this.isFollowed,
       this.isBlocked,
@@ -183,6 +185,7 @@ class User extends UpdatableModel<User> {
       unreadNotificationsCount = json['unread_notifications_count'];
     if (json.containsKey('posts_count')) postsCount = json['posts_count'];
     if (json.containsKey('invite_count')) inviteCount = json['invite_count'];
+    if (json.containsKey('is_subscribed')) isSubscribed = json['is_subscribed'];
     if (json.containsKey('is_following')) isFollowing = json['is_following'];
     if (json.containsKey('is_followed')) isFollowed = json['is_followed'];
     if (json.containsKey('is_connected')) isConnected = json['is_connected'];
@@ -618,6 +621,7 @@ class UserFactory extends UpdatableModelFactory<User> {
         followingCount: json['following_count'],
         isFollowing: json['is_following'],
         isFollowed: json['is_followed'],
+        isSubscribed: json['is_subscribed'],
         isConnected: json['is_connected'],
         isGlobalModerator: json['is_global_moderator'],
         isBlocked: json['is_blocked'],

@@ -30,6 +30,7 @@ class AuthApiService {
   static const SEARCH_LINKED_USERS_PATH = 'api/auth/linked-users/search/';
   static const GET_BLOCKED_USERS_PATH = 'api/auth/blocked-users/';
   static const SEARCH_BLOCKED_USERS_PATH = 'api/auth/blocked-users/search/';
+  static const SUBSCRIBE_USER_NOTIFICATIONS_PATH = 'api/auth/users/{userUsername}/notifications/subscribe/';
   static const BLOCK_USER_PATH = 'api/auth/users/{userUsername}/block/';
   static const UNBLOCK_USER_PATH = 'api/auth/users/{userUsername}/unblock/';
   static const GET_FOLLOWERS_PATH = 'api/auth/followers/';
@@ -260,6 +261,16 @@ class AuthApiService {
     return _httpService.post(_makeApiUrl(path), appendAuthorizationToken: true);
   }
 
+  Future<HttpieResponse> subscribeUserWithUsername(String userUsername) {
+    String path = _makeSubscribeUserWithUsernamePath(userUsername);
+    return _httpService.putJSON(_makeApiUrl(path), appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> unsubscribeUserWithUsername(String userUsername) {
+    String path = _makeSubscribeUserWithUsernamePath(userUsername);
+    return _httpService.delete(_makeApiUrl(path), appendAuthorizationToken: true);
+  }
+
   Future<HttpieResponse> searchFollowers({@required String query, int count}) {
     Map<String, dynamic> queryParams = {'query': query};
 
@@ -349,6 +360,8 @@ class AuthApiService {
     bool connectionRequestNotifications,
     bool connectionConfirmedNotifications,
     bool communityInviteNotifications,
+    bool communityNewPostNotifications,
+    bool userNewPostNotifications,
   }) {
     Map<String, dynamic> body = {};
 
@@ -380,6 +393,12 @@ class AuthApiService {
 
     if (communityInviteNotifications != null)
       body['community_invite_notifications'] = communityInviteNotifications;
+
+    if (communityNewPostNotifications != null)
+      body['community_new_post_notifications'] = communityNewPostNotifications;
+
+    if (userNewPostNotifications != null)
+      body['user_new_post_notifications'] = userNewPostNotifications;
 
     if (connectionConfirmedNotifications != null)
       body['connection_confirmed_notifications'] =
@@ -432,6 +451,11 @@ class AuthApiService {
   String _makeUnblockUserWithUsernamePath(String username) {
     return _stringTemplateService
         .parse(UNBLOCK_USER_PATH, {'userUsername': username});
+  }
+
+  String _makeSubscribeUserWithUsernamePath(String username) {
+    return _stringTemplateService
+        .parse(SUBSCRIBE_USER_NOTIFICATIONS_PATH, {'userUsername': username});
   }
 
   String _makeReportUserPath({@required username}) {

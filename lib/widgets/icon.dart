@@ -134,6 +134,7 @@ class OBIcons {
   static const play_arrow = OBIconData(nativeIcon: Icons.play_arrow);
   static const search = OBIconData(nativeIcon: Icons.search);
   static const notifications = OBIconData(nativeIcon: Icons.notifications);
+  static const notifications_off = OBIconData(nativeIcon: Icons.notifications_off);
   static const language = OBIconData(nativeIcon: Icons.language);
   static const translate = OBIconData(nativeIcon: Icons.translate);
   static const menu = OBIconData(nativeIcon: Icons.menu);

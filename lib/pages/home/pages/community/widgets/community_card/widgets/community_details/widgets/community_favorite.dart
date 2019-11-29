@@ -1,7 +1,10 @@
 import 'package:Okuna/models/community.dart';
+import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../../../../../../provider.dart';
 
 class OBCommunityFavorite extends StatelessWidget {
   final Community community;
@@ -10,6 +13,8 @@ class OBCommunityFavorite extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    LocalizationService localizationService = OpenbookProvider.of(context).localizationService;
+
     return StreamBuilder(
       stream: community.updateSubject,
       initialData: community,
@@ -31,9 +36,12 @@ class OBCommunityFavorite extends StatelessWidget {
               width: 10,
             ),
             OBText(
-              'In favorites',
+              localizationService.community__details_favorite,
               style: TextStyle(fontSize: 16),
-            )
+            ),
+            const SizedBox(
+              width: 10,
+            ),
           ],
         );
       },

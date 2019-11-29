@@ -23,8 +23,7 @@ class OBCommunityDetails extends StatelessWidget {
             Flexible(
               child: SizedBox(
                 child: Wrap(
-                  spacing: 10.0,
-                  runSpacing: 10.0,
+                  spacing: 0.0,
                   children: <Widget>[
                     OBCommunityType(community),
                     OBCommunityMembersCount(community),

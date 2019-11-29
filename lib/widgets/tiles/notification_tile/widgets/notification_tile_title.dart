@@ -13,8 +13,8 @@ class OBNotificationTileTitle extends StatelessWidget {
 
   OBNotificationTileTitle(
       {Key key,
-      @required this.onUsernamePressed,
-      @required this.user,
+      this.onUsernamePressed,
+      this.user,
       @required this.text})
       : super(key: key);
 
@@ -35,8 +35,8 @@ class OBNotificationTileTitle extends StatelessWidget {
           Color secondaryTextColor =
               themeValueParserService.parseColor(theme.secondaryTextColor);
 
-          String commenterUsername = user.username;
-          String commenterName = user.getProfileName();
+          String commenterUsername = user?.username;
+          String commenterName = user?.getProfileName();
 
           GestureRecognizer usernameTapGestureRecognizer =
               TapGestureRecognizer()..onTap = onUsernamePressed;

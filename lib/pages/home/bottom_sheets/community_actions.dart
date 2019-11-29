@@ -10,6 +10,7 @@ import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/theming/text.dart';
 import 'package:Okuna/widgets/tiles/actions/favorite_community_tile.dart';
 import 'package:Okuna/widgets/tiles/actions/report_community_tile.dart';
+import 'package:Okuna/widgets/tiles/actions/subscribe_community_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -32,6 +33,7 @@ class OBCommunityActionsBottomSheetState
   UserService _userService;
   ToastService _toastService;
   ModalService _modalService;
+  LocalizationService _localizationService;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +41,7 @@ class OBCommunityActionsBottomSheetState
     _userService = openbookProvider.userService;
     _toastService = openbookProvider.toastService;
     _modalService = openbookProvider.modalService;
-    LocalizationService _localizationService = openbookProvider.localizationService;
+    _localizationService = openbookProvider.localizationService;
 
     List<Widget> communityActions = [
       OBFavoriteCommunityTile(
@@ -56,6 +58,14 @@ class OBCommunityActionsBottomSheetState
     bool isCommunityAdministrator = community.isAdministrator(loggedInUser);
     bool isCommunityModerator = community.isModerator(loggedInUser);
     bool communityHasInvitesEnabled = community.invitesEnabled;
+
+    if (isMemberOfCommunity) {
+      communityActions.add(OBSubscribeCommunityTile(
+        community: community,
+        onSubscribeToCommunity: _dismiss,
+        onUnsubscribeFromCommunity: _dismiss,
+      ));
+    }
 
     if (communityHasInvitesEnabled && isMemberOfCommunity) {
       communityActions.add(ListTile(
