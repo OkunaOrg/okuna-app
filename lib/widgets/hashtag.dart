@@ -32,7 +32,7 @@ class OBHashtag extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: hashtagBackgroundColor,
-          borderRadius: BorderRadius.circular(3),
+          borderRadius: BorderRadius.circular(5),
         ),
         padding: const EdgeInsets.symmetric(horizontal: 4),
         child: Text('${hashtag.name}', style: finalTextStyle,),
