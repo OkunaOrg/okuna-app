@@ -1,7 +1,9 @@
+import 'package:Okuna/models/hashtag.dart';
 import 'package:Okuna/models/theme.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/theme.dart';
 import 'package:Okuna/services/theme_value_parser.dart';
+import 'package:Okuna/widgets/hashtag.dart';
 import 'package:Okuna/widgets/theming/text.dart';
 export 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/gestures.dart';
@@ -31,10 +33,10 @@ class LinkElement extends SmartTextElement {
 }
 
 /// Represents an element containing a hastag
-class HashTagElement extends SmartTextElement {
+class HashtagElement extends SmartTextElement {
   final String tag;
 
-  HashTagElement(this.tag) : super(tag);
+  HashtagElement(this.tag) : super(tag);
 
   @override
   String toString() {
@@ -89,6 +91,7 @@ class SecondaryTextElement extends SmartTextElement {
 final linkRegex = RegExp(
     r"(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})",
     caseSensitive: false);
+
 final _tagRegex = RegExp(r"\B#\w*[a-zA-Z]+\w*", caseSensitive: false);
 
 // Architecture of this regex:
@@ -135,6 +138,10 @@ List<SmartTextElement> _smartify(String text) {
   }));
   matches.addAll(linkRegex.allMatches(text).map((m) {
     return SmartMatch(LinkElement(m.group(0)), m.start, m.end);
+  }));
+
+  matches.addAll(_tagRegex.allMatches(text).map((m) {
+    return SmartMatch(HashtagElement(m.group(0)), m.start, m.end);
   }));
   // matches.addAll(_tagRegex.allMatches(text).map((m) { return SmartMatch(HashTagElement(m.group(0)), m.start, m.end); }));
   matches.sort((a, b) {
@@ -207,7 +214,7 @@ class OBSmartText extends StatelessWidget {
   final StringCallback onLinkTapped;
 
   /// Callback for tapping a link
-  final StringCallback onTagTapped;
+  final ValueChanged<Hashtag> onHashtagTapped;
 
   /// Callback for tapping a link
   final StringCallback onUsernameTapped;
@@ -224,6 +231,8 @@ class OBSmartText extends StatelessWidget {
 
   final TextOverflow lengthOverflow;
 
+  final Map<String, Hashtag> hashtagsMap;
+
   const OBSmartText({
     Key key,
     this.text,
@@ -234,15 +243,16 @@ class OBSmartText extends StatelessWidget {
     this.linkStyle,
     this.tagStyle,
     this.onLinkTapped,
-    this.onTagTapped,
+    this.onHashtagTapped,
     this.onUsernameTapped,
     this.onCommunityNameTapped,
     this.trailingSmartTextElement,
     this.size = OBTextSize.medium,
+    this.hashtagsMap,
   }) : super(key: key);
 
   /// Raw TextSpan builder for more control on the RichText
-  TextSpan _buildTextSpan({
+  TextSpan _buildSpan({
     String text,
     TextStyle style,
     TextStyle secondaryTextStyle,
@@ -258,14 +268,6 @@ class OBSmartText extends StatelessWidget {
     void _onOpen(String url) {
       if (onLinkTapped != null) {
         onLinkTapped(url);
-      }
-    }
-
-    void _onTagTapped(String tag) {
-      if (onTagTapped != null) {
-        // Remove #
-        String cleanedTag = tag.substring(1, tag.length).toLowerCase();
-        onTagTapped(cleanedTag);
       }
     }
 
@@ -298,42 +300,57 @@ class OBSmartText extends StatelessWidget {
     }
 
     return TextSpan(
-        children: elements.map<TextSpan>((element) {
+        children: elements.map<InlineSpan>((element) {
+      InlineSpan textSpan;
       if (element is TextElement) {
-        return TextSpan(
+        textSpan = TextSpan(
           text: element.text,
           style: style,
         );
       } else if (element is SecondaryTextElement) {
-        return TextSpan(
+        textSpan = TextSpan(
           text: element.text,
           style: secondaryTextStyle,
         );
       } else if (element is LinkElement) {
-        return LinkTextSpan(
+        textSpan = LinkTextSpan(
           text: element.text,
           style: linkStyle,
           onPressed: () => _onOpen(element.url),
         );
-      } else if (element is HashTagElement) {
-        return LinkTextSpan(
-          text: element.text,
-          style: tagStyle,
-          onPressed: () => _onTagTapped(element.tag),
-        );
+      } else if (element is HashtagElement) {
+        String hashtagText = element.text.substring(1, element.text.length);
+        if (this.hashtagsMap != null &&
+            this.hashtagsMap.containsKey(hashtagText)) {
+          Hashtag hashtag = this.hashtagsMap[hashtagText];
+          textSpan = WidgetSpan(
+              child: OBHashtag(
+            hashtag: hashtag,
+            onPressed: onHashtagTapped,
+            textStyle: usernameStyle,
+          ));
+        } else {
+          textSpan = LinkTextSpan(
+            text: element.text,
+            style: usernameStyle,
+            onPressed: () => _onUsernameTapped(element.text),
+          );
+        }
       } else if (element is UsernameElement) {
-        return LinkTextSpan(
+        textSpan = LinkTextSpan(
           text: element.text,
           style: usernameStyle,
           onPressed: () => _onUsernameTapped(element.username),
         );
       } else if (element is CommunityNameElement) {
-        return LinkTextSpan(
+        textSpan = LinkTextSpan(
           text: element.text,
           style: communityNameStyle,
           onPressed: () => _onCommunityNameTapped(element.communityName),
         );
       }
+
+      return textSpan;
     }).toList());
   }
 
@@ -356,7 +373,9 @@ class OBSmartText extends StatelessWidget {
 
       if (length + elementLength > maxlength) {
         elements.removeRange(i + 1, elements.length);
-        element.text = runeSubstring(input: element.text, start: 0, end: maxlength - length).trimRight();
+        element.text = runeSubstring(
+                input: element.text, start: 0, end: maxlength - length)
+            .trimRight();
 
         if (lengthOverflow == TextOverflow.ellipsis) {
           element.text = element.text + '...';
@@ -417,7 +436,7 @@ class OBSmartText extends StatelessWidget {
         return RichText(
           overflow: overflow,
           softWrap: true,
-          text: _buildTextSpan(
+          text: _buildSpan(
               text: text,
               style: textStyle,
               secondaryTextStyle: secondaryTextStyle,
@@ -426,7 +445,6 @@ class OBSmartText extends StatelessWidget {
               communityNameStyle: smartItemsStyle,
               usernameStyle: smartItemsStyle,
               onLinkTapped: onLinkTapped,
-              onTagTapped: onTagTapped,
               onCommunityNameTapped: onCommunityNameTapped,
               onUsernameTapped: onUsernameTapped),
         );

@@ -95,12 +95,14 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
         trailingSmartTextElement: SecondaryTextElement(' (edited)'),
         maxlength: MAX_LENGTH_LIMIT,
         getChild: _buildTranslationButton,
+        hashtagsMap: widget.post.hashtagsMap,
       );
     } else {
       return OBCollapsibleSmartText(
         text: _translatedText != null ? _translatedText : widget.post.text,
         maxlength: MAX_LENGTH_LIMIT,
         getChild: _buildTranslationButton,
+        hashtagsMap: widget.post.hashtagsMap,
       );
     }
   }
