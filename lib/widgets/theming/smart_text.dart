@@ -319,7 +319,7 @@ class OBSmartText extends StatelessWidget {
           onPressed: () => _onOpen(element.url),
         );
       } else if (element is HashtagElement) {
-        String hashtagText = element.text.substring(1, element.text.length);
+        String hashtagText = element.text.substring(1, element.text.length).toLowerCase();
         if (this.hashtagsMap != null &&
             this.hashtagsMap.containsKey(hashtagText)) {
           Hashtag hashtag = this.hashtagsMap[hashtagText];
