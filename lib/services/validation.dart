@@ -175,6 +175,14 @@ class ValidationService {
     return regExp.hasMatch(username);
   }
 
+  bool isHashtagAllowedCharacters(String hashtag) {
+    String p = r'^[a-zA-Z]+$';
+
+    RegExp regExp = new RegExp(p, caseSensitive: false);
+
+    return regExp.hasMatch(hashtag);
+  }
+
   bool isCommunityNameAllowedCharacters(String name) {
     String p = r'^[a-zA-Z0-9_]+$';
 

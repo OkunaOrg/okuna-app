@@ -1,6 +1,13 @@
+import 'package:Okuna/services/validation.dart';
 import 'package:flutter/cupertino.dart';
 
 class TextAutocompletionService {
+  ValidationService _validationService;
+
+  void setValidationService(validationService) {
+    _validationService = validationService;
+  }
+
   TextAutocompletionResult checkTextForAutocompletion(
       TextEditingController textController) {
     int cursorPosition = textController.selection.baseOffset;
@@ -21,7 +28,10 @@ class TextAutocompletionService {
             isAutocompleting: true,
             autocompleteQuery: searchQuery,
             type: TextAutocompletionType.community);
-      } else if (lastWord.startsWith('#') && lastWord.length > 1) {
+      } else if (lastWord.startsWith('#') &&
+          lastWord.length > 1 &&
+          _validationService
+              .isHashtagAllowedCharacters(lastWord.substring(1))) {
         String searchQuery = lastWord.substring(1);
         return TextAutocompletionResult(
             isAutocompleting: true,
