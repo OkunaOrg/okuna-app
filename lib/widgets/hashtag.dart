@@ -1,6 +1,8 @@
 import 'package:Okuna/models/hashtag.dart';
 import 'package:Okuna/provider.dart';
+import 'package:Okuna/widgets/emoji_picker/widgets/emoji_groups/widgets/emoji_group/widgets/emoji.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_advanced_networkimage/provider.dart';
 
 class OBHashtag extends StatelessWidget {
   final Hashtag hashtag;
@@ -27,6 +29,26 @@ class OBHashtag extends StatelessWidget {
 
     finalTextStyle = finalTextStyle.merge(TextStyle(color: hashtagTextColor));
 
+    Widget hashtagContent = Text('${hashtag.name}', style: finalTextStyle,);
+
+
+
+    if(hashtag.hasEmoji()){
+      hashtagContent  = Row(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(right: 4),
+            child: Image(
+              height: 15,
+              image: AdvancedNetworkImage(hashtag.emoji.image, useDiskCache: true),
+            )
+          ),
+          hashtagContent
+        ],
+      );
+    }
+
     return GestureDetector(
       onTap: onPressed != null ? () => onPressed(hashtag) : null,
       child: Container(
@@ -34,8 +56,8 @@ class OBHashtag extends StatelessWidget {
           color: hashtagBackgroundColor,
           borderRadius: BorderRadius.circular(5),
         ),
-        padding: const EdgeInsets.symmetric(horizontal: 4),
-        child: Text('${hashtag.name}', style: finalTextStyle,),
+        padding: const EdgeInsets.symmetric(horizontal: 2.5),
+        child: hashtagContent,
       ),
     );
   }
