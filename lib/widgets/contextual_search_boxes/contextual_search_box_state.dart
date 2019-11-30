@@ -90,14 +90,11 @@ abstract class OBContextualSearchBoxState<T extends StatefulWidget>
   }
 
   Widget _buildHashtagSearchBox() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: OBContextualHashtagSearchBox(
-        controller: _contextualHashtagSearchBoxController,
-        onHashtagPressed: _onHashtagSearchBoxUserPressed,
-        initialSearchQuery:
-            _contextualHashtagSearchBoxController.getLastSearchQuery(),
-      ),
+    return OBContextualHashtagSearchBox(
+      controller: _contextualHashtagSearchBoxController,
+      onHashtagPressed: _onHashtagSearchBoxUserPressed,
+      initialSearchQuery:
+      _contextualHashtagSearchBoxController.getLastSearchQuery(),
     );
   }
 

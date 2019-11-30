@@ -1,6 +1,5 @@
 import 'package:Okuna/models/emoji.dart';
 import 'package:Okuna/models/updatable_model.dart';
-import 'package:Okuna/models/users_list.dart';
 import 'package:dcache/dcache.dart';
 
 class Hashtag extends UpdatableModel<Hashtag> {
@@ -10,7 +9,6 @@ class Hashtag extends UpdatableModel<Hashtag> {
   Emoji emoji;
   String color;
   int postsCount;
-  UsersList users;
 
   Hashtag({
     this.id,
@@ -19,7 +17,6 @@ class Hashtag extends UpdatableModel<Hashtag> {
     this.emoji,
     this.color,
     this.postsCount,
-    this.users,
   });
 
   static final factory = HashtagFactory();
@@ -59,10 +56,6 @@ class Hashtag extends UpdatableModel<Hashtag> {
     if (json.containsKey('emoji')) {
       emoji = factory.parseEmoji(json['emoji']);
     }
-  }
-
-  bool hasUsers() {
-    return users != null && users.users.length > 0;
   }
 
   bool hasEmoji() {

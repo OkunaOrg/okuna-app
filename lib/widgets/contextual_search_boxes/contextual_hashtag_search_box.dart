@@ -19,9 +19,9 @@ class OBContextualHashtagSearchBox extends StatefulWidget {
 
   const OBContextualHashtagSearchBox(
       {Key key,
-        this.onHashtagPressed,
-        this.controller,
-        this.initialSearchQuery})
+      this.onHashtagPressed,
+      this.controller,
+      this.initialSearchQuery})
       : super(key: key);
 
   @override
@@ -42,8 +42,6 @@ class OBContextualHashtagSearchBoxState
   CancelableOperation _searchParticipantsOperation;
 
   String _searchQuery;
-  List<Hashtag> _all;
-  bool _getAllInProgress;
   List<Hashtag> _searchResults;
   bool _searchInProgress;
 
@@ -52,11 +50,9 @@ class OBContextualHashtagSearchBoxState
     super.initState();
     _needsBootstrap = true;
     if (widget.controller != null) widget.controller.attach(this);
-    _all = [];
     _searchResults = [];
     _searchQuery = '';
     _searchInProgress = false;
-    _getAllInProgress = false;
   }
 
   @override
@@ -85,8 +81,7 @@ class OBContextualHashtagSearchBoxState
       }
     }
 
-    return OBPrimaryColorContainer(
-        child: _buildSearchResultsList());
+    return OBPrimaryColorContainer(child: _buildSearchResultsList());
   }
 
   Widget _buildSearchResultsList() {
@@ -119,8 +114,13 @@ class OBContextualHashtagSearchBoxState
         );
       } else if (_searchResults.isEmpty) {
         return ListTile(
-            leading: const OBIcon(OBIcons.sad),
-            title: OBText('No results found'));
+          leading: const Padding(
+            padding: const EdgeInsets.only(left: 10),
+            child: const OBIcon(OBIcons.happy),
+          ),
+          title: OBText('Be the first to use #$_searchQuery'),
+          onTap: () => widget.onHashtagPressed(Hashtag(name: _searchQuery)),
+        );
       } else {
         return const SizedBox();
       }
@@ -136,7 +136,6 @@ class OBContextualHashtagSearchBoxState
   void _bootstrap() {
     debugLog('Nothing to bootstrap');
   }
-
 
   Future search(String searchQuery) async {
     if (_searchParticipantsOperation != null)
@@ -182,12 +181,6 @@ class OBContextualHashtagSearchBoxState
   void _setSearchResults(List<Hashtag> searchResults) {
     setState(() {
       _searchResults = searchResults;
-    });
-  }
-
-  void _setAll(List<Hashtag> all) {
-    setState(() {
-      _all = all;
     });
   }
 

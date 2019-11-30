@@ -146,7 +146,10 @@ class OBContextualAccountSearchBoxState
         );
       } else if (_searchResults.isEmpty) {
         return ListTile(
-            leading: const OBIcon(OBIcons.sad),
+            leading: const Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: const OBIcon(OBIcons.sad),
+            ),
             title: OBText('No results found'));
       } else {
         return const SizedBox();

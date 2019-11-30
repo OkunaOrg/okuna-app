@@ -49,14 +49,9 @@ class OBHashtagAvatar extends StatelessWidget {
           } else {
             String hashtagHexColor = hashtag.color;
 
-            OpenbookProviderState openbookProviderState =
-                OpenbookProvider.of(context);
-            ThemeValueParserService themeValueParserService =
-                openbookProviderState.themeValueParserService;
-            ThemeService themeService = openbookProviderState.themeService;
+            OpenbookProviderState openbookProviderState = OpenbookProvider.of(context);
 
-            Color hashtagColor =
-                themeValueParserService.parseColor(hashtagHexColor);
+            Color hashtagColor =  openbookProviderState.utilsService.parseHexColor(hashtagHexColor);
             Color textColor = Colors.white;
 
             avatar = OBLetterAvatar(
