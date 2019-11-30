@@ -133,6 +133,8 @@ class OBIcons {
   static const pause = OBIconData(nativeIcon: Icons.pause);
   static const play_arrow = OBIconData(nativeIcon: Icons.play_arrow);
   static const search = OBIconData(nativeIcon: Icons.search);
+  static const okuna_age_baby = OBIconData(nativeIcon: Icons.child_care);
+  static const okuna_age_smile = OBIconData(nativeIcon: Icons.sentiment_satisfied);
   static const notifications = OBIconData(nativeIcon: Icons.notifications);
   static const notifications_off = OBIconData(nativeIcon: Icons.notifications_off);
   static const language = OBIconData(nativeIcon: Icons.language);
