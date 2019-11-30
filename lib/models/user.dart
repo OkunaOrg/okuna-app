@@ -25,6 +25,7 @@ class User extends UpdatableModel<User> {
   String username;
   Language language;
   UserProfile profile;
+  DateTime dateJoined;
   UserNotificationsSettings notificationsSettings;
   int followersCount;
   int followingCount;
@@ -77,6 +78,7 @@ class User extends UpdatableModel<User> {
     return {
       'id': id,
       'uuid': uuid,
+      'date_joined': dateJoined?.toString(),
       'connections_circle_id': connectionsCircleId,
       'email': email,
       'username': username,
@@ -119,6 +121,7 @@ class User extends UpdatableModel<User> {
   User(
       {this.id,
       this.uuid,
+      this.dateJoined,
       this.connectionsCircleId,
       this.username,
       this.email,
@@ -150,6 +153,7 @@ class User extends UpdatableModel<User> {
   void updateFromJson(Map json) {
     if (json.containsKey('username')) username = json['username'];
     if (json.containsKey('uuid')) uuid = json['uuid'];
+    if (json.containsKey('date_joined')) dateJoined = navigationUsersFactory.parseDateJoined(json['date_joined']);
     if (json.containsKey('are_guidelines_accepted'))
       areGuidelinesAccepted = json['are_guidelines_accepted'];
     if (json.containsKey('email')) email = json['email'];
@@ -605,6 +609,7 @@ class UserFactory extends UpdatableModelFactory<User> {
     return User(
         id: json['id'],
         uuid: json['uuid'],
+        dateJoined: parseDateJoined(json['date_joined']),
         areGuidelinesAccepted: json['are_guidelines_accepted'],
         connectionsCircleId: json['connections_circle_id'],
         followersCount: json['followers_count'],
@@ -670,5 +675,10 @@ class UserFactory extends UpdatableModelFactory<User> {
   Language parseLanguage(Map languageData) {
     if (languageData == null) return null;
     return Language.fromJson(languageData);
+  }
+
+  DateTime parseDateJoined(String dateJoined) {
+    if (dateJoined == null) return null;
+    return DateTime.parse(dateJoined).toLocal();
   }
 }
