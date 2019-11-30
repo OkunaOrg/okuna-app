@@ -2,16 +2,16 @@ import 'package:Okuna/models/theme.dart';
 import 'package:Okuna/provider.dart';
 import 'package:flutter/material.dart';
 
-class OBHighlightedBox extends StatelessWidget {
+class OBHighlightedColorContainer extends StatelessWidget {
   final Widget child;
-  final EdgeInsets padding;
-  final BorderRadius borderRadius;
+  final BoxDecoration decoration;
+  final MainAxisSize mainAxisSize;
 
-  const OBHighlightedBox(
+  const OBHighlightedColorContainer(
       {Key key,
       this.child,
-      this.padding,
-      this.borderRadius})
+      this.decoration,
+      this.mainAxisSize = MainAxisSize.max})
       : super(key: key);
 
   @override
@@ -35,13 +35,25 @@ class OBHighlightedBox extends StatelessWidget {
               ? Color.fromARGB(30, 255, 255, 255)
               : Color.fromARGB(10, 0, 0, 0);
 
-          return Container(
-            padding: padding,
-            decoration: BoxDecoration(
-              borderRadius: borderRadius,
-              color: highlightedColor,
-            ),
-            child: child,
+          Widget container = DecoratedBox(
+              decoration: BoxDecoration(
+                  color:
+                      themeValueParserService.parseColor(theme.primaryColor),
+                  borderRadius: decoration?.borderRadius),
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                    color: highlightedColor,
+                    borderRadius: decoration?.borderRadius),
+                child: child,
+              ));
+
+          if (mainAxisSize == MainAxisSize.min) {
+            return container;
+          }
+
+          return Column(
+            mainAxisSize: mainAxisSize,
+            children: <Widget>[Expanded(child: container)],
           );
         });
   }
