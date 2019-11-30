@@ -63,8 +63,16 @@ class UtilsService {
     return isDark;
   }
 
+  List<String> extractHashtagsInString(String str) {
+    RegExp hashtagRegExp = RegExp(r"\B#\w*[a-zA-Z]+\w*", caseSensitive: false);
+    return hashtagRegExp.allMatches(str).map((match) => match.group(0)).toList();
+  }
+
+  int countHashtagsInString(String str) {
+    return extractHashtagsInString(str).length;
+  }
+
   bool colorIsDark(Color color) {
-    print(color.computeLuminance());
     return color.computeLuminance() < 0.179;
   }
 

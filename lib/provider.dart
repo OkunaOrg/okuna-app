@@ -176,6 +176,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     devicesApiService.setHttpService(httpService);
     devicesApiService.setStringTemplateService(stringTemplateService);
     validationService.setAuthApiService(authApiService);
+    validationService.setUtilsService(utilsService);
     validationService.setFollowsListsApiService(followsListsApiService);
     validationService.setCommunitiesApiService(communitiesApiService);
     validationService

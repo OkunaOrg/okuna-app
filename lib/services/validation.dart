@@ -5,6 +5,7 @@ import 'package:Okuna/services/connections_circles_api.dart';
 import 'package:Okuna/services/follows_lists_api.dart';
 import 'package:Okuna/services/httpie.dart';
 import 'package:Okuna/services/media.dart';
+import 'package:Okuna/services/utils_service.dart';
 import 'package:validators/validators.dart' as validators;
 
 import 'localization.dart';
@@ -15,6 +16,7 @@ class ValidationService {
   FollowsListsApiService _followsListsApiService;
   ConnectionsCirclesApiService _connectionsCirclesApiService;
   LocalizationService _localizationService;
+  UtilsService _utilsService;
 
   static const int USERNAME_MAX_LENGTH = 30;
   static const int COMMUNITY_NAME_MAX_LENGTH = 32;
@@ -23,6 +25,8 @@ class ValidationService {
   static const int COMMUNITY_USER_ADJECTIVE_MAX_LENGTH = 16;
   static const int COMMUNITY_RULES_MAX_LENGTH = 1500;
   static const int POST_MAX_LENGTH = 5000;
+  static const int POST_MAX_HASHTAGS = 3;
+  static const int POST_COMMENT_MAX_HASHTAGS = 3;
   static const int POST_COMMENT_MAX_LENGTH = 1500;
   static const int PASSWORD_MIN_LENGTH = 10;
   static const int PASSWORD_MAX_LENGTH = 100;
@@ -42,6 +46,10 @@ class ValidationService {
 
   void setAuthApiService(AuthApiService authApiService) {
     _authApiService = authApiService;
+  }
+
+  void setUtilsService(UtilsService utilsService) {
+    _utilsService = utilsService;
   }
 
   void setCommunitiesApiService(CommunitiesApiService communitiesApiService) {
@@ -98,6 +106,16 @@ class ValidationService {
 
   bool isPostTextAllowedLength(String postText) {
     return postText.length <= POST_MAX_LENGTH;
+  }
+
+  bool isPostTextWithinHashtagLimit(String postText) {
+    int hashtagsCount = _utilsService.countHashtagsInString(postText);
+    return hashtagsCount <= POST_MAX_HASHTAGS;
+  }
+
+  bool isPostCommentTextWithinHashtagLimit(String postCommentText) {
+    int hashtagsCount = _utilsService.countHashtagsInString(postCommentText);
+    return hashtagsCount <= POST_COMMENT_MAX_HASHTAGS;
   }
 
   bool isBioAllowedLength(String bio) {
