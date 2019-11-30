@@ -3699,11 +3699,28 @@ class LocalizationService {
         name: 'contextual_account_search_box__suggestions');
   }
 
+  String get contextual_account_search_box__no_results {
+    return Intl.message("No results found",
+        name: 'contextual_account_search_box__no_results');
+  }
+
   String get contextual_community_search_box__suggestions {
     return Intl.message("Suggestions",
         desc:
             "The title to display on the suggestions when searching for communitys when trying to mention someone.",
         name: 'contextual_community_search_box__suggestions');
+  }
+
+  String get contextual_community_search_box__no_results {
+    return Intl.message("No results found",
+        name: 'contextual_community_search_box__no_results');
+  }
+
+  String contextual_hashtag_search_box__be_the_first(String hashtag) {
+    return Intl.message(
+        "Be the first to use #$hashtag",
+        args: [hashtag],
+        name: 'contextual_hashtag_search_box__be_the_first');
   }
 
   String get image_picker__from_gallery {

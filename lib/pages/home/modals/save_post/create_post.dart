@@ -449,7 +449,6 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
           _validationService.isPostTextAllowedLength(text);
       _isPostTextWithinHashtagLimit =
           _validationService.isPostTextWithinHashtagLimit(text);
-      print(_isPostTextWithinHashtagLimit);
     });
   }
 

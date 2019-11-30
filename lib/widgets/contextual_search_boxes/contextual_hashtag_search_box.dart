@@ -118,7 +118,7 @@ class OBContextualHashtagSearchBoxState
             padding: const EdgeInsets.only(left: 10),
             child: const OBIcon(OBIcons.happy),
           ),
-          title: OBText('Be the first to use #$_searchQuery'),
+          title: OBText(_localizationService.contextual_hashtag_search_box__be_the_first(_searchQuery)),
           onTap: () => widget.onHashtagPressed(Hashtag(name: _searchQuery)),
         );
       } else {

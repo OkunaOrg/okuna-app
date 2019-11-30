@@ -150,7 +150,7 @@ class OBContextualAccountSearchBoxState
               padding: const EdgeInsets.only(left: 10),
               child: const OBIcon(OBIcons.sad),
             ),
-            title: OBText('No results found'));
+            title: OBText(_localizationService.contextual_account_search_box__no_results));
       } else {
         return const SizedBox();
       }
