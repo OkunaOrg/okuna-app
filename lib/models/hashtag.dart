@@ -8,6 +8,7 @@ class Hashtag extends UpdatableModel<Hashtag> {
   String image;
   Emoji emoji;
   String color;
+  String textColor;
   int postsCount;
 
   Hashtag({
@@ -16,6 +17,7 @@ class Hashtag extends UpdatableModel<Hashtag> {
     this.image,
     this.emoji,
     this.color,
+    this.textColor,
     this.postsCount,
   });
 
@@ -33,6 +35,7 @@ class Hashtag extends UpdatableModel<Hashtag> {
       'emoji': emoji,
       'image': image,
       'color': color,
+      'text_color': textColor,
       'posts_count': postsCount,
     };
   }
@@ -47,6 +50,10 @@ class Hashtag extends UpdatableModel<Hashtag> {
     }
     if (json.containsKey('color')) {
       color = json['color'];
+    }
+
+    if (json.containsKey('text_color')) {
+      textColor = json['text_color'];
     }
 
     if (json.containsKey('image')) {
@@ -78,6 +85,7 @@ class HashtagFactory extends UpdatableModelFactory<Hashtag> {
       id: json['id'],
       name: json['name'],
       color: json['color'],
+      textColor: json['text_color'],
       emoji: parseEmoji(json['emoji']),
       postsCount: json['posts_count'],
     );

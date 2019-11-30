@@ -1,6 +1,5 @@
 import 'package:Okuna/models/hashtag.dart';
 import 'package:Okuna/provider.dart';
-import 'package:Okuna/widgets/emoji_picker/widgets/emoji_groups/widgets/emoji_group/widgets/emoji.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
 
@@ -22,7 +21,7 @@ class OBHashtag extends StatelessWidget {
     var utilsService = openbookProvider.utilsService;
 
     Color hashtagBackgroundColor = utilsService.parseHexColor(hashtag.color);
-    Color hashtagTextColor = Colors.white;
+    Color hashtagTextColor = utilsService.parseHexColor(hashtag.textColor);
 
 
     TextStyle finalTextStyle = textStyle ?? TextStyle();
