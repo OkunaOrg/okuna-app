@@ -491,7 +491,7 @@ class LocalizationService {
   }
 
   String get auth__login__forgot_password_subtitle {
-    return Intl.message("Enter your username or email",
+    return Intl.message("Enter your email",
         name: 'auth__login__forgot_password_subtitle');
   }
 
@@ -505,10 +505,6 @@ class LocalizationService {
 
   String get auth__login__email_label {
     return Intl.message("Email", name: 'auth__login__email_label');
-  }
-
-  String get auth__login__or_text {
-    return Intl.message("Or", name: 'auth__login__or_text');
   }
 
   String get auth__login__password_empty_error {
