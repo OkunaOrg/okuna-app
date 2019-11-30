@@ -330,10 +330,9 @@ class OBSmartText extends StatelessWidget {
             textStyle: usernameStyle,
           ));
         } else {
-          textSpan = LinkTextSpan(
+          textSpan = TextSpan(
             text: element.text,
-            style: usernameStyle,
-            onPressed: () => _onUsernameTapped(element.text),
+            style: style,
           );
         }
       } else if (element is UsernameElement) {

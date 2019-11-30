@@ -13,6 +13,7 @@ import 'package:Okuna/services/dialog.dart';
 import 'package:Okuna/services/documents.dart';
 import 'package:Okuna/services/draft.dart';
 import 'package:Okuna/services/explore_timeline_preferences.dart';
+import 'package:Okuna/services/hashtags_api.dart';
 import 'package:Okuna/services/intercom.dart';
 import 'package:Okuna/services/link_preview.dart';
 import 'package:Okuna/services/moderation_api.dart';
@@ -20,7 +21,7 @@ import 'package:Okuna/services/notifications_api.dart';
 import 'package:Okuna/services/permissions.dart';
 import 'package:Okuna/services/push_notifications/push_notifications.dart';
 import 'package:Okuna/services/share.dart';
-import 'package:Okuna/services/text_account_autocompletion.dart';
+import 'package:Okuna/services/text_autocompletion.dart';
 import 'package:Okuna/services/universal_links/universal_links.dart';
 import 'package:Okuna/services/emoji_picker.dart';
 import 'package:Okuna/services/emojis_api.dart';
@@ -91,6 +92,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   FollowsApiService followsApiService = FollowsApiService();
   PermissionsService permissionService = PermissionsService();
   CommunitiesApiService communitiesApiService = CommunitiesApiService();
+  HashtagsApiService hashtagsApiService = HashtagsApiService();
   CategoriesApiService categoriesApiService = CategoriesApiService();
   NotificationsApiService notificationsApiService = NotificationsApiService();
   DevicesApiService devicesApiService = DevicesApiService();
@@ -147,6 +149,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     createAccountBloc.setAuthApiService(authApiService);
     createAccountBloc.setUserService(userService);
     userService.setAuthApiService(authApiService);
+    userService.setHashtagsApiService(hashtagsApiService);
     userService.setPushNotificationsService(pushNotificationsService);
     userService.setIntercomService(intercomService);
     userService.setPostsApiService(postsApiService);
@@ -200,6 +203,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     shareService.setToastService(toastService);
     shareService.setValidationService(validationService);
     permissionService.setToastService(toastService);
+    hashtagsApiService.setHttpieService(httpService);
   }
 
   void initAsyncState() async {
@@ -219,6 +223,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     connectionsCirclesApiService.setApiURL(environment.apiUrl);
     followsListsApiService.setApiURL(environment.apiUrl);
     communitiesApiService.setApiURL(environment.apiUrl);
+    hashtagsApiService.setApiURL(environment.apiUrl);
     categoriesApiService.setApiURL(environment.apiUrl);
     notificationsApiService.setApiURL(environment.apiUrl);
     devicesApiService.setApiURL(environment.apiUrl);

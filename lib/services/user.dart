@@ -17,6 +17,7 @@ import 'package:Okuna/models/emoji.dart';
 import 'package:Okuna/models/emoji_group_list.dart';
 import 'package:Okuna/models/follow.dart';
 import 'package:Okuna/models/follows_list.dart';
+import 'package:Okuna/models/hashtags_list.dart';
 import 'package:Okuna/models/language.dart';
 import 'package:Okuna/models/language_list.dart';
 import 'package:Okuna/models/moderation/moderated_object.dart';
@@ -55,6 +56,7 @@ import 'package:Okuna/services/devices_api.dart';
 import 'package:Okuna/services/draft.dart';
 import 'package:Okuna/services/emojis_api.dart';
 import 'package:Okuna/services/follows_api.dart';
+import 'package:Okuna/services/hashtags_api.dart';
 import 'package:Okuna/services/httpie.dart';
 import 'package:Okuna/services/follows_lists_api.dart';
 import 'package:Okuna/services/localization.dart';
@@ -91,6 +93,7 @@ class UserService {
   PostsApiService _postsApiService;
   ModerationApiService _moderationApiService;
   CommunitiesApiService _communitiesApiService;
+  HashtagsApiService _hashtagsApiService;
   CategoriesApiService _categoriesApiService;
   EmojisApiService _emojisApiService;
   FollowsApiService _followsApiService;
@@ -165,6 +168,10 @@ class UserService {
 
   void setCommunitiesApiService(CommunitiesApiService communitiesApiService) {
     _communitiesApiService = communitiesApiService;
+  }
+
+  void setHashtagsApiService(HashtagsApiService hashtagsApiService) {
+    _hashtagsApiService = hashtagsApiService;
   }
 
   void setCategoriesApiService(CategoriesApiService categoriesApiService) {
@@ -1652,6 +1659,20 @@ class UserService {
     HttpieResponse response = await _categoriesApiService.getCategories();
     _checkResponseIsOk(response);
     return CategoriesList.fromJson(json.decode(response.body));
+  }
+
+  Future<HashtagsList> getHashtagsWithQuery(String query) async {
+    HttpieResponse response =
+    await _hashtagsApiService.getHashtagsWithQuery(query: query);
+    _checkResponseIsOk(response);
+    return HashtagsList.fromJson(json.decode(response.body));
+  }
+
+  Future<HashtagsList> getSuggestedHashtags() async {
+    HttpieResponse response = await _hashtagsApiService
+        .getSuggestedHashtags();
+    _checkResponseIsOk(response);
+    return HashtagsList.fromJson(json.decode(response.body));
   }
 
   Future<NotificationsList> getNotifications(

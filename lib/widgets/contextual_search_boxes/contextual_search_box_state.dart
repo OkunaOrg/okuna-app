@@ -1,9 +1,11 @@
 import 'package:Okuna/models/community.dart';
+import 'package:Okuna/models/hashtag.dart';
 import 'package:Okuna/models/user.dart';
 import 'package:Okuna/provider.dart';
-import 'package:Okuna/services/text_account_autocompletion.dart';
+import 'package:Okuna/services/text_autocompletion.dart';
 import 'package:Okuna/widgets/contextual_search_boxes/contextual_account_search_box.dart';
 import 'package:Okuna/widgets/contextual_search_boxes/contextual_community_search_box.dart';
+import 'package:Okuna/widgets/contextual_search_boxes/contextual_hashtag_search_box.dart';
 import 'package:flutter/material.dart';
 
 abstract class OBContextualSearchBoxState<T extends StatefulWidget>
@@ -12,6 +14,7 @@ abstract class OBContextualSearchBoxState<T extends StatefulWidget>
   OBContextualAccountSearchBoxController _contextualAccountSearchBoxController;
   OBContextualCommunitySearchBoxController
       _contextualCommunitySearchBoxController;
+  OBContextualHashtagSearchBoxController _contextualHashtagSearchBoxController;
 
   TextAutocompletionType _autocompletionType;
 
@@ -26,6 +29,8 @@ abstract class OBContextualSearchBoxState<T extends StatefulWidget>
         OBContextualAccountSearchBoxController();
     _contextualCommunitySearchBoxController =
         OBContextualCommunitySearchBoxController();
+    _contextualHashtagSearchBoxController =
+        OBContextualHashtagSearchBoxController();
     isAutocompleting = false;
   }
 
@@ -51,9 +56,16 @@ abstract class OBContextualSearchBoxState<T extends StatefulWidget>
       throw 'There is no current autocompletion';
     }
 
-    return _autocompletionType == TextAutocompletionType.account
-        ? _buildAccountSearchBox()
-        : _buildCommunitySearchBox();
+    switch (_autocompletionType) {
+      case TextAutocompletionType.account:
+        return _buildAccountSearchBox();
+      case TextAutocompletionType.community:
+        return _buildCommunitySearchBox();
+      case TextAutocompletionType.hashtag:
+        return _buildHashtagSearchBox();
+      default:
+        throw 'Unhandled text autocompletion type';
+    }
   }
 
   Widget _buildAccountSearchBox() {
@@ -77,12 +89,28 @@ abstract class OBContextualSearchBoxState<T extends StatefulWidget>
     );
   }
 
+  Widget _buildHashtagSearchBox() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: OBContextualHashtagSearchBox(
+        controller: _contextualHashtagSearchBoxController,
+        onHashtagPressed: _onHashtagSearchBoxUserPressed,
+        initialSearchQuery:
+            _contextualHashtagSearchBoxController.getLastSearchQuery(),
+      ),
+    );
+  }
+
   void _onAccountSearchBoxUserPressed(User user) {
     autocompleteFoundAccountUsername(user.username);
   }
 
   void _onCommunitySearchBoxUserPressed(Community community) {
     autocompleteFoundCommunityName(community.name);
+  }
+
+  void _onHashtagSearchBoxUserPressed(Hashtag hashtag) {
+    autocompleteFoundHashtagName(hashtag.name);
   }
 
   void _checkForAutocomplete() {
@@ -94,11 +122,20 @@ abstract class OBContextualSearchBoxState<T extends StatefulWidget>
           result.autocompleteQuery);
       _setIsAutocompleting(true);
       _setAutocompletionType(result.type);
-      result.type == TextAutocompletionType.account
-          ? _contextualAccountSearchBoxController
-              .search(result.autocompleteQuery)
-          : _contextualCommunitySearchBoxController
+      switch (result.type) {
+        case TextAutocompletionType.hashtag:
+          _contextualHashtagSearchBoxController
               .search(result.autocompleteQuery);
+          break;
+        case TextAutocompletionType.account:
+          _contextualAccountSearchBoxController
+              .search(result.autocompleteQuery);
+          break;
+        case TextAutocompletionType.community:
+          _contextualCommunitySearchBoxController
+              .search(result.autocompleteQuery);
+          break;
+      }
     } else if (isAutocompleting) {
       debugLog('Finished autocompleting');
       _setIsAutocompleting(false);
@@ -130,6 +167,20 @@ abstract class OBContextualSearchBoxState<T extends StatefulWidget>
     setState(() {
       _textAutocompletionService.autocompleteTextWithCommunityName(
           _autocompleteTextController, foundCommunityName);
+    });
+  }
+
+  void autocompleteFoundHashtagName(String foundHashtagName) {
+    if (!isAutocompleting) {
+      debugLog(
+          'Tried to autocomplete found hashtag name but was not searching hashtag');
+      return;
+    }
+
+    debugLog('Autocompleting with name:$foundHashtagName');
+    setState(() {
+      _textAutocompletionService.autocompleteTextWithHashtagName(
+          _autocompleteTextController, foundHashtagName);
     });
   }
 
