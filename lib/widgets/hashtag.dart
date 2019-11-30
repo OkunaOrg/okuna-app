@@ -13,7 +13,7 @@ class OBHashtag extends StatelessWidget {
       {Key key,
       @required this.hashtag,
       this.onPressed,
-      @required this.textStyle})
+      this.textStyle})
       : super(key: key);
 
   @override
@@ -27,7 +27,7 @@ class OBHashtag extends StatelessWidget {
 
     TextStyle finalTextStyle = textStyle ?? TextStyle();
 
-    finalTextStyle = finalTextStyle.merge(TextStyle(color: hashtagTextColor));
+    finalTextStyle = finalTextStyle.merge(TextStyle(color: hashtagTextColor, fontWeight: FontWeight.bold));
 
     Widget hashtagContent = Text('${hashtag.name}', style: finalTextStyle,);
 

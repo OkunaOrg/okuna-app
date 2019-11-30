@@ -133,45 +133,10 @@ class OBContextualHashtagSearchBoxState
     );
   }
 
-  Widget _buildAllItem(BuildContext context, int index) {
-    return OBHashtagTile(
-      _all[index],
-      key: Key(_all[index].id.toString()),
-      onHashtagTilePressed: widget.onHashtagPressed,
-    );
-  }
-
-  Widget _buildProgressIndicator() {
-    return Padding(
-      padding: EdgeInsets.all(10),
-      child: Center(child: OBProgressIndicator()),
-    );
-  }
-
   void _bootstrap() {
-    debugLog('Bootstrapping');
-    refreshAll();
+    debugLog('Nothing to bootstrap');
   }
 
-  Future refreshAll() async {
-    if (_getAllOperation != null) _getAllOperation.cancel();
-
-    _setGetAllInProgress(true);
-
-    debugLog('Refreshing all hashtags');
-
-    try {
-      _getAllOperation =
-          CancelableOperation.fromFuture(_userService.getSuggestedHashtags());
-      HashtagsList all = await _getAllOperation.value;
-      _setAll(all.hashtags);
-    } catch (error) {
-      _onError(error);
-    } finally {
-      _setGetAllInProgress(false);
-      _getAllOperation = null;
-    }
-  }
 
   Future search(String searchQuery) async {
     if (_searchParticipantsOperation != null)
@@ -235,12 +200,6 @@ class OBContextualHashtagSearchBoxState
   void _setSearchInProgress(bool searchInProgress) {
     setState(() {
       _searchInProgress = searchInProgress;
-    });
-  }
-
-  void _setGetAllInProgress(bool getAllInProgress) {
-    setState(() {
-      _getAllInProgress = getAllInProgress;
     });
   }
 

@@ -1668,13 +1668,6 @@ class UserService {
     return HashtagsList.fromJson(json.decode(response.body));
   }
 
-  Future<HashtagsList> getSuggestedHashtags() async {
-    HttpieResponse response = await _hashtagsApiService
-        .getSuggestedHashtags();
-    _checkResponseIsOk(response);
-    return HashtagsList.fromJson(json.decode(response.body));
-  }
-
   Future<NotificationsList> getNotifications(
       {int maxId, int count, List<NotificationType> types}) async {
     HttpieResponse response = await _notificationsApiService.getNotifications(

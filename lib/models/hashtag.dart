@@ -68,6 +68,10 @@ class Hashtag extends UpdatableModel<Hashtag> {
   bool hasEmoji() {
     return this.emoji != null;
   }
+
+  bool hasImage() {
+    return this.image != null;
+  }
 }
 
 class HashtagFactory extends UpdatableModelFactory<Hashtag> {
