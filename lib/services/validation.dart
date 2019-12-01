@@ -26,6 +26,7 @@ class ValidationService {
   static const int COMMUNITY_RULES_MAX_LENGTH = 1500;
   static const int POST_MAX_LENGTH = 5000;
   static const int POST_MAX_HASHTAGS = 3;
+  static const int HASHTAG_MAX_LENGTH = 32;
   static const int POST_COMMENT_MAX_HASHTAGS = 3;
   static const int POST_COMMENT_MAX_LENGTH = 1500;
   static const int PASSWORD_MIN_LENGTH = 10;
@@ -108,14 +109,20 @@ class ValidationService {
     return postText.length <= POST_MAX_LENGTH;
   }
 
-  bool isPostTextWithinHashtagLimit(String postText) {
-    int hashtagsCount = _utilsService.countHashtagsInString(postText);
-    return hashtagsCount <= POST_MAX_HASHTAGS;
-  }
+  bool isPostTextContainingValidHashtags(String postText) {
+    List<String> hashtags = _utilsService.extractHashtagsInString(postText);
+    bool hashtagsHaveAllowedMaxCharacters = true;
 
-  bool isPostCommentTextWithinHashtagLimit(String postCommentText) {
-    int hashtagsCount = _utilsService.countHashtagsInString(postCommentText);
-    return hashtagsCount <= POST_COMMENT_MAX_HASHTAGS;
+    hashtags
+        .takeWhile((hashtag) => hashtagsHaveAllowedMaxCharacters)
+        .forEach((hashtag) {
+      if (hashtag.length > HASHTAG_MAX_LENGTH) {
+        hashtagsHaveAllowedMaxCharacters = false;
+      }
+    });
+
+    return hashtags.length <= POST_MAX_HASHTAGS &&
+        hashtagsHaveAllowedMaxCharacters;
   }
 
   bool isBioAllowedLength(String bio) {
@@ -173,14 +180,6 @@ class ValidationService {
     RegExp regExp = new RegExp(p, caseSensitive: false);
 
     return regExp.hasMatch(username);
-  }
-
-  bool isHashtagAllowedCharacters(String hashtag) {
-    String p = r'^[a-zA-Z]+$';
-
-    RegExp regExp = new RegExp(p, caseSensitive: false);
-
-    return regExp.hasMatch(hashtag);
   }
 
   bool isCommunityNameAllowedCharacters(String name) {

@@ -18,6 +18,8 @@ class UtilsService {
   static SimpleCache<String, Color> parseHexColorCache =
       SimpleCache(storage: SimpleStorage(size: 30));
 
+  static RegExp hashtagsRegExp = RegExp(r"\B#\w*[a-zA-Z]+\w*", caseSensitive: false);
+
   Future<bool> fileHasImageMimeType(File file) async {
     String fileMimeType =
         await getFileMimeType(file) ?? 'application/octet-stream';
@@ -64,8 +66,7 @@ class UtilsService {
   }
 
   List<String> extractHashtagsInString(String str) {
-    RegExp hashtagRegExp = RegExp(r"\B#\w*[a-zA-Z]+\w*", caseSensitive: false);
-    return hashtagRegExp.allMatches(str).map((match) => match.group(0)).toList();
+    return hashtagsRegExp.allMatches(str).map((match) => match.group(0)).toList();
   }
 
   int countHashtagsInString(String str) {

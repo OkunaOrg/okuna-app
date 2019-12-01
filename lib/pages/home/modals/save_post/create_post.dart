@@ -72,7 +72,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
   String _linkPreviewUrl;
 
   bool _isPostTextAllowedLength;
-  bool _isPostTextWithinHashtagLimit;
+  bool _isPostTextContainingValidHashtags;
 
   bool _hasFocus;
   bool _hasImage;
@@ -109,7 +109,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
     _hasFocus = false;
     _linkPreviewUrl = '';
     _isPostTextAllowedLength = false;
-    _isPostTextWithinHashtagLimit = false;
+    _isPostTextContainingValidHashtags = false;
     _isCreateCommunityPostInProgress = false;
     _needsBootstrap = true;
 
@@ -168,8 +168,8 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
     _charactersCount = _textController.text.length;
     _isPostTextAllowedLength =
         _validationService.isPostTextAllowedLength(_textController.text);
-    _isPostTextWithinHashtagLimit =
-        _validationService.isPostTextWithinHashtagLimit(_textController.text);
+    _isPostTextContainingValidHashtags = _validationService
+        .isPostTextContainingValidHashtags(_textController.text);
     if (!_isEditingPost) {
       _shareService.subscribe(_onShare);
     }
@@ -295,10 +295,11 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
   }
 
   Future<void> _onWantsToCreateCommunityPost() {
-    if (!_isPostTextWithinHashtagLimit) {
+    if (!_isPostTextContainingValidHashtags) {
       _toastService.error(
-          message: _localizationService.post__create_max_hashtags_exceeded(
-              ValidationService.POST_MAX_HASHTAGS),
+          message: _localizationService.post__create_hashtags_invalid(
+              ValidationService.POST_MAX_HASHTAGS,
+              ValidationService.HASHTAG_MAX_LENGTH),
           context: context);
       return null;
     }
@@ -306,10 +307,11 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
   }
 
   void _onWantsToGoNext() async {
-    if (!_isPostTextWithinHashtagLimit) {
+    if (!_isPostTextContainingValidHashtags) {
       _toastService.error(
-          message: _localizationService.post__create_max_hashtags_exceeded(
-              ValidationService.POST_MAX_HASHTAGS),
+          message: _localizationService.post__create_hashtags_invalid(
+              ValidationService.POST_MAX_HASHTAGS,
+              ValidationService.HASHTAG_MAX_LENGTH),
           context: context);
       return;
     }
@@ -447,8 +449,8 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
       _charactersCount = text.length;
       _isPostTextAllowedLength =
           _validationService.isPostTextAllowedLength(text);
-      _isPostTextWithinHashtagLimit =
-          _validationService.isPostTextWithinHashtagLimit(text);
+      _isPostTextContainingValidHashtags =
+          _validationService.isPostTextContainingValidHashtags(text);
     });
   }
 

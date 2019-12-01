@@ -29,9 +29,7 @@ class TextAutocompletionService {
             autocompleteQuery: searchQuery,
             type: TextAutocompletionType.community);
       } else if (lastWord.startsWith('#') &&
-          lastWord.length > 1 &&
-          _validationService
-              .isHashtagAllowedCharacters(lastWord.substring(1))) {
+          _validationService.isPostTextContainingValidHashtags(lastWord)) {
         String searchQuery = lastWord.substring(1);
         return TextAutocompletionResult(
             isAutocompleting: true,

@@ -1862,11 +1862,11 @@ class LocalizationService {
     return Intl.message("Video", name: 'post__create_video');
   }
 
-  String post__create_max_hashtags_exceeded(int maxHashtags) {
+  String post__create_hashtags_invalid(int maxHashtags, int maxCharacters) {
     return Intl.message(
-        "Please add up to $maxHashtags hashtags.",
-        args: [maxHashtags],
-        name: 'post__create_max_hashtags_exceeded');
+        "Please add up to $maxHashtags hashtags and under $maxCharacters characters.",
+        args: [maxHashtags, maxCharacters],
+        name: 'post__create_hashtags_invalid');
   }
 
   String get post__commenter_post_text {
