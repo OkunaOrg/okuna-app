@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:Okuna/models/communities_list.dart';
 import 'package:Okuna/models/community.dart';
+import 'package:Okuna/models/hashtag.dart';
+import 'package:Okuna/models/hashtags_list.dart';
 import 'package:Okuna/models/theme.dart';
 import 'package:Okuna/models/user.dart';
 import 'package:Okuna/models/users_list.dart';
@@ -9,7 +11,7 @@ import 'package:Okuna/pages/home/pages/search/widgets/top_posts.dart';
 import 'package:Okuna/pages/home/pages/search/widgets/trending_posts.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/navigation_service.dart';
-import 'package:Okuna/pages/home/pages/search/widgets/user_search_results.dart';
+import 'package:Okuna/pages/home/pages/search/widgets/search_results.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/httpie.dart';
 import 'package:Okuna/services/theme.dart';
@@ -37,7 +39,7 @@ class OBMainSearchPage extends StatefulWidget {
   }
 }
 
-class OBMainSearchPageState extends State<OBMainSearchPage> 
+class OBMainSearchPageState extends State<OBMainSearchPage>
     with WidgetsBindingObserver, TickerProviderStateMixin {
   UserService _userService;
   ToastService _toastService;
@@ -50,9 +52,11 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
   bool _isScrollingUp;
   bool _userSearchRequestInProgress;
   bool _communitySearchRequestInProgress;
+  bool _hashtagSearchRequestInProgress;
   String _searchQuery;
   List<User> _userSearchResults;
   List<Community> _communitySearchResults;
+  List<Hashtag> _hashtagSearchResults;
   OBTopPostsController _topPostsController;
   OBTrendingPostsController _trendingPostsController;
   TabController _tabController;
@@ -65,6 +69,7 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
 
   StreamSubscription<UsersList> _getUsersWithQuerySubscription;
   StreamSubscription<CommunitiesList> _getCommunitiesWithQuerySubscription;
+  StreamSubscription<HashtagsList> _getHashtagsWithQuerySubscription;
 
   static const double OB_BOTTOM_TAB_BAR_HEIGHT = 50.0;
   static const double HEIGHT_SEARCH_BAR = 76.0;
@@ -79,11 +84,13 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
     _trendingPostsController = OBTrendingPostsController();
     _userSearchRequestInProgress = false;
     _communitySearchRequestInProgress = false;
+    _hashtagSearchRequestInProgress = false;
     _hasSearch = false;
     _isScrollingUp = true;
     _heightTabs = HEIGHT_TABS_SECTION;
     _userSearchResults = [];
     _communitySearchResults = [];
+    _hashtagSearchResults = [];
     _selectedSearchResultsTab = OBUserSearchResultsTab.users;
     _tabController = new TabController(length: 2, vsync: this);
     _animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 150));
@@ -154,14 +161,17 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
         ),
         Padding(
           padding: EdgeInsets.only(top: HEIGHT_SEARCH_BAR + _extraPaddingForSlidableSection),
-          child: OBUserSearchResults(
+          child: OBSearchResults(
             searchQuery: _searchQuery,
             userResults: _userSearchResults,
             userSearchInProgress: _userSearchRequestInProgress,
             communityResults: _communitySearchResults,
             communitySearchInProgress: _communitySearchRequestInProgress,
+            hashtagResults: _hashtagSearchResults,
+            hashtagSearchInProgress: _hashtagSearchRequestInProgress,
             onUserPressed: _onSearchUserPressed,
             onCommunityPressed: _onSearchCommunityPressed,
+            onHashtagPressed: _onSearchHashtagPressed,
             selectedTab: _selectedSearchResultsTab,
             onScroll: _onScrollSearchResults,
             onTabSelectionChanged: _onSearchTabSelectionChanged,
@@ -272,7 +282,8 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
   Future<void> _searchWithQuery(String query) {
     return Future.wait([
       _searchForUsersWithQuery(query),
-      _searchForCommunitiesWithQuery(query)
+      _searchForCommunitiesWithQuery(query),
+      _searchForHashtagsWithQuery(query)
     ]);
   }
 
@@ -311,6 +322,23 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
             });
   }
 
+  Future<void> _searchForHashtagsWithQuery(String query) async {
+    if (_getHashtagsWithQuerySubscription != null)
+      _getHashtagsWithQuerySubscription.cancel();
+
+    _setHashtagSearchRequestInProgress(true);
+
+    _getHashtagsWithQuerySubscription =
+        _userService.getHashtagsWithQuery(query).asStream().listen(
+                (HashtagsList hashtagsList) {
+              _setHashtagSearchResults(hashtagsList.hashtags);
+            },
+            onError: _onError,
+            onDone: () {
+              _setHashtagSearchRequestInProgress(false);
+            });
+  }
+
   void _onError(error) async {
     if (error is HttpieConnectionRefusedError) {
       _toastService.error(
@@ -337,6 +365,12 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
   void _setCommunitySearchRequestInProgress(bool requestInProgress) {
     setState(() {
       _communitySearchRequestInProgress = requestInProgress;
+    });
+  }
+
+  void _setHashtagSearchRequestInProgress(bool requestInProgress) {
+    setState(() {
+      _hashtagSearchRequestInProgress = requestInProgress;
     });
   }
 
@@ -385,6 +419,12 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
     });
   }
 
+  void _setHashtagSearchResults(List<Hashtag> searchResults) {
+    setState(() {
+      _hashtagSearchResults = searchResults;
+    });
+  }
+
   void _onSearchUserPressed(User user) {
     _hideKeyboard();
     _navigationService.navigateToUserProfile(user: user, context: context);
@@ -394,6 +434,12 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
     _hideKeyboard();
     _navigationService.navigateToCommunity(
         community: community, context: context);
+  }
+
+  void _onSearchHashtagPressed(Hashtag hashtag) {
+    _hideKeyboard();
+    //_navigationService.navigateToHashtag(
+//        hashtag: hashtag, context: context);
   }
 
   void scrollToTop() {

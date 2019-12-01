@@ -1601,6 +1601,10 @@ class LocalizationService {
     return Intl.message("Communities", name: 'user_search__communities');
   }
 
+  String get user_search__hashtags {
+    return Intl.message("Hashtags", name: 'user_search__hashtags');
+  }
+
   String get user_search__users {
     return Intl.message("Users", name: 'user_search__users');
   }
@@ -1646,6 +1650,11 @@ class LocalizationService {
   String user_search__no_communities_for(String searchQuery) {
     return Intl.message("No communities found for '$searchQuery'.",
         args: [searchQuery], name: 'user_search__no_communities_for');
+  }
+
+  String user_search__no_hashtags_for(String searchQuery) {
+    return Intl.message("No hashtags found for '$searchQuery'.",
+        args: [searchQuery], name: 'user_search__no_hashtags_for');
   }
 
   String user_search__no_users_for(String searchQuery) {
