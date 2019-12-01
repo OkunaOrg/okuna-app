@@ -4,6 +4,7 @@ import 'package:Okuna/widgets/hashtag.dart';
 import 'package:Okuna/widgets/nav_bars/image_nav_bar.dart';
 import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Okuna/widgets/posts_count.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -25,27 +26,37 @@ class OBHashtagNavBar extends StatelessWidget
         builder: (BuildContext context, AsyncSnapshot<Hashtag> snapshot) {
           var hashtag = snapshot.data;
 
-          Widget navBarContents = Row(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              OBHashtag(
-                hashtag: hashtag,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 2),
-                child: Text('·', style: TextStyle(color: Colors.white),),
-              ),
-              OBPostsCount(hashtag.postsCount, color: Colors.white)
-            ],
-          );
-
           return hashtag.image != null
               ? OBImageNavBar(
                   imageSrc: hashtag.image,
-                  middle: navBarContents,
+                  middle: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      OBHashtag(
+                        hashtag: hashtag,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 3),
+                        child: Text('·', style: TextStyle(color: Colors.white),),
+                      ),
+                      OBPostsCount(hashtag.postsCount, color: Colors.white)
+                    ],
+                  ),
                   textColor: hashtagTextColor)
               : OBThemedNavigationBar(
-                  middle: navBarContents
+                  middle: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      OBHashtag(
+                        hashtag: hashtag,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 3),
+                        child: OBText('·'),
+                      ),
+                      OBPostsCount(hashtag.postsCount)
+                    ],
+                  )
                 );
         });
   }
