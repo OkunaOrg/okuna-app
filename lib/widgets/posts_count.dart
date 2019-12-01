@@ -8,17 +8,20 @@ import 'package:flutter/material.dart';
 class OBPostsCount extends StatelessWidget {
   final int postsCount;
   final bool showZero;
+  final Color color;
 
-  OBPostsCount(this.postsCount, {this.showZero = false});
+  OBPostsCount(this.postsCount, {this.showZero = false, this.color});
 
   @override
   Widget build(BuildContext context) {
-    if (postsCount == null || (postsCount == 0 && !showZero)) return const SizedBox();
+    if (postsCount == null || (postsCount == 0 && !showZero))
+      return const SizedBox();
 
     var openbookProvider = OpenbookProvider.of(context);
     var themeService = openbookProvider.themeService;
     var themeValueParserService = openbookProvider.themeValueParserService;
-    LocalizationService _localizationService = openbookProvider.localizationService;
+    LocalizationService _localizationService =
+        openbookProvider.localizationService;
     String count = getPrettyCount(postsCount, _localizationService);
 
     return StreamBuilder(
@@ -38,11 +41,15 @@ class OBPostsCount extends StatelessWidget {
                       text: count,
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: themeValueParserService.parseColor(theme.primaryTextColor))),
+                          color: color ?? themeValueParserService
+                              .parseColor(theme.primaryTextColor))),
                   TextSpan(
-                      text: postsCount == 1 ? _localizationService.post__profile_counts_post : _localizationService.post__profile_counts_posts,
+                      text: postsCount == 1
+                          ? _localizationService.post__profile_counts_post
+                          : _localizationService.post__profile_counts_posts,
                       style: TextStyle(
-                          color: themeValueParserService.parseColor(theme.secondaryTextColor)))
+                          color: color ?? themeValueParserService
+                              .parseColor(theme.secondaryTextColor)))
                 ])),
               )
             ],

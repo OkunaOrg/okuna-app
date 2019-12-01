@@ -1,9 +1,9 @@
 import 'package:Okuna/models/hashtag.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/widgets/hashtag.dart';
-import 'package:Okuna/widgets/nav_bars/colored_nav_bar.dart';
 import 'package:Okuna/widgets/nav_bars/image_nav_bar.dart';
 import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
+import 'package:Okuna/widgets/posts_count.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -24,17 +24,28 @@ class OBHashtagNavBar extends StatelessWidget
         initialData: hashtag,
         builder: (BuildContext context, AsyncSnapshot<Hashtag> snapshot) {
           var hashtag = snapshot.data;
-          return hashtag.hasImage()
+
+          Widget navBarContents = Row(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              OBHashtag(
+                hashtag: hashtag,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 2),
+                child: Text('·', style: TextStyle(color: Colors.white),),
+              ),
+              OBPostsCount(hashtag.postsCount, color: Colors.white)
+            ],
+          );
+
+          return hashtag.image != null
               ? OBImageNavBar(
                   imageSrc: hashtag.image,
-                  middle: OBHashtag(
-                    hashtag: hashtag,
-                  ),
+                  middle: navBarContents,
                   textColor: hashtagTextColor)
               : OBThemedNavigationBar(
-                  middle: OBHashtag(
-                    hashtag: hashtag,
-                  ),
+                  middle: navBarContents
                 );
         });
   }

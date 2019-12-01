@@ -1,6 +1,5 @@
 import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/hashtag.dart';
-import 'package:Okuna/pages/home/pages/hashtag/widgets/hashtag_cover.dart';
 import 'package:Okuna/pages/home/pages/hashtag/widgets/hashtag_nav_bar.dart';
 import 'package:Okuna/pages/home/pages/hashtag/widgets/hashtag_posts_stream_status_indicator.dart';
 import 'package:Okuna/provider.dart';
