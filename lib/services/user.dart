@@ -1677,6 +1677,13 @@ class UserService {
     return PostsList.fromJson(json.decode(response.body));
   }
 
+  Future<Hashtag> getHashtagWithName(String name) async {
+    HttpieResponse response =
+    await _hashtagsApiService.getHashtagWithName(name);
+    _checkResponseIsOk(response);
+    return Hashtag.fromJSON(json.decode(response.body));
+  }
+
   Future<NotificationsList> getNotifications(
       {int maxId, int count, List<NotificationType> types}) async {
     HttpieResponse response = await _notificationsApiService.getNotifications(

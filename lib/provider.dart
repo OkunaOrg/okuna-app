@@ -204,6 +204,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     shareService.setValidationService(validationService);
     permissionService.setToastService(toastService);
     hashtagsApiService.setHttpieService(httpService);
+    hashtagsApiService.setStringTemplateService(stringTemplateService);
     textAccountAutocompletionService.setValidationService(validationService);
   }
 

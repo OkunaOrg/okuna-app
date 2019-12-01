@@ -11,12 +11,14 @@ class OBThemedNavigationBar extends StatelessWidget
   final String title;
   final Widget trailing;
   final String previousPageTitle;
+  final Widget middle;
 
   OBThemedNavigationBar({
     this.leading,
     this.previousPageTitle,
     this.title,
     this.trailing,
+    this.middle,
   });
 
   @override
@@ -35,16 +37,17 @@ class OBThemedNavigationBar extends StatelessWidget
             .parseGradient(theme.primaryAccentColor)
             .colors[1];
 
-
         return CupertinoNavigationBar(
           border: null,
-          actionsForegroundColor:
-          actionsForegroundColor != null ? actionsForegroundColor : Colors.black,
-          middle: title != null
-              ? OBText(
-                  title,
-                )
-              : const SizedBox(),
+          actionsForegroundColor: actionsForegroundColor != null
+              ? actionsForegroundColor
+              : Colors.black,
+          middle: middle ??
+              (title != null
+                  ? OBText(
+                      title,
+                    )
+                  : const SizedBox()),
           transitionBetweenRoutes: false,
           backgroundColor:
               themeValueParserService.parseColor(theme.primaryColor),

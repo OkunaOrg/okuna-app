@@ -114,7 +114,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                           child: Column(
                             children: <Widget>[
                               const SizedBox(
-                                height: (OBCover.normalSizeHeight) -
+                                height: (OBCover.largeSizeHeight) -
                                     (OBAvatar.AVATAR_SIZE_LARGE / 2),
                               ),
                               _buildUserAvatar()
@@ -122,7 +122,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                           ),
                         ),
                         const SizedBox(
-                            height: OBCover.normalSizeHeight +
+                            height: OBCover.largeSizeHeight +
                                 OBAvatar.AVATAR_SIZE_LARGE / 2)
                       ],
                     ),

@@ -4,9 +4,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 /// A coloured navigation bar, used in communities.
-class OBColoredNavBar extends StatelessWidget implements ObstructingPreferredSizeWidget{
+class OBColoredNavBar extends StatelessWidget
+    implements ObstructingPreferredSizeWidget {
   final Color color;
+  final Color textColor;
+  final Color actionsColor;
   final Widget leading;
+  final Widget middle;
   final Widget trailing;
   final String title;
 
@@ -15,7 +19,10 @@ class OBColoredNavBar extends StatelessWidget implements ObstructingPreferredSiz
       @required this.color,
       this.leading,
       this.trailing,
-      @required this.title})
+      this.title,
+      this.textColor,
+      this.actionsColor,
+      this.middle})
       : super(key: key);
 
   @override
@@ -23,16 +30,18 @@ class OBColoredNavBar extends StatelessWidget implements ObstructingPreferredSiz
     ThemeValueParserService themeValueParserService =
         OpenbookProvider.of(context).themeValueParserService;
     bool isDarkColor = themeValueParserService.isDarkColor(color);
-    Color actionsColor = isDarkColor ? Colors.white : Colors.black;
+    Color finalActionsColor =
+        actionsColor ?? (isDarkColor ? Colors.white : Colors.black);
 
     return CupertinoNavigationBar(
         border: null,
         leading: leading,
-        actionsForegroundColor: actionsColor,
-        middle: Text(
-          title,
-          style: TextStyle(color: actionsColor),
-        ),
+        actionsForegroundColor: finalActionsColor,
+        middle: middle ??
+            Text(
+              title,
+              style: TextStyle(color: textColor ?? finalActionsColor),
+            ),
         transitionBetweenRoutes: false,
         backgroundColor: color,
         trailing: trailing);
