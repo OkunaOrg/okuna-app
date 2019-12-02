@@ -2,6 +2,8 @@ import 'package:Okuna/models/circle.dart';
 import 'package:Okuna/models/circles_list.dart';
 import 'package:Okuna/models/community.dart';
 import 'package:Okuna/models/emoji.dart';
+import 'package:Okuna/models/hashtag.dart';
+import 'package:Okuna/models/hashtags_list.dart';
 import 'package:Okuna/models/post_comment.dart';
 import 'package:Okuna/models/post_comment_list.dart';
 import 'package:Okuna/models/post_media.dart';
@@ -42,6 +44,8 @@ class Post extends UpdatableModel<Post> {
   LinkPreview linkPreview;
   PostCommentList commentsList;
   Community community;
+  HashtagsList hashtagsList;
+  Map<String, Hashtag> hashtagsMap;
 
   bool isMuted;
   bool isEncircled;
@@ -66,8 +70,12 @@ class Post extends UpdatableModel<Post> {
       'uuid': uuid,
       'creator_id': creatorId,
       'creator': creator?.toJson(),
-      'circles': circles?.circles?.map((Circle circle) => circle.toJson())?.toList(),
-      'reactions_emoji_counts': reactionsEmojiCounts?.counts?.map((ReactionsEmojiCount reactionEmojiCount) => reactionEmojiCount.toJson())?.toList(),
+      'circles':
+          circles?.circles?.map((Circle circle) => circle.toJson())?.toList(),
+      'reactions_emoji_counts': reactionsEmojiCounts?.counts
+          ?.map((ReactionsEmojiCount reactionEmojiCount) =>
+              reactionEmojiCount.toJson())
+          ?.toList(),
       'reaction': reaction?.toJson(),
       'reactions_count': reactionsCount,
       'comments_count': commentsCount,
@@ -79,8 +87,15 @@ class Post extends UpdatableModel<Post> {
       'text': text,
       'language': language?.toJson(),
       'status': status?.code,
-      'media': media?.postMedia?.map((PostMedia mediaObj) => mediaObj.toJson())?.toList(),
-      'comments_list': commentsList?.comments?.map((PostComment comment) => comment.toJson())?.toList(),
+      'media': media?.postMedia
+          ?.map((PostMedia mediaObj) => mediaObj.toJson())
+          ?.toList(),
+      'comments_list': commentsList?.comments
+          ?.map((PostComment comment) => comment.toJson())
+          ?.toList(),
+      'hashtags_list': hashtagsList?.hashtags
+          ?.map((Hashtag hashtag) => hashtag.toJson())
+          ?.toList(),
       'community': community?.toJson(),
       'is_muted': isMuted,
       'is_encircled': isEncircled,
@@ -109,6 +124,7 @@ class Post extends UpdatableModel<Post> {
       this.mediaHeight,
       this.mediaWidth,
       this.commentsList,
+      this.hashtagsList,
       this.reaction,
       this.reactionsEmojiCounts,
       this.areCommentsEnabled,
@@ -121,7 +137,9 @@ class Post extends UpdatableModel<Post> {
       this.isClosed,
       this.isReported,
       this.isEdited})
-      : super();
+      : super() {
+    this._updateHashtagsMap();
+  }
 
   void updateFromJson(Map json) {
     if (json.containsKey('reactions_emoji_counts'))
@@ -185,6 +203,11 @@ class Post extends UpdatableModel<Post> {
     if (json.containsKey('comments'))
       commentsList = factory.parseCommentList(json['comments']);
 
+    if (json.containsKey('hashtags')) {
+      hashtagsList = factory.parseHashtagsList(json['hashtags']);
+      _updateHashtagsMap();
+    }
+
     if (json.containsKey('circles'))
       circles = factory.parseCircles(json['circles']);
   }
@@ -206,7 +229,6 @@ class Post extends UpdatableModel<Post> {
     isFromExcludedCommunity = isExcluded;
     notifyUpdate();
   }
-
 
   bool hasReaction() {
     return reaction != null;
@@ -386,6 +408,18 @@ class Post extends UpdatableModel<Post> {
   void _setReactionsEmojiCounts(ReactionsEmojiCountList emojiCounts) {
     reactionsEmojiCounts = emojiCounts;
   }
+
+  void _updateHashtagsMap() {
+    if (hashtagsList == null) {
+      this.hashtagsMap = null;
+      return;
+    }
+
+    Map<String, Hashtag> updatedMap = Map();
+    hashtagsList.hashtags
+        .forEach((hashtag) => updatedMap[hashtag.name] = hashtag);
+    hashtagsMap = updatedMap;
+  }
 }
 
 class PostFactory extends UpdatableModelFactory<Post> {
@@ -418,6 +452,7 @@ class PostFactory extends UpdatableModelFactory<Post> {
         reaction: parseReaction(json['reaction']),
         community: parseCommunity(json['community']),
         commentsList: parseCommentList(json['comments']),
+        hashtagsList: parseHashtagsList(json['hashtags']),
         isEncircled: json['is_encircled'],
         isEdited: json['is_edited'],
         isClosed: json['is_closed'],
@@ -463,6 +498,11 @@ class PostFactory extends UpdatableModelFactory<Post> {
   PostCommentList parseCommentList(List commentList) {
     if (commentList == null) return null;
     return PostCommentList.fromJson(commentList);
+  }
+
+  HashtagsList parseHashtagsList(List hashtagsList) {
+    if (hashtagsList == null) return null;
+    return HashtagsList.fromJson(hashtagsList);
   }
 
   CirclesList parseCircles(List circlesData) {

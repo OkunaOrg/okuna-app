@@ -4,6 +4,7 @@ import 'package:Okuna/models/circle.dart';
 import 'package:Okuna/models/community.dart';
 import 'package:Okuna/models/emoji.dart';
 import 'package:Okuna/models/follows_list.dart';
+import 'package:Okuna/models/hashtag.dart';
 import 'package:Okuna/models/moderation/moderated_object.dart';
 import 'package:Okuna/models/moderation/moderation_category.dart';
 import 'package:Okuna/models/post.dart';
@@ -32,6 +33,7 @@ import 'package:Okuna/pages/home/pages/community/pages/manage_community/pages/co
 import 'package:Okuna/pages/home/pages/community/pages/manage_community/pages/community_moderators/modals/add_community_moderator/pages/confirm_add_community_moderator.dart';
 import 'package:Okuna/pages/home/pages/community/pages/manage_community/pages/delete_community.dart';
 import 'package:Okuna/pages/home/pages/community/pages/manage_community/pages/leave_community.dart';
+import 'package:Okuna/pages/home/pages/hashtag/hashtag.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/settings/about.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/community_guidelines.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/connections_circle/connections_circle.dart';
@@ -969,6 +971,20 @@ class NavigationService {
               child: OBPrimaryColorContainer(
                 child: widget,
               ),
+            );
+          }),
+    );
+  }
+
+  Future navigateToHashtag(
+      {@required Hashtag hashtag, @required BuildContext context}) async {
+    return Navigator.push(
+      context,
+      OBSlideRightRoute<dynamic>(
+          slidableKey: _getKeyRandomisedWithWord('hashtagRoute'),
+          builder: (BuildContext context) {
+            return OBHashtagPage(
+              hashtag,
             );
           }),
     );

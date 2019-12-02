@@ -149,7 +149,7 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
                           child: Column(
                             children: <Widget>[
                               const SizedBox(
-                                height: (OBCover.normalSizeHeight) -
+                                height: (OBCover.largeSizeHeight) -
                                     (OBAvatar.AVATAR_SIZE_LARGE / 2),
                               ),
                               _buildAvatar()
@@ -157,7 +157,7 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
                           ),
                         ),
                         const SizedBox(
-                            height: OBCover.normalSizeHeight +
+                            height: OBCover.largeSizeHeight +
                                 OBAvatar.AVATAR_SIZE_LARGE / 2)
                       ],
                     ),

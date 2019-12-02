@@ -8,7 +8,8 @@ import 'package:flutter/material.dart';
 class OBCover extends StatelessWidget {
   final String coverUrl;
   final File coverFile;
-  static const double normalSizeHeight = 230.0;
+  static const double largeSizeHeight = 230.0;
+  static const double mediumSizedHeight = 190.0;
   static const double smallSizeHeight = 160.0;
   static const COVER_PLACEHOLDER = 'assets/images/fallbacks/cover-fallback.jpg';
   final OBCoverSize size;
@@ -17,7 +18,7 @@ class OBCover extends StatelessWidget {
   OBCover(
       {this.coverUrl,
       this.coverFile,
-      this.size = OBCoverSize.normal,
+      this.size = OBCoverSize.large,
       this.isZoomable = true});
 
   @override
@@ -27,8 +28,11 @@ class OBCover extends StatelessWidget {
     double coverHeight;
 
     switch (size) {
-      case OBCoverSize.normal:
-        coverHeight = normalSizeHeight;
+      case OBCoverSize.large:
+        coverHeight = largeSizeHeight;
+        break;
+        case OBCoverSize.medium:
+        coverHeight = mediumSizedHeight;
         break;
       case OBCoverSize.small:
         coverHeight = smallSizeHeight;
@@ -106,4 +110,4 @@ class OBCover extends StatelessWidget {
   }
 }
 
-enum OBCoverSize { normal, small }
+enum OBCoverSize { large, small , medium}

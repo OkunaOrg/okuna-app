@@ -1639,6 +1639,10 @@ class LocalizationService {
     return Intl.message("Communities", name: 'user_search__communities');
   }
 
+  String get user_search__hashtags {
+    return Intl.message("Hashtags", name: 'user_search__hashtags');
+  }
+
   String get user_search__users {
     return Intl.message("Users", name: 'user_search__users');
   }
@@ -1684,6 +1688,11 @@ class LocalizationService {
   String user_search__no_communities_for(String searchQuery) {
     return Intl.message("No communities found for '$searchQuery'.",
         args: [searchQuery], name: 'user_search__no_communities_for');
+  }
+
+  String user_search__no_hashtags_for(String searchQuery) {
+    return Intl.message("No hashtags found for '$searchQuery'.",
+        args: [searchQuery], name: 'user_search__no_hashtags_for');
   }
 
   String user_search__no_users_for(String searchQuery) {
@@ -1898,6 +1907,13 @@ class LocalizationService {
 
   String get post__create_video {
     return Intl.message("Video", name: 'post__create_video');
+  }
+
+  String post__create_hashtags_invalid(int maxHashtags, int maxCharacters) {
+    return Intl.message(
+        "Please add up to $maxHashtags hashtags and under $maxCharacters characters.",
+        args: [maxHashtags, maxCharacters],
+        name: 'post__create_hashtags_invalid');
   }
 
   String get post__commenter_post_text {
@@ -3812,11 +3828,28 @@ class LocalizationService {
         name: 'contextual_account_search_box__suggestions');
   }
 
+  String get contextual_account_search_box__no_results {
+    return Intl.message("No results found",
+        name: 'contextual_account_search_box__no_results');
+  }
+
   String get contextual_community_search_box__suggestions {
     return Intl.message("Suggestions",
         desc:
             "The title to display on the suggestions when searching for communitys when trying to mention someone.",
         name: 'contextual_community_search_box__suggestions');
+  }
+
+  String get contextual_community_search_box__no_results {
+    return Intl.message("No results found",
+        name: 'contextual_community_search_box__no_results');
+  }
+
+  String contextual_hashtag_search_box__be_the_first(String hashtag) {
+    return Intl.message(
+        "You\'ll be the first to use #$hashtag",
+        args: [hashtag],
+        name: 'contextual_hashtag_search_box__be_the_first');
   }
 
   String get image_picker__from_gallery {

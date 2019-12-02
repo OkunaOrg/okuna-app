@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:Okuna/models/community.dart';
+import 'package:Okuna/models/hashtag.dart';
 import 'package:Okuna/models/user.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/navigation_service.dart';
@@ -18,16 +19,18 @@ class OBActionableSmartText extends StatefulWidget {
   final TextOverflow overflow;
   final TextOverflow lengthOverflow;
   final SmartTextElement trailingSmartTextElement;
+  final Map<String, Hashtag> hashtagsMap;
 
-  const OBActionableSmartText({
-    Key key,
-    this.text,
-    this.maxlength,
-    this.size = OBTextSize.medium,
-    this.overflow = TextOverflow.clip,
-    this.lengthOverflow = TextOverflow.ellipsis,
-    this.trailingSmartTextElement
-  }) : super(key: key);
+  const OBActionableSmartText(
+      {Key key,
+      this.text,
+      this.maxlength,
+      this.size = OBTextSize.medium,
+      this.overflow = TextOverflow.clip,
+      this.lengthOverflow = TextOverflow.ellipsis,
+      this.trailingSmartTextElement,
+      this.hashtagsMap})
+      : super(key: key);
 
   @override
   OBActionableTextState createState() {
@@ -74,7 +77,9 @@ class OBActionableTextState extends State<OBActionableSmartText> {
       onCommunityNameTapped: _onCommunityNameTapped,
       onUsernameTapped: _onUsernameTapped,
       onLinkTapped: _onLinkTapped,
+      onHashtagTapped: _onHashtagNameHashtagRetrieved,
       trailingSmartTextElement: widget.trailingSmartTextElement,
+      hashtagsMap: widget.hashtagsMap,
       size: widget.size,
     );
   }
@@ -103,6 +108,10 @@ class OBActionableTextState extends State<OBActionableSmartText> {
         .listen(_onUsernameUserRetrieved,
             onError: _onError, onDone: _onRequestDone);
     _setRequestSubscription(requestSubscription);
+  }
+
+  void _onHashtagNameHashtagRetrieved(Hashtag hashtag) {
+    _navigationService.navigateToHashtag(hashtag: hashtag, context: context);
   }
 
   void _onUsernameUserRetrieved(User user) {

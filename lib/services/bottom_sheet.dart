@@ -386,8 +386,7 @@ Future<T> showModalBottomSheetApp<T>({
 }) {
   assert(context != null);
   assert(builder != null);
-  return Navigator.push(
-      context,
+  return Navigator.of(context, rootNavigator: true).push(
       new _ModalBottomSheetRoute<T>(
         builder: builder,
         theme: ThemeData(

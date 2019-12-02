@@ -1,4 +1,5 @@
 import 'package:Okuna/models/community.dart';
+import 'package:Okuna/models/hashtag.dart';
 import 'package:Okuna/models/theme.dart';
 import 'package:Okuna/models/user.dart';
 import 'package:Okuna/provider.dart';
@@ -9,42 +10,49 @@ import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/progress_indicator.dart';
 import 'package:Okuna/widgets/theming/text.dart';
 import 'package:Okuna/widgets/tiles/community_tile.dart';
+import 'package:Okuna/widgets/tiles/hashtag_tile.dart';
 import 'package:Okuna/widgets/tiles/user_tile.dart';
 import 'package:flutter/material.dart';
 
-class OBUserSearchResults extends StatefulWidget {
+class OBSearchResults extends StatefulWidget {
   final List<User> userResults;
   final List<Community> communityResults;
+  final List<Hashtag> hashtagResults;
   final String searchQuery;
   final ValueChanged<User> onUserPressed;
   final ValueChanged<Community> onCommunityPressed;
+  final ValueChanged<Hashtag> onHashtagPressed;
   final ValueChanged<OBUserSearchResultsTab> onTabSelectionChanged;
   final VoidCallback onScroll;
   final OBUserSearchResultsTab selectedTab;
   final bool userSearchInProgress;
   final bool communitySearchInProgress;
+  final bool hashtagSearchInProgress;
 
-  const OBUserSearchResults(
+  const OBSearchResults(
       {Key key,
       @required this.userResults,
       this.selectedTab = OBUserSearchResultsTab.users,
       @required this.communityResults,
+      @required this.hashtagResults,
       this.userSearchInProgress = false,
       this.communitySearchInProgress = false,
+      this.hashtagSearchInProgress = false,
       @required this.searchQuery,
       @required this.onUserPressed,
       @required this.onScroll,
       @required this.onCommunityPressed,
+      @required this.onHashtagPressed,
       @required this.onTabSelectionChanged})
       : super(key: key);
 
   @override
-  OBUserSearchResultsState createState() {
-    return OBUserSearchResultsState();
+  OBSearchResultsState createState() {
+    return OBSearchResultsState();
   }
 }
 
-class OBUserSearchResultsState extends State<OBUserSearchResults>
+class OBSearchResultsState extends State<OBSearchResults>
     with TickerProviderStateMixin {
   TabController _tabController;
   LocalizationService _localizationService;
@@ -52,13 +60,16 @@ class OBUserSearchResultsState extends State<OBUserSearchResults>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 3, vsync: this);
     switch (widget.selectedTab) {
       case OBUserSearchResultsTab.users:
         _tabController.index = 0;
         break;
       case OBUserSearchResultsTab.communities:
         _tabController.index = 1;
+        break;
+      case OBUserSearchResultsTab.hashtags:
+        _tabController.index = 2;
         break;
       default:
         throw 'Unhandled tab index';
@@ -94,11 +105,17 @@ class OBUserSearchResultsState extends State<OBUserSearchResults>
           tabs: [
             Padding(
               padding: EdgeInsets.symmetric(vertical: 5),
-              child: Tab(text: _localizationService.trans('user_search__users')),
+              child:
+                  Tab(text: _localizationService.trans('user_search__users')),
             ),
             Padding(
               padding: EdgeInsets.symmetric(vertical: 5),
-              child: Tab(text: _localizationService.trans('user_search__communities')),
+              child: Tab(
+                  text: _localizationService.trans('user_search__communities')),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 5),
+              child: Tab(text: _localizationService.user_search__hashtags),
             )
           ],
           isScrollable: false,
@@ -108,7 +125,7 @@ class OBUserSearchResultsState extends State<OBUserSearchResults>
         Expanded(
           child: TabBarView(
             controller: _tabController,
-            children: [_buildUserResults(), _buildCommunityResults()],
+            children: [_buildUserResults(), _buildCommunityResults(), _buildHashtagResults()],
           ),
         )
       ],
@@ -132,12 +149,14 @@ class OBUserSearchResultsState extends State<OBUserSearchResults>
                 // Search in progress
                 return ListTile(
                     leading: OBProgressIndicator(),
-                    title: OBText(_localizationService.user_search__searching_for(searchQuery)));
+                    title: OBText(_localizationService
+                        .user_search__searching_for(searchQuery)));
               } else if (widget.userResults.isEmpty) {
                 // Results were empty
                 return ListTile(
                     leading: OBIcon(OBIcons.sad),
-                    title: OBText(_localizationService.user_search__no_users_for(searchQuery)));
+                    title: OBText(_localizationService
+                        .user_search__no_users_for(searchQuery)));
               } else {
                 return SizedBox();
               }
@@ -175,12 +194,14 @@ class OBUserSearchResultsState extends State<OBUserSearchResults>
                 // Search in progress
                 return ListTile(
                     leading: OBProgressIndicator(),
-                    title: OBText(_localizationService.user_search__searching_for(searchQuery)));
+                    title: OBText(_localizationService
+                        .user_search__searching_for(searchQuery)));
               } else if (widget.communityResults.isEmpty) {
                 // Results were empty
                 return ListTile(
                     leading: OBIcon(OBIcons.sad),
-                    title: OBText(_localizationService.user_search__no_communities_for(searchQuery)));
+                    title: OBText(_localizationService
+                        .user_search__no_communities_for(searchQuery)));
               } else {
                 return SizedBox();
               }
@@ -196,6 +217,46 @@ class OBUserSearchResultsState extends State<OBUserSearchResults>
     );
   }
 
+  Widget _buildHashtagResults() {
+    return NotificationListener(
+      onNotification: (ScrollNotification notification) {
+        widget.onScroll();
+        return true;
+      },
+      child: ListView.builder(
+        padding: const EdgeInsets.all(0),
+          physics: const ClampingScrollPhysics(),
+          itemCount: widget.hashtagResults.length + 1,
+          itemBuilder: (BuildContext context, int index) {
+            if (index == widget.hashtagResults.length) {
+              String searchQuery = widget.searchQuery;
+              if (widget.hashtagSearchInProgress) {
+                // Search in progress
+                return ListTile(
+                    leading: OBProgressIndicator(),
+                    title: OBText(_localizationService
+                        .user_search__searching_for(searchQuery)));
+              } else if (widget.hashtagResults.isEmpty) {
+                // Results were empty
+                return ListTile(
+                    leading: OBIcon(OBIcons.sad),
+                    title: OBText(_localizationService
+                        .user_search__no_hashtags_for(searchQuery)));
+              } else {
+                return SizedBox();
+              }
+            }
+
+            Hashtag hashtag = widget.hashtagResults[index];
+
+            return OBHashtagTile(
+              hashtag,
+              onHashtagTilePressed: widget.onHashtagPressed,
+            );
+          }),
+    );
+  }
+
   void _onTabSelectionChanged() {
     OBUserSearchResultsTab newSelection =
         OBUserSearchResultsTab.values[_tabController.previousIndex];
@@ -203,4 +264,4 @@ class OBUserSearchResultsState extends State<OBUserSearchResults>
   }
 }
 
-enum OBUserSearchResultsTab { communities, users }
+enum OBUserSearchResultsTab { communities, users, hashtags }

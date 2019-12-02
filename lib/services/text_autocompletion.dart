@@ -1,6 +1,13 @@
+import 'package:Okuna/services/validation.dart';
 import 'package:flutter/cupertino.dart';
 
 class TextAutocompletionService {
+  ValidationService _validationService;
+
+  void setValidationService(validationService) {
+    _validationService = validationService;
+  }
+
   TextAutocompletionResult checkTextForAutocompletion(
       TextEditingController textController) {
     int cursorPosition = textController.selection.baseOffset;
@@ -21,6 +28,13 @@ class TextAutocompletionService {
             isAutocompleting: true,
             autocompleteQuery: searchQuery,
             type: TextAutocompletionType.community);
+      } else if (lastWord.startsWith('#') && lastWord.length > 1 &&
+          _validationService.isPostTextContainingValidHashtags(lastWord)) {
+        String searchQuery = lastWord.substring(1);
+        return TextAutocompletionResult(
+            isAutocompleting: true,
+            autocompleteQuery: searchQuery,
+            type: TextAutocompletionType.hashtag);
       }
     }
 
@@ -42,6 +56,26 @@ class TextAutocompletionService {
         text.substring(cursorPosition);
     var newSelection = TextSelection.collapsed(
         offset: cursorPosition - lastWord.length + username.length + 2);
+
+    textController.value =
+        TextEditingValue(text: newText, selection: newSelection);
+  }
+
+  void autocompleteTextWithHashtagName(
+      TextEditingController textController, String hashtag) {
+    String text = textController.text;
+    int cursorPosition = textController.selection.baseOffset;
+    String lastWord = _getWordBeforeCursor(text, cursorPosition);
+
+    if (!lastWord.startsWith('#')) {
+      throw 'Tried to autocomplete text with hashtag without #';
+    }
+
+    var newText = text.substring(0, cursorPosition - lastWord.length) +
+        '#$hashtag ' +
+        text.substring(cursorPosition);
+    var newSelection = TextSelection.collapsed(
+        offset: cursorPosition - lastWord.length + hashtag.length + 2);
 
     textController.value =
         TextEditingValue(text: newText, selection: newSelection);
@@ -86,4 +120,4 @@ class TextAutocompletionResult {
       {@required this.isAutocompleting, this.type, this.autocompleteQuery});
 }
 
-enum TextAutocompletionType { account, community }
+enum TextAutocompletionType { account, community, hashtag }

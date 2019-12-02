@@ -1,3 +1,4 @@
+import 'package:Okuna/models/hashtag.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/theming/secondary_text.dart';
@@ -17,6 +18,7 @@ class OBCollapsibleSmartText extends StatefulWidget {
   final TextOverflow lengthOverflow;
   final SmartTextElement trailingSmartTextElement;
   final Function getChild;
+  final Map<String, Hashtag> hashtagsMap;
 
   const OBCollapsibleSmartText(
       {Key key,
@@ -26,7 +28,8 @@ class OBCollapsibleSmartText extends StatefulWidget {
       this.overflow = TextOverflow.clip,
       this.lengthOverflow = TextOverflow.ellipsis,
       this.getChild,
-      this.trailingSmartTextElement})
+      this.trailingSmartTextElement,
+      this.hashtagsMap})
       : super(key: key);
 
   @override
@@ -47,14 +50,16 @@ class OBCollapsibleSmartTextState extends State<OBCollapsibleSmartText> {
   @override
   Widget build(BuildContext context) {
     bool shouldBeCollapsed = widget.text.length > widget.maxlength;
-    LocalizationService _localizationService = OpenbookProvider.of(context).localizationService;
+    LocalizationService _localizationService =
+        OpenbookProvider.of(context).localizationService;
 
     return shouldBeCollapsed
         ? _buildExpandableActionableSmartText(_localizationService)
         : _buildActionableSmartText();
   }
 
-  Widget _buildExpandableActionableSmartText(LocalizationService _localizationService) {
+  Widget _buildExpandableActionableSmartText(
+      LocalizationService _localizationService) {
     return ExpandableNotifier(
       controller: _expandableController,
       child: Column(
@@ -127,6 +132,7 @@ class OBCollapsibleSmartTextState extends State<OBCollapsibleSmartText> {
           size: widget.size,
           lengthOverflow: widget.lengthOverflow,
           trailingSmartTextElement: widget.trailingSmartTextElement,
+          hashtagsMap: widget.hashtagsMap,
         ),
         translateButton
       ],

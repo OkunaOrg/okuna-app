@@ -161,6 +161,7 @@ class OBIcons {
   static const close = OBIconData(nativeIcon: Icons.close);
   static const cancel = OBIconData(nativeIcon: Icons.close);
   static const sad = OBIconData(nativeIcon: Icons.sentiment_dissatisfied);
+  static const happy = OBIconData(nativeIcon: Icons.sentiment_very_satisfied);
   static const location = OBIconData(nativeIcon: Icons.location_on);
   static const link = OBIconData(nativeIcon: Icons.link);
   static const linkOff = OBIconData(nativeIcon: Icons.link_off);

@@ -1,6 +1,5 @@
-import 'package:Okuna/models/post.dart';
-import 'package:Okuna/models/user.dart';
-import 'package:Okuna/models/users_list.dart';
+import 'package:Okuna/models/hashtags_list.dart';
+import 'package:Okuna/models/hashtag.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/toast.dart';
@@ -9,33 +8,30 @@ import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/progress_indicator.dart';
 import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:Okuna/widgets/theming/text.dart';
-import 'package:Okuna/widgets/tiles/user_tile.dart';
+import 'package:Okuna/widgets/tiles/hashtag_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:async/async.dart';
 
-class OBContextualAccountSearchBox extends StatefulWidget {
-  final ValueChanged<User> onPostParticipantPressed;
-  final Post post;
-  final OBContextualAccountSearchBoxController controller;
+class OBContextualHashtagSearchBox extends StatefulWidget {
+  final ValueChanged<Hashtag> onHashtagPressed;
+  final OBContextualHashtagSearchBoxController controller;
   final String initialSearchQuery;
 
-  const OBContextualAccountSearchBox(
+  const OBContextualHashtagSearchBox(
       {Key key,
-      this.onPostParticipantPressed,
-      // If passed, searches for post participants, if not all users using the global search API
-      this.post,
+      this.onHashtagPressed,
       this.controller,
       this.initialSearchQuery})
       : super(key: key);
 
   @override
-  OBContextualAccountSearchBoxState createState() {
-    return OBContextualAccountSearchBoxState();
+  OBContextualHashtagSearchBoxState createState() {
+    return OBContextualHashtagSearchBoxState();
   }
 }
 
-class OBContextualAccountSearchBoxState
-    extends State<OBContextualAccountSearchBox> {
+class OBContextualHashtagSearchBoxState
+    extends State<OBContextualHashtagSearchBox> {
   UserService _userService;
   LocalizationService _localizationService;
   ToastService _toastService;
@@ -46,23 +42,17 @@ class OBContextualAccountSearchBoxState
   CancelableOperation _searchParticipantsOperation;
 
   String _searchQuery;
-  List<User> _all;
-  bool _getAllInProgress;
-  List<User> _searchResults;
+  List<Hashtag> _searchResults;
   bool _searchInProgress;
-  bool _isInPostContext;
 
   @override
   void initState() {
     super.initState();
-    _isInPostContext = widget.post != null;
     _needsBootstrap = true;
     if (widget.controller != null) widget.controller.attach(this);
-    _all = [];
     _searchResults = [];
     _searchQuery = '';
     _searchInProgress = false;
-    _getAllInProgress = false;
   }
 
   @override
@@ -91,48 +81,26 @@ class OBContextualAccountSearchBoxState
       }
     }
 
-    return OBPrimaryColorContainer(
-        child:
-            _searchQuery.isEmpty ? _buildAllList() : _buildSearchResultsList());
-  }
-
-  Widget _buildAllList() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Padding(
-          padding:
-              const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
-          child: OBText(
-            _localizationService.contextual_account_search_box__suggestions,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
-          ),
-        ),
-        _all.isNotEmpty && !_getAllInProgress
-            ? Expanded(
-                child: ListView.builder(
-                  itemBuilder: _buildAllItem,
-                  itemCount: _all.length,
-                  padding: const EdgeInsets.all(0),
-                ),
-              )
-            : _buildProgressIndicator()
-      ],
-    );
+    return OBPrimaryColorContainer(child: _buildSearchResultsList());
   }
 
   Widget _buildSearchResultsList() {
     return Column(
       children: <Widget>[
         Expanded(
-          child: ListView.builder(
+          child: ListView.separated(
             itemBuilder: _buildResultItem,
             itemCount: _searchResults.length + 1,
             padding: const EdgeInsets.all(0),
+            separatorBuilder: _buildListItemSeparator,
           ),
         )
       ],
     );
+  }
+
+  Widget _buildListItemSeparator(BuildContext context, int index) {
+    return const SizedBox(height: 10);
   }
 
   Widget _buildResultItem(BuildContext context, int index) {
@@ -146,62 +114,27 @@ class OBContextualAccountSearchBoxState
         );
       } else if (_searchResults.isEmpty) {
         return ListTile(
-            leading: const Padding(
-              padding: const EdgeInsets.only(left: 10),
-              child: const OBIcon(OBIcons.sad),
-            ),
-            title: OBText(_localizationService.contextual_account_search_box__no_results));
+          leading: const Padding(
+            padding: const EdgeInsets.only(left: 10),
+            child: const OBIcon(OBIcons.happy),
+          ),
+          title: OBText(_localizationService.contextual_hashtag_search_box__be_the_first(_searchQuery)),
+          onTap: () => widget.onHashtagPressed(Hashtag(name: _searchQuery)),
+        );
       } else {
         return const SizedBox();
       }
     }
 
-    return OBUserTile(
+    return OBHashtagTile(
       _searchResults[index],
       key: Key(_searchResults[index].id.toString()),
-      onUserTilePressed: widget.onPostParticipantPressed,
-    );
-  }
-
-  Widget _buildAllItem(BuildContext context, int index) {
-    return OBUserTile(
-      _all[index],
-      key: Key(_all[index].id.toString()),
-      onUserTilePressed: widget.onPostParticipantPressed,
-    );
-  }
-
-  Widget _buildProgressIndicator() {
-    return Padding(
-      padding: EdgeInsets.all(10),
-      child: Center(child: OBProgressIndicator()),
+      onHashtagTilePressed: widget.onHashtagPressed,
     );
   }
 
   void _bootstrap() {
-    debugLog('Bootstrapping');
-    refreshAll();
-  }
-
-  Future refreshAll() async {
-    if (_getAllOperation != null) _getAllOperation.cancel();
-
-    _setGetAllInProgress(true);
-
-    debugLog('Refreshing all accounts');
-
-    try {
-      _getAllOperation = CancelableOperation.fromFuture(_isInPostContext
-          ? _userService.getPostParticipants(post: widget.post)
-          : _userService.getLinkedUsers());
-      UsersList all = await _getAllOperation.value;
-      _setAll(all.users);
-    } catch (error) {
-      _onError(error);
-    } finally {
-      _setGetAllInProgress(false);
-      _getAllOperation = null;
-    }
+    debugLog('Nothing to bootstrap');
   }
 
   Future search(String searchQuery) async {
@@ -220,12 +153,9 @@ class OBContextualAccountSearchBoxState
 
     try {
       _searchParticipantsOperation = CancelableOperation.fromFuture(
-          _isInPostContext
-              ? _userService.searchPostParticipants(
-                  query: searchQuery, post: widget.post)
-              : _userService.getUsersWithQuery(searchQuery));
-      UsersList searchResults = await _searchParticipantsOperation.value;
-      _setSearchResults(searchResults.users);
+          _userService.getHashtagsWithQuery(searchQuery));
+      HashtagsList searchResults = await _searchParticipantsOperation.value;
+      _setSearchResults(searchResults.hashtags);
     } catch (error) {
       _onError(error);
     } finally {
@@ -248,15 +178,9 @@ class OBContextualAccountSearchBoxState
     }
   }
 
-  void _setSearchResults(List<User> searchResults) {
+  void _setSearchResults(List<Hashtag> searchResults) {
     setState(() {
       _searchResults = searchResults;
-    });
-  }
-
-  void _setAll(List<User> all) {
-    setState(() {
-      _all = all;
     });
   }
 
@@ -272,12 +196,6 @@ class OBContextualAccountSearchBoxState
     });
   }
 
-  void _setGetAllInProgress(bool getAllInProgress) {
-    setState(() {
-      _getAllInProgress = getAllInProgress;
-    });
-  }
-
   void clearSearch() {
     debugLog('Clearing search');
     setState(() {
@@ -290,15 +208,15 @@ class OBContextualAccountSearchBoxState
   }
 
   void debugLog(String log) {
-    debugPrint('OBPostParticipantsSearchBox:$log');
+    debugPrint('OBContextualHashtagSearchBox:$log');
   }
 }
 
-class OBContextualAccountSearchBoxController {
-  OBContextualAccountSearchBoxState _state;
+class OBContextualHashtagSearchBoxController {
+  OBContextualHashtagSearchBoxState _state;
   String _lastSearchQuery;
 
-  void attach(OBContextualAccountSearchBoxState state) {
+  void attach(OBContextualHashtagSearchBoxState state) {
     _state = state;
   }
 
@@ -323,6 +241,6 @@ class OBContextualAccountSearchBoxController {
   }
 
   void debugLog(String log) {
-    debugPrint('OBContextualAccountSearchBox:$log');
+    debugPrint('OBContextualHashtagSearchBoxController:$log');
   }
 }

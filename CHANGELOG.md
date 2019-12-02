@@ -9,15 +9,27 @@ The change log for the Okuna app.
 ## Release 0.0.59
 
 #### Features
- - Show suggested communities on account creation
- - Add choose username page
- - Trending posts is now an infinite stream
- - Add Okuna age to profile
- - Add posts count to community page
+ - 🏷 Add hashtags globally!
+ - 🛎 Subscribe for new community/account post notifications!
+ - 🔥 Trending posts now stick around after 12 hours
+ - ＠ Add choose username step on sign up
+ - 🏡 Add suggested communities when signing up
+ - 👶 Add Okuna age on profiles
+ - 😘 Add Follow Back button
+ - 💯 Add posts count in communities
+ - 🎄 Add app christmas icon!
+
 
 #### Bugs
 - Verify token on invite opened
-- Remove username from forgot password
+- Fix blank flash when opening app
+- Ungroup push notifications
+- Fix profiles posts count was off
+- Remove posibility to request password reset with username
+
+#### For contributors
+
+- We've built okuna-cli! A tool to get you a development API up and running on a single command. Try it out!
 
 #### Happy testing 🎉!
 
