@@ -17,7 +17,8 @@ class OBCommunityStaffPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    LocalizationService localizationService = OpenbookProvider.of(context).localizationService;
+    LocalizationService localizationService =
+        OpenbookProvider.of(context).localizationService;
 
     return OBCupertinoPageScaffold(
       navigationBar: OBThemedNavigationBar(
@@ -31,6 +32,7 @@ class OBCommunityStaffPage extends StatelessWidget {
             return SingleChildScrollView(
               physics: const ClampingScrollPhysics(),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   OBCommunityAdministrators(community),
                   OBCommunityModerators(community),
