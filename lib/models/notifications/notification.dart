@@ -1,4 +1,5 @@
 import 'package:Okuna/models/notifications/community_invite_notification.dart';
+import 'package:Okuna/models/notifications/community_new_post_notification.dart';
 import 'package:Okuna/models/notifications/connection_confirmed_notification.dart';
 import 'package:Okuna/models/notifications/connection_request_notification.dart';
 import 'package:Okuna/models/notifications/follow_notification.dart';
@@ -8,6 +9,7 @@ import 'package:Okuna/models/notifications/post_comment_reply_notification.dart'
 import 'package:Okuna/models/notifications/post_comment_user_mention_notification.dart';
 import 'package:Okuna/models/notifications/post_reaction_notification.dart';
 import 'package:Okuna/models/notifications/post_user_mention_notification.dart';
+import 'package:Okuna/models/notifications/user_new_post_notification.dart';
 import 'package:Okuna/models/updatable_model.dart';
 import 'package:Okuna/models/user.dart';
 import 'package:dcache/dcache.dart';
@@ -136,6 +138,12 @@ class NotificationFactory extends UpdatableModelFactory<OBNotification> {
       case NotificationType.communityInvite:
         contentObject = CommunityInviteNotification.fromJson(contentObjectData);
         break;
+      case NotificationType.communityNewPost:
+        contentObject = CommunityNewPostNotification.fromJson(contentObjectData);
+        break;
+      case NotificationType.userNewPost:
+        contentObject = UserNewPostNotification.fromJson(contentObjectData);
+        break;
       default:
     }
     return contentObject;
@@ -166,6 +174,8 @@ class NotificationType {
   static const communityInvite = const NotificationType._internal('CI');
   static const postCommentUserMention = const NotificationType._internal('PCUM');
   static const postUserMention = const NotificationType._internal('PUM');
+  static const communityNewPost = const NotificationType._internal('CNP');
+  static const userNewPost = const NotificationType._internal('UNP');
 
   static const _values = const <NotificationType>[
     postReaction,
@@ -177,7 +187,9 @@ class NotificationType {
     follow,
     communityInvite,
     postCommentUserMention,
-    postUserMention
+    postUserMention,
+    communityNewPost,
+    userNewPost
   ];
 
   static values() => _values;

@@ -1,51 +1,40 @@
 import 'package:Okuna/libs/pretty_count.dart';
+import 'package:Okuna/libs/str_utils.dart';
 import 'package:Okuna/models/theme.dart';
 import 'package:Okuna/models/community.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:flutter/material.dart';
 
-class OBCommunityMembersCount extends StatelessWidget {
+class OBCommunityPostsCount extends StatelessWidget {
   final Community community;
 
-  OBCommunityMembersCount(this.community);
+  OBCommunityPostsCount(this.community);
 
   @override
   Widget build(BuildContext context) {
-    int membersCount = community.membersCount;
+    int postsCount = community.postsCount;
     LocalizationService localizationService = OpenbookProvider.of(context).localizationService;
 
-    if (membersCount == null || membersCount == 0) return const SizedBox();
+    if (postsCount == null || postsCount == 0) return const SizedBox();
 
-    String count = getPrettyCount(membersCount, localizationService);
-
-    String userAdjective = community.userAdjective ?? localizationService.community__member_capitalized;
-    String usersAdjective = community.usersAdjective ?? localizationService.community__members_capitalized;
+    String count = getPrettyCount(postsCount, localizationService);
 
     var openbookProvider = OpenbookProvider.of(context);
     var themeService = openbookProvider.themeService;
     var themeValueParserService = openbookProvider.themeValueParserService;
     var userService = openbookProvider.userService;
-    var navigationService = openbookProvider.navigationService;
-
     return StreamBuilder(
         stream: themeService.themeChange,
         initialData: themeService.getActiveTheme(),
         builder: (BuildContext context, AsyncSnapshot<OBTheme> snapshot) {
           var theme = snapshot.data;
+          bool isPublicCommunity = community.isPublic();
+          bool isLoggedInUserMember = community.isMember(userService.getLoggedInUser());
 
-          return GestureDetector(
-            onTap: () {
-              bool isPublicCommunity = community.isPublic();
-              bool isLoggedInUserMember =
-                  community.isMember(userService.getLoggedInUser());
+          if (!isPublicCommunity && !isLoggedInUserMember) return SizedBox();
 
-              if (isPublicCommunity || isLoggedInUserMember) {
-                navigationService.navigateToCommunityMembers(
-                    community: community, context: context);
-              }
-            },
-            child: Row(
+          return Row(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 Flexible(
@@ -61,19 +50,17 @@ class OBCommunityMembersCount extends StatelessWidget {
                     TextSpan(text: ' '),
                     TextSpan(
                         text:
-                            membersCount == 1 ? userAdjective : usersAdjective,
+                            postsCount == 1 ?
+                            toCapital(localizationService.community__post_singular) :
+                            toCapital(localizationService.community__post_plural),
                         style: TextStyle(
                             fontSize: 16,
                             color: themeValueParserService
                                 .parseColor(theme.secondaryTextColor)))
                   ])),
                 ),
-                const SizedBox(
-                  width: 10,
-                ),
               ],
-            ),
-          );
+            );
         });
   }
 }
