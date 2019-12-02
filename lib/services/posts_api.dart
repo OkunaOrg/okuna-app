@@ -12,7 +12,7 @@ class PostsApiService {
 
   static const GET_POSTS_PATH = 'api/posts/';
   static const GET_TOP_POSTS_PATH = 'api/posts/top/';
-  static const GET_TRENDING_POSTS_PATH = 'api/posts/trending/';
+  static const GET_TRENDING_POSTS_PATH = 'api/posts/trending/new/';
   static const CREATE_POST_PATH = 'api/posts/';
   static const POST_MEDIA_PATH = 'api/posts/{postUuid}/media/';
   static const EDIT_POST_PATH = 'api/posts/{postUuid}/';
