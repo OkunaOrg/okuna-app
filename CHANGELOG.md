@@ -12,6 +12,7 @@ The change log for the Okuna app.
  - Show suggested communities on account creation
  - Add choose username page
  - Add Okuna age to profile
+ - Add posts count to community page
 
 #### Bugs
 - Verify token on invite opened
