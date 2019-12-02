@@ -2364,6 +2364,11 @@ class LocalizationService {
         args: [maxLength], name: 'user__profile_bio_length_error');
   }
 
+  String user__profile_okuna_age_toast(String age) {
+    return Intl.message("On Okuna since $age",
+        args: [age], name: 'user__profile_okuna_age_toast');
+  }
+
   String get user__follow_button_follow_text {
     return Intl.message("Follow", name: 'user__follow_button_follow_text');
   }

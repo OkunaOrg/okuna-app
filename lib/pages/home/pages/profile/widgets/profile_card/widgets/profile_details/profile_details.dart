@@ -1,4 +1,5 @@
 import 'package:Okuna/models/user.dart';
+import 'package:Okuna/pages/home/pages/profile/widgets/profile_card/widgets/profile_details/widgets/profile_age.dart';
 import 'package:Okuna/pages/home/pages/profile/widgets/profile_card/widgets/profile_details/widgets/profile_location.dart';
 import 'package:Okuna/pages/home/pages/profile/widgets/profile_card/widgets/profile_details/widgets/profile_url.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +30,8 @@ class OBProfileDetails extends StatelessWidget {
                       runSpacing: 10.0,
                       children: <Widget>[
                         OBProfileLocation(user),
-                        OBProfileUrl(user)
+                        OBProfileUrl(user),
+                        OBProfileAge(user),
                       ],
                     ),
                   ),
