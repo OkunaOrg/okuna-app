@@ -55,6 +55,7 @@ class Community extends UpdatableModel<Community> {
   String userAdjective;
   String usersAdjective;
   int membersCount;
+  int postsCount;
   int pendingModeratedObjectsCount;
 
   CommunityType type;
@@ -105,6 +106,7 @@ class Community extends UpdatableModel<Community> {
       this.isFavorite,
       this.invitesEnabled,
       this.membersCount,
+      this.postsCount,
       this.pendingModeratedObjectsCount,
       this.categories});
 
@@ -189,6 +191,7 @@ class Community extends UpdatableModel<Community> {
       'is_favorite': isFavorite,
       'invites_enabled': invitesEnabled,
       'members_count': membersCount,
+      'posts_count': postsCount,
       'pending_moderated_objects_count': pendingModeratedObjectsCount,
       'categories': categories?.categories?.map((Category category) => category.toJson())?.toList()
     };
@@ -271,6 +274,11 @@ class Community extends UpdatableModel<Community> {
     if (json.containsKey('members_count')) {
       membersCount = json['members_count'];
     }
+
+    if (json.containsKey('posts_count')) {
+      postsCount = json['posts_count'];
+    }
+
     if (json.containsKey('color')) {
       color = json['color'];
     }
@@ -298,6 +306,20 @@ class Community extends UpdatableModel<Community> {
   void decrementMembersCount() {
     if (this.membersCount != null && this.membersCount > 0) {
       this.membersCount -= 1;
+      notifyUpdate();
+    }
+  }
+
+  void incrementPostsCount() {
+    if (this.postsCount != null) {
+      this.postsCount += 1;
+      notifyUpdate();
+    }
+  }
+
+  void decrementPostsCount() {
+    if (this.postsCount != null && this.postsCount > 0) {
+      this.postsCount -= 1;
       notifyUpdate();
     }
   }
@@ -333,6 +355,7 @@ class CommunityFactory extends UpdatableModelFactory<Community> {
         color: json['color'],
         memberships: parseMemberships(json['memberships']),
         membersCount: json['members_count'],
+        postsCount: json['posts_count'],
         userAdjective: json['user_adjective'],
         usersAdjective: json['users_adjective'],
         type: parseType(json['type']),

@@ -181,6 +181,7 @@ class OBCommunityPageState extends State<OBCommunityPage>
   void _onNewPostDataUploaderPostPublished(
       Post publishedPost, OBNewPostData newPostData) {
     _removeNewPostData(newPostData);
+    _community.incrementPostsCount();
     _obPostsStreamController.addPostToTop(publishedPost);
   }
 
