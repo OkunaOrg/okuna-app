@@ -15,6 +15,7 @@ The change log for the Okuna app.
 
 #### Bugs
 - Verify token on invite opened
+- Remove username from forgot password
 
 #### Happy testing 🎉!
 

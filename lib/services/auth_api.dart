@@ -324,11 +324,8 @@ class AuthApiService {
         body: {'username': username, 'password': password});
   }
 
-  Future<HttpieResponse> requestPasswordReset({String username, String email}) {
+  Future<HttpieResponse> requestPasswordReset({@required String email}) {
     var body = {};
-    if (username != null && username != '') {
-      body = {'username': username};
-    }
     if (email != null && email != '') {
       body['email'] = email;
     }

@@ -336,9 +336,9 @@ class UserService {
     }
   }
 
-  Future<void> requestPasswordReset({String username, String email}) async {
+  Future<void> requestPasswordReset({@required String email}) async {
     HttpieResponse response = await _authApiService.requestPasswordReset(
-        username: username, email: email);
+        email: email);
     _checkResponseIsOk(response);
   }
 
