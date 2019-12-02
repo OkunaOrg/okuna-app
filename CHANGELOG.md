@@ -11,6 +11,7 @@ The change log for the Okuna app.
 #### Features
  - Show suggested communities on account creation
  - Add choose username page
+ - Trending posts is now an infinite stream
  - Add Okuna age to profile
  - Add posts count to community page
 
