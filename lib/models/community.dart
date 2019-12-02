@@ -55,12 +55,16 @@ class Community extends UpdatableModel<Community> {
   String userAdjective;
   String usersAdjective;
   int membersCount;
+  int postsCount;
   int pendingModeratedObjectsCount;
 
   CommunityType type;
 
   // Whether the user has been invited to the community
   bool isInvited;
+
+  // Whether the user has subscribed to the community
+  bool isSubscribed;
 
   // Whether the user is the creator of the community
   bool isCreator;
@@ -93,6 +97,7 @@ class Community extends UpdatableModel<Community> {
       this.color,
       this.cover,
       this.isInvited,
+      this.isSubscribed,
       this.isCreator,
       this.isReported,
       this.moderators,
@@ -101,6 +106,7 @@ class Community extends UpdatableModel<Community> {
       this.isFavorite,
       this.invitesEnabled,
       this.membersCount,
+      this.postsCount,
       this.pendingModeratedObjectsCount,
       this.categories});
 
@@ -176,6 +182,7 @@ class Community extends UpdatableModel<Community> {
       'color': color,
       'cover': cover,
       'is_invited': isInvited,
+      'is_subscribed': isSubscribed,
       'is_creator': isCreator,
       'is_reported': isReported,
       'moderators': moderators?.users?.map((User user) => user.toJson())?.toList(),
@@ -184,6 +191,7 @@ class Community extends UpdatableModel<Community> {
       'is_favorite': isFavorite,
       'invites_enabled': invitesEnabled,
       'members_count': membersCount,
+      'posts_count': postsCount,
       'pending_moderated_objects_count': pendingModeratedObjectsCount,
       'categories': categories?.categories?.map((Category category) => category.toJson())?.toList()
     };
@@ -201,6 +209,10 @@ class Community extends UpdatableModel<Community> {
 
     if (json.containsKey('is_invited')) {
       isInvited = json['is_invited'];
+    }
+
+    if (json.containsKey('is_subscribed')) {
+      isSubscribed = json['is_subscribed'];
     }
 
     if (json.containsKey('is_favorite')) {
@@ -262,6 +274,11 @@ class Community extends UpdatableModel<Community> {
     if (json.containsKey('members_count')) {
       membersCount = json['members_count'];
     }
+
+    if (json.containsKey('posts_count')) {
+      postsCount = json['posts_count'];
+    }
+
     if (json.containsKey('color')) {
       color = json['color'];
     }
@@ -293,6 +310,20 @@ class Community extends UpdatableModel<Community> {
     }
   }
 
+  void incrementPostsCount() {
+    if (this.postsCount != null) {
+      this.postsCount += 1;
+      notifyUpdate();
+    }
+  }
+
+  void decrementPostsCount() {
+    if (this.postsCount != null && this.postsCount > 0) {
+      this.postsCount -= 1;
+      notifyUpdate();
+    }
+  }
+
   void setIsReported(isReported) {
     this.isReported = isReported;
     notifyUpdate();
@@ -314,6 +345,7 @@ class CommunityFactory extends UpdatableModelFactory<Community> {
         rules: json['rules'],
         avatar: json['avatar'],
         isInvited: json['is_invited'],
+        isSubscribed: json['is_subscribed'],
         isCreator: json['is_creator'],
         isReported: json['is_reported'],
         isFavorite: json['is_favorite'],
@@ -323,6 +355,7 @@ class CommunityFactory extends UpdatableModelFactory<Community> {
         color: json['color'],
         memberships: parseMemberships(json['memberships']),
         membersCount: json['members_count'],
+        postsCount: json['posts_count'],
         userAdjective: json['user_adjective'],
         usersAdjective: json['users_adjective'],
         type: parseType(json['type']),

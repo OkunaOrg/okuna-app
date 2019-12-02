@@ -98,8 +98,17 @@ class PostsApiService {
         appendAuthorizationToken: authenticatedRequest);
   }
 
-  Future<HttpieResponse> getTrendingPosts({bool authenticatedRequest = true}) {
+  Future<HttpieResponse> getTrendingPosts(
+      {int maxId, int minId, int count, bool authenticatedRequest = true}) {
+    Map<String, dynamic> queryParams = {};
+    if (count != null) queryParams['count'] = count;
+
+    if (maxId != null) queryParams['max_id'] = maxId;
+
+    if (minId != null) queryParams['min_id'] = minId;
+
     return _httpService.get('$apiURL$GET_TRENDING_POSTS_PATH',
+        queryParameters: queryParams,
         appendAuthorizationToken: authenticatedRequest);
   }
 

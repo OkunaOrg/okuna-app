@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:dcache/dcache.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:mime/mime.dart';
 
 /// Temporal until https://github.com/dart-lang/mime/issues/13 hits
 import 'package:mime/src/default_extension_map.dart';
+import 'package:intl/date_symbol_data_file.dart';
 import 'package:pigment/pigment.dart';
 
 import 'localization.dart';
@@ -124,6 +126,16 @@ class UtilsService {
     } else {
       return _localizationService.post__time_short_now_text;
     }
+  }
+
+  Future<dynamic> initialiseDateFormatting(LocalizationService localizationService) async {
+    Locale locale = localizationService.getLocale();
+    String localeName = locale.toString();
+
+    if (LocalizationService.localizedLocales.contains(locale.languageCode)) {
+      localeName = locale.languageCode.replaceFirst('-', '_');
+    }
+    return initializeDateFormatting(localeName, null);
   }
 
   Future<String> _getFileMimeTypeFromMagicHeaders(File file) async {

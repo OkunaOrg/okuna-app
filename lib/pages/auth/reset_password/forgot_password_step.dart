@@ -125,13 +125,11 @@ class OBAuthForgotPasswordPageState extends State<OBAuthForgotPasswordPage> {
 
   Future<void> _requestPasswordReset(BuildContext context) async {
     _setRequestInProgress(true);
-    String username = _validateUsername(_usernameController.text.trim()) == null ?  _usernameController.text.trim() : '';
     String email;
-    if (username == '') {
-      email = _validateEmail(_emailController.text.trim()) == null ?  _emailController.text.trim() : '';
-    }
+    email = _validateEmail(_emailController.text.trim()) == null ?  _emailController.text.trim() : '';
+
     try {
-      await _userService.requestPasswordReset(username: username, email: email);
+      await _userService.requestPasswordReset(email: email);
       Navigator.pushNamed(context, '/auth/verify_reset_password_link_step');
     } catch (error) {
       if (error is HttpieRequestError) {
@@ -172,8 +170,8 @@ class OBAuthForgotPasswordPageState extends State<OBAuthForgotPasswordPage> {
   }
 
   Widget _buildHeading({@required BuildContext context}) {
-    String titleText = _localizationService.trans('auth__login__forgot_password');
-    String subtitleText = _localizationService.trans('auth__login__forgot_password_subtitle');
+    String titleText = _localizationService.auth__login__forgot_password;
+    String subtitleText = _localizationService.auth__login__forgot_password_subtitle;
 
     return Column(
       children: <Widget>[
@@ -201,14 +199,8 @@ class OBAuthForgotPasswordPageState extends State<OBAuthForgotPasswordPage> {
     // bug which places the cursor at the beginning of the label everytime
     // the stream changes. Therefore a flag is used to bootstrap initial value
 
-    String usernameInputLabel =
-    _localizationService.trans('auth__login__username_label');
-
     String emailInputLabel =
     _localizationService.trans('auth__login__email_label');
-
-    String orText =
-    _localizationService.trans('auth__login__or_text');
 
     EdgeInsetsGeometry inputContentPadding =
     EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0);
@@ -227,27 +219,6 @@ class OBAuthForgotPasswordPageState extends State<OBAuthForgotPasswordPage> {
                       child: Column(
                         children: <Widget>[
                           TextFormField(
-                            controller: _usernameController,
-                            validator: _validateUsername,
-                            decoration: InputDecoration(
-                              contentPadding: inputContentPadding,
-                              labelText: usernameInputLabel,
-                              border: OutlineInputBorder(),
-                              errorMaxLines: 3
-                            ),
-                            autocorrect: false,
-                          ),
-                          const SizedBox(
-                            height: 20.0,
-                          ),
-                          SizedBox(
-                            height: 20.0,
-                            child: Text(orText),
-                          ),
-                          const SizedBox(
-                            height: 20.0,
-                          ),
-                          TextFormField(
                             controller: _emailController,
                             validator: _validateEmail,
                             decoration: InputDecoration(
@@ -265,14 +236,6 @@ class OBAuthForgotPasswordPageState extends State<OBAuthForgotPasswordPage> {
             ),
           ],
         ));
-  }
-
-  String _validateUsername(String value) {
-    if (!_isSubmitted) return null;
-    if (_emailController.text.trim().length > 0 && value == '') {
-      return null;
-    }
-    return _validationService.validateUserUsername(value);
   }
 
   String _validateEmail(String value) {
