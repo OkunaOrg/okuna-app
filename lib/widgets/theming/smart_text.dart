@@ -10,7 +10,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:tinycolor/tinycolor.dart';
-
+import 'dart:ui' as ui;
 // Based on https://github.com/knoxpo/flutter_smart_text_view
 
 abstract class SmartTextElement {
@@ -324,6 +324,8 @@ class OBSmartText extends StatelessWidget {
             this.hashtagsMap.containsKey(hashtagText)) {
           Hashtag hashtag = this.hashtagsMap[hashtagText];
           textSpan = WidgetSpan(
+            baseline: TextBaseline.alphabetic,
+              alignment: ui.PlaceholderAlignment.baseline,
               child: OBHashtag(
             hashtag: hashtag,
             onPressed: onHashtagTapped,
