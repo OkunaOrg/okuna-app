@@ -34,10 +34,6 @@ class OBProfileAgeState extends State<OBProfileAge> {
 
   @override
   Widget build(BuildContext context) {
-    var openbookProvider = OpenbookProvider.of(context);
-    _utilsService = openbookProvider.utilsService;
-    _localizationService = openbookProvider.localizationService;
-    _toastService = openbookProvider.toastService;
     DateTime age = widget.user.dateJoined;
 
     if (age == null) {
@@ -45,6 +41,10 @@ class OBProfileAgeState extends State<OBProfileAge> {
     }
 
     if (_needsBootstrap) {
+      var openbookProvider = OpenbookProvider.of(context);
+      _utilsService = openbookProvider.utilsService;
+      _localizationService = openbookProvider.localizationService;
+      _toastService = openbookProvider.toastService;
       _bootstrap();
       _needsBootstrap = false;
     }
