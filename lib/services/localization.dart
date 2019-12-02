@@ -3727,7 +3727,7 @@ class LocalizationService {
 
   String contextual_hashtag_search_box__be_the_first(String hashtag) {
     return Intl.message(
-        "Be the first to use #$hashtag",
+        "You\'ll be the first to use #$hashtag",
         args: [hashtag],
         name: 'contextual_hashtag_search_box__be_the_first');
   }
