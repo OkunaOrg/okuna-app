@@ -72,6 +72,10 @@ class OBCommunityPageState extends State<OBCommunityPage>
       _userService = openbookProvider.userService;
       _localizationService = openbookProvider.localizationService;
       _needsBootstrap = false;
+
+      // Refresh the community to make sure the model contains all relevant
+      // community information (like admins and moderators).
+      _refreshCommunity();
     }
 
     return CupertinoPageScaffold(
