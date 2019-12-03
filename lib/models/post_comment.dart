@@ -81,7 +81,9 @@ class PostComment extends UpdatableModel<PostComment> {
       this.replies,
       this.repliesCount,
       this.reactionsEmojiCounts,
-      this.reaction});
+      this.reaction}) {
+    _updateHashtagsMap();
+  }
 
   static final factory = PostCommentFactory();
 
