@@ -24,6 +24,7 @@ class OBHashtagTile extends StatelessWidget {
         if (onHashtagTilePressed != null) onHashtagTilePressed(hashtag);
       },
       leading: OBHashtagAvatar(
+        key: Key('Avatar-${hashtag.name}'),
         hashtag: hashtag,
         size: OBAvatarSize.medium,
       ),

@@ -201,7 +201,7 @@ class ThemeService {
     Brightness iconsBrightness = _utilsService.colorIsDark(primaryColor)
         ? Brightness.light
         : Brightness.dark;
-    
+
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         statusBarBrightness: iconsBrightness,
         statusBarIconBrightness: iconsBrightness,

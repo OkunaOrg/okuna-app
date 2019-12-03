@@ -125,7 +125,11 @@ class OBSearchResultsState extends State<OBSearchResults>
         Expanded(
           child: TabBarView(
             controller: _tabController,
-            children: [_buildUserResults(), _buildCommunityResults(), _buildHashtagResults()],
+            children: [
+              _buildUserResults(),
+              _buildCommunityResults(),
+              _buildHashtagResults()
+            ],
           ),
         )
       ],
@@ -224,7 +228,7 @@ class OBSearchResultsState extends State<OBSearchResults>
         return true;
       },
       child: ListView.builder(
-        padding: const EdgeInsets.all(0),
+          padding: const EdgeInsets.all(0),
           physics: const ClampingScrollPhysics(),
           itemCount: widget.hashtagResults.length + 1,
           itemBuilder: (BuildContext context, int index) {
@@ -251,6 +255,7 @@ class OBSearchResultsState extends State<OBSearchResults>
 
             return OBHashtagTile(
               hashtag,
+              key: Key(hashtag.name),
               onHashtagTilePressed: widget.onHashtagPressed,
             );
           }),

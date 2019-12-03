@@ -409,6 +409,7 @@ class OBSmartText extends StatelessWidget {
         TextStyle textStyle = TextStyle(
             color: primaryTextColor,
             fontSize: fontSize,
+            height: 1.5,
             fontFamilyFallback: ['NunitoSans']);
 
         TextStyle secondaryTextStyle;
