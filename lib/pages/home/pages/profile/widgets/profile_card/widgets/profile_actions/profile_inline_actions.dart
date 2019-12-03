@@ -1,25 +1,28 @@
 import 'package:Okuna/models/user.dart';
-import 'package:Okuna/pages/home/pages/profile/widgets/profile_card/widgets/profile_actions/widgets/profile_action_more/profile_action_more.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/modal_service.dart';
 import 'package:Okuna/widgets/buttons/actions/block_button.dart';
 import 'package:Okuna/widgets/buttons/button.dart';
 import 'package:Okuna/widgets/buttons/actions/follow_button.dart';
+import 'package:Okuna/widgets/icon.dart';
 import 'package:flutter/material.dart';
 
-class OBProfileActions extends StatelessWidget {
+class OBProfileInlineActions extends StatelessWidget {
   final User user;
   final VoidCallback onUserProfileUpdated;
 
-  const OBProfileActions(this.user, {@required this.onUserProfileUpdated});
+  const OBProfileInlineActions(this.user,
+      {@required this.onUserProfileUpdated});
 
   @override
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
     var userService = openbookProvider.userService;
     var modalService = openbookProvider.modalService;
-    LocalizationService localizationService = openbookProvider.localizationService;
+    var bottomSheetService = openbookProvider.bottomSheetService;
+    LocalizationService localizationService =
+        openbookProvider.localizationService;
 
     return StreamBuilder(
       stream: user.updateSubject,
@@ -50,7 +53,18 @@ class OBProfileActions extends StatelessWidget {
             const SizedBox(
               width: 10,
             ),
-            OBProfileActionMore(user)
+            IconButton(
+              icon: const OBIcon(
+                OBIcons.moreVertical,
+                customSize: 30,
+              ),
+              onPressed: () {
+                bottomSheetService.showUserActions(
+                    context: context,
+                    user: user,
+                );
+              },
+            )
           ]);
         }
         return Row(
@@ -61,14 +75,18 @@ class OBProfileActions extends StatelessWidget {
     );
   }
 
-  _buildEditButton(ModalService modalService, LocalizationService localizationService, context) {
+  _buildEditButton(ModalService modalService,
+      LocalizationService localizationService, context) {
     return OBButton(
         child: Text(
           localizationService.user__edit_profile_title,
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         onPressed: () {
-          modalService.openEditUserProfile(user: user, context: context, onUserProfileUpdated: onUserProfileUpdated);
+          modalService.openEditUserProfile(
+              user: user,
+              context: context,
+              onUserProfileUpdated: onUserProfileUpdated);
         });
   }
 }

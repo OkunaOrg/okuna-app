@@ -7,6 +7,7 @@ import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/post_comment.dart';
 import 'package:Okuna/models/post_comment_reaction.dart';
 import 'package:Okuna/models/post_reaction.dart';
+import 'package:Okuna/models/user.dart';
 import 'package:Okuna/pages/home/bottom_sheets/community_actions.dart';
 import 'package:Okuna/pages/home/bottom_sheets/community_type_picker.dart';
 import 'package:Okuna/pages/home/bottom_sheets/confirm_action.dart';
@@ -16,6 +17,7 @@ import 'package:Okuna/pages/home/bottom_sheets/link_previews_setting_picker.dart
 import 'package:Okuna/pages/home/bottom_sheets/post_comment_more_actions.dart';
 import 'package:Okuna/pages/home/bottom_sheets/follows_lists_picker.dart';
 import 'package:Okuna/pages/home/bottom_sheets/post_actions.dart';
+import 'package:Okuna/pages/home/bottom_sheets/user_actions/user_actions.dart';
 import 'package:Okuna/pages/home/bottom_sheets/video_picker.dart';
 import 'package:Okuna/pages/home/bottom_sheets/react_to_post.dart';
 import 'package:Okuna/pages/home/bottom_sheets/react_to_post_comment.dart';
@@ -29,9 +31,11 @@ import 'package:meta/meta.dart';
 import 'media.dart';
 
 class BottomSheetService {
+  bool hasActiveBottomSheet = false;
+
   Future<PostReaction> showReactToPost(
       {@required Post post, @required BuildContext context}) async {
-    return showModalBottomSheetApp(
+    return _showModalBottomSheetApp(
         context: context,
         builder: (BuildContext context) {
           return Material(
@@ -44,7 +48,7 @@ class BottomSheetService {
       {@required PostComment postComment,
       @required Post post,
       @required BuildContext context}) async {
-    return showModalBottomSheetApp(
+    return _showModalBottomSheetApp(
         context: context,
         builder: (BuildContext context) {
           return Material(
@@ -60,7 +64,7 @@ class BottomSheetService {
       @required String actionLabel,
       @required OnPickedCircles onPickedCircles,
       List<Circle> initialPickedCircles}) {
-    showModalBottomSheetApp(
+    _showModalBottomSheetApp(
         context: context,
         builder: (BuildContext context) {
           return OBConnectionCirclesPickerBottomSheet(
@@ -76,7 +80,7 @@ class BottomSheetService {
       {@required BuildContext context,
       ValueChanged<CommunityType> onChanged,
       CommunityType initialType}) {
-    return showModalBottomSheetApp(
+    return _showModalBottomSheetApp(
         context: context,
         builder: (BuildContext context) {
           return OBCommunityTypePickerBottomSheet(
@@ -88,7 +92,7 @@ class BottomSheetService {
       {@required BuildContext context,
       ValueChanged<VideosSoundSetting> onChanged,
       VideosSoundSetting initialValue}) {
-    return showModalBottomSheetApp(
+    return _showModalBottomSheetApp(
         context: context,
         builder: (BuildContext context) {
           return OBVideosSoundSettingPickerBottomSheet(
@@ -100,7 +104,7 @@ class BottomSheetService {
       {@required BuildContext context,
       ValueChanged<VideosAutoPlaySetting> onChanged,
       VideosAutoPlaySetting initialValue}) {
-    return showModalBottomSheetApp(
+    return _showModalBottomSheetApp(
         context: context,
         builder: (BuildContext context) {
           return OBVideosAutoPlaySettingPickerBottomSheet(
@@ -112,7 +116,7 @@ class BottomSheetService {
       {@required BuildContext context,
       ValueChanged<LinkPreviewsSetting> onChanged,
       LinkPreviewsSetting initialValue}) {
-    return showModalBottomSheetApp(
+    return _showModalBottomSheetApp(
         context: context,
         builder: (BuildContext context) {
           return OBLinkPreviewsSettingPickerBottomSheet(
@@ -125,7 +129,7 @@ class BottomSheetService {
       @required String title,
       @required String actionLabel,
       List<FollowsList> initialPickedFollowsLists}) {
-    return showModalBottomSheetApp(
+    return _showModalBottomSheetApp(
         context: context,
         builder: (BuildContext context) {
           return OBFollowsListsPickerBottomSheet(
@@ -145,7 +149,7 @@ class BottomSheetService {
       Function onCommunityExcluded,
       Function onUndoCommunityExcluded,
       List<FollowsList> initialPickedFollowsLists}) {
-    return showModalBottomSheetApp(
+    return _showModalBottomSheetApp(
         context: context,
         builder: (BuildContext context) {
           return OBPostActionsBottomSheet(
@@ -159,11 +163,22 @@ class BottomSheetService {
         });
   }
 
+  Future<void> showUserActions(
+      {@required BuildContext context, @required User user}) {
+    return _showModalBottomSheetApp(
+        context: context,
+        builder: (BuildContext context) {
+          return OBUserActionsBottomSheet(
+            user,
+          );
+        });
+  }
+
   Future<void> showCommunityActions(
       {@required BuildContext context,
       @required Community community,
       OnCommunityReported onCommunityReported}) {
-    return showModalBottomSheetApp(
+    return _showModalBottomSheetApp(
         context: context,
         builder: (BuildContext context) {
           return OBCommunityActionsBottomSheet(
@@ -180,7 +195,7 @@ class BottomSheetService {
     @required ValueChanged<PostComment> onPostCommentDeleted,
     @required ValueChanged<PostComment> onPostCommentReported,
   }) {
-    return showModalBottomSheetApp(
+    return _showModalBottomSheetApp(
         context: context,
         builder: (BuildContext context) {
           return OBPostCommentMoreActionsBottomSheet(
@@ -192,7 +207,7 @@ class BottomSheetService {
   }
 
   Future<File> showVideoPicker({@required BuildContext context}) {
-    return showModalBottomSheetApp(
+    return _showModalBottomSheetApp(
         context: context,
         builder: (BuildContext context) {
           return OBVideoPickerBottomSheet();
@@ -200,7 +215,7 @@ class BottomSheetService {
   }
 
   Future<File> showImagePicker({@required BuildContext context}) {
-    return showModalBottomSheetApp(
+    return _showModalBottomSheetApp(
         context: context,
         builder: (BuildContext context) {
           return OBImagePickerBottomSheet();
@@ -215,7 +230,7 @@ class BottomSheetService {
     String cancelText,
     @required ActionCompleter actionCompleter,
   }) {
-    return showModalBottomSheetApp(
+    return _showModalBottomSheetApp(
         context: context,
         builder: (BuildContext context) {
           return OBConfirmActionBottomSheet(
@@ -226,6 +241,23 @@ class BottomSheetService {
             actionCompleter: actionCompleter,
           );
         });
+  }
+
+  void dismissActiveBottomSheet({@required BuildContext context}) async {
+    if (this.hasActiveBottomSheet) {
+      Navigator.of(context, rootNavigator: true).pop();
+      this.hasActiveBottomSheet = true;
+    }
+  }
+
+  _showModalBottomSheetApp(
+      {BuildContext context, WidgetBuilder builder}) async {
+    dismissActiveBottomSheet(context: context);
+    print('Showing modal bottom sheet');
+    hasActiveBottomSheet = true;
+    await showModalBottomSheetApp(context: context, builder: builder);
+    hasActiveBottomSheet = false;
+    print('Bottom sheet was dismissed');
   }
 }
 
@@ -386,15 +418,12 @@ Future<T> showModalBottomSheetApp<T>({
 }) {
   assert(context != null);
   assert(builder != null);
-  return Navigator.of(context, rootNavigator: true).push(
-      new _ModalBottomSheetRoute<T>(
-        builder: builder,
-        theme: ThemeData(
-          canvasColor: Colors.transparent
-        ),
-        barrierLabel:
-            MaterialLocalizations.of(context).modalBarrierDismissLabel,
-        resizeToAvoidBottomPadding: resizeToAvoidBottomPadding,
-        dismissOnTap: dismissOnTap,
-      ));
+  return Navigator.of(context, rootNavigator: true)
+      .push(new _ModalBottomSheetRoute<T>(
+    builder: builder,
+    theme: ThemeData(canvasColor: Colors.transparent),
+    barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
+    resizeToAvoidBottomPadding: resizeToAvoidBottomPadding,
+    dismissOnTap: dismissOnTap,
+  ));
 }

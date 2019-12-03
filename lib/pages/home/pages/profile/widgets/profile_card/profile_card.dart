@@ -1,7 +1,7 @@
 import 'package:Okuna/models/badge.dart';
 import 'package:Okuna/models/theme.dart';
 import 'package:Okuna/models/user.dart';
-import 'package:Okuna/pages/home/pages/profile/widgets/profile_card/widgets/profile_actions/profile_actions.dart';
+import 'package:Okuna/pages/home/pages/profile/widgets/profile_card/widgets/profile_actions/profile_inline_actions.dart';
 import 'package:Okuna/pages/home/pages/profile/widgets/profile_card/widgets/profile_bio.dart';
 import 'package:Okuna/pages/home/pages/profile/widgets/profile_card/widgets/profile_connected_in.dart';
 import 'package:Okuna/pages/home/pages/profile/widgets/profile_card/widgets/profile_connection_request.dart';
@@ -44,7 +44,7 @@ class OBProfileCard extends StatelessWidget {
                     height: (OBAvatar.AVATAR_SIZE_EXTRA_LARGE * 0.2),
                     width: OBAvatar.AVATAR_SIZE_EXTRA_LARGE,
                   ),
-                  Expanded(child: OBProfileActions(user, onUserProfileUpdated: onUserProfileUpdated,)),
+                  Expanded(child: OBProfileInlineActions(user, onUserProfileUpdated: onUserProfileUpdated,)),
                 ],
               ),
               Column(

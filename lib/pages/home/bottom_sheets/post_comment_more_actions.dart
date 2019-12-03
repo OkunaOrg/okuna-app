@@ -177,6 +177,6 @@ class OBPostCommentMoreActionsBottomSheetState
   }
 
   void _dismissMoreActions() {
-    Navigator.pop(context);
+    Navigator.of(context, rootNavigator: true).pop(context);
   }
 }
