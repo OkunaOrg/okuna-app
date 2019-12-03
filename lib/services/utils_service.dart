@@ -128,14 +128,13 @@ class UtilsService {
     }
   }
 
-  void initialiseDateFormatting(LocalizationService localizationService) async {
+  Future<dynamic> initialiseDateFormatting(LocalizationService localizationService) async {
     Locale locale = localizationService.getLocale();
     String localeName = locale.toString();
 
     if (LocalizationService.localizedLocales.contains(locale.languageCode)) {
       localeName = locale.languageCode.replaceFirst('-', '_');
     }
-
     return initializeDateFormatting(localeName, null);
   }
 
