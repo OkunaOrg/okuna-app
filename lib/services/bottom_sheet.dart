@@ -250,14 +250,15 @@ class BottomSheetService {
     }
   }
 
-  _showModalBottomSheetApp(
+  Future<T> _showModalBottomSheetApp<T>(
       {BuildContext context, WidgetBuilder builder}) async {
     dismissActiveBottomSheet(context: context);
     print('Showing modal bottom sheet');
     hasActiveBottomSheet = true;
-    await showModalBottomSheetApp(context: context, builder: builder);
+    final result = await showModalBottomSheetApp(context: context, builder: builder);
     hasActiveBottomSheet = false;
     print('Bottom sheet was dismissed');
+    return result;
   }
 }
 
