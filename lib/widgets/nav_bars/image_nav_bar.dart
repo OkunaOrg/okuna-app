@@ -27,9 +27,6 @@ class OBImageNavBar extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    ThemeValueParserService themeValueParserService =
-        OpenbookProvider.of(context).themeValueParserService;
-
     return Stack(
       children: <Widget>[
         Positioned(
