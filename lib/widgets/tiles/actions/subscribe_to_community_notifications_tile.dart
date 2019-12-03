@@ -56,7 +56,7 @@ class OBSubscribeToCommunityNotificationsTileState extends State<OBSubscribeToCo
       builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
         var community = snapshot.data;
 
-        bool isSubscribed = community.isSubscribed ?? false;
+        bool isSubscribed = community.isSubscribedToNotifications ?? false;
 
         return ListTile(
           enabled: !_requestInProgress,

@@ -52,7 +52,7 @@ class OBSubscribeToUserNotificationsTileState extends State<OBSubscribeToUserNot
       builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
         var user = snapshot.data;
 
-        bool isSubscribed = user.isSubscribed ?? false;
+        bool isSubscribed = user.isSubscribedToNotifications ?? false;
 
         return OBLoadingTile(
           isLoading: _requestInProgress,
