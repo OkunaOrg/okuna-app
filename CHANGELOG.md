@@ -17,6 +17,8 @@ The change log for the Okuna app.
  - 👶 Add Okuna age on profiles
  - 😘 Add Follow Back button
  - 💯 Add posts count in communities
+ - 🗑 Add confirm to delete posts and comments
+ - ✨ Make bottom sheets rounded and improve their visibility
  - 🎄 Add app christmas icon!
 
 

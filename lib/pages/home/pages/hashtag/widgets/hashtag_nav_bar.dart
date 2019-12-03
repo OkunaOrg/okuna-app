@@ -39,7 +39,7 @@ class OBHashtagNavBar extends StatelessWidget
                         padding: const EdgeInsets.symmetric(horizontal: 3),
                         child: Text('·', style: TextStyle(color: Colors.white),),
                       ),
-                      OBPostsCount(hashtag.postsCount, color: Colors.white)
+                      OBPostsCount(hashtag.postsCount, color: Colors.white, showZero: true,)
                     ],
                   ),
                   textColor: hashtagTextColor)

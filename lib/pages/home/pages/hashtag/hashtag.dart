@@ -1,7 +1,6 @@
 import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/hashtag.dart';
 import 'package:Okuna/pages/home/pages/hashtag/widgets/hashtag_nav_bar.dart';
-import 'package:Okuna/pages/home/pages/hashtag/widgets/hashtag_posts_stream_status_indicator.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/user.dart';
 import 'package:Okuna/widgets/posts_stream/posts_stream.dart';
@@ -60,24 +59,12 @@ class OBHashtagPageState extends State<OBHashtagPage> {
                     controller: _obPostsStreamController,
                     secondaryRefresher: _refreshHashtag,
                     refresher: _refreshPosts,
-                    onScrollLoader: _loadMorePosts,
-                    statusIndicatorBuilder: _buildPostsStreamStatusIndicator),
+                    onScrollLoader: _loadMorePosts
+                ),
               )
             ],
           ),
         ));
-  }
-
-  Widget _buildPostsStreamStatusIndicator(
-      {BuildContext context,
-      OBPostsStreamStatus streamStatus,
-      List<Widget> streamPrependedItems,
-      Function streamRefresher}) {
-    return OBHashtagPostsStreamStatusIndicator(
-        hashtag: widget.hashtag,
-        streamRefresher: streamRefresher,
-        streamPrependedItems: streamPrependedItems,
-        streamStatus: streamStatus);
   }
 
   void scrollToTop() {
