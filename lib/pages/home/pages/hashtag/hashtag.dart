@@ -12,10 +12,8 @@ class OBHashtagPage extends StatefulWidget {
   final OBHashtagPageController controller;
   final Hashtag hashtag;
 
-  OBHashtagPage(
-    this.hashtag, {
-    this.controller,
-  });
+  const OBHashtagPage({Key key, this.controller, this.hashtag})
+      : super(key: key);
 
   @override
   OBHashtagPageState createState() {
@@ -48,7 +46,10 @@ class OBHashtagPageState extends State<OBHashtagPage> {
 
     return CupertinoPageScaffold(
         backgroundColor: Color.fromARGB(0, 0, 0, 0),
-        navigationBar: OBHashtagNavBar(_hashtag),
+        navigationBar: OBHashtagNavBar(
+          key: Key('navBarHeader_${_hashtag.name}'),
+          hashtag: _hashtag,
+        ),
         child: OBPrimaryColorContainer(
           child: Column(
             mainAxisSize: MainAxisSize.max,

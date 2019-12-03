@@ -984,7 +984,7 @@ class NavigationService {
           slidableKey: _getKeyRandomisedWithWord('hashtagRoute'),
           builder: (BuildContext context) {
             return OBHashtagPage(
-              hashtag,
+              hashtag: hashtag
             );
           }),
     );

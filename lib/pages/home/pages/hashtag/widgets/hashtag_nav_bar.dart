@@ -12,7 +12,7 @@ class OBHashtagNavBar extends StatelessWidget
     implements ObstructingPreferredSizeWidget {
   final Hashtag hashtag;
 
-  OBHashtagNavBar(this.hashtag);
+  const OBHashtagNavBar({Key key, this.hashtag}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,27 +37,36 @@ class OBHashtagNavBar extends StatelessWidget
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 3),
-                        child: Text('·', style: TextStyle(color: Colors.white),),
+                        child: Text(
+                          '·',
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ),
-                      OBPostsCount(hashtag.postsCount, color: Colors.white, showZero: true,)
+                      OBPostsCount(
+                        hashtag.postsCount,
+                        color: Colors.white,
+                        showZero: true,
+                      )
                     ],
                   ),
                   textColor: hashtagTextColor)
               : OBThemedNavigationBar(
                   middle: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      OBHashtag(
-                        hashtag: hashtag,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 3),
-                        child: OBText('·'),
-                      ),
-                      OBPostsCount(hashtag.postsCount, showZero: true,)
-                    ],
-                  )
-                );
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    OBHashtag(
+                      hashtag: hashtag,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 3),
+                      child: OBText('·'),
+                    ),
+                    OBPostsCount(
+                      hashtag.postsCount,
+                      showZero: true,
+                    )
+                  ],
+                ));
         });
   }
 
