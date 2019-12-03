@@ -8,7 +8,7 @@ import 'package:mime/mime.dart';
 
 /// Temporal until https://github.com/dart-lang/mime/issues/13 hits
 import 'package:mime/src/default_extension_map.dart';
-import 'package:intl/date_symbol_data_file.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:pigment/pigment.dart';
 
 import 'localization.dart';
@@ -128,13 +128,14 @@ class UtilsService {
     }
   }
 
-  Future<dynamic> initialiseDateFormatting(LocalizationService localizationService) async {
+  void initialiseDateFormatting(LocalizationService localizationService) async {
     Locale locale = localizationService.getLocale();
     String localeName = locale.toString();
 
     if (LocalizationService.localizedLocales.contains(locale.languageCode)) {
       localeName = locale.languageCode.replaceFirst('-', '_');
     }
+
     return initializeDateFormatting(localeName, null);
   }
 
