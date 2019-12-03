@@ -261,13 +261,13 @@ class AuthApiService {
     return _httpService.post(_makeApiUrl(path), appendAuthorizationToken: true);
   }
 
-  Future<HttpieResponse> subscribeUserWithUsername(String userUsername) {
-    String path = _makeSubscribeUserWithUsernamePath(userUsername);
+  Future<HttpieResponse> subscribeToUserWithUsernameNotifications(String userUsername) {
+    String path = _makeSubscribeToUserWithUsernameNotificationsPath(userUsername);
     return _httpService.putJSON(_makeApiUrl(path), appendAuthorizationToken: true);
   }
 
-  Future<HttpieResponse> unsubscribeUserWithUsername(String userUsername) {
-    String path = _makeSubscribeUserWithUsernamePath(userUsername);
+  Future<HttpieResponse> unsubscribeFromUserWithUsernameNotifications(String userUsername) {
+    String path = _makeSubscribeToUserWithUsernameNotificationsPath(userUsername);
     return _httpService.delete(_makeApiUrl(path), appendAuthorizationToken: true);
   }
 
@@ -450,7 +450,7 @@ class AuthApiService {
         .parse(UNBLOCK_USER_PATH, {'userUsername': username});
   }
 
-  String _makeSubscribeUserWithUsernamePath(String username) {
+  String _makeSubscribeToUserWithUsernameNotificationsPath(String username) {
     return _stringTemplateService
         .parse(SUBSCRIBE_USER_NOTIFICATIONS_PATH, {'userUsername': username});
   }

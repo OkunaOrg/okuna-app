@@ -971,16 +971,16 @@ class UserService {
     return User.fromJson(json.decode(response.body));
   }
 
-  Future<User> subscribeUser(User user) async {
+  Future<User> subscribeToUserNotifications(User user) async {
     HttpieResponse response =
-        await _authApiService.subscribeUserWithUsername(user.username);
+        await _authApiService.subscribeToUserWithUsernameNotifications(user.username);
     _checkResponseIsCreated(response);
     return User.fromJson(json.decode(response.body));
   }
 
-  Future<User> unsubscribeUser(User user) async {
+  Future<User> unsubscribeFromUserNotifications(User user) async {
     HttpieResponse response =
-        await _authApiService.unsubscribeUserWithUsername(user.username);
+        await _authApiService.unsubscribeFromUserWithUsernameNotifications(user.username);
     _checkResponseIsOk(response);
     return User.fromJson(json.decode(response.body));
   }
@@ -1683,16 +1683,16 @@ class UserService {
     return Community.fromJSON(json.decode(response.body));
   }
 
-  Future<void> subscribeToCommunity(Community community) async {
-    HttpieResponse response = await _communitiesApiService.subscribeToCommunity(
+  Future<void> subscribeToCommunityNotifications(Community community) async {
+    HttpieResponse response = await _communitiesApiService.subscribeToCommunityNotifications(
         communityName: community.name);
     _checkResponseIsCreated(response);
 
     return Community.fromJSON(json.decode(response.body));
   }
 
-  Future<void> unsubscribeToCommunity(Community community) async {
-    HttpieResponse response = await _communitiesApiService.unsubscribeToCommunity(
+  Future<void> unsubscribeFromCommunityNotifications(Community community) async {
+    HttpieResponse response = await _communitiesApiService.unsubscribeFromCommunityNotifications(
         communityName: community.name);
     _checkResponseIsOk(response);
 

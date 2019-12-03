@@ -5,7 +5,7 @@ import 'package:Okuna/pages/home/bottom_sheets/user_actions/widgets/confirm_conn
 import 'package:Okuna/pages/home/bottom_sheets/user_actions/widgets/connect_to_user_tile.dart';
 import 'package:Okuna/pages/home/bottom_sheets/user_actions/widgets/disconnect_from_user_tile.dart';
 import 'package:Okuna/pages/home/bottom_sheets/user_actions/widgets/remove_account_from_lists_tile.dart';
-import 'package:Okuna/pages/home/bottom_sheets/user_actions/widgets/subscribe_user_tile.dart';
+import 'package:Okuna/pages/home/bottom_sheets/user_actions/widgets/subscribe_to_user_notifications_tile.dart';
 import 'package:Okuna/pages/home/bottom_sheets/user_actions/widgets/update_connection_with_user_tile.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/bottom_sheet.dart';
@@ -57,9 +57,9 @@ class OBUserActionsBottomSheet extends StatelessWidget {
           ));
         }
 
-        moreTiles.add(OBSubscribeToUserTile(
+        moreTiles.add(OBSubscribeToUserNotificationsTile(
           user: user,
-          onSubscribedUser: () {
+          onSubscribed: () {
             dismissBottomSheet();
             // Bottom sheet
             openbookProvider.toastService.success(
@@ -67,7 +67,7 @@ class OBUserActionsBottomSheet extends StatelessWidget {
                     .user__profile_action_user_post_notifications_enabled,
                 context: context);
           },
-          onUnsubscribedUser: () {
+          onUnsubscribed: () {
             // Bottom sheet
             dismissBottomSheet();
             openbookProvider.toastService.success(

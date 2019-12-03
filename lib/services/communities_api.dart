@@ -45,7 +45,7 @@ class CommunitiesApiService {
       'api/communities/{communityName}/search/';
   static const FAVORITE_COMMUNITY_PATH =
       'api/communities/{communityName}/favorite/';
-  static const SUBSCRIBE_COMMUNITY_NOTIFICATIONS_PATH =
+  static const SUBSCRIBE_TO_COMMUNITY_NOTIFICATIONS_PATH =
       'api/communities/{communityName}/notifications/subscribe/';
   static const EXCLUDE_COMMUNITY_PATH =
       'api/communities/{communityName}/top-posts/exclude/';
@@ -609,14 +609,14 @@ class CommunitiesApiService {
         appendAuthorizationToken: true);
   }
 
-  Future<HttpieResponse> subscribeToCommunity({@required String communityName}) {
-    String path = _makeSubscribeCommunityPath(communityName);
+  Future<HttpieResponse> subscribeToCommunityNotifications({@required String communityName}) {
+    String path = _makeSubscribeToCommunityNotificationsPath(communityName);
     return _httpService.putJSON(_makeApiUrl(path),
         appendAuthorizationToken: true);
   }
 
-  Future<HttpieResponse> unsubscribeToCommunity({@required String communityName}) {
-    String path = _makeSubscribeCommunityPath(communityName);
+  Future<HttpieResponse> unsubscribeFromCommunityNotifications({@required String communityName}) {
+    String path = _makeSubscribeToCommunityNotificationsPath(communityName);
     return _httpService.delete(_makeApiUrl(path),
         appendAuthorizationToken: true);
   }
@@ -814,9 +814,9 @@ class CommunitiesApiService {
         .parse(FAVORITE_COMMUNITY_PATH, {'communityName': communityName});
   }
 
-  String _makeSubscribeCommunityPath(String communityName) {
+  String _makeSubscribeToCommunityNotificationsPath(String communityName) {
     return _stringTemplateService
-        .parse(SUBSCRIBE_COMMUNITY_NOTIFICATIONS_PATH, {'communityName': communityName});
+        .parse(SUBSCRIBE_TO_COMMUNITY_NOTIFICATIONS_PATH, {'communityName': communityName});
   }
 
   String _makeExcludeCommunityPath(String communityName) {

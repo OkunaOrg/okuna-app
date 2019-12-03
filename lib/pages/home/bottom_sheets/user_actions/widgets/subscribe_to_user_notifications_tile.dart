@@ -9,25 +9,25 @@ import 'package:Okuna/widgets/theming/text.dart';
 import 'package:Okuna/widgets/tiles/loading_tile.dart';
 import 'package:flutter/material.dart';
 
-class OBSubscribeToUserTile extends StatefulWidget {
+class OBSubscribeToUserNotificationsTile extends StatefulWidget {
   final User user;
-  final VoidCallback onSubscribedUser;
-  final VoidCallback onUnsubscribedUser;
+  final VoidCallback onSubscribed;
+  final VoidCallback onUnsubscribed;
 
-  const OBSubscribeToUserTile({
+  const OBSubscribeToUserNotificationsTile({
     Key key,
     @required this.user,
-    this.onSubscribedUser,
-    this.onUnsubscribedUser,
+    this.onSubscribed,
+    this.onUnsubscribed,
   }) : super(key: key);
 
   @override
-  OBSubscribeToUserTileState createState() {
-    return OBSubscribeToUserTileState();
+  OBSubscribeToUserNotificationsTileState createState() {
+    return OBSubscribeToUserNotificationsTileState();
   }
 }
 
-class OBSubscribeToUserTileState extends State<OBSubscribeToUserTile> {
+class OBSubscribeToUserNotificationsTileState extends State<OBSubscribeToUserNotificationsTile> {
   UserService _userService;
   ToastService _toastService;
   LocalizationService _localizationService;
@@ -69,8 +69,8 @@ class OBSubscribeToUserTileState extends State<OBSubscribeToUserTile> {
   void _susbcribeUser() async {
     _setRequestInProgress(true);
     try {
-      await _userService.subscribeUser(widget.user);
-      if (widget.onSubscribedUser != null) widget.onSubscribedUser();
+      await _userService.subscribeToUserNotifications(widget.user);
+      if (widget.onSubscribed != null) widget.onSubscribed();
     } catch (e) {
       _onError(e);
     } finally {
@@ -81,8 +81,8 @@ class OBSubscribeToUserTileState extends State<OBSubscribeToUserTile> {
   void _unsubscribeUser() async {
     _setRequestInProgress(true);
     try {
-      await _userService.unsubscribeUser(widget.user);
-      if (widget.onUnsubscribedUser != null) widget.onUnsubscribedUser();
+      await _userService.unsubscribeFromUserNotifications(widget.user);
+      if (widget.onUnsubscribed != null) widget.onUnsubscribed();
     } catch (e) {
       _onError(e);
     } finally {
