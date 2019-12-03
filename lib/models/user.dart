@@ -237,6 +237,10 @@ class User extends UpdatableModel<User> {
     return profile.hasUrl();
   }
 
+  bool hasAge() {
+    return dateJoined != null;
+  }
+
   bool hasProfileAvatar() {
     return this.profile.avatar != null;
   }

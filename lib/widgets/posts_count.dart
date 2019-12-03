@@ -51,6 +51,9 @@ class OBPostsCount extends StatelessWidget {
                           color: color ?? themeValueParserService
                               .parseColor(theme.secondaryTextColor)))
                 ])),
+              ),
+              const SizedBox(
+                width: 10,
               )
             ],
           );
