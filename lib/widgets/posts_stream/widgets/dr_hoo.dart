@@ -109,7 +109,10 @@ class OBPostsStreamDrHoo extends StatelessWidget {
       padding: EdgeInsets.symmetric(
           horizontal: 20,
           vertical:
-              streamPrependedItems != null && streamPrependedItems.isNotEmpty || streamStatus == OBPostsStreamStatus.empty || streamStatus == OBPostsStreamStatus.refreshing
+              streamPrependedItems != null && streamPrependedItems.isNotEmpty ||
+                      streamStatus == OBPostsStreamStatus.empty ||
+                      streamStatus == OBPostsStreamStatus.refreshing ||
+                      streamStatus == OBPostsStreamStatus.loadingMoreFailed
                   ? 20
                   : 0),
       child: OBHighlightedBox(
