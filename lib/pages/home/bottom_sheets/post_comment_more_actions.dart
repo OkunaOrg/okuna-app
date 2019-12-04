@@ -145,8 +145,6 @@ class OBPostCommentMoreActionsBottomSheetState
   Future _onWantsToDeletePostComment() async {
     if (_requestInProgress) return;
     _setRequestInProgress(true);
-    _dismissMoreActions();
-
     _bottomSheetService.showConfirmAction(
         context: context,
         subtitle: _localizationService.post__actions_delete_comment_description,
