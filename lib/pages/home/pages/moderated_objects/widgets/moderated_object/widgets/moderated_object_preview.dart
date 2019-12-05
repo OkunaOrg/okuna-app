@@ -1,4 +1,5 @@
 import 'package:Okuna/models/community.dart';
+import 'package:Okuna/models/hashtag.dart';
 import 'package:Okuna/models/moderation/moderated_object.dart';
 import 'package:Okuna/models/post_comment.dart';
 import 'package:Okuna/pages/home/pages/post_comments/widgets/post_comment/post_comment.dart';
@@ -6,6 +7,7 @@ import 'package:Okuna/provider.dart';
 import 'package:Okuna/widgets/post/widgets/post-body/post_body.dart';
 import 'package:Okuna/widgets/post/widgets/post_header/post_header.dart';
 import 'package:Okuna/widgets/tiles/community_tile.dart';
+import 'package:Okuna/widgets/tiles/hashtag_tile.dart';
 import 'package:Okuna/widgets/tiles/user_tile.dart';
 import 'package:flutter/material.dart';
 
@@ -42,6 +44,20 @@ class OBModeratedObjectPreview extends StatelessWidget {
                   OpenbookProvider.of(context);
               openbookProvider.navigationService
                   .navigateToCommunity(community: community, context: context);
+            },
+          ),
+        );
+        break;
+      case ModeratedObjectType.hashtag:
+        widget = Padding(
+          padding: EdgeInsets.all(10),
+          child: OBHashtagTile(
+            moderatedObject.contentObject,
+            onHashtagTilePressed: (Hashtag hashtag) {
+              OpenbookProviderState openbookProvider =
+                  OpenbookProvider.of(context);
+              openbookProvider.navigationService
+                  .navigateToHashtag(hashtag: hashtag, context: context);
             },
           ),
         );

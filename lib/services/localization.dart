@@ -618,7 +618,8 @@ class LocalizationService {
   }
 
   String get drawer__my_user_subscriptions {
-    return Intl.message("My user subscriptions", name: 'drawer__my_user_subscriptions');
+    return Intl.message("My user subscriptions",
+        name: 'drawer__my_user_subscriptions');
   }
 
   String get drawer__my_invites {
@@ -1103,7 +1104,8 @@ class LocalizationService {
   }
 
   String get community__manage_subscribe_community {
-    return Intl.message("Subscribe to notifications when there are new posts in this community",
+    return Intl.message(
+        "Subscribe to notifications when there are new posts in this community",
         name: 'community__manage_subscribe_community');
   }
 
@@ -2356,8 +2358,7 @@ class LocalizationService {
   }
 
   String get user__profile_in_circles {
-    return Intl.message("In circles",
-        name: 'user__profile_in_circles');
+    return Intl.message("In circles", name: 'user__profile_in_circles');
   }
 
   String get user__profile_action_cancel_connection {
@@ -2390,11 +2391,13 @@ class LocalizationService {
   }
 
   String get user__follow_button_follow_back_text {
-    return Intl.message("Follow back", name: 'user__follow_button_follow_back_text');
+    return Intl.message("Follow back",
+        name: 'user__follow_button_follow_back_text');
   }
 
   String get user__follow_button_following_text {
-    return Intl.message("Following", name: 'user__follow_button_following_text');
+    return Intl.message("Following",
+        name: 'user__follow_button_following_text');
   }
 
   String get user__follow_button_unfollow_text {
@@ -2402,11 +2405,13 @@ class LocalizationService {
   }
 
   String get user__subscribe_button_subscribe_text {
-    return Intl.message("Subscribe", name: 'user__subscribe_button_subscribe_text');
+    return Intl.message("Subscribe",
+        name: 'user__subscribe_button_subscribe_text');
   }
 
   String get user__unsubscribe_button_unsubscribe_text {
-    return Intl.message("Unsubscribe", name: 'user__unsubscribe_button_unsubscribe_text');
+    return Intl.message("Unsubscribe",
+        name: 'user__unsubscribe_button_unsubscribe_text');
   }
 
   String get user__edit_profile_username {
@@ -2595,7 +2600,8 @@ class LocalizationService {
   }
 
   String get user__user_subscriptions_text {
-    return Intl.message("User subscriptions", name: 'user__user_subscriptions_text');
+    return Intl.message("User subscriptions",
+        name: 'user__user_subscriptions_text');
   }
 
   String get user__following_resource_name {
@@ -2606,7 +2612,8 @@ class LocalizationService {
 
   String get user__user_subscriptions_resource_name {
     return Intl.message("user subscriptions",
-        desc: 'Eg: Search user subscriptions.., No user subscriptions found. etc ',
+        desc:
+            'Eg: Search user subscriptions.., No user subscriptions found. etc ',
         name: 'user__user_subscriptions_resource_name');
   }
 
@@ -3198,11 +3205,13 @@ class LocalizationService {
   }
 
   String get user__enable_new_post_notifications {
-    return Intl.message("Enable new post notifications", name: 'user__enable_new_post_notifications');
+    return Intl.message("Enable new post notifications",
+        name: 'user__enable_new_post_notifications');
   }
 
   String get user__disable_new_post_notifications {
-    return Intl.message("Disable new post notifications", name: 'user__disable_new_post_notifications');
+    return Intl.message("Disable new post notifications",
+        name: 'user__disable_new_post_notifications');
   }
 
   String user__disconnect_from_user(String userName) {
@@ -3417,8 +3426,7 @@ class LocalizationService {
   }
 
   String notifications__community_new_post_tile(String communityName) {
-    return Intl.message(
-        "There was a new post in /c/$communityName.",
+    return Intl.message("There was a new post in /c/$communityName.",
         args: [communityName],
         desc: "Eg.: There was a new post in /c/okuna.",
         name: 'notifications__community_new_post_tile');
@@ -3710,6 +3718,16 @@ class LocalizationService {
         name: 'moderation__you_have_reported_account_text');
   }
 
+  String get moderation__report_hashtag_text {
+    return Intl.message("Report hashtag",
+        name: 'moderation__report_hashtag_text');
+  }
+
+  String get moderation__you_have_reported_hashtag_text {
+    return Intl.message("You have reported this hashtag",
+        name: 'moderation__you_have_reported_hashtag_text');
+  }
+
   String get moderation__report_community_text {
     return Intl.message("Report community",
         name: 'moderation__report_community_text');
@@ -3846,10 +3864,8 @@ class LocalizationService {
   }
 
   String contextual_hashtag_search_box__be_the_first(String hashtag) {
-    return Intl.message(
-        "You\'ll be the first to use #$hashtag",
-        args: [hashtag],
-        name: 'contextual_hashtag_search_box__be_the_first');
+    return Intl.message("You\'ll be the first to use #$hashtag",
+        args: [hashtag], name: 'contextual_hashtag_search_box__be_the_first');
   }
 
   String get image_picker__from_gallery {

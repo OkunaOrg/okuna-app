@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:Okuna/models/circle.dart';
 import 'package:Okuna/models/community.dart';
 import 'package:Okuna/models/follows_list.dart';
+import 'package:Okuna/models/hashtag.dart';
 import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/post_comment.dart';
 import 'package:Okuna/models/post_comment_reaction.dart';
@@ -12,6 +13,7 @@ import 'package:Okuna/pages/home/bottom_sheets/community_actions.dart';
 import 'package:Okuna/pages/home/bottom_sheets/community_type_picker.dart';
 import 'package:Okuna/pages/home/bottom_sheets/confirm_action.dart';
 import 'package:Okuna/pages/home/bottom_sheets/connection_circles_picker.dart';
+import 'package:Okuna/pages/home/bottom_sheets/hashtag_actions.dart';
 import 'package:Okuna/pages/home/bottom_sheets/image_picker.dart';
 import 'package:Okuna/pages/home/bottom_sheets/link_previews_setting_picker.dart';
 import 'package:Okuna/pages/home/bottom_sheets/post_comment_more_actions.dart';
@@ -159,6 +161,21 @@ class BottomSheetService {
             onUndoCommunityExcluded: onUndoCommunityExcluded,
             onPostDeleted: onPostDeleted,
             onPostReported: onPostReported,
+          );
+        });
+  }
+
+  Future<void> showHashtagActions(
+      {@required BuildContext context,
+      @required Hashtag hashtag,
+      @required ValueChanged<Hashtag> onHashtagReported}) {
+
+    return _showModalBottomSheetApp(
+        context: context,
+        builder: (BuildContext context) {
+          return OBHashtagActionsBottomSheet(
+            hashtag: hashtag,
+            onHashtagReported: onHashtagReported,
           );
         });
   }

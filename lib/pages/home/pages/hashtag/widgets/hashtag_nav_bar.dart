@@ -1,6 +1,7 @@
 import 'package:Okuna/models/hashtag.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/widgets/hashtag.dart';
+import 'package:Okuna/widgets/more_buttons/hashtag_more_button.dart';
 import 'package:Okuna/widgets/nav_bars/image_nav_bar.dart';
 import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Okuna/widgets/posts_count.dart';
@@ -28,6 +29,9 @@ class OBHashtagNavBar extends StatelessWidget
 
           return hashtag.image != null
               ? OBImageNavBar(
+                  trailing: OBHashtagMoreButton(
+                    hashtag: hashtag,
+                  ),
                   imageSrc: hashtag.image,
                   middle: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -51,22 +55,25 @@ class OBHashtagNavBar extends StatelessWidget
                   ),
                   textColor: hashtagTextColor)
               : OBThemedNavigationBar(
+                  trailing: OBHashtagMoreButton(
+                    hashtag: hashtag,
+                  ),
                   middle: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    OBHashtag(
-                      hashtag: hashtag,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 3),
-                      child: OBText('·'),
-                    ),
-                    OBPostsCount(
-                      hashtag.postsCount,
-                      showZero: true,
-                    )
-                  ],
-                ));
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      OBHashtag(
+                        hashtag: hashtag,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 3),
+                        child: OBText('·'),
+                      ),
+                      OBPostsCount(
+                        hashtag.postsCount,
+                        showZero: true,
+                      )
+                    ],
+                  ));
         });
   }
 
