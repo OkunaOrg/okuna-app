@@ -18,12 +18,14 @@ class OBIcon extends StatelessWidget {
   static const double SMALL_SIZE = 15.0;
 
   const OBIcon(this.iconData,
-      {this.size,
+      {Key key,
+      this.size,
       this.customSize,
       this.color,
       this.themeColor,
       this.semanticLabel})
-      : assert(!(color != null && themeColor != null));
+      : assert(!(color != null && themeColor != null)),
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -132,6 +134,10 @@ class OBIcons {
   static const trending = OBIconData(nativeIcon: Icons.whatshot);
   static const pause = OBIconData(nativeIcon: Icons.pause);
   static const play_arrow = OBIconData(nativeIcon: Icons.play_arrow);
+  static const fullscreen_exit = OBIconData(nativeIcon: Icons.fullscreen_exit);
+  static const fullscreen = OBIconData(nativeIcon: Icons.fullscreen);
+  static const volume_up = OBIconData(nativeIcon: Icons.volume_up);
+  static const volume_off = OBIconData(nativeIcon: Icons.volume_off);
   static const search = OBIconData(nativeIcon: Icons.search);
   static const okuna_age_baby = OBIconData(nativeIcon: Icons.child_care);
   static const okuna_age_smile = OBIconData(nativeIcon: Icons.sentiment_satisfied);
