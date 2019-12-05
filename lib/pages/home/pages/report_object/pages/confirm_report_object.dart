@@ -1,5 +1,5 @@
-import 'package:Okuna/libs/type_to_str.dart';
 import 'package:Okuna/models/community.dart';
+import 'package:Okuna/models/hashtag.dart';
 import 'package:Okuna/models/moderation/moderation_category.dart';
 import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/post_comment.dart';
@@ -73,7 +73,8 @@ class OBConfirmReportObjectState extends State<OBConfirmReportObject> {
     }
 
     return OBCupertinoPageScaffold(
-        navigationBar: OBThemedNavigationBar(title: _localizationService.moderation__confirm_report_title),
+        navigationBar: OBThemedNavigationBar(
+            title: _localizationService.moderation__confirm_report_title),
         child: OBPrimaryColorContainer(
             child: Column(
           children: <Widget>[
@@ -87,7 +88,8 @@ class OBConfirmReportObjectState extends State<OBConfirmReportObject> {
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     OBText(
-                     _localizationService.moderation__confirm_report_provide_details,
+                      _localizationService
+                          .moderation__confirm_report_provide_details,
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
@@ -95,7 +97,8 @@ class OBConfirmReportObjectState extends State<OBConfirmReportObject> {
                       height: 10,
                     ),
                     OBSecondaryText(
-                     _localizationService.moderation__confirm_report_provide_optional_info,
+                      _localizationService
+                          .moderation__confirm_report_provide_optional_info,
                     ),
                     const SizedBox(
                       height: 10,
@@ -107,7 +110,8 @@ class OBConfirmReportObjectState extends State<OBConfirmReportObject> {
                         maxLines: 3,
                         hasBorder: false,
                         decoration: InputDecoration(
-                          hintText: _localizationService.moderation__confirm_report_provide_optional_hint_text,
+                          hintText: _localizationService
+                              .moderation__confirm_report_provide_optional_hint_text,
                           contentPadding: const EdgeInsets.symmetric(
                               vertical: 8.0, horizontal: 10),
                         ),
@@ -117,7 +121,8 @@ class OBConfirmReportObjectState extends State<OBConfirmReportObject> {
                       height: 40,
                     ),
                     OBText(
-                      _localizationService.moderation__confirm_report_provide_happen_next,
+                      _localizationService
+                          .moderation__confirm_report_provide_happen_next,
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
@@ -126,7 +131,8 @@ class OBConfirmReportObjectState extends State<OBConfirmReportObject> {
                     ),
                     OBMarkdown(
                         onlyBody: true,
-                        data: _localizationService.moderation__confirm_report_provide_happen_next_desc)
+                        data: _localizationService
+                            .moderation__confirm_report_provide_happen_next_desc)
                   ],
                 ),
               ),
@@ -138,7 +144,8 @@ class OBConfirmReportObjectState extends State<OBConfirmReportObject> {
                   Expanded(
                     child: OBButton(
                       size: OBButtonSize.large,
-                      child: Text(_localizationService.moderation__confirm_report_submit),
+                      child: Text(_localizationService
+                          .moderation__confirm_report_submit),
                       onPressed: _onConfirm,
                       isLoading: _confirmationInProgress,
                     ),
@@ -178,6 +185,12 @@ class OBConfirmReportObjectState extends State<OBConfirmReportObject> {
                 description: _descriptionController.text,
                 user: widget.object,
                 moderationCategory: widget.category));
+      } else if (widget.object is Hashtag) {
+        _submitReportOperation = CancelableOperation.fromFuture(
+            _userService.reportHashtag(
+                description: _descriptionController.text,
+                hashtag: widget.object,
+                moderationCategory: widget.category));
       } else {
         throw 'Object type not supported';
       }
@@ -185,7 +198,8 @@ class OBConfirmReportObjectState extends State<OBConfirmReportObject> {
       if (widget.object is User ||
           widget.object is Community ||
           widget.object is Post ||
-          widget.object is PostComment) {
+          widget.object is PostComment ||
+          widget.object is Hashtag) {
         widget.object.setIsReported(true);
       }
       _toastService.success(
@@ -204,9 +218,11 @@ class OBConfirmReportObjectState extends State<OBConfirmReportObject> {
     if (modelInstance is Post) {
       result = _localizationService.moderation__confirm_report_post_reported;
     } else if (modelInstance is PostComment) {
-      result = _localizationService.moderation__confirm_report_post_comment_reported;
+      result =
+          _localizationService.moderation__confirm_report_post_comment_reported;
     } else if (modelInstance is Community) {
-      result = _localizationService.moderation__confirm_report_community_reported;
+      result =
+          _localizationService.moderation__confirm_report_community_reported;
     } else if (modelInstance is User) {
       result = _localizationService.moderation__confirm_report_user_reported;
     } else {
@@ -223,7 +239,8 @@ class OBConfirmReportObjectState extends State<OBConfirmReportObject> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: _localizationService.error__unknown_error, context: context);
+      _toastService.error(
+          message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

@@ -60,6 +60,7 @@ class OBModeratedObjectsFiltersModalState
         ModeratedObjectType.postComment,
         ModeratedObjectType.community,
         ModeratedObjectType.user,
+        ModeratedObjectType.hashtag,
       ];
     }
 

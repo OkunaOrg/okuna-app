@@ -684,7 +684,7 @@ class CommunitiesApiService {
         queryParameters: {'offset': offset});
   }
 
-  Future<HttpieResponse> reportCommunity(
+  Future<HttpieResponse> reportCommunityWithName(
       {@required String communityName,
       @required int moderationCategoryId,
       String description}) {

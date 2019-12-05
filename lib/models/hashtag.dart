@@ -10,6 +10,7 @@ class Hashtag extends UpdatableModel<Hashtag> {
   String color;
   String textColor;
   int postsCount;
+  bool isReported;
 
   Hashtag({
     this.id,
@@ -19,6 +20,7 @@ class Hashtag extends UpdatableModel<Hashtag> {
     this.color,
     this.textColor,
     this.postsCount,
+    this.isReported,
   });
 
   static final factory = HashtagFactory();
@@ -37,6 +39,7 @@ class Hashtag extends UpdatableModel<Hashtag> {
       'color': color,
       'text_color': textColor,
       'posts_count': postsCount,
+      'is_reported': isReported,
     };
   }
 
@@ -45,6 +48,11 @@ class Hashtag extends UpdatableModel<Hashtag> {
     if (json.containsKey('name')) {
       name = json['name'];
     }
+
+    if (json.containsKey('is_reported')) {
+      isReported = json['is_reported'];
+    }
+
     if (json.containsKey('posts_count')) {
       postsCount = json['posts_count'];
     }
@@ -72,6 +80,11 @@ class Hashtag extends UpdatableModel<Hashtag> {
   bool hasImage() {
     return this.image != null;
   }
+
+  void setIsReported(isReported) {
+    this.isReported = isReported;
+    notifyUpdate();
+  }
 }
 
 class HashtagFactory extends UpdatableModelFactory<Hashtag> {
@@ -85,6 +98,7 @@ class HashtagFactory extends UpdatableModelFactory<Hashtag> {
       id: json['id'],
       name: json['name'],
       color: json['color'],
+      isReported: json['is_reported'],
       textColor: json['text_color'],
       emoji: parseEmoji(json['emoji']),
       postsCount: json['posts_count'],
