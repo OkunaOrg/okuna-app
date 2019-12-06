@@ -115,7 +115,7 @@ final _usernameRegex = RegExp(
 
 // Same idea as inner part of above regex, but only _ is allowed as special character
 final _communityNameRegex = RegExp(
-    r"((?:(?<=\s)|^)/c/([A-Za-z0-9]|[_](?![_])){1,30})(?=\b|$)",
+    r"((?:(?<=\s)|^)([/]?)c/([A-Za-z0-9]|[_](?![_])){1,30})(?=\b|$)",
     caseSensitive: false);
 
 class SmartMatch {
@@ -282,9 +282,18 @@ class OBSmartText extends StatelessWidget {
 
     void _onCommunityNameTapped(String communityName) {
       if (onCommunityNameTapped != null) {
-        // Remove /c/
-        String cleanedCommunityName =
-            communityName.substring(3, communityName.length).toLowerCase();
+        String cleanedCommunityName = communityName;
+        // Remove c/
+        if (cleanedCommunityName.startsWith('/c/')) {
+          cleanedCommunityName =
+              cleanedCommunityName.substring(3, communityName.length);
+        } else if (cleanedCommunityName.startsWith('c/')) {
+          cleanedCommunityName =
+              cleanedCommunityName.substring(2, communityName.length);
+        }
+
+        cleanedCommunityName = cleanedCommunityName.toLowerCase();
+
         onCommunityNameTapped(cleanedCommunityName);
       }
     }
@@ -319,12 +328,13 @@ class OBSmartText extends StatelessWidget {
           onPressed: () => _onOpen(element.url),
         );
       } else if (element is HashtagElement) {
-        String hashtagText = element.text.substring(1, element.text.length).toLowerCase();
+        String hashtagText =
+            element.text.substring(1, element.text.length).toLowerCase();
         if (this.hashtagsMap != null &&
             this.hashtagsMap.containsKey(hashtagText)) {
           Hashtag hashtag = this.hashtagsMap[hashtagText];
           textSpan = WidgetSpan(
-            baseline: TextBaseline.alphabetic,
+              baseline: TextBaseline.alphabetic,
               alignment: ui.PlaceholderAlignment.baseline,
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 3),
