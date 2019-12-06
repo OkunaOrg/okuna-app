@@ -40,7 +40,6 @@ class OBButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     var provider = OpenbookProvider.of(context);
     var themeService = provider.themeService;
     var themeValueParser = provider.themeValueParserService;
@@ -70,10 +69,7 @@ class OBButton extends StatelessWidget {
     var finalOnPressed = isLoading || isDisabled ? () {} : onPressed;
     var finalOnLongPressed = isLoading || isDisabled ? () {} : onLongPressed;
 
-    var buttonChild = isLoading ? _getLoadingIndicator(textColor) : Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: child,
-    );
+    var buttonChild = isLoading ? _getLoadingIndicator(textColor) : child;
 
     if (isDisabled) buttonChild = Opacity(opacity: 0.5, child: buttonChild);
 
@@ -200,7 +196,7 @@ class OBButton extends StatelessWidget {
         buttonPadding = EdgeInsets.symmetric(vertical: 8, horizontal: 12);
         break;
       case OBButtonSize.small:
-        buttonPadding = EdgeInsets.symmetric(vertical: 6, horizontal: 2);
+        buttonPadding = EdgeInsets.symmetric(vertical: 6, horizontal: 10);
         break;
       default:
     }
