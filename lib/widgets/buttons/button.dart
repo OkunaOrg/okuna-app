@@ -70,7 +70,10 @@ class OBButton extends StatelessWidget {
     var finalOnPressed = isLoading || isDisabled ? () {} : onPressed;
     var finalOnLongPressed = isLoading || isDisabled ? () {} : onLongPressed;
 
-    var buttonChild = isLoading ? _getLoadingIndicator(textColor) : child;
+    var buttonChild = isLoading ? _getLoadingIndicator(textColor) : Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: child,
+    );
 
     if (isDisabled) buttonChild = Opacity(opacity: 0.5, child: buttonChild);
 
