@@ -273,10 +273,14 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
     _setSearchQuery(query);
     if (query.isEmpty) {
       _setHasSearch(false);
-    } else {
-      _setHasSearch(true);
-      _searchWithQuery(query);
+      return;
     }
+
+    if (_hasSearch == false) {
+      _setHasSearch(true);
+    }
+
+    _searchWithQuery(query);
   }
 
   void _onScrollSearchResults() {
@@ -288,11 +292,26 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
   }
 
   Future<void> _searchWithQuery(String query) {
+    String cleanedUpQuery = _cleanUpQuery(query);
+    if(cleanedUpQuery.isEmpty) return null;
+
     return Future.wait([
-      _searchForUsersWithQuery(query),
-      _searchForCommunitiesWithQuery(query),
-      _searchForHashtagsWithQuery(query)
+      _searchForUsersWithQuery(cleanedUpQuery),
+      _searchForCommunitiesWithQuery(cleanedUpQuery),
+      _searchForHashtagsWithQuery(cleanedUpQuery)
     ]);
+  }
+
+  final hashtagAndUsernamesRegexp = RegExp(r'^#|@');
+
+  String _cleanUpQuery(String query) {
+    String cleanQuery = query;
+    if (cleanQuery.startsWith(hashtagAndUsernamesRegexp)) {
+      cleanQuery = cleanQuery.substring(1, cleanQuery.length);
+    } else if (cleanQuery.startsWith('c/')) {
+      cleanQuery = cleanQuery.substring(2, cleanQuery.length);
+    }
+    return cleanQuery;
   }
 
   Future<void> _searchForUsersWithQuery(String query) async {
