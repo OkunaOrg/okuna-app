@@ -326,11 +326,14 @@ class OBSmartText extends StatelessWidget {
           textSpan = WidgetSpan(
             baseline: TextBaseline.alphabetic,
               alignment: ui.PlaceholderAlignment.baseline,
-              child: OBHashtag(
-            hashtag: hashtag,
-            onPressed: onHashtagTapped,
-            textStyle: usernameStyle,
-          ));
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 3),
+                child: OBHashtag(
+                  hashtag: hashtag,
+                  onPressed: onHashtagTapped,
+                  textStyle: usernameStyle,
+                ),
+              ));
         } else {
           textSpan = TextSpan(
             text: element.text,
@@ -409,7 +412,6 @@ class OBSmartText extends StatelessWidget {
         TextStyle textStyle = TextStyle(
             color: primaryTextColor,
             fontSize: fontSize,
-            height: 1.5,
             fontFamilyFallback: ['NunitoSans']);
 
         TextStyle secondaryTextStyle;
