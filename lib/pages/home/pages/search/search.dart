@@ -273,10 +273,14 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
     _setSearchQuery(query);
     if (query.isEmpty) {
       _setHasSearch(false);
-    } else {
-      _setHasSearch(true);
-      _searchWithQuery(query);
+      return;
     }
+
+    if(_hasSearch == false){
+      _setHasSearch(true);
+    }
+
+    _searchWithQuery(query);
   }
 
   void _onScrollSearchResults() {

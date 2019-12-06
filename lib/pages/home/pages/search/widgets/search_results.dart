@@ -85,6 +85,14 @@ class OBSearchResultsState extends State<OBSearchResults>
   }
 
   @override
+  void didUpdateWidget(OBSearchResults oldWidget) {
+    if (oldWidget.searchQuery != widget.searchQuery) {
+      this._onSearchQueryChanged(widget.searchQuery);
+    }
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
   Widget build(BuildContext context) {
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
     ThemeService _themeService = openbookProvider.themeService;
@@ -267,6 +275,34 @@ class OBSearchResultsState extends State<OBSearchResults>
         OBUserSearchResultsTab.values[_tabController.previousIndex];
     widget.onTabSelectionChanged(newSelection);
   }
+
+  void _onSearchQueryChanged(String searchQuery) {
+    OBUserSearchResultsTab currentTab = _getCurrentTab();
+
+    if (searchQuery.length <= 2) {
+      if (searchQuery.startsWith('#') &&
+          currentTab != OBUserSearchResultsTab.hashtags) {
+        _setCurrentTab(OBUserSearchResultsTab.hashtags);
+      } else if (searchQuery.startsWith('@') &&
+          currentTab != OBUserSearchResultsTab.users) {
+        _setCurrentTab(OBUserSearchResultsTab.users);
+      } else if (searchQuery.startsWith('c/') &&
+          currentTab != OBUserSearchResultsTab.communities) {
+        _setCurrentTab(OBUserSearchResultsTab.communities);
+      }
+    }
+  }
+
+  void _setCurrentTab(OBUserSearchResultsTab tab) {
+    int tabIndex = OBUserSearchResultsTab.values.indexOf(tab);
+    setState(() {
+      _tabController.index = tabIndex;
+    });
+  }
+
+  OBUserSearchResultsTab _getCurrentTab() {
+    return OBUserSearchResultsTab.values[_tabController.index];
+  }
 }
 
-enum OBUserSearchResultsTab { communities, users, hashtags }
+enum OBUserSearchResultsTab { users, communities, hashtags }
