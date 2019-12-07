@@ -7,6 +7,7 @@ import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/theme.dart';
 import 'package:Okuna/services/theme_value_parser.dart';
 import 'package:Okuna/services/toast.dart';
+import 'package:Okuna/widgets/buttons/stream_load_more_button.dart';
 import 'package:Okuna/widgets/post/post.dart';
 import 'package:Okuna/widgets/posts_stream/widgets/dr_hoo.dart';
 import 'package:Okuna/widgets/theming/secondary_text.dart';
@@ -34,7 +35,6 @@ class OBPostsStream extends StatefulWidget {
   final Function(ScrollPosition) onScrollCallback;
   final double refreshIndicatorDisplacement;
   final int onScrollLoadMoreLimit;
-  final OBPostsStreamOnScrollLoadLimitCondition onScrollLoadMoreLimitCondition;
 
   const OBPostsStream({
     Key key,
@@ -53,7 +53,6 @@ class OBPostsStream extends StatefulWidget {
     this.postBuilder,
     this.statusIndicatorBuilder,
     this.onScrollLoadMoreLimit,
-    this.onScrollLoadMoreLimitCondition,
   }) : super(key: key);
 
   @override
@@ -285,12 +284,11 @@ class OBPostsStreamState extends State<OBPostsStream>
           ),
         );
       case OBPostsStreamStatus.onScrollLoadMoreLimitReached:
-        return ListTile(
-          onTap: _removeOnScrollLoadMoreLimit,
-          key: statusKey,
-          title: OBSecondaryText(
-            'Load more limit reached',
-            textAlign: TextAlign.center,
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          child: OBStreamLoadMoreButton(
+            onPressed: _removeOnScrollLoadMoreLimit,
+            key: statusKey,
           ),
         );
       case OBPostsStreamStatus.empty:
@@ -425,6 +423,7 @@ class OBPostsStreamState extends State<OBPostsStream>
   }
 
   void _removeOnScrollLoadMoreLimit() {
+    print('TAPPED');
     _onScrollLoadMoreLimitRemoved = true;
     _setStatus(OBPostsStreamStatus.idle);
     _loadMorePosts();
@@ -437,12 +436,8 @@ class OBPostsStreamState extends State<OBPostsStream>
         _status == OBPostsStreamStatus.onScrollLoadMoreLimitReached ||
         _posts.isEmpty) return null;
 
-    if (!_onScrollLoadMoreLimitRemoved &&
-            (widget.onScrollLoadMoreLimit != null &&
-                _posts.length >= widget.onScrollLoadMoreLimit) ||
-        widget.onScrollLoadMoreLimitCondition != null &&
-            !widget.onScrollLoadMoreLimitCondition(
-                context: context, posts: _posts, status: _status)) {
+    if (!_onScrollLoadMoreLimitRemoved && (widget.onScrollLoadMoreLimit != null &&
+        _posts.length >= widget.onScrollLoadMoreLimit)) {
       debugLog('Load more limit reached');
       _setStatus(OBPostsStreamStatus.onScrollLoadMoreLimitReached);
       return;
@@ -595,9 +590,3 @@ typedef Widget OBPostsStreamPostBuilder(
     Post post,
     String postIdentifier,
     ValueChanged<Post> onPostDeleted});
-
-typedef bool OBPostsStreamOnScrollLoadLimitCondition(
-    {BuildContext context,
-    Post post,
-    List<Post> posts,
-    OBPostsStreamStatus status});

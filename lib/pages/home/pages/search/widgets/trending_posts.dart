@@ -8,7 +8,6 @@ import 'package:Okuna/widgets/post/post.dart';
 import 'package:Okuna/widgets/posts_stream/posts_stream.dart';
 import 'package:Okuna/widgets/theming/highlighted_box.dart';
 import 'package:Okuna/widgets/theming/primary_accent_text.dart';
-import 'package:Okuna/widgets/theming/secondary_text.dart';
 import 'package:Okuna/widgets/theming/text.dart';
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
@@ -74,6 +73,7 @@ class OBTrendingPostsState extends State<OBTrendingPosts>
     _localizationService = openbookProvider.localizationService;
 
     return OBPostsStream(
+      onScrollLoadMoreLimit: 20,
       streamIdentifier: 'trendingPosts',
       refresher: _postsStreamRefresher,
       onScrollLoader: _postsStreamOnScrollLoader,
@@ -97,7 +97,7 @@ class OBTrendingPostsState extends State<OBTrendingPosts>
     List<TrendingPost> trendingPosts =
         (await _userService.getTrendingPosts(count: 10)).posts;
     List<Post> posts =
-        trendingPosts.map((trendingPost) => trendingPost.post).toList();
+    trendingPosts.map((trendingPost) => trendingPost.post).toList();
 
     _setTrendingPosts(trendingPosts);
     _setPosts(posts);
@@ -110,11 +110,11 @@ class OBTrendingPostsState extends State<OBTrendingPosts>
     int lastTrendingPostId = lastTrendingPost.id;
 
     List<TrendingPost> moreTrendingPosts = (await _userService.getTrendingPosts(
-            maxId: lastTrendingPostId, count: 10))
+        maxId: lastTrendingPostId, count: 10))
         .posts;
 
     List<Post> morePosts =
-        moreTrendingPosts.map((trendingPost) => trendingPost.post).toList();
+    moreTrendingPosts.map((trendingPost) => trendingPost.post).toList();
 
     _appendCurrentTrendingPosts(moreTrendingPosts);
     _appendCurrentPosts(morePosts);
@@ -122,11 +122,10 @@ class OBTrendingPostsState extends State<OBTrendingPosts>
     return morePosts;
   }
 
-  Widget _trendingPostBuilder(
-      {BuildContext context,
-      Post post,
-      String postIdentifier,
-      ValueChanged<Post> onPostDeleted}) {
+  Widget _trendingPostBuilder({BuildContext context,
+    Post post,
+    String postIdentifier,
+    ValueChanged<Post> onPostDeleted}) {
     Widget postWidget = OBPost(
       post,
       key: Key(postIdentifier),
@@ -149,7 +148,7 @@ class OBTrendingPostsState extends State<OBTrendingPosts>
                 borderRadius: BorderRadius.circular(5),
                 child: ListTile(
                   title: OBText(
-                    _localizationService.post__trending_posts_older,
+                    _localizationService.post__load_more,
                     size: OBTextSize.large,
                     textAlign: TextAlign.center,
                   ),
@@ -163,6 +162,13 @@ class OBTrendingPostsState extends State<OBTrendingPosts>
     }
 
     return postWidget;
+  }
+
+  bool _trendingPostsLoadMoreLimitCondition({BuildContext context,
+    List<Post> posts,
+    OBPostsStreamStatus status}) {
+    if(posts.isEmpty) return true;
+    return posts.last.isOlderThan(Duration(hours: 12));
   }
 
   void _setTrendingPosts(List<TrendingPost> posts) async {
