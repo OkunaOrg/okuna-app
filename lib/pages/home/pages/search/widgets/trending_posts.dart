@@ -4,8 +4,12 @@ import 'package:Okuna/models/trending_post.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/user.dart';
+import 'package:Okuna/widgets/post/post.dart';
 import 'package:Okuna/widgets/posts_stream/posts_stream.dart';
+import 'package:Okuna/widgets/theming/highlighted_box.dart';
 import 'package:Okuna/widgets/theming/primary_accent_text.dart';
+import 'package:Okuna/widgets/theming/secondary_text.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 
@@ -27,7 +31,7 @@ class OBTrendingPosts extends StatefulWidget {
 }
 
 class OBTrendingPostsState extends State<OBTrendingPosts>
- with AutomaticKeepAliveClientMixin {
+    with AutomaticKeepAliveClientMixin {
   UserService _userService;
   LocalizationService _localizationService;
 
@@ -36,6 +40,8 @@ class OBTrendingPostsState extends State<OBTrendingPosts>
   OBPostsStreamController _obPostsStreamController;
   List<TrendingPost> _currentTrendingPosts;
   List<Post> _currentPosts;
+
+  int olderTrendingPostsPostDelimiterId;
 
   @override
   void initState() {
@@ -72,11 +78,13 @@ class OBTrendingPostsState extends State<OBTrendingPosts>
       refresher: _postsStreamRefresher,
       onScrollLoader: _postsStreamOnScrollLoader,
       controller: _obPostsStreamController,
+      postBuilder: _trendingPostBuilder,
       onScrollCallback: widget.onScrollCallback,
       refreshIndicatorDisplacement: 110.0,
       prependedItems: <Widget>[
         Padding(
-          padding: EdgeInsets.only(left: 20, right: 20, bottom: 10, top: widget.extraTopPadding),
+          padding: EdgeInsets.only(
+              left: 20, right: 20, bottom: 10, top: widget.extraTopPadding),
           child: OBPrimaryAccentText(
               _localizationService.post__trending_posts_title,
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24)),
@@ -86,14 +94,14 @@ class OBTrendingPostsState extends State<OBTrendingPosts>
   }
 
   Future<List<Post>> _postsStreamRefresher() async {
-    List<TrendingPost> trendingPosts = (await _userService.getTrendingPosts(
-      count: 10
-    )).posts;
-    List<Post> posts = trendingPosts.map((trendingPost) => trendingPost.post).toList();
+    List<TrendingPost> trendingPosts =
+        (await _userService.getTrendingPosts(count: 10)).posts;
+    List<Post> posts =
+        trendingPosts.map((trendingPost) => trendingPost.post).toList();
 
     _setTrendingPosts(trendingPosts);
     _setPosts(posts);
-    
+
     return posts;
   }
 
@@ -102,11 +110,11 @@ class OBTrendingPostsState extends State<OBTrendingPosts>
     int lastTrendingPostId = lastTrendingPost.id;
 
     List<TrendingPost> moreTrendingPosts = (await _userService.getTrendingPosts(
-        maxId: lastTrendingPostId,
-        count: 10))
+            maxId: lastTrendingPostId, count: 10))
         .posts;
 
-    List<Post> morePosts = moreTrendingPosts.map((trendingPost) => trendingPost.post).toList();
+    List<Post> morePosts =
+        moreTrendingPosts.map((trendingPost) => trendingPost.post).toList();
 
     _appendCurrentTrendingPosts(moreTrendingPosts);
     _appendCurrentPosts(morePosts);
@@ -114,6 +122,48 @@ class OBTrendingPostsState extends State<OBTrendingPosts>
     return morePosts;
   }
 
+  Widget _trendingPostBuilder(
+      {BuildContext context,
+      Post post,
+      String postIdentifier,
+      ValueChanged<Post> onPostDeleted}) {
+    Widget postWidget = OBPost(
+      post,
+      key: Key(postIdentifier),
+      onPostDeleted: onPostDeleted,
+      inViewId: postIdentifier,
+    );
+
+    if (post.isOlderThan(Duration(hours: 12))) {
+      if (olderTrendingPostsPostDelimiterId == null) {
+        olderTrendingPostsPostDelimiterId = post.id;
+      }
+
+      if (olderTrendingPostsPostDelimiterId == post.id) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              child: OBHighlightedBox(
+                borderRadius: BorderRadius.circular(5),
+                child: ListTile(
+                  title: OBText(
+                    _localizationService.post__trending_posts_older,
+                    size: OBTextSize.large,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+            ),
+            postWidget,
+          ],
+        );
+      }
+    }
+
+    return postWidget;
+  }
 
   void _setTrendingPosts(List<TrendingPost> posts) async {
     setState(() {
@@ -138,7 +188,6 @@ class OBTrendingPostsState extends State<OBTrendingPosts>
       _currentPosts = newPosts;
     });
   }
-  
 }
 
 class OBTrendingPostsController {

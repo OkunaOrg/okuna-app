@@ -1980,6 +1980,10 @@ class LocalizationService {
     return Intl.message("Trending", name: 'post__trending_posts_title');
   }
 
+  String get post__trending_posts_older {
+    return Intl.message("⏱  Now showing older trending posts", name: 'post__trending_posts_older');
+  }
+
   String get post__trending_posts_no_trending_posts {
     return Intl.message(
         "There are no trending posts. Try refreshing in a couple seconds.",
