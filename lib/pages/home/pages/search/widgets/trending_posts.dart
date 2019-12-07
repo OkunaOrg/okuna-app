@@ -74,6 +74,7 @@ class OBTrendingPostsState extends State<OBTrendingPosts>
 
     return OBPostsStream(
       onScrollLoadMoreLimit: 20,
+      onScrollLoadMoreLimitLoadMoreText: _localizationService.post__trending_posts_load_more,
       streamIdentifier: 'trendingPosts',
       refresher: _postsStreamRefresher,
       onScrollLoader: _postsStreamOnScrollLoader,

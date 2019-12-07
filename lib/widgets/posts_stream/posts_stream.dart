@@ -35,6 +35,7 @@ class OBPostsStream extends StatefulWidget {
   final Function(ScrollPosition) onScrollCallback;
   final double refreshIndicatorDisplacement;
   final int onScrollLoadMoreLimit;
+  final String onScrollLoadMoreLimitLoadMoreText;
 
   const OBPostsStream({
     Key key,
@@ -52,7 +53,7 @@ class OBPostsStream extends StatefulWidget {
     this.isTopPostsStream = false,
     this.postBuilder,
     this.statusIndicatorBuilder,
-    this.onScrollLoadMoreLimit,
+    this.onScrollLoadMoreLimit, this.onScrollLoadMoreLimitLoadMoreText,
   }) : super(key: key);
 
   @override
@@ -288,6 +289,7 @@ class OBPostsStreamState extends State<OBPostsStream>
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           child: OBStreamLoadMoreButton(
             onPressed: _removeOnScrollLoadMoreLimit,
+            text: widget.onScrollLoadMoreLimitLoadMoreText,
             key: statusKey,
           ),
         );
@@ -423,7 +425,6 @@ class OBPostsStreamState extends State<OBPostsStream>
   }
 
   void _removeOnScrollLoadMoreLimit() {
-    print('TAPPED');
     _onScrollLoadMoreLimitRemoved = true;
     _setStatus(OBPostsStreamStatus.idle);
     _loadMorePosts();

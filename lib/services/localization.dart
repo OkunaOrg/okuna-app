@@ -1980,6 +1980,10 @@ class LocalizationService {
     return Intl.message("Trending", name: 'post__trending_posts_title');
   }
 
+  String get post__trending_posts_load_more {
+    return Intl.message("Load older posts", name: 'post__trending_posts_load_more');
+  }
+
   String get post__load_more {
     return Intl.message("Load more posts", name: 'post__trending_posts_older');
   }
