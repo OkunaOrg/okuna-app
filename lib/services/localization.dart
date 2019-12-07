@@ -1990,6 +1990,11 @@ class LocalizationService {
     return Intl.message("Refresh", name: 'post__trending_posts_refresh');
   }
 
+  String get post__community_not_found {
+    return Intl.message("This community does not exist",
+        name: 'post__community_not_found');
+  }
+
   String post__comments_view_all_comments(int commentsCount) {
     return Intl.message("View all $commentsCount comments",
         args: [commentsCount], name: 'post__comments_view_all_comments');
