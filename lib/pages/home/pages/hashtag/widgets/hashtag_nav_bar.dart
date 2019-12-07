@@ -12,8 +12,10 @@ import 'package:flutter/material.dart';
 class OBHashtagNavBar extends StatelessWidget
     implements ObstructingPreferredSizeWidget {
   final Hashtag hashtag;
+  final String rawHashtagName;
 
-  const OBHashtagNavBar({Key key, this.hashtag}) : super(key: key);
+  const OBHashtagNavBar({Key key, this.hashtag, this.rawHashtagName})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +39,7 @@ class OBHashtagNavBar extends StatelessWidget
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       OBHashtag(
-                        hashtag: hashtag,
-                      ),
+                          hashtag: hashtag, rawHashtagName: rawHashtagName),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 3),
                         child: Text(
