@@ -389,6 +389,7 @@ class OBPostsStreamState extends State<OBPostsStream>
     debugLog('Refreshing posts');
     _ensureNoRefreshPostsInProgress();
     _setStatus(OBPostsStreamStatus.refreshing);
+    _onScrollLoadMoreLimitRemoved = false;
     try {
       _refreshOperation = CancelableOperation.fromFuture(widget.refresher());
 
