@@ -62,6 +62,21 @@
     "type": "text",
     "placeholders": {}
   },
+  "profile_action_user_post_notifications_enabled": "New post notifications enabled",
+  "@profile_action_user_post_notifications_enabled": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "profile_action_user_post_notifications_disabled": "New post notifications disabled",
+  "@profile_action_user_post_notifications_disabled": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "profile_in_circles": "In circles",
+  "@profile_in_circles": {
+    "type": "text",
+    "placeholders": {}
+  },
   "profile_action_cancel_connection": "Cancel connection request",
   "@profile_action_cancel_connection": {
     "type": "text",
@@ -86,13 +101,40 @@
       "maxLength": {}
     }
   },
+  "profile_okuna_age_toast": "On Okuna since {age}",
+  "@profile_okuna_age_toast": {
+    "type": "text",
+    "placeholders": {
+      "age": {}
+    }
+  },
   "follow_button_follow_text": "Follow",
   "@follow_button_follow_text": {
     "type": "text",
     "placeholders": {}
   },
+  "follow_button_follow_back_text": "Follow back",
+  "@follow_button_follow_back_text": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "follow_button_following_text": "Following",
+  "@follow_button_following_text": {
+    "type": "text",
+    "placeholders": {}
+  },
   "follow_button_unfollow_text": "Unfollow",
   "@follow_button_unfollow_text": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "subscribe_button_subscribe_text": "Subscribe",
+  "@subscribe_button_subscribe_text": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "unsubscribe_button_unsubscribe_text": "Unsubscribe",
+  "@unsubscribe_button_unsubscribe_text": {
     "type": "text",
     "placeholders": {}
   },
@@ -313,9 +355,20 @@
     "type": "text",
     "placeholders": {}
   },
+  "user_subscriptions_text": "User subscriptions",
+  "@user_subscriptions_text": {
+    "type": "text",
+    "placeholders": {}
+  },
   "following_resource_name": "followed users",
   "@following_resource_name": {
     "description": "Eg: Search followed users.., No followed users found. etc ",
+    "type": "text",
+    "placeholders": {}
+  },
+  "user_subscriptions_resource_name": "user subscriptions",
+  "@user_subscriptions_resource_name": {
+    "description": "Eg: Search user subscriptions.., No user subscriptions found. etc ",
     "type": "text",
     "placeholders": {}
   },
@@ -954,6 +1007,16 @@
   },
   "unblock_user": "Unblock user",
   "@unblock_user": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "enable_new_post_notifications": "Enable new post notifications",
+  "@enable_new_post_notifications": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "disable_new_post_notifications": "Disable new post notifications",
+  "@disable_new_post_notifications": {
     "type": "text",
     "placeholders": {}
   },

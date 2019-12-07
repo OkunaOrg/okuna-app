@@ -1985,7 +1985,7 @@ class LocalizationService {
   }
 
   String get post__load_more {
-    return Intl.message("Load more posts", name: 'post__trending_posts_older');
+    return Intl.message("Load more posts", name: 'post__load_more');
   }
 
   String get post__trending_posts_no_trending_posts {
