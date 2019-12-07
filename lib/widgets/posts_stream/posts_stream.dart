@@ -30,7 +30,7 @@ class OBPostsStream extends StatefulWidget {
   final OBPostsStreamSecondaryRefresher secondaryRefresher;
   final OBPostsStreamStatusIndicatorBuilder statusIndicatorBuilder;
   final bool isTopPostsStream;
-  final Widget Function(BuildContext, Post, String, Function(Post)) postBuilder;
+  final OBPostsStreamPostBuilder postBuilder;
   final Function(ScrollPosition) onScrollCallback;
   final double refreshIndicatorDisplacement;
 
@@ -99,7 +99,8 @@ class OBPostsStreamState extends State<OBPostsStream>
 
     _hideOverlayAnimationController = AnimationController(
         duration: const Duration(milliseconds: 500), vsync: this);
-    _animation = new Tween(begin: 1.0, end: 0.0).animate(_hideOverlayAnimationController);
+    _animation = new Tween(begin: 1.0, end: 0.0)
+        .animate(_hideOverlayAnimationController);
     _animation.addStatusListener(_onAnimationStatusChanged);
   }
 
@@ -179,20 +180,17 @@ class OBPostsStreamState extends State<OBPostsStream>
     var primaryColor = _themeValueParserService.parseColor(theme.primaryColor);
     List<Widget> _stackChildren = [];
 
-    _stackChildren.add(
-        InViewNotifierList(
-          key: Key(_streamUniqueIdentifier),
-          physics: const ClampingScrollPhysics(),
-          padding: const EdgeInsets.all(0),
-          controller: _streamScrollController,
-          isInViewPortCondition: _checkTimelineItemIsInViewport,
-          children: streamItems,
-        )
-    );
+    _stackChildren.add(InViewNotifierList(
+      key: Key(_streamUniqueIdentifier),
+      physics: const ClampingScrollPhysics(),
+      padding: const EdgeInsets.all(0),
+      controller: _streamScrollController,
+      isInViewPortCondition: _checkTimelineItemIsInViewport,
+      children: streamItems,
+    ));
 
     if (!_shouldHideStackedLoadingScreen) {
-      _stackChildren.add(
-        Positioned(
+      _stackChildren.add(Positioned(
         top: 0.0,
         left: 0.0,
         right: 0.0,
@@ -210,42 +208,48 @@ class OBPostsStreamState extends State<OBPostsStream>
                 ),
               ),
             )),
-        )
-      );
+      ));
     }
     return _stackChildren;
   }
 
   List<Widget> _buildStreamPosts() {
-    if (widget.postBuilder != null) {
-      return _posts.map((Post post) {
-        if (_posts.isNotEmpty && post.id == _posts.last.id) {
-          _hideInitialPostsLoadingOverlay();
-        }
-        return widget.postBuilder(context, post, _streamUniqueIdentifier, _onPostDeleted);
-      }).toList();
-    }
+    OBPostsStreamPostBuilder postBuilder =
+        widget.postBuilder ?? _defaultStreamPostBuilder;
 
-    return _posts.map(_buildStreamPost).toList();
+    return _posts.map((Post post) {
+      if (_posts.isNotEmpty && post.id == _posts.last.id) {
+        _hideInitialPostsLoadingOverlay();
+      }
+
+      String postIdentifier = _makePostUniqueIdentifier(post);
+
+      return postBuilder(
+          context: context,
+          post: post,
+          postIdentifier: postIdentifier,
+          onPostDeleted: _onPostDeleted);
+    }).toList();
   }
 
-  Widget _buildStreamPost(Post post) {
-    String inViewId = '${_streamUniqueIdentifier}_${post.id.toString()}';
-    if (_posts.isNotEmpty && post.id == _posts.last.id) {
-      _hideInitialPostsLoadingOverlay();
-    }
-
+  Widget _defaultStreamPostBuilder({
+    BuildContext context,
+    Post post,
+    String postIdentifier,
+    ValueChanged<Post> onPostDeleted,
+  }) {
     return OBPost(
       post,
-      key: Key(inViewId),
-      onPostDeleted: _onPostDeleted,
-      inViewId: inViewId,
+      key: Key(postIdentifier),
+      onPostDeleted: onPostDeleted,
+      inViewId: postIdentifier,
       isTopPost: widget.isTopPostsStream,
     );
   }
 
   void _hideInitialPostsLoadingOverlay() {
-    Future.delayed(Duration(milliseconds: 0),() => _hideOverlayAnimationController.forward());
+    Future.delayed(Duration(milliseconds: 0),
+        () => _hideOverlayAnimationController.forward());
   }
 
   Widget _buildStatusTile() {
@@ -321,9 +325,7 @@ class OBPostsStreamState extends State<OBPostsStream>
 
   void _scrollToBottom() {
     var position = _streamScrollController.position.maxScrollExtent;
-    _streamScrollController.jumpTo(
-      position
-    );
+    _streamScrollController.jumpTo(position);
   }
 
   void _addPostToTop(Post post) {
@@ -435,7 +437,8 @@ class OBPostsStreamState extends State<OBPostsStream>
     setState(() {
       _posts.remove(deletedPost);
       if (_posts.isEmpty) _setStatus(OBPostsStreamStatus.empty);
-      if (deletedPost.isCommunityPost()) deletedPost.community.decrementPostsCount();
+      if (deletedPost.isCommunityPost())
+        deletedPost.community.decrementPostsCount();
     });
   }
 
@@ -473,6 +476,10 @@ class OBPostsStreamState extends State<OBPostsStream>
 
   void debugLog(String log) {
     //debugPrint('OBPostsStream:${widget.streamIdentifier}: $log');
+  }
+
+  String _makePostUniqueIdentifier(Post post) {
+    return '${_streamUniqueIdentifier}_${post.id.toString()}';
   }
 }
 
@@ -536,3 +543,9 @@ typedef OBPostsStreamStatusIndicatorBuilder = Widget Function(
     @required OBPostsStreamStatus streamStatus,
     @required List<Widget> streamPrependedItems,
     @required Function streamRefresher});
+
+typedef Widget OBPostsStreamPostBuilder(
+    {BuildContext context,
+    Post post,
+    String postIdentifier,
+    ValueChanged<Post> onPostDeleted});
