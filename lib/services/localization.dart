@@ -3424,16 +3424,16 @@ class LocalizationService {
 
   String notifications__user_community_invite_tile(String communityName) {
     return Intl.message(
-        "[name] [username] has invited you to join community /c/$communityName.",
+        "[name] [username] has invited you to join community c/$communityName.",
         args: [communityName],
-        desc: "Eg.: James @jamest has invited you to join community /c/okuna.",
+        desc: "Eg.: James @jamest has invited you to join community c/okuna.",
         name: 'notifications__user_community_invite_tile');
   }
 
   String notifications__community_new_post_tile(String communityName) {
-    return Intl.message("There was a new post in /c/$communityName.",
+    return Intl.message("There was a new post in c/$communityName.",
         args: [communityName],
-        desc: "Eg.: There was a new post in /c/okuna.",
+        desc: "Eg.: There was a new post in c/okuna.",
         name: 'notifications__community_new_post_tile');
   }
 

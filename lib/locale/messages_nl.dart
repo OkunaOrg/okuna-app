@@ -69,7 +69,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m25(postCommentText) => "[name] [username] heeft je in een commentaar genoemd: ${postCommentText}";
 
-  static m26(communityName) => "[name] [username] heeft je uitgenodigd om deel te nemen aan de community /c/${communityName}.";
+  static m26(communityName) => "[name] [username] heeft je uitgenodigd om deel te nemen aan de community c/${communityName}.";
 
   static m27(maxLength) => "Een reactie mag niet langer zijn dan ${maxLength} tekens.";
 

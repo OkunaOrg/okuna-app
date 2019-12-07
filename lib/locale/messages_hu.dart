@@ -71,7 +71,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m25(postCommentText) => "[name] [username] megjelölt egy hozzászólásban: ${postCommentText}";
 
-  static m26(communityName) => "[name] [username] meghívott téged a(z) /c/${communityName} közösségbe.";
+  static m26(communityName) => "[name] [username] meghívott téged a(z) c/${communityName} közösségbe.";
 
   static m27(maxLength) => "A hozzászólás nem lehet ${maxLength} karakternél hosszabb.";
 

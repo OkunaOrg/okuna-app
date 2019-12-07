@@ -71,7 +71,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m25(postCommentText) => "[name] [username] bir yorumda sizden bahsetti: ${postCommentText}";
 
-  static m26(communityName) => "[name] [username] sizi /c/${communityName} topluluğuna davet etti.";
+  static m26(communityName) => "[name] [username] sizi c/${communityName} topluluğuna davet etti.";
 
   static m27(maxLength) => "Yorum kısmı ${maxLength} karakterden daha uzun olamaz.";
 

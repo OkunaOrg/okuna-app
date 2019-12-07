@@ -164,9 +164,9 @@
         "type": "text",
         "placeholders": {}
     },
-    "user_community_invite_tile": "[name] [username] indbyder dig til at blive medlem i fælleskabet /c/{communityName}.",
+    "user_community_invite_tile": "[name] [username] indbyder dig til at blive medlem i fælleskabet c/{communityName}.",
     "@user_community_invite_tile": {
-        "description": "Eg.: James @jamest has invited you to join community /c/okuna.",
+        "description": "Eg.: James @jamest has invited you to join community c/okuna.",
         "type": "text",
         "placeholders": {
             "communityName": {}

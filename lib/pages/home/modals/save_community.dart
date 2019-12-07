@@ -191,7 +191,7 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
                                 decoration: InputDecoration(
                                     prefixIcon: const OBIcon(OBIcons.shortText),
                                     labelText: _localizationService.community__save_community_name_title,
-                                    prefixText: '/c/',
+                                    prefixText: 'c/',
                                     hintText:
                                     _localizationService.community__save_community_name_title_hint_text),
                                 validator: (String communityName) {

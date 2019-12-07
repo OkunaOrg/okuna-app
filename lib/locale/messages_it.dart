@@ -71,7 +71,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m25(postCommentText) => "[name] [username] ti ha menzionato in un commento: ${postCommentText}";
 
-  static m26(communityName) => "[name] [username] ti ha invitato a unirti alla comunità /c/${communityName}.";
+  static m26(communityName) => "[name] [username] ti ha invitato a unirti alla comunità c/${communityName}.";
 
   static m27(maxLength) => "Un commento non può essere più lungo di ${maxLength} caratteri.";
 

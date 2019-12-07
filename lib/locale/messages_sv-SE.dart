@@ -71,7 +71,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m25(postCommentText) => "[name] [username] nämnde dig i en kommentar: ${postCommentText}";
 
-  static m26(communityName) => "[name] [username] har bjudit in dig till gemenskapen /c/${communityName}.";
+  static m26(communityName) => "[name] [username] har bjudit in dig till gemenskapen c/${communityName}.";
 
   static m27(maxLength) => "En kommentar kan inte vara längre än ${maxLength} tecken.";
 
