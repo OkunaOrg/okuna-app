@@ -7,6 +7,7 @@ import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/theme.dart';
 import 'package:Okuna/services/theme_value_parser.dart';
 import 'package:Okuna/services/toast.dart';
+import 'package:Okuna/widgets/buttons/stream_load_more_button.dart';
 import 'package:Okuna/widgets/post/post.dart';
 import 'package:Okuna/widgets/posts_stream/widgets/dr_hoo.dart';
 import 'package:Okuna/widgets/theming/secondary_text.dart';
@@ -30,27 +31,30 @@ class OBPostsStream extends StatefulWidget {
   final OBPostsStreamSecondaryRefresher secondaryRefresher;
   final OBPostsStreamStatusIndicatorBuilder statusIndicatorBuilder;
   final bool isTopPostsStream;
-  final Widget Function(BuildContext, Post, String, Function(Post)) postBuilder;
+  final OBPostsStreamPostBuilder postBuilder;
   final Function(ScrollPosition) onScrollCallback;
   final double refreshIndicatorDisplacement;
+  final int onScrollLoadMoreLimit;
+  final String onScrollLoadMoreLimitLoadMoreText;
 
-  const OBPostsStream(
-      {Key key,
-      this.prependedItems,
-      @required this.refresher,
-      @required this.onScrollLoader,
-      this.onScrollCallback,
-      this.controller,
-      this.initialPosts,
-      @required this.streamIdentifier,
-      this.onPostsRefreshed,
-      this.refreshOnCreate = true,
-      this.refreshIndicatorDisplacement = 40.0,
-      this.secondaryRefresher,
-      this.isTopPostsStream = false,
-      this.postBuilder,
-      this.statusIndicatorBuilder})
-      : super(key: key);
+  const OBPostsStream({
+    Key key,
+    this.prependedItems,
+    @required this.refresher,
+    @required this.onScrollLoader,
+    this.onScrollCallback,
+    this.controller,
+    this.initialPosts,
+    @required this.streamIdentifier,
+    this.onPostsRefreshed,
+    this.refreshOnCreate = true,
+    this.refreshIndicatorDisplacement = 40.0,
+    this.secondaryRefresher,
+    this.isTopPostsStream = false,
+    this.postBuilder,
+    this.statusIndicatorBuilder,
+    this.onScrollLoadMoreLimit, this.onScrollLoadMoreLimitLoadMoreText,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -80,6 +84,7 @@ class OBPostsStreamState extends State<OBPostsStream>
   AnimationController _hideOverlayAnimationController;
   Animation<double> _animation;
   bool _shouldHideStackedLoadingScreen = true;
+  bool _onScrollLoadMoreLimitRemoved;
 
   String _streamUniqueIdentifier;
 
@@ -99,7 +104,9 @@ class OBPostsStreamState extends State<OBPostsStream>
 
     _hideOverlayAnimationController = AnimationController(
         duration: const Duration(milliseconds: 500), vsync: this);
-    _animation = new Tween(begin: 1.0, end: 0.0).animate(_hideOverlayAnimationController);
+    _animation = new Tween(begin: 1.0, end: 0.0)
+        .animate(_hideOverlayAnimationController);
+    _onScrollLoadMoreLimitRemoved = false;
     _animation.addStatusListener(_onAnimationStatusChanged);
   }
 
@@ -179,20 +186,17 @@ class OBPostsStreamState extends State<OBPostsStream>
     var primaryColor = _themeValueParserService.parseColor(theme.primaryColor);
     List<Widget> _stackChildren = [];
 
-    _stackChildren.add(
-        InViewNotifierList(
-          key: Key(_streamUniqueIdentifier),
-          physics: const ClampingScrollPhysics(),
-          padding: const EdgeInsets.all(0),
-          controller: _streamScrollController,
-          isInViewPortCondition: _checkTimelineItemIsInViewport,
-          children: streamItems,
-        )
-    );
+    _stackChildren.add(InViewNotifierList(
+      key: Key(_streamUniqueIdentifier),
+      physics: const ClampingScrollPhysics(),
+      padding: const EdgeInsets.all(0),
+      controller: _streamScrollController,
+      isInViewPortCondition: _checkTimelineItemIsInViewport,
+      children: streamItems,
+    ));
 
     if (!_shouldHideStackedLoadingScreen) {
-      _stackChildren.add(
-        Positioned(
+      _stackChildren.add(Positioned(
         top: 0.0,
         left: 0.0,
         right: 0.0,
@@ -210,42 +214,48 @@ class OBPostsStreamState extends State<OBPostsStream>
                 ),
               ),
             )),
-        )
-      );
+      ));
     }
     return _stackChildren;
   }
 
   List<Widget> _buildStreamPosts() {
-    if (widget.postBuilder != null) {
-      return _posts.map((Post post) {
-        if (_posts.isNotEmpty && post.id == _posts.last.id) {
-          _hideInitialPostsLoadingOverlay();
-        }
-        return widget.postBuilder(context, post, _streamUniqueIdentifier, _onPostDeleted);
-      }).toList();
-    }
+    OBPostsStreamPostBuilder postBuilder =
+        widget.postBuilder ?? _defaultStreamPostBuilder;
 
-    return _posts.map(_buildStreamPost).toList();
+    return _posts.map((Post post) {
+      if (_posts.isNotEmpty && post.id == _posts.last.id) {
+        _hideInitialPostsLoadingOverlay();
+      }
+
+      String postIdentifier = _makePostUniqueIdentifier(post);
+
+      return postBuilder(
+          context: context,
+          post: post,
+          postIdentifier: postIdentifier,
+          onPostDeleted: _onPostDeleted);
+    }).toList();
   }
 
-  Widget _buildStreamPost(Post post) {
-    String inViewId = '${_streamUniqueIdentifier}_${post.id.toString()}';
-    if (_posts.isNotEmpty && post.id == _posts.last.id) {
-      _hideInitialPostsLoadingOverlay();
-    }
-
+  Widget _defaultStreamPostBuilder({
+    BuildContext context,
+    Post post,
+    String postIdentifier,
+    ValueChanged<Post> onPostDeleted,
+  }) {
     return OBPost(
       post,
-      key: Key(inViewId),
-      onPostDeleted: _onPostDeleted,
-      inViewId: inViewId,
+      key: Key(postIdentifier),
+      onPostDeleted: onPostDeleted,
+      inViewId: postIdentifier,
       isTopPost: widget.isTopPostsStream,
     );
   }
 
   void _hideInitialPostsLoadingOverlay() {
-    Future.delayed(Duration(milliseconds: 0),() => _hideOverlayAnimationController.forward());
+    Future.delayed(Duration(milliseconds: 0),
+        () => _hideOverlayAnimationController.forward());
   }
 
   Widget _buildStatusTile() {
@@ -272,6 +282,15 @@ class OBPostsStreamState extends State<OBPostsStream>
           title: OBSecondaryText(
             _localizationService.posts_stream__status_tile_no_more_to_load,
             textAlign: TextAlign.center,
+          ),
+        );
+      case OBPostsStreamStatus.onScrollLoadMoreLimitReached:
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          child: OBStreamLoadMoreButton(
+            onPressed: _removeOnScrollLoadMoreLimit,
+            text: widget.onScrollLoadMoreLimitLoadMoreText,
+            key: statusKey,
           ),
         );
       case OBPostsStreamStatus.empty:
@@ -321,9 +340,7 @@ class OBPostsStreamState extends State<OBPostsStream>
 
   void _scrollToBottom() {
     var position = _streamScrollController.position.maxScrollExtent;
-    _streamScrollController.jumpTo(
-      position
-    );
+    _streamScrollController.jumpTo(position);
   }
 
   void _addPostToTop(Post post) {
@@ -372,6 +389,7 @@ class OBPostsStreamState extends State<OBPostsStream>
     debugLog('Refreshing posts');
     _ensureNoRefreshPostsInProgress();
     _setStatus(OBPostsStreamStatus.refreshing);
+    _onScrollLoadMoreLimitRemoved = false;
     try {
       _refreshOperation = CancelableOperation.fromFuture(widget.refresher());
 
@@ -386,7 +404,12 @@ class OBPostsStreamState extends State<OBPostsStream>
       List<dynamic> results = await Future.wait(refreshFutures);
       List<Post> posts = results[0];
 
-      if (posts.length == 0) {
+      if (!_onScrollLoadMoreLimitRemoved && widget.onScrollLoadMoreLimit != null &&
+          posts.length > widget.onScrollLoadMoreLimit) {
+        // Slice the posts to be within the limit
+        posts = posts.sublist(0, widget.onScrollLoadMoreLimit - 1);
+        _setStatus(OBPostsStreamStatus.onScrollLoadMoreLimitReached);
+      }else if (posts.length == 0) {
         _setStatus(OBPostsStreamStatus.empty);
       } else {
         _setStatus(OBPostsStreamStatus.idle);
@@ -402,11 +425,26 @@ class OBPostsStreamState extends State<OBPostsStream>
     }
   }
 
+  void _removeOnScrollLoadMoreLimit() {
+    _onScrollLoadMoreLimitRemoved = true;
+    _setStatus(OBPostsStreamStatus.idle);
+    _loadMorePosts();
+  }
+
   Future _loadMorePosts() async {
     if (_status == OBPostsStreamStatus.refreshing ||
         _status == OBPostsStreamStatus.noMoreToLoad ||
         _status == OBPostsStreamStatus.loadingMore ||
+        _status == OBPostsStreamStatus.onScrollLoadMoreLimitReached ||
         _posts.isEmpty) return null;
+
+    if (!_onScrollLoadMoreLimitRemoved && (widget.onScrollLoadMoreLimit != null &&
+        _posts.length >= widget.onScrollLoadMoreLimit)) {
+      debugLog('Load more limit reached');
+      _setStatus(OBPostsStreamStatus.onScrollLoadMoreLimitReached);
+      return;
+    }
+
     debugLog('Loading more posts');
     _ensureNoLoadMoreInProgress();
     _setStatus(OBPostsStreamStatus.loadingMore);
@@ -417,7 +455,13 @@ class OBPostsStreamState extends State<OBPostsStream>
 
       List<Post> morePosts = await _loadMoreOperation.value;
 
-      if (morePosts.length == 0) {
+      if (!_onScrollLoadMoreLimitRemoved && widget.onScrollLoadMoreLimit != null &&
+          _posts.length + morePosts.length > widget.onScrollLoadMoreLimit) {
+        // Slice the posts to be within the limit
+        morePosts =
+            morePosts.sublist(0, widget.onScrollLoadMoreLimit - _posts.length);
+        _setStatus(OBPostsStreamStatus.onScrollLoadMoreLimitReached);
+      }else if (morePosts.length == 0) {
         _setStatus(OBPostsStreamStatus.noMoreToLoad);
       } else {
         _setStatus(OBPostsStreamStatus.idle);
@@ -435,7 +479,8 @@ class OBPostsStreamState extends State<OBPostsStream>
     setState(() {
       _posts.remove(deletedPost);
       if (_posts.isEmpty) _setStatus(OBPostsStreamStatus.empty);
-      if (deletedPost.isCommunityPost()) deletedPost.community.decrementPostsCount();
+      if (deletedPost.isCommunityPost())
+        deletedPost.community.decrementPostsCount();
     });
   }
 
@@ -473,6 +518,10 @@ class OBPostsStreamState extends State<OBPostsStream>
 
   void debugLog(String log) {
     //debugPrint('OBPostsStream:${widget.streamIdentifier}: $log');
+  }
+
+  String _makePostUniqueIdentifier(Post post) {
+    return '${_streamUniqueIdentifier}_${post.id.toString()}';
   }
 }
 
@@ -512,7 +561,8 @@ enum OBPostsStreamStatus {
   loadingMoreFailed,
   noMoreToLoad,
   empty,
-  idle
+  idle,
+  onScrollLoadMoreLimitReached
 }
 
 Widget defaultStatusIndicatorBuilder(
@@ -536,3 +586,9 @@ typedef OBPostsStreamStatusIndicatorBuilder = Widget Function(
     @required OBPostsStreamStatus streamStatus,
     @required List<Widget> streamPrependedItems,
     @required Function streamRefresher});
+
+typedef Widget OBPostsStreamPostBuilder(
+    {BuildContext context,
+    Post post,
+    String postIdentifier,
+    ValueChanged<Post> onPostDeleted});

@@ -286,6 +286,10 @@ class Post extends UpdatableModel<Post> {
     return isEncircled || false;
   }
 
+  bool isOlderThan(Duration duration) {
+    return created.isBefore(DateTime.now().subtract(duration));
+  }
+
   List<PostComment> getPostComments() {
     return commentsList.comments;
   }
