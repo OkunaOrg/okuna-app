@@ -110,8 +110,8 @@ class OBActionableTextState extends State<OBActionableSmartText> {
     _setRequestSubscription(requestSubscription);
   }
 
-  void _onHashtagNameHashtagRetrieved(Hashtag hashtag) {
-    _navigationService.navigateToHashtag(hashtag: hashtag, context: context);
+  void _onHashtagNameHashtagRetrieved({Hashtag hashtag, String rawHashtagName}) {
+    _navigationService.navigateToHashtag(hashtag: hashtag, rawHashtagName: rawHashtagName, context: context);
   }
 
   void _onUsernameUserRetrieved(User user) {

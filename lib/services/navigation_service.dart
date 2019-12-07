@@ -977,15 +977,16 @@ class NavigationService {
   }
 
   Future navigateToHashtag(
-      {@required Hashtag hashtag, @required BuildContext context}) async {
+      {@required Hashtag hashtag,
+      String rawHashtagName,
+      @required BuildContext context}) async {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
           slidableKey: _getKeyRandomisedWithWord('hashtagRoute'),
           builder: (BuildContext context) {
             return OBHashtagPage(
-              hashtag: hashtag
-            );
+                hashtag: hashtag, rawHashtagName: rawHashtagName);
           }),
     );
   }

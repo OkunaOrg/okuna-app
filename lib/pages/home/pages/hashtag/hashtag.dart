@@ -11,8 +11,10 @@ import 'package:flutter/material.dart';
 class OBHashtagPage extends StatefulWidget {
   final OBHashtagPageController controller;
   final Hashtag hashtag;
+  final String rawHashtagName;
 
-  const OBHashtagPage({Key key, this.controller, this.hashtag})
+  const OBHashtagPage(
+      {Key key, this.controller, this.hashtag, this.rawHashtagName})
       : super(key: key);
 
   @override
@@ -47,9 +49,9 @@ class OBHashtagPageState extends State<OBHashtagPage> {
     return CupertinoPageScaffold(
         backgroundColor: Color.fromARGB(0, 0, 0, 0),
         navigationBar: OBHashtagNavBar(
-          key: Key('navBarHeader_${_hashtag.name}'),
-          hashtag: _hashtag,
-        ),
+            key: Key('navBarHeader_${_hashtag.name}'),
+            hashtag: _hashtag,
+            rawHashtagName: widget.rawHashtagName),
         child: OBPrimaryColorContainer(
           child: Column(
             mainAxisSize: MainAxisSize.max,
@@ -60,8 +62,7 @@ class OBHashtagPageState extends State<OBHashtagPage> {
                     controller: _obPostsStreamController,
                     secondaryRefresher: _refreshHashtag,
                     refresher: _refreshPosts,
-                    onScrollLoader: _loadMorePosts
-                ),
+                    onScrollLoader: _loadMorePosts),
               )
             ],
           ),
