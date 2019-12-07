@@ -33,24 +33,28 @@ class OBPostsStream extends StatefulWidget {
   final OBPostsStreamPostBuilder postBuilder;
   final Function(ScrollPosition) onScrollCallback;
   final double refreshIndicatorDisplacement;
+  final int onScrollLoadMoreLimit;
+  final OBPostsStreamOnScrollLoadLimitCondition onScrollLoadMoreLimitCondition;
 
-  const OBPostsStream(
-      {Key key,
-      this.prependedItems,
-      @required this.refresher,
-      @required this.onScrollLoader,
-      this.onScrollCallback,
-      this.controller,
-      this.initialPosts,
-      @required this.streamIdentifier,
-      this.onPostsRefreshed,
-      this.refreshOnCreate = true,
-      this.refreshIndicatorDisplacement = 40.0,
-      this.secondaryRefresher,
-      this.isTopPostsStream = false,
-      this.postBuilder,
-      this.statusIndicatorBuilder})
-      : super(key: key);
+  const OBPostsStream({
+    Key key,
+    this.prependedItems,
+    @required this.refresher,
+    @required this.onScrollLoader,
+    this.onScrollCallback,
+    this.controller,
+    this.initialPosts,
+    @required this.streamIdentifier,
+    this.onPostsRefreshed,
+    this.refreshOnCreate = true,
+    this.refreshIndicatorDisplacement = 40.0,
+    this.secondaryRefresher,
+    this.isTopPostsStream = false,
+    this.postBuilder,
+    this.statusIndicatorBuilder,
+    this.onScrollLoadMoreLimit,
+    this.onScrollLoadMoreLimitCondition,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -80,6 +84,7 @@ class OBPostsStreamState extends State<OBPostsStream>
   AnimationController _hideOverlayAnimationController;
   Animation<double> _animation;
   bool _shouldHideStackedLoadingScreen = true;
+  bool _onScrollLoadMoreLimitRemoved;
 
   String _streamUniqueIdentifier;
 
@@ -101,6 +106,7 @@ class OBPostsStreamState extends State<OBPostsStream>
         duration: const Duration(milliseconds: 500), vsync: this);
     _animation = new Tween(begin: 1.0, end: 0.0)
         .animate(_hideOverlayAnimationController);
+    _onScrollLoadMoreLimitRemoved = false;
     _animation.addStatusListener(_onAnimationStatusChanged);
   }
 
@@ -278,6 +284,15 @@ class OBPostsStreamState extends State<OBPostsStream>
             textAlign: TextAlign.center,
           ),
         );
+      case OBPostsStreamStatus.onScrollLoadMoreLimitReached:
+        return ListTile(
+          onTap: _removeOnScrollLoadMoreLimit,
+          key: statusKey,
+          title: OBSecondaryText(
+            'Load more limit reached',
+            textAlign: TextAlign.center,
+          ),
+        );
       case OBPostsStreamStatus.empty:
         return ListTile(
           key: statusKey,
@@ -388,7 +403,12 @@ class OBPostsStreamState extends State<OBPostsStream>
       List<dynamic> results = await Future.wait(refreshFutures);
       List<Post> posts = results[0];
 
-      if (posts.length == 0) {
+      if (!_onScrollLoadMoreLimitRemoved && widget.onScrollLoadMoreLimit != null &&
+          posts.length > widget.onScrollLoadMoreLimit) {
+        // Slice the posts to be within the limit
+        posts = posts.sublist(0, widget.onScrollLoadMoreLimit - 1);
+        _setStatus(OBPostsStreamStatus.onScrollLoadMoreLimitReached);
+      }else if (posts.length == 0) {
         _setStatus(OBPostsStreamStatus.empty);
       } else {
         _setStatus(OBPostsStreamStatus.idle);
@@ -404,11 +424,30 @@ class OBPostsStreamState extends State<OBPostsStream>
     }
   }
 
+  void _removeOnScrollLoadMoreLimit() {
+    _onScrollLoadMoreLimitRemoved = true;
+    _setStatus(OBPostsStreamStatus.idle);
+    _loadMorePosts();
+  }
+
   Future _loadMorePosts() async {
     if (_status == OBPostsStreamStatus.refreshing ||
         _status == OBPostsStreamStatus.noMoreToLoad ||
         _status == OBPostsStreamStatus.loadingMore ||
+        _status == OBPostsStreamStatus.onScrollLoadMoreLimitReached ||
         _posts.isEmpty) return null;
+
+    if (!_onScrollLoadMoreLimitRemoved &&
+            (widget.onScrollLoadMoreLimit != null &&
+                _posts.length >= widget.onScrollLoadMoreLimit) ||
+        widget.onScrollLoadMoreLimitCondition != null &&
+            !widget.onScrollLoadMoreLimitCondition(
+                context: context, posts: _posts, status: _status)) {
+      debugLog('Load more limit reached');
+      _setStatus(OBPostsStreamStatus.onScrollLoadMoreLimitReached);
+      return;
+    }
+
     debugLog('Loading more posts');
     _ensureNoLoadMoreInProgress();
     _setStatus(OBPostsStreamStatus.loadingMore);
@@ -419,7 +458,13 @@ class OBPostsStreamState extends State<OBPostsStream>
 
       List<Post> morePosts = await _loadMoreOperation.value;
 
-      if (morePosts.length == 0) {
+      if (!_onScrollLoadMoreLimitRemoved && widget.onScrollLoadMoreLimit != null &&
+          _posts.length + morePosts.length > widget.onScrollLoadMoreLimit) {
+        // Slice the posts to be within the limit
+        morePosts =
+            morePosts.sublist(0, widget.onScrollLoadMoreLimit - _posts.length);
+        _setStatus(OBPostsStreamStatus.onScrollLoadMoreLimitReached);
+      }else if (morePosts.length == 0) {
         _setStatus(OBPostsStreamStatus.noMoreToLoad);
       } else {
         _setStatus(OBPostsStreamStatus.idle);
@@ -519,7 +564,8 @@ enum OBPostsStreamStatus {
   loadingMoreFailed,
   noMoreToLoad,
   empty,
-  idle
+  idle,
+  onScrollLoadMoreLimitReached
 }
 
 Widget defaultStatusIndicatorBuilder(
@@ -549,3 +595,9 @@ typedef Widget OBPostsStreamPostBuilder(
     Post post,
     String postIdentifier,
     ValueChanged<Post> onPostDeleted});
+
+typedef bool OBPostsStreamOnScrollLoadLimitCondition(
+    {BuildContext context,
+    Post post,
+    List<Post> posts,
+    OBPostsStreamStatus status});
