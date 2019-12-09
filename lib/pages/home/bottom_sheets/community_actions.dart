@@ -10,7 +10,7 @@ import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/theming/text.dart';
 import 'package:Okuna/widgets/tiles/actions/favorite_community_tile.dart';
 import 'package:Okuna/widgets/tiles/actions/report_community_tile.dart';
-import 'package:Okuna/widgets/tiles/actions/subscribe_to_community_notifications_tile.dart';
+import 'package:Okuna/widgets/tiles/actions/new_post_notifications_for_community_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -60,7 +60,7 @@ class OBCommunityActionsBottomSheetState
     bool communityHasInvitesEnabled = community.invitesEnabled;
 
     if (isMemberOfCommunity) {
-      communityActions.add(OBSubscribeToCommunityNotificationsTile(
+      communityActions.add(OBNewPostNotificationsForCommunityTile(
         community: community,
         onSubscribed: _dismiss,
         onUnsubscribed: _dismiss,

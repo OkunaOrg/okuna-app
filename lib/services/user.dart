@@ -968,16 +968,16 @@ class UserService {
     return User.fromJson(json.decode(response.body));
   }
 
-  Future<User> subscribeToUserNotifications(User user) async {
+  Future<User> enableNewPostNotificationsForUser(User user) async {
     HttpieResponse response = await _authApiService
-        .subscribeToUserWithUsernameNotifications(user.username);
+        .enableNewPostNotificationsForUserWithUsername(user.username);
     _checkResponseIsCreated(response);
     return User.fromJson(json.decode(response.body));
   }
 
-  Future<User> unsubscribeFromUserNotifications(User user) async {
+  Future<User> disableNewPostNotificationsForUser(User user) async {
     HttpieResponse response = await _authApiService
-        .unsubscribeFromUserWithUsernameNotifications(user.username);
+        .disableNewPostNotificationsForUserWithUsername(user.username);
     _checkResponseIsOk(response);
     return User.fromJson(json.decode(response.body));
   }
@@ -1487,23 +1487,6 @@ class UserService {
     return CommunitiesList.fromJson(json.decode(response.body));
   }
 
-  Future<CommunitiesList> getSubscribedCommunities({int offset}) async {
-    HttpieResponse response =
-        await _communitiesApiService.getSubscribedCommunities(offset: offset);
-
-    _checkResponseIsOk(response);
-
-    return CommunitiesList.fromJson(json.decode(response.body));
-  }
-
-  Future<CommunitiesList> searchSubscribedCommunities(
-      {@required String query, int count}) async {
-    HttpieResponse response = await _communitiesApiService
-        .searchSubscribedCommunities(query: query, count: count);
-    _checkResponseIsOk(response);
-    return CommunitiesList.fromJson(json.decode(response.body));
-  }
-
   Future<CommunitiesList> searchJoinedCommunities(
       {@required String query, int count, Community withCommunity}) async {
     HttpieResponse response = await _communitiesApiService
@@ -1681,18 +1664,18 @@ class UserService {
     return Community.fromJSON(json.decode(response.body));
   }
 
-  Future<void> subscribeToCommunityNotifications(Community community) async {
+  Future<void> enableNewPostNotificationsForCommunity(Community community) async {
     HttpieResponse response = await _communitiesApiService
-        .subscribeToCommunityNotifications(communityName: community.name);
+        .enableNewPostNotificationsForCommunity(communityName: community.name);
     _checkResponseIsCreated(response);
 
     return Community.fromJSON(json.decode(response.body));
   }
 
-  Future<void> unsubscribeFromCommunityNotifications(
+  Future<void> disableNewPostNotificationsForCommunity(
       Community community) async {
     HttpieResponse response = await _communitiesApiService
-        .unsubscribeFromCommunityNotifications(communityName: community.name);
+        .disableNewPostNotificationsForCommunity(communityName: community.name);
     _checkResponseIsOk(response);
 
     return Community.fromJSON(json.decode(response.body));

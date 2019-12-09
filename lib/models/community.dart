@@ -64,7 +64,7 @@ class Community extends UpdatableModel<Community> {
   bool isInvited;
 
   // Whether the user has subscribed to the community
-  bool isSubscribedToNotifications;
+  bool areNewPostNotificationsEnabled;
 
   // Whether the user is the creator of the community
   bool isCreator;
@@ -97,7 +97,7 @@ class Community extends UpdatableModel<Community> {
       this.color,
       this.cover,
       this.isInvited,
-      this.isSubscribedToNotifications,
+      this.areNewPostNotificationsEnabled,
       this.isCreator,
       this.isReported,
       this.moderators,
@@ -182,7 +182,7 @@ class Community extends UpdatableModel<Community> {
       'color': color,
       'cover': cover,
       'is_invited': isInvited,
-      'is_subscribed_to_notifications': isSubscribedToNotifications,
+      'are_new_post_notifications_enabled': areNewPostNotificationsEnabled,
       'is_creator': isCreator,
       'is_reported': isReported,
       'moderators': moderators?.users?.map((User user) => user.toJson())?.toList(),
@@ -211,8 +211,8 @@ class Community extends UpdatableModel<Community> {
       isInvited = json['is_invited'];
     }
 
-    if (json.containsKey('is_subscribed_to_notifications')) {
-      isSubscribedToNotifications = json['is_subscribed_to_notifications'];
+    if (json.containsKey('are_new_post_notifications_enabled')) {
+      areNewPostNotificationsEnabled = json['are_new_post_notifications_enabled'];
     }
 
     if (json.containsKey('is_favorite')) {
@@ -345,7 +345,7 @@ class CommunityFactory extends UpdatableModelFactory<Community> {
         rules: json['rules'],
         avatar: json['avatar'],
         isInvited: json['is_invited'],
-        isSubscribedToNotifications: json['is_subscribed_to_notifications'],
+        areNewPostNotificationsEnabled: json['are_new_post_notifications_enabled'],
         isCreator: json['is_creator'],
         isReported: json['is_reported'],
         isFavorite: json['is_favorite'],

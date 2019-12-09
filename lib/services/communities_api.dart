@@ -14,9 +14,7 @@ class CommunitiesApiService {
   static const GET_TRENDING_COMMUNITIES_PATH = 'api/communities/trending/';
   static const GET_SUGGESTED_COMMUNITIES_PATH = 'api/communities/suggested/';
   static const GET_JOINED_COMMUNITIES_PATH = 'api/communities/joined/';
-  static const GET_SUBSCRIBED_COMMUNITIES_PATH = 'api/communities/subscribed/';
   static const SEARCH_JOINED_COMMUNITIES_PATH = 'api/communities/joined/search/';
-  static const SEARCH_SUBSCRIBED_COMMUNITIES_PATH = 'api/communities/subscribed/search/';
   static const CHECK_COMMUNITY_NAME_PATH = 'api/communities/name-check/';
   static const CREATE_COMMUNITY_PATH = 'api/communities/';
   static const DELETE_COMMUNITY_PATH = 'api/communities/{communityName}/';
@@ -45,8 +43,8 @@ class CommunitiesApiService {
       'api/communities/{communityName}/search/';
   static const FAVORITE_COMMUNITY_PATH =
       'api/communities/{communityName}/favorite/';
-  static const SUBSCRIBE_TO_COMMUNITY_NOTIFICATIONS_PATH =
-      'api/communities/{communityName}/notifications/subscribe/';
+  static const ENABLE_NEW_POST_NOTIFICATIONS_FOR_COMMUNITY_PATH =
+      'api/communities/{communityName}/notifications/subscribe/new-post/';
   static const EXCLUDE_COMMUNITY_PATH =
       'api/communities/{communityName}/top-posts/exclude/';
   static const GET_EXCLUDED_COMMUNITIES_PATH = 'api/communities/top-posts/exclusions/';
@@ -415,25 +413,6 @@ class CommunitiesApiService {
         queryParameters: {'offset': offset});
   }
 
-  Future<HttpieResponse> getSubscribedCommunities(
-      {bool authenticatedRequest = true, int offset}) {
-    return _httpService.get('$apiURL$GET_SUBSCRIBED_COMMUNITIES_PATH',
-        appendAuthorizationToken: authenticatedRequest,
-        queryParameters: {'offset': offset});
-  }
-
-  Future<HttpieResponse> searchSubscribedCommunities({
-    @required String query,
-    int count,
-  }) {
-    Map<String, dynamic> queryParams = {'query': query};
-
-    if (count != null) queryParams['count'] = count;
-
-    return _httpService.get(_makeApiUrl('$SEARCH_SUBSCRIBED_COMMUNITIES_PATH'),
-        queryParameters: queryParams, appendAuthorizationToken: true);
-  }
-
   Future<HttpieResponse> searchJoinedCommunities({
     @required String query,
     int count,
@@ -611,14 +590,14 @@ class CommunitiesApiService {
         appendAuthorizationToken: true);
   }
 
-  Future<HttpieResponse> subscribeToCommunityNotifications({@required String communityName}) {
-    String path = _makeSubscribeToCommunityNotificationsPath(communityName);
+  Future<HttpieResponse> enableNewPostNotificationsForCommunity({@required String communityName}) {
+    String path = _makeEnableNewPostNotificationsForCommunityPath(communityName);
     return _httpService.putJSON(_makeApiUrl(path),
         appendAuthorizationToken: true);
   }
 
-  Future<HttpieResponse> unsubscribeFromCommunityNotifications({@required String communityName}) {
-    String path = _makeSubscribeToCommunityNotificationsPath(communityName);
+  Future<HttpieResponse> disableNewPostNotificationsForCommunity({@required String communityName}) {
+    String path = _makeEnableNewPostNotificationsForCommunityPath(communityName);
     return _httpService.delete(_makeApiUrl(path),
         appendAuthorizationToken: true);
   }
@@ -816,9 +795,9 @@ class CommunitiesApiService {
         .parse(FAVORITE_COMMUNITY_PATH, {'communityName': communityName});
   }
 
-  String _makeSubscribeToCommunityNotificationsPath(String communityName) {
+  String _makeEnableNewPostNotificationsForCommunityPath(String communityName) {
     return _stringTemplateService
-        .parse(SUBSCRIBE_TO_COMMUNITY_NOTIFICATIONS_PATH, {'communityName': communityName});
+        .parse(ENABLE_NEW_POST_NOTIFICATIONS_FOR_COMMUNITY_PATH, {'communityName': communityName});
   }
 
   String _makeExcludeCommunityPath(String communityName) {
