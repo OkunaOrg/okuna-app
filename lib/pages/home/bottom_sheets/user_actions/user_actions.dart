@@ -84,8 +84,7 @@ class OBUserActionsBottomSheet extends StatelessWidget {
               onDisconnectedFromUser: _dismissModalBottomSheet,
               title:
                   localizationService.user__profile_action_cancel_connection));
-          moreTiles.add(OBUpdateConnectionWithUserTile(user,
-              onWillShowModalBottomSheet: _dismissModalBottomSheet));
+          moreTiles.add(OBUpdateConnectionWithUserTile(user));
         } else if (user.isPendingConnectionConfirmation) {
           moreTiles.add(OBConfirmConnectionWithUserTile(
             user,
@@ -95,8 +94,7 @@ class OBUserActionsBottomSheet extends StatelessWidget {
               onDisconnectedFromUser: _dismissModalBottomSheet,
               title: localizationService.user__profile_action_deny_connection));
         } else if (user.isFullyConnected) {
-          moreTiles.add(OBUpdateConnectionWithUserTile(user,
-              onWillShowModalBottomSheet: _dismissModalBottomSheet));
+          moreTiles.add(OBUpdateConnectionWithUserTile(user));
           moreTiles.add(OBDisconnectFromUserTile(user,
               onDisconnectedFromUser: _dismissModalBottomSheet));
         } else {
