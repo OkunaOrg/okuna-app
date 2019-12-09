@@ -25,6 +25,7 @@ import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:throttling/throttling.dart';
 
 class OBMainSearchPage extends StatefulWidget {
   final OBMainSearchPageController controller;
@@ -72,6 +73,10 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
   StreamSubscription<CommunitiesList> _getCommunitiesWithQuerySubscription;
   StreamSubscription<HashtagsList> _getHashtagsWithQuerySubscription;
 
+  Debouncing _showTabsDebouncer;
+  Debouncing _hideTabsDebouncer;
+  Debouncing _isScrollingContinuouslyDebouncer;
+
   static const double OB_BOTTOM_TAB_BAR_HEIGHT = 50.0;
   static const double HEIGHT_SEARCH_BAR = 76.0;
   static const double HEIGHT_TABS_SECTION = 52.0;
@@ -94,6 +99,7 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
     _hashtagSearchResults = [];
     _selectedSearchResultsTab = OBUserSearchResultsTab.users;
     _tabController = new TabController(length: 2, vsync: this);
+    _isScrollingContinuouslyDebouncer = new Debouncing(duration: Duration(milliseconds: 100));
     _animationController =
         AnimationController(vsync: this, duration: Duration(milliseconds: 150));
     _offset = Tween<Offset>(begin: Offset.zero, end: Offset(0.0, -1.0))
@@ -260,7 +266,7 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
       return;
     }
 
-    if (isScrollingUp == _isScrollingUp) return;
+    // if (isScrollingUp == _isScrollingUp) return;
 
     if (isScrollingUp) {
       _showTabSection();
@@ -403,16 +409,61 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
   }
 
   void _hideTabSection() {
-    _animationController.forward();
+    if (_hideTabsDebouncer == null) {
+      _setHideTabsDebounce();
+    } else {
+      _resetIsScrollingContinuouslyDebouncer();
+    }
+    if (!_isScrollingUp) return;
     setState(() {
       _isScrollingUp = false;
     });
   }
 
   void _showTabSection() {
-    _animationController.reverse();
+    if (_showTabsDebouncer == null) {
+      _setShowTabsDebounce();
+    } else {
+      _resetIsScrollingContinuouslyDebouncer();
+    }
+    if (_isScrollingUp) return;
     setState(() {
       _isScrollingUp = true;
+    });
+  }
+
+  void _setShowTabsDebounce() {
+    setState(() {
+      _showTabsDebouncer = new Debouncing(duration: Duration(milliseconds: 1000));
+    });
+    _showTabsDebouncer.debounce(() {
+      if (_showTabsDebouncer != null) _animationController.reverse();
+    });
+  }
+
+  void _setHideTabsDebounce() {
+    setState(() {
+      _hideTabsDebouncer = new Debouncing(duration: Duration(milliseconds: 1000));
+    });
+    _hideTabsDebouncer.debounce(() {
+      if (_hideTabsDebouncer != null) _animationController.forward();
+    });
+  }
+
+  void _resetIsScrollingContinuouslyDebouncer() {
+    setState(() {
+      _isScrollingContinuouslyDebouncer = new Debouncing(duration: Duration(milliseconds: 100));
+    });
+    _scheduleCancelIfNotScrolled();
+  }
+
+  void _scheduleCancelIfNotScrolled() {
+    _isScrollingContinuouslyDebouncer.debounce(() {
+      setState(() {
+        _isScrollingContinuouslyDebouncer = null;
+        _showTabsDebouncer = null;
+        _hideTabsDebouncer = null;
+      });
     });
   }
 
