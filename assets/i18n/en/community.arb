@@ -703,7 +703,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "actions_enable_new_post_notifications_success": "You'll now get new post notifications",
+  "actions_enable_new_post_notifications_success": "New post notifications enabled",
   "@actions_enable_new_post_notifications_success": {
     "type": "text",
     "placeholders": {}
@@ -713,7 +713,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "actions_disable_new_post_notifications_success": "Successfully disabled notifications",
+  "actions_disable_new_post_notifications_success": "New post notifications enabled",
   "@actions_disable_new_post_notifications_success": {
     "type": "text",
     "placeholders": {}

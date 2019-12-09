@@ -345,20 +345,9 @@
     "type": "text",
     "placeholders": {}
   },
-  "user_subscriptions_text": "User subscriptions",
-  "@user_subscriptions_text": {
-    "type": "text",
-    "placeholders": {}
-  },
   "following_resource_name": "followed users",
   "@following_resource_name": {
     "description": "Eg: Search followed users.., No followed users found. etc ",
-    "type": "text",
-    "placeholders": {}
-  },
-  "user_subscriptions_resource_name": "user subscriptions",
-  "@user_subscriptions_resource_name": {
-    "description": "Eg: Search user subscriptions.., No user subscriptions found. etc ",
     "type": "text",
     "placeholders": {}
   },
