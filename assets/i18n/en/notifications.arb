@@ -119,7 +119,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "community_new_post_desc": "Be notified when there is a new post in a community you are subscribed to",
+  "community_new_post_desc": "Be notified when there is a new post in a community you enabled post notifications on",
   "@community_new_post_desc": {
     "type": "text",
     "placeholders": {}
@@ -129,7 +129,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "user_new_post_desc": "Be notified when there is a new post by a user you are subscribed to",
+  "user_new_post_desc": "Be notified when there is a new post by a user you enabled notifications on",
   "@user_new_post_desc": {
     "type": "text",
     "placeholders": {}

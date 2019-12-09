@@ -74,11 +74,6 @@
     "type": "text",
     "placeholders": {}
   },
-  "details_subscribed": "Subscribed",
-  "@details_subscribed": {
-    "type": "text",
-    "placeholders": {}
-  },
   "admin_desc": "This will allow the member to edit the community details, administrators, moderators and banned users.",
   "@admin_desc": {
     "type": "text",
@@ -280,13 +275,13 @@
     "type": "text",
     "placeholders": {}
   },
-  "manage_subscribe_community": "Subscribe to notifications when there are new posts in this community",
-  "@manage_subscribe_community": {
+  "manage_enable_new_post_notifications": "Enable new post notifications",
+  "@manage_enable_new_post_notifications": {
     "type": "text",
     "placeholders": {}
   },
-  "manage_unsubscribe_community": "Unsubscribe to notifications from this community",
-  "@manage_unsubscribe_community": {
+  "manage_disable_new_post_notifications": "Disable new post notifications",
+  "@manage_disable_new_post_notifications": {
     "type": "text",
     "placeholders": {}
   },

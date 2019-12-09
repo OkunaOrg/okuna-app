@@ -128,16 +128,6 @@
     "type": "text",
     "placeholders": {}
   },
-  "subscribe_button_subscribe_text": "Subscribe",
-  "@subscribe_button_subscribe_text": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "unsubscribe_button_unsubscribe_text": "Unsubscribe",
-  "@unsubscribe_button_unsubscribe_text": {
-    "type": "text",
-    "placeholders": {}
-  },
   "edit_profile_username": "Username",
   "@edit_profile_username": {
     "type": "text",

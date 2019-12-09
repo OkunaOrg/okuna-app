@@ -903,10 +903,6 @@ class LocalizationService {
     return Intl.message("In favorites", name: 'community__details_favorite');
   }
 
-  String get community__details_subscribed {
-    return Intl.message("Subscribed", name: 'community__details_subscribed');
-  }
-
   String get community__admin_desc {
     return Intl.message(
         "This will allow the member to edit the community details, administrators, moderators and banned users.",
@@ -1103,15 +1099,15 @@ class LocalizationService {
         name: 'community__manage_remove_favourite');
   }
 
-  String get community__manage_subscribe_community {
+  String get community__manage_enable_new_post_notifications {
     return Intl.message(
-        "Subscribe to notifications when there are new posts in this community",
-        name: 'community__manage_subscribe_community');
+        "Enable new post notifications",
+        name: 'community__manage_enable_new_post_notifications');
   }
 
-  String get community__manage_unsubscribe_community {
-    return Intl.message("Unsubscribe to notifications from this community",
-        name: 'community__manage_unsubscribe_community');
+  String get community__manage_disable_new_post_notifications {
+    return Intl.message("Disable new post notifications",
+        name: 'community__manage_disable_new_post_notifications');
   }
 
   String get community__is_private {
@@ -2417,16 +2413,6 @@ class LocalizationService {
     return Intl.message("Unfollow", name: 'user__follow_button_unfollow_text');
   }
 
-  String get user__subscribe_button_subscribe_text {
-    return Intl.message("Subscribe",
-        name: 'user__subscribe_button_subscribe_text');
-  }
-
-  String get user__unsubscribe_button_unsubscribe_text {
-    return Intl.message("Unsubscribe",
-        name: 'user__unsubscribe_button_unsubscribe_text');
-  }
-
   String get user__edit_profile_username {
     return Intl.message("Username", name: 'user__edit_profile_username');
   }
@@ -3365,7 +3351,7 @@ class LocalizationService {
 
   String get notifications__community_new_post_desc {
     return Intl.message(
-        "Be notified when there is a new post in a community you are subscribed to",
+        "Be notified when there is a new post in a community you enabled post notifications on",
         name: 'notifications__community_new_post_desc');
   }
 
@@ -3376,7 +3362,7 @@ class LocalizationService {
 
   String get notifications__user_new_post_desc {
     return Intl.message(
-        "Be notified when there is a new post by a user you are subscribed to",
+        "Be notified when there is a new post by a user you enabled notifications on",
         name: 'notifications__user_new_post_desc');
   }
 
