@@ -99,7 +99,6 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
     _hashtagSearchResults = [];
     _selectedSearchResultsTab = OBUserSearchResultsTab.users;
     _tabController = new TabController(length: 2, vsync: this);
-    _isScrollingContinuouslyDebouncer = new Debouncing(duration: Duration(milliseconds: 100));
     _animationController =
         AnimationController(vsync: this, duration: Duration(milliseconds: 150));
     _offset = Tween<Offset>(begin: Offset.zero, end: Offset(0.0, -1.0))
