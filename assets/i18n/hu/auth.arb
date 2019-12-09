@@ -51,6 +51,16 @@
         "type": "text",
         "placeholders": {}
     },
+    "create_acc__invalid_token": "Invalid token",
+    "@create_acc__invalid_token": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__validating_token": "Validating token...",
+    "@create_acc__validating_token": {
+        "type": "text",
+        "placeholders": {}
+    },
     "create_acc__previous": "Vissza",
     "@create_acc__previous": {
         "type": "text",
@@ -86,7 +96,7 @@
         "type": "text",
         "placeholders": {}
     },
-    "create_acc__link_invalid_error": "A megadott link érvénytelen.",
+    "create_acc__link_invalid_error": "This link is invalid.",
     "@create_acc__link_invalid_error": {
         "type": "text",
         "placeholders": {}
@@ -323,8 +333,13 @@
         "type": "text",
         "placeholders": {}
     },
-    "create_acc__done_created": "A fiókod sikeresen létrejött! Íme a felhasználóneved: ",
+    "create_acc__done_created": "Your account has been created.",
     "@create_acc__done_created": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__suggested_communities": "🥳 Get started by joining the following communities.",
+    "@create_acc__suggested_communities": {
         "type": "text",
         "placeholders": {}
     },
@@ -418,7 +433,7 @@
         "type": "text",
         "placeholders": {}
     },
-    "login__forgot_password_subtitle": "Add meg a felhasználóneved vagy e-mail címed",
+    "login__forgot_password_subtitle": "Enter your email",
     "@login__forgot_password_subtitle": {
         "type": "text",
         "placeholders": {}
@@ -435,11 +450,6 @@
     },
     "login__email_label": "E-mail cím",
     "@login__email_label": {
-        "type": "text",
-        "placeholders": {}
-    },
-    "login__or_text": "vagy",
-    "@login__or_text": {
         "type": "text",
         "placeholders": {}
     },

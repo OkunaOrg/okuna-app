@@ -1,0 +1,12 @@
+{
+    "storage_permission_denied": "Vi behöver tillstånd att komma åt dina lagringsmedia för att du ska kunna välja mediafiler. Var god och tillåt detta i dina inställningar.",
+    "@storage_permission_denied": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "camera_permission_denied": "Vi behöver tillstånd att använda din kamera för att du ska kunna ta bilder och spela in videor. Var god och tillåt detta i dina inställningar.",
+    "@camera_permission_denied": {
+        "type": "text",
+        "placeholders": {}
+    }
+}

@@ -125,10 +125,10 @@ class OBManageCommunityPage extends StatelessWidget {
 
     menuListTiles.add(OBSubscribeToCommunityNotificationsTile(
         community: community,
-        title: OBText(_localizationService.community__manage_subscribe_community,
+        title: OBText(_localizationService.community__manage_enable_new_post_notifications,
           style: listItemSubtitleStyle,
         ),
-        subtitle: OBText(_localizationService.community__manage_unsubscribe_community,
+        subtitle: OBText(_localizationService.community__manage_disable_new_post_notifications,
           style: listItemSubtitleStyle,
         )));
 

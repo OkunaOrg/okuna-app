@@ -261,6 +261,16 @@
         "type": "text",
         "placeholders": {}
     },
+    "report_hashtag_text": "Anmäl hashtag",
+    "@report_hashtag_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "you_have_reported_hashtag_text": "Du har anmält den här hashtaggen",
+    "@you_have_reported_hashtag_text": {
+        "type": "text",
+        "placeholders": {}
+    },
     "report_community_text": "Anmäl gemenskap",
     "@report_community_text": {
         "type": "text",

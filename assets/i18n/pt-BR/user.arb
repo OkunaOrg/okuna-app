@@ -62,6 +62,21 @@
         "type": "text",
         "placeholders": {}
     },
+    "profile_action_user_post_notifications_enabled": "Notificações de postagem estão ativadas",
+    "@profile_action_user_post_notifications_enabled": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "profile_action_user_post_notifications_disabled": "Notificações de postagem estão desativadas",
+    "@profile_action_user_post_notifications_disabled": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "profile_in_circles": "Em círculos",
+    "@profile_in_circles": {
+        "type": "text",
+        "placeholders": {}
+    },
     "profile_action_cancel_connection": "Cancelar pedido de conexão",
     "@profile_action_cancel_connection": {
         "type": "text",
@@ -86,8 +101,25 @@
             "maxLength": {}
         }
     },
+    "profile_okuna_age_toast": "Na Okuna desde {age}",
+    "@profile_okuna_age_toast": {
+        "type": "text",
+        "placeholders": {
+            "age": {}
+        }
+    },
     "follow_button_follow_text": "Seguir",
     "@follow_button_follow_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "follow_button_follow_back_text": "Seguir de volta",
+    "@follow_button_follow_back_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "follow_button_following_text": "Seguindo",
+    "@follow_button_following_text": {
         "type": "text",
         "placeholders": {}
     },
@@ -339,11 +371,12 @@
         "type": "text",
         "placeholders": {}
     },
-    "invite_someone_message": "Ei! Eu gostaria de convidar você para a Okuna. Primeiro, baixe o app no iTunes ({iosLink}) ou na Play Store ({androidLink}). Depois, copie e cole o seguinte link de convite no formulário de criação de conta no app da Okuna: {inviteLink}",
+    "invite_someone_message": "Ei, eu gostaria de convidar você para a rede social Okuna.\n\nSe tiver iOS, primeiro, baixe o aplicativo TestFlight na App Store ({testFlightLink}) e, em seguida, baixe o aplicativo Okuna ({iosLink})\n\nSe tiver Android, faça o download na Play Store ({androidLink}).\n\nDepois, cole este link de convite personalizado no formulário 'Cadastrar-se' no aplicativo Okuna: {inviteLink}",
     "@invite_someone_message": {
         "type": "text",
         "placeholders": {
             "iosLink": {},
+            "testFlightLink": {},
             "androidLink": {},
             "inviteLink": {}
         }
@@ -953,6 +986,16 @@
     },
     "unblock_user": "Desbloquear usuário",
     "@unblock_user": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "enable_new_post_notifications": "Habilitar notificações de postagem",
+    "@enable_new_post_notifications": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "disable_new_post_notifications": "Desativar notificações de postagens",
+    "@disable_new_post_notifications": {
         "type": "text",
         "placeholders": {}
     },

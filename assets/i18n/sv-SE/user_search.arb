@@ -9,6 +9,11 @@
         "type": "text",
         "placeholders": {}
     },
+    "hashtags": "Hashtaggar",
+    "@hashtags": {
+        "type": "text",
+        "placeholders": {}
+    },
     "users": "Användare",
     "@users": {
         "type": "text",
@@ -61,6 +66,13 @@
     },
     "no_communities_for": "Inga gemenskaper hittades för '{searchQuery}'.",
     "@no_communities_for": {
+        "type": "text",
+        "placeholders": {
+            "searchQuery": {}
+        }
+    },
+    "no_hashtags_for": "Inga hashtaggar hittades för '{searchQuery}'.",
+    "@no_hashtags_for": {
         "type": "text",
         "placeholders": {
             "searchQuery": {}

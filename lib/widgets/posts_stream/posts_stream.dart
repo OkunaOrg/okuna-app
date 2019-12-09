@@ -458,6 +458,7 @@ class OBPostsStreamState extends State<OBPostsStream>
       if (!_onScrollLoadMoreLimitRemoved && widget.onScrollLoadMoreLimit != null &&
           _posts.length + morePosts.length > widget.onScrollLoadMoreLimit) {
         // Slice the posts to be within the limit
+        if(morePosts.length == 0) return;
         morePosts =
             morePosts.sublist(0, widget.onScrollLoadMoreLimit - _posts.length);
         _setStatus(OBPostsStreamStatus.onScrollLoadMoreLimitReached);

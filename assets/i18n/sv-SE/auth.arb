@@ -51,6 +51,16 @@
         "type": "text",
         "placeholders": {}
     },
+    "create_acc__invalid_token": "Ogiltig kod",
+    "@create_acc__invalid_token": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__validating_token": "Validerar kod...",
+    "@create_acc__validating_token": {
+        "type": "text",
+        "placeholders": {}
+    },
     "create_acc__previous": "Tillbaka",
     "@create_acc__previous": {
         "type": "text",
@@ -86,7 +96,7 @@
         "type": "text",
         "placeholders": {}
     },
-    "create_acc__link_invalid_error": "Länken verkar vara ogiltig.",
+    "create_acc__link_invalid_error": "Länken är ogiltig.",
     "@create_acc__link_invalid_error": {
         "type": "text",
         "placeholders": {}
@@ -323,8 +333,13 @@
         "type": "text",
         "placeholders": {}
     },
-    "create_acc__done_created": "Ditt konto har skapats med användarnamnet ",
+    "create_acc__done_created": "Ditt konto har skapats.",
     "@create_acc__done_created": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__suggested_communities": "🥳 Kom igång genom att gå med i följande gemenskaper.",
+    "@create_acc__suggested_communities": {
         "type": "text",
         "placeholders": {}
     },
@@ -418,7 +433,7 @@
         "type": "text",
         "placeholders": {}
     },
-    "login__forgot_password_subtitle": "Ange ditt användarnamn eller e-postadress",
+    "login__forgot_password_subtitle": "Ange din e-postadress",
     "@login__forgot_password_subtitle": {
         "type": "text",
         "placeholders": {}
@@ -435,11 +450,6 @@
     },
     "login__email_label": "E-postadress",
     "@login__email_label": {
-        "type": "text",
-        "placeholders": {}
-    },
-    "login__or_text": "Eller",
-    "@login__or_text": {
         "type": "text",
         "placeholders": {}
     },

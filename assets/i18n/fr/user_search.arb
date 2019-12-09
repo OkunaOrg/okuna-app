@@ -9,6 +9,11 @@
         "type": "text",
         "placeholders": {}
     },
+    "hashtags": "Hashtags",
+    "@hashtags": {
+        "type": "text",
+        "placeholders": {}
+    },
     "users": "Utilisateurs.trices",
     "@users": {
         "type": "text",
@@ -61,6 +66,13 @@
     },
     "no_communities_for": "Aucune communauté trouvée pour '{searchQuery}'.",
     "@no_communities_for": {
+        "type": "text",
+        "placeholders": {
+            "searchQuery": {}
+        }
+    },
+    "no_hashtags_for": "No hashtags found for '{searchQuery}'.",
+    "@no_hashtags_for": {
         "type": "text",
         "placeholders": {
             "searchQuery": {}

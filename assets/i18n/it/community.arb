@@ -29,6 +29,26 @@
         "type": "text",
         "placeholders": {}
     },
+    "excluded_community": "comunità esclusa",
+    "@excluded_community": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "excluded_communities": "comunità escluse",
+    "@excluded_communities": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "exclude_joined_communities": "Escludi comunità sottoscritte",
+    "@exclude_joined_communities": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "exclude_joined_communities_desc": "Non mostrare i post delle comunità di cui sono membro",
+    "@exclude_joined_communities_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
     "type_public": "Pubblico",
     "@type_public": {
         "type": "text",
@@ -46,6 +66,11 @@
     },
     "members_capitalized": "Membri",
     "@members_capitalized": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "details_favorite": "Nei preferiti",
+    "@details_favorite": {
         "type": "text",
         "placeholders": {}
     },
@@ -250,6 +275,16 @@
         "type": "text",
         "placeholders": {}
     },
+    "manage_enable_new_post_notifications": "Attiva le notifiche dei nuovi post",
+    "@manage_enable_new_post_notifications": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_disable_new_post_notifications": "Disabilita le notifiche dei nuovi post",
+    "@manage_disable_new_post_notifications": {
+        "type": "text",
+        "placeholders": {}
+    },
     "is_private": "Questa comunità è privata.",
     "@is_private": {
         "type": "text",
@@ -336,6 +371,11 @@
     },
     "user_you_text": "Tu",
     "@user_you_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "tile_delete": "Elimina",
+    "@tile_delete": {
         "type": "text",
         "placeholders": {}
     },
@@ -658,6 +698,26 @@
         "type": "text",
         "placeholders": {}
     },
+    "actions_enable_new_post_notifications_title": "Attiva le notifiche dei nuovi post",
+    "@actions_enable_new_post_notifications_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "actions_enable_new_post_notifications_success": "Notifiche dei nuovi post attivate",
+    "@actions_enable_new_post_notifications_success": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "actions_disable_new_post_notifications_title": "Disabilita le notifiche dei nuovi post",
+    "@actions_disable_new_post_notifications_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "actions_disable_new_post_notifications_success": "Notifiche dei nuovi post attivate",
+    "@actions_disable_new_post_notifications_success": {
+        "type": "text",
+        "placeholders": {}
+    },
     "join_community": "Unisciti",
     "@join_community": {
         "type": "text",
@@ -748,5 +808,20 @@
         "placeholders": {
             "maxLength": {}
         }
+    },
+    "top_posts_excluded_communities": "Comunità escluse",
+    "@top_posts_excluded_communities": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "top_posts_excluded_communities_desc": "Gestisci le comunità escluse dalla cronologia di esplorazione",
+    "@top_posts_excluded_communities_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "top_posts_settings": "Esplora impostazioni",
+    "@top_posts_settings": {
+        "type": "text",
+        "placeholders": {}
     }
 }

@@ -1,0 +1,12 @@
+{
+    "storage_permission_denied": "Vi behøver adgang til hukommelsen for at give dig lov til at tage media emner, tillad det venligst i dine indstillinger.",
+    "@storage_permission_denied": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "camera_permission_denied": "Vi behøver adgang til dit kamera for at give dig lov til at tage billeder og optage videoer, tillad det venligst i dine indstillinger.",
+    "@camera_permission_denied": {
+        "type": "text",
+        "placeholders": {}
+    }
+}

@@ -141,6 +141,18 @@
         "type": "text",
         "placeholders": {}
     },
+    "about": "Om",
+    "@about": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "about_platform": "Kör på {platform}",
+    "@about_platform": {
+        "type": "text",
+        "placeholders": {
+            "platform": {}
+        }
+    },
     "logout": "Logga ut",
     "@logout": {
         "type": "text",

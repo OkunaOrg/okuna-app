@@ -141,6 +141,18 @@
         "type": "text",
         "placeholders": {}
     },
+    "about": "Sobre",
+    "@about": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "about_platform": "Executando em {platform}",
+    "@about_platform": {
+        "type": "text",
+        "placeholders": {
+            "platform": {}
+        }
+    },
     "logout": "Sair",
     "@logout": {
         "type": "text",

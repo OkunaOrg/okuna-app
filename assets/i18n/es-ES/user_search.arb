@@ -9,6 +9,11 @@
         "type": "text",
         "placeholders": {}
     },
+    "hashtags": "Hashtags",
+    "@hashtags": {
+        "type": "text",
+        "placeholders": {}
+    },
     "users": "Usuarios",
     "@users": {
         "type": "text",
@@ -61,6 +66,13 @@
     },
     "no_communities_for": "No se encontraron comunidades para '{searchQuery}'.",
     "@no_communities_for": {
+        "type": "text",
+        "placeholders": {
+            "searchQuery": {}
+        }
+    },
+    "no_hashtags_for": "No se encontraron hashtags para '{searchQuery}'.",
+    "@no_hashtags_for": {
         "type": "text",
         "placeholders": {
             "searchQuery": {}
