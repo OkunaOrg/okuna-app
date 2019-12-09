@@ -29,6 +29,26 @@
         "type": "text",
         "placeholders": {}
     },
+    "excluded_community": "ekskluderet gruppe",
+    "@excluded_community": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "excluded_communities": "ekskluderede grupper",
+    "@excluded_communities": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "exclude_joined_communities": "Ekskluder grupper du meldte dig ind i",
+    "@exclude_joined_communities": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "exclude_joined_communities_desc": "Vis ikke indlæg fra grupper jeg er medlem af",
+    "@exclude_joined_communities_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
     "type_public": "Offentlig",
     "@type_public": {
         "type": "text",
@@ -46,6 +66,11 @@
     },
     "members_capitalized": "Medlemmer",
     "@members_capitalized": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "details_favorite": "I favoritter",
+    "@details_favorite": {
         "type": "text",
         "placeholders": {}
     },
@@ -250,6 +275,16 @@
         "type": "text",
         "placeholders": {}
     },
+    "manage_enable_new_post_notifications": "Slå meddelelser om nye indlæg til",
+    "@manage_enable_new_post_notifications": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_disable_new_post_notifications": "Slå meddelelser om nye indlæg fra",
+    "@manage_disable_new_post_notifications": {
+        "type": "text",
+        "placeholders": {}
+    },
     "is_private": "Dette fællesskab er privat.",
     "@is_private": {
         "type": "text",
@@ -336,6 +371,11 @@
     },
     "user_you_text": "Dig",
     "@user_you_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "tile_delete": "Slet",
+    "@tile_delete": {
         "type": "text",
         "placeholders": {}
     },
@@ -658,6 +698,26 @@
         "type": "text",
         "placeholders": {}
     },
+    "actions_enable_new_post_notifications_title": "Slå meddelelser om nye indlæg til",
+    "@actions_enable_new_post_notifications_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "actions_enable_new_post_notifications_success": "Meddelelser om nye indlæg slået til",
+    "@actions_enable_new_post_notifications_success": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "actions_disable_new_post_notifications_title": "Slå meddelelser om nye indlæg fra",
+    "@actions_disable_new_post_notifications_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "actions_disable_new_post_notifications_success": "Meddelelser om nye indlæg slået fra",
+    "@actions_disable_new_post_notifications_success": {
+        "type": "text",
+        "placeholders": {}
+    },
     "join_community": "Deltag",
     "@join_community": {
         "type": "text",
@@ -748,5 +808,20 @@
         "placeholders": {
             "maxLength": {}
         }
+    },
+    "top_posts_excluded_communities": "Ekskluderede grupper",
+    "@top_posts_excluded_communities": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "top_posts_excluded_communities_desc": "Forvalt grupper der er udelukket fra oversigts-tidlinie",
+    "@top_posts_excluded_communities_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "top_posts_settings": "Undersøg indstillinger",
+    "@top_posts_settings": {
+        "type": "text",
+        "placeholders": {}
     }
 }

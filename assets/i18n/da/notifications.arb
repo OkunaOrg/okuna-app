@@ -114,6 +114,26 @@
         "type": "text",
         "placeholders": {}
     },
+    "community_new_post_title": "Fællesskabsindlæg",
+    "@community_new_post_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "community_new_post_desc": "Få meddelelse når der er et nyt indlæg i et fællesskab du har slået indlægs-meddelelser til for",
+    "@community_new_post_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "user_new_post_title": "Ny bruger indlæg",
+    "@user_new_post_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "user_new_post_desc": "Få meddelelse når der er et nyt indlæg fra en bruger du har slået meddelelser til for",
+    "@user_new_post_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
     "mute_post_turn_on_post_notifications": "Slå beskeder for indlæg til",
     "@mute_post_turn_on_post_notifications": {
         "type": "text",
@@ -164,9 +184,17 @@
         "type": "text",
         "placeholders": {}
     },
-    "user_community_invite_tile": "[name] [username] indbyder dig til at blive medlem i fælleskabet c/{communityName}.",
+    "user_community_invite_tile": "[name] [username] indbyder dig til at blive medlem i fælleskabet /c/{communityName}.",
     "@user_community_invite_tile": {
         "description": "Eg.: James @jamest has invited you to join community c/okuna.",
+        "type": "text",
+        "placeholders": {
+            "communityName": {}
+        }
+    },
+    "community_new_post_tile": "Der er et nyt indlæg i c/{communityName}.",
+    "@community_new_post_tile": {
+        "description": "Eg.: There was a new post in c/okuna.",
         "type": "text",
         "placeholders": {
             "communityName": {}
@@ -212,6 +240,12 @@
     "mentioned_in_post_tile": "[name] [username] nævnte dig i et indlæg.",
     "@mentioned_in_post_tile": {
         "description": "Eg.: James @jamest mentioned you on a post.",
+        "type": "text",
+        "placeholders": {}
+    },
+    "user_new_post_tile": "[name] [username] skrev noget.",
+    "@user_new_post_tile": {
+        "description": "Eg.: James @jamest posted something.",
         "type": "text",
         "placeholders": {}
     }

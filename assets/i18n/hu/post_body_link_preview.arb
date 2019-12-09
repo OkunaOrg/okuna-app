@@ -1,10 +1,10 @@
 {
-    "empty": "This link could not be previewed",
+    "empty": "Ennek a linknek nem lehet megjeleníteni az előnézetét",
     "@empty": {
         "type": "text",
         "placeholders": {}
     },
-    "error_with_description": "Failed to preview link with website error: {description}",
+    "error_with_description": "Nem sikerült megjeleníteni a link előnézetét, hiba: {description}",
     "@error_with_description": {
         "type": "text",
         "placeholders": {

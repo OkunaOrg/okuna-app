@@ -41,16 +41,6 @@
         "type": "text",
         "placeholders": {}
     },
-    "timeline_posts_refreshing_drhoo_subtitle": "Je tijdlijn wordt geladen.",
-    "@timeline_posts_refreshing_drhoo_subtitle": {
-        "type": "text",
-        "placeholders": {}
-    },
-    "timeline_posts_no_more_drhoo_title": "Je tijdlijn is leeg.",
-    "@timeline_posts_no_more_drhoo_title": {
-        "type": "text",
-        "placeholders": {}
-    },
     "timeline_posts_no_more_drhoo_subtitle": "Volg gebruikers of word lid van een community om aan de slag te gaan!",
     "@timeline_posts_no_more_drhoo_subtitle": {
         "type": "text",
@@ -115,6 +105,11 @@
     },
     "profile_counts_follower": " Volger",
     "@profile_counts_follower": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "profile_retry_loading_posts": "Tik om het opnieuw te proberen",
+    "@profile_retry_loading_posts": {
         "type": "text",
         "placeholders": {}
     },
@@ -216,6 +211,21 @@
         "type": "text",
         "placeholders": {}
     },
+    "create_new_post_label": "Nieuw bericht maken",
+    "@create_new_post_label": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_new_community_post_label": "Nieuw communitybericht maken",
+    "@create_new_community_post_label": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "close_create_post_label": "Sluiten",
+    "@close_create_post_label": {
+        "type": "text",
+        "placeholders": {}
+    },
     "create_next": "Volgende",
     "@create_next": {
         "type": "text",
@@ -230,6 +240,14 @@
     "@create_video": {
         "type": "text",
         "placeholders": {}
+    },
+    "create_hashtags_invalid": "Please add a maximum of {maxHashtags} hashtags and keep them under {maxCharacters} characters.",
+    "@create_hashtags_invalid": {
+        "type": "text",
+        "placeholders": {
+            "maxHashtags": {},
+            "maxCharacters": {}
+        }
     },
     "commenter_post_text": "Plaats commentaar",
     "@commenter_post_text": {
@@ -291,8 +309,23 @@
         "type": "text",
         "placeholders": {}
     },
+    "top_posts_title": "Verkennen",
+    "@top_posts_title": {
+        "type": "text",
+        "placeholders": {}
+    },
     "trending_posts_title": "Populaire berichten",
     "@trending_posts_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "trending_posts_load_more": "Oudere berichten laden",
+    "@trending_posts_load_more": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "load_more": "Meer berichten laden",
+    "@load_more": {
         "type": "text",
         "placeholders": {}
     },
@@ -303,6 +336,11 @@
     },
     "trending_posts_refresh": "Verversen",
     "@trending_posts_refresh": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "community_not_found": "Deze community bestaat niet",
+    "@community_not_found": {
         "type": "text",
         "placeholders": {}
     },
@@ -465,6 +503,16 @@
         "type": "text",
         "placeholders": {}
     },
+    "exclude_post_community": "Geen berichten van deze community tonen",
+    "@exclude_post_community": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "undo_exclude_post_community": "Berichten van deze community tonen",
+    "@undo_exclude_post_community": {
+        "type": "text",
+        "placeholders": {}
+    },
     "comments_enabled_message": "Commentaren ingeschakeld voor bericht",
     "@comments_enabled_message": {
         "type": "text",
@@ -480,6 +528,11 @@
         "type": "text",
         "placeholders": {}
     },
+    "actions_delete_description": "Het bericht en de bijbehorende opmerkingen en reacties worden definitief verwijderd.",
+    "@actions_delete_description": {
+        "type": "text",
+        "placeholders": {}
+    },
     "actions_deleted": "Bericht verwijderd",
     "@actions_deleted": {
         "type": "text",
@@ -487,6 +540,11 @@
     },
     "actions_delete_comment": "Commentaar verwijderen",
     "@actions_delete_comment": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "actions_delete_comment_description": "De opmerking en de bijbehorende antwoorden en reacties worden definitief verwijderd.",
+    "@actions_delete_comment_description": {
         "type": "text",
         "placeholders": {}
     },

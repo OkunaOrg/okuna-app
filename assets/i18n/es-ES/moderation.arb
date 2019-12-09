@@ -261,6 +261,16 @@
         "type": "text",
         "placeholders": {}
     },
+    "report_hashtag_text": "Reportar hashtag",
+    "@report_hashtag_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "you_have_reported_hashtag_text": "Has reportado este Hashtag",
+    "@you_have_reported_hashtag_text": {
+        "type": "text",
+        "placeholders": {}
+    },
     "report_community_text": "Reportar comunidad",
     "@report_community_text": {
         "type": "text",

@@ -29,6 +29,26 @@
         "type": "text",
         "placeholders": {}
     },
+    "excluded_community": "excluded community",
+    "@excluded_community": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "excluded_communities": "excluded communities",
+    "@excluded_communities": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "exclude_joined_communities": "Exclude joined communities",
+    "@exclude_joined_communities": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "exclude_joined_communities_desc": "Don't show posts from communities I'm a member of",
+    "@exclude_joined_communities_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
     "type_public": "Herkese Açık",
     "@type_public": {
         "type": "text",
@@ -46,6 +66,11 @@
     },
     "members_capitalized": "Üyeler",
     "@members_capitalized": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "details_favorite": "In favorites",
+    "@details_favorite": {
         "type": "text",
         "placeholders": {}
     },
@@ -250,6 +275,16 @@
         "type": "text",
         "placeholders": {}
     },
+    "manage_enable_new_post_notifications": "Enable new post notifications",
+    "@manage_enable_new_post_notifications": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_disable_new_post_notifications": "Disable new post notifications",
+    "@manage_disable_new_post_notifications": {
+        "type": "text",
+        "placeholders": {}
+    },
     "is_private": "Bu topluluk özel.",
     "@is_private": {
         "type": "text",
@@ -336,6 +371,11 @@
     },
     "user_you_text": "Sen",
     "@user_you_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "tile_delete": "Delete",
+    "@tile_delete": {
         "type": "text",
         "placeholders": {}
     },
@@ -658,6 +698,26 @@
         "type": "text",
         "placeholders": {}
     },
+    "actions_enable_new_post_notifications_title": "Enable new post notifications",
+    "@actions_enable_new_post_notifications_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "actions_enable_new_post_notifications_success": "New post notifications enabled",
+    "@actions_enable_new_post_notifications_success": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "actions_disable_new_post_notifications_title": "Disable new post notifications",
+    "@actions_disable_new_post_notifications_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "actions_disable_new_post_notifications_success": "New post notifications enabled",
+    "@actions_disable_new_post_notifications_success": {
+        "type": "text",
+        "placeholders": {}
+    },
     "join_community": "Katıl",
     "@join_community": {
         "type": "text",
@@ -748,5 +808,20 @@
         "placeholders": {
             "maxLength": {}
         }
+    },
+    "top_posts_excluded_communities": "Excluded communities",
+    "@top_posts_excluded_communities": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "top_posts_excluded_communities_desc": "Manage communities excluded from the explore timeline",
+    "@top_posts_excluded_communities_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "top_posts_settings": "Explore settings",
+    "@top_posts_settings": {
+        "type": "text",
+        "placeholders": {}
     }
 }

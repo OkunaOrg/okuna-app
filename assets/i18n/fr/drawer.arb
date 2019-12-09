@@ -141,6 +141,18 @@
         "type": "text",
         "placeholders": {}
     },
+    "about": "À propos",
+    "@about": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "about_platform": "En cours d'exécution sur {platform}",
+    "@about_platform": {
+        "type": "text",
+        "placeholders": {
+            "platform": {}
+        }
+    },
     "logout": "Se déconnecter",
     "@logout": {
         "type": "text",

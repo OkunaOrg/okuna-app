@@ -29,6 +29,26 @@
         "type": "text",
         "placeholders": {}
     },
+    "excluded_community": "uitgesloten community",
+    "@excluded_community": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "excluded_communities": "uitgesloten communities",
+    "@excluded_communities": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "exclude_joined_communities": "Aangemelde communities uitsluiten",
+    "@exclude_joined_communities": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "exclude_joined_communities_desc": "Geen berichten tonen van gemeenschappen waar ik lid van ben",
+    "@exclude_joined_communities_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
     "type_public": "Openbaar",
     "@type_public": {
         "type": "text",
@@ -49,6 +69,11 @@
         "type": "text",
         "placeholders": {}
     },
+    "details_favorite": "In favorieten",
+    "@details_favorite": {
+        "type": "text",
+        "placeholders": {}
+    },
     "admin_desc": "Hiermee wordt een lid in staat gesteld om de community gegevens, de beheerders, de moderators en geblokkeerde gebruikers, aan te passen.",
     "@admin_desc": {
         "type": "text",
@@ -56,6 +81,11 @@
     },
     "confirmation_title": "Bevestiging",
     "@confirmation_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "retry_loading_posts": "Tik om het opnieuw te proberen",
+    "@retry_loading_posts": {
         "type": "text",
         "placeholders": {}
     },
@@ -245,6 +275,16 @@
         "type": "text",
         "placeholders": {}
     },
+    "manage_enable_new_post_notifications": "Enable new post notifications",
+    "@manage_enable_new_post_notifications": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_disable_new_post_notifications": "Disable new post notifications",
+    "@manage_disable_new_post_notifications": {
+        "type": "text",
+        "placeholders": {}
+    },
     "is_private": "Deze community is besloten.",
     "@is_private": {
         "type": "text",
@@ -331,6 +371,11 @@
     },
     "user_you_text": "Jij",
     "@user_you_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "tile_delete": "Verwijderen",
+    "@tile_delete": {
         "type": "text",
         "placeholders": {}
     },
@@ -653,6 +698,26 @@
         "type": "text",
         "placeholders": {}
     },
+    "actions_enable_new_post_notifications_title": "Nieuwe berichtmeldingen inschakelen",
+    "@actions_enable_new_post_notifications_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "actions_enable_new_post_notifications_success": "New post notifications enabled",
+    "@actions_enable_new_post_notifications_success": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "actions_disable_new_post_notifications_title": "Nieuwe berichtmeldingen uitschakelen",
+    "@actions_disable_new_post_notifications_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "actions_disable_new_post_notifications_success": "New post notifications enabled",
+    "@actions_disable_new_post_notifications_success": {
+        "type": "text",
+        "placeholders": {}
+    },
     "join_community": "Word lid",
     "@join_community": {
         "type": "text",
@@ -743,5 +808,20 @@
         "placeholders": {
             "maxLength": {}
         }
+    },
+    "top_posts_excluded_communities": "Uitgesloten communities",
+    "@top_posts_excluded_communities": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "top_posts_excluded_communities_desc": "Communities beheren die uitgesloten zijn van de verkenningstijdlijn",
+    "@top_posts_excluded_communities_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "top_posts_settings": "Explore settings",
+    "@top_posts_settings": {
+        "type": "text",
+        "placeholders": {}
     }
 }

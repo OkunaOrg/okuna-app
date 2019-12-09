@@ -114,6 +114,26 @@
         "type": "text",
         "placeholders": {}
     },
+    "community_new_post_title": "Nuovo post comunità",
+    "@community_new_post_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "community_new_post_desc": "Ricevi una notifica quando c'è un nuovo post in una comunità su cui hai attivato le notifiche dei post",
+    "@community_new_post_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "user_new_post_title": "Nuovo post utente",
+    "@user_new_post_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "user_new_post_desc": "Ricevi una notifica quando c'è un nuovo post da parte di un utente di cui hai abilitato le notifiche",
+    "@user_new_post_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
     "mute_post_turn_on_post_notifications": "Attiva notifiche ai post",
     "@mute_post_turn_on_post_notifications": {
         "type": "text",
@@ -164,9 +184,17 @@
         "type": "text",
         "placeholders": {}
     },
-    "user_community_invite_tile": "[name] [username] ti ha invitato a unirti alla comunità c/{communityName}.",
+    "user_community_invite_tile": "[name] [username] ti ha invitato a unirti alla comunità /c/{communityName}.",
     "@user_community_invite_tile": {
         "description": "Eg.: James @jamest has invited you to join community c/okuna.",
+        "type": "text",
+        "placeholders": {
+            "communityName": {}
+        }
+    },
+    "community_new_post_tile": "C'è un nuovo post in c/{communityName}.",
+    "@community_new_post_tile": {
+        "description": "Eg.: There was a new post in c/okuna.",
         "type": "text",
         "placeholders": {
             "communityName": {}
@@ -212,6 +240,12 @@
     "mentioned_in_post_tile": "[name] [username] ti ha menzionato in un post.",
     "@mentioned_in_post_tile": {
         "description": "Eg.: James @jamest mentioned you on a post.",
+        "type": "text",
+        "placeholders": {}
+    },
+    "user_new_post_tile": "[name] [username] ha postato qualcosa.",
+    "@user_new_post_tile": {
+        "description": "Eg.: James @jamest posted something.",
         "type": "text",
         "placeholders": {}
     }

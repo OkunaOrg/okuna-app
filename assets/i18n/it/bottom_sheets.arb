@@ -1,0 +1,17 @@
+{
+    "confirm_action_are_you_sure": "Sei sicuro?",
+    "@confirm_action_are_you_sure": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_action_yes": "Sì",
+    "@confirm_action_yes": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "confirm_action_no": "No",
+    "@confirm_action_no": {
+        "type": "text",
+        "placeholders": {}
+    }
+}

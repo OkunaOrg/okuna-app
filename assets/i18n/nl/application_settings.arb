@@ -1,11 +1,21 @@
 {
-    "videos": "Videos",
+    "videos": "Video 's",
     "@videos": {
         "type": "text",
         "placeholders": {}
     },
-    "videos_autoplay": "Autoplay",
+    "link_previews": "Link-voorbeelden",
+    "@link_previews": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "videos_autoplay": "Automatisch afspelen",
     "@videos_autoplay": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "link_previews_show": "Toon",
+    "@link_previews_show": {
         "type": "text",
         "placeholders": {}
     },
@@ -24,12 +34,27 @@
         "type": "text",
         "placeholders": {}
     },
-    "videos_sound": "Sound",
+    "link_previews_autoplay_always": "Altijd",
+    "@link_previews_autoplay_always": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "link_previews_autoplay_wifi_only": "Alleen via Wifi",
+    "@link_previews_autoplay_wifi_only": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "link_previews_autoplay_never": "Nooit",
+    "@link_previews_autoplay_never": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "videos_sound": "Geluid",
     "@videos_sound": {
         "type": "text",
         "placeholders": {}
     },
-    "tap_to_change": "(Tap to change)",
+    "tap_to_change": "(Tik om te wijzigen)",
     "@tap_to_change": {
         "type": "text",
         "placeholders": {}

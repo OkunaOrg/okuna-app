@@ -62,6 +62,21 @@
         "type": "text",
         "placeholders": {}
     },
+    "profile_action_user_post_notifications_enabled": "Meddelelser om nye indlæg slået til",
+    "@profile_action_user_post_notifications_enabled": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "profile_action_user_post_notifications_disabled": "Meddelelser om nye indlæg slået fra",
+    "@profile_action_user_post_notifications_disabled": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "profile_in_circles": "I kredse",
+    "@profile_in_circles": {
+        "type": "text",
+        "placeholders": {}
+    },
     "profile_action_cancel_connection": "Kald forspørgsel om forbindelse tilbage",
     "@profile_action_cancel_connection": {
         "type": "text",
@@ -86,8 +101,25 @@
             "maxLength": {}
         }
     },
+    "profile_okuna_age_toast": "På Okuna siden {age}",
+    "@profile_okuna_age_toast": {
+        "type": "text",
+        "placeholders": {
+            "age": {}
+        }
+    },
     "follow_button_follow_text": "Følg",
     "@follow_button_follow_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "follow_button_follow_back_text": "Følg tilbage",
+    "@follow_button_follow_back_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "follow_button_following_text": "Følger",
+    "@follow_button_following_text": {
         "type": "text",
         "placeholders": {}
     },
@@ -339,11 +371,12 @@
         "type": "text",
         "placeholders": {}
     },
-    "invite_someone_message": "Hej, jeg vil gerne invitere dig til Okuna. Først skal du downloade app'en hos iTunes ({iosLink}) eller Play store ({androidLink}). Dernæst skal du indføje denne personlige invitationslink i 'Sign up' skemaet i Okuna app'en: {inviteLink}",
+    "invite_someone_message": "Hej, jeg vil gerne invitere dig til Okuna.\n\nFor Apple skal du først downloade TestFlight appen fra iTunes ({testFlightLink}) og så downloade Okuna appen ({iosLink})\n\nFor Android skal du downloade den fra Play storen ({androidLink}).\n\nNæst kopier denne personaliserede invitations link i 'Sign up' formen i Okuna Appen: {inviteLink}",
     "@invite_someone_message": {
         "type": "text",
         "placeholders": {
             "iosLink": {},
+            "testFlightLink": {},
             "androidLink": {},
             "inviteLink": {}
         }
@@ -953,6 +986,16 @@
     },
     "unblock_user": "Fjern blokering af bruger",
     "@unblock_user": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "enable_new_post_notifications": "Slå meddelelser om nye indlæg til",
+    "@enable_new_post_notifications": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "disable_new_post_notifications": "Slå meddelelser om nye indlæg fra",
+    "@disable_new_post_notifications": {
         "type": "text",
         "placeholders": {}
     },

@@ -1,0 +1,13 @@
+{
+    "suggestions": "Förslag",
+    "@suggestions": {
+        "description": "The title to display on the suggestions when searching for communitys when trying to mention someone.",
+        "type": "text",
+        "placeholders": {}
+    },
+    "no_results": "Inga resultat hittades",
+    "@no_results": {
+        "type": "text",
+        "placeholders": {}
+    }
+}

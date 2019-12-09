@@ -1,0 +1,7 @@
+{
+    "crop_image": "Beskær billede",
+    "@crop_image": {
+        "type": "text",
+        "placeholders": {}
+    }
+}

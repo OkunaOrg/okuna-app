@@ -51,6 +51,16 @@
         "type": "text",
         "placeholders": {}
     },
+    "create_acc__invalid_token": "Token non valido",
+    "@create_acc__invalid_token": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__validating_token": "Sto convalidando il token...",
+    "@create_acc__validating_token": {
+        "type": "text",
+        "placeholders": {}
+    },
     "create_acc__previous": "Indietro",
     "@create_acc__previous": {
         "type": "text",
@@ -86,7 +96,7 @@
         "type": "text",
         "placeholders": {}
     },
-    "create_acc__link_invalid_error": "Questo link sembra non valido.",
+    "create_acc__link_invalid_error": "Questo link non è valido.",
     "@create_acc__link_invalid_error": {
         "type": "text",
         "placeholders": {}
@@ -323,8 +333,13 @@
         "type": "text",
         "placeholders": {}
     },
-    "create_acc__done_created": "Il tuo account è stato creato con nome utente ",
+    "create_acc__done_created": "Il tuo account è stato creato.",
     "@create_acc__done_created": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__suggested_communities": "🥳 Comincia unendoti a queste comunità.",
+    "@create_acc__suggested_communities": {
         "type": "text",
         "placeholders": {}
     },
@@ -418,7 +433,7 @@
         "type": "text",
         "placeholders": {}
     },
-    "login__forgot_password_subtitle": "Il tuo nome utente o email",
+    "login__forgot_password_subtitle": "Inserisci la tua email",
     "@login__forgot_password_subtitle": {
         "type": "text",
         "placeholders": {}
@@ -435,11 +450,6 @@
     },
     "login__email_label": "Email",
     "@login__email_label": {
-        "type": "text",
-        "placeholders": {}
-    },
-    "login__or_text": "Oppure",
-    "@login__or_text": {
         "type": "text",
         "placeholders": {}
     },

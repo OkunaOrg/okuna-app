@@ -55,101 +55,113 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m17(categoryName) => "Felkapottak a(z) ${categoryName} kategóriában";
 
-  static m18(currentUserLanguage) => "Nyelv (${currentUserLanguage})";
+  static m18(hashtag) => "You\'ll be the first to use #${hashtag}";
 
-  static m19(limit) => "A fájl túl nagy (korlát: ${limit} MB)";
+  static m19(platform) => "Platform: ${platform}";
 
-  static m20(resourceCount, resourceName) => "Mind a(z) ${resourceCount} ${resourceName} megtekintése";
+  static m20(currentUserLanguage) => "Nyelv (${currentUserLanguage})";
 
-  static m21(postCommentText) => "[name] [username] is hozzászólt: ${postCommentText}";
+  static m21(limit) => "A fájl túl nagy (korlát: ${limit} MB)";
 
-  static m22(postCommentText) => "[name] [username] hozzászólt a bejegyzésedhez: ${postCommentText}";
+  static m22(resourceCount, resourceName) => "Mind a(z) ${resourceCount} ${resourceName} megtekintése";
 
-  static m23(postCommentText) => "[name] [username] is válaszolt: ${postCommentText}";
+  static m23(postCommentText) => "[name] [username] is hozzászólt: ${postCommentText}";
 
-  static m24(postCommentText) => "[name] [username] válaszolt: ${postCommentText}";
+  static m24(postCommentText) => "[name] [username] hozzászólt a bejegyzésedhez: ${postCommentText}";
 
-  static m25(postCommentText) => "[name] [username] megjelölt egy hozzászólásban: ${postCommentText}";
+  static m25(postCommentText) => "[name] [username] is válaszolt: ${postCommentText}";
 
-  static m26(communityName) => "[name] [username] meghívott téged a(z) c/${communityName} közösségbe.";
+  static m26(postCommentText) => "[name] [username] válaszolt: ${postCommentText}";
 
-  static m27(maxLength) => "A hozzászólás nem lehet ${maxLength} karakternél hosszabb.";
+  static m27(communityName) => "There was a new post in c/${communityName}.";
 
-  static m28(commentsCount) => "Mind a(z) ${commentsCount} hozzászólás betöltése";
+  static m28(postCommentText) => "[name] [username] megjelölt egy hozzászólásban: ${postCommentText}";
 
-  static m29(circlesSearchQuery) => "Nem találhatóak körök a(z) \"${circlesSearchQuery}\" keresésre.";
+  static m29(communityName) => "[name] [username] meghívott téged a(z) /c/${communityName} közösségbe.";
 
-  static m30(name) => "${name} még nem osztott meg semmit.";
+  static m30(maxLength) => "A hozzászólás nem lehet ${maxLength} karakternél hosszabb.";
 
-  static m31(postCreatorUsername) => "@${postCreatorUsername} köreiben";
+  static m31(commentsCount) => "Mind a(z) ${commentsCount} hozzászólás betöltése";
 
-  static m32(description) => "Failed to preview link with website error: ${description}";
+  static m32(maxHashtags, maxCharacters) => "Please add a maximum of ${maxHashtags} hashtags and keep them under ${maxCharacters} characters.";
 
-  static m33(maxLength) => "A kör neve nem lehet ${maxLength} karakternél hosszabb.";
+  static m33(circlesSearchQuery) => "Nem találhatóak körök a(z) \"${circlesSearchQuery}\" keresésre.";
 
-  static m34(prettyUsersCount) => "${prettyUsersCount} ember";
+  static m34(name) => "${name} még nem osztott meg semmit.";
 
-  static m35(username) => "Biztosan le szeretnéd tiltani @${username}-t?";
+  static m35(postCreatorUsername) => "@${postCreatorUsername} köreiben";
 
-  static m36(userName) => "Kapcsolat megerősítése vele: ${userName}";
+  static m36(description) => "Nem sikerült megjeleníteni a link előnézetét, hiba: ${description}";
 
-  static m37(userName) => "Kapcsolódás vele: ${userName}";
+  static m37(maxLength) => "A kör neve nem lehet ${maxLength} karakternél hosszabb.";
 
-  static m38(userName) => "Kapcsolat törlése vele: ${userName}";
+  static m38(prettyUsersCount) => "${prettyUsersCount} ember";
 
-  static m39(limit) => "A kép túl nagy (korlát: ${limit} MB)";
+  static m39(username) => "Biztosan le szeretnéd tiltani @${username}-t?";
 
-  static m40(username) => "A(z) @${username} felhasználónév foglalt";
+  static m40(userName) => "Kapcsolat megerősítése vele: ${userName}";
 
-  static m41(searchQuery) => "Nem találhatóak emojik a(z) \"${searchQuery}\" keresésre.";
+  static m41(userName) => "Kapcsolódás vele: ${userName}";
 
-  static m42(searchQuery) => "Nem található lista a(z) \"${searchQuery}\" keresésre";
+  static m42(userName) => "Kapcsolat törlése vele: ${userName}";
 
-  static m43(prettyUsersCount) => "${prettyUsersCount} fiók";
+  static m43(limit) => "A kép túl nagy (korlát: ${limit} MB)";
 
-  static m44(prettyUsersCount) => "${prettyUsersCount} fiók";
+  static m44(username) => "A(z) @${username} felhasználónév foglalt";
 
-  static m45(groupName) => "Összes ${groupName} megtekintése";
+  static m45(searchQuery) => "Nem találhatóak emojik a(z) \"${searchQuery}\" keresésre.";
 
-  static m46(iosLink, testFlightLink, androidLink, inviteLink) => "Szia! Meg szeretnélek hívni az Okuna közösségi hálózatra. Először is töltsd le az alkalmazást az iTunes-ról (${iosLink}) vagy a Play áruházból (${androidLink}). Utána illeszd be ezt a személyre szabott meghívó linket az Okuna alkalmazásban: ${inviteLink}";
+  static m46(searchQuery) => "Nem található lista a(z) \"${searchQuery}\" keresésre";
 
-  static m47(username) => "Regisztrált a(z) @${username} felhasználónévvel";
+  static m47(prettyUsersCount) => "${prettyUsersCount} fiók";
 
-  static m48(email) => "Függőben, meghívó elküldve erre az e-mail címre: ${email}";
+  static m48(prettyUsersCount) => "${prettyUsersCount} fiók";
 
-  static m49(maxLength) => "A lista neve nem lehet ${maxLength} karakternél hosszabb.";
+  static m49(groupName) => "Összes ${groupName} megtekintése";
 
-  static m50(maxLength) => "A bemutatkozás nem lehet ${maxLength} karakternél hosszabb.";
+  static m50(iosLink, testFlightLink, androidLink, inviteLink) => "Szia! Meg szeretnélek hívni az Okuna közösségi hálózatra.\n\niOS esetén először töltsd le a TestFlight alkalmazást az iTunes-ról (${testFlightLink}), majd töltsd le az Okuna alkalmazást (${iosLink}).\n\nAndroid esetén töltsd le a Play áruházból (${androidLink}).\n\nMiután sikeresen letöltötted az alkalmazást, illeszd be ezt a személyre szabott meghívó linket az Okuna alkalmazás regisztrációs űrlapjába: ${inviteLink}";
 
-  static m51(maxLength) => "A hely nem lehet ${maxLength} karakternél hosszabb.";
+  static m51(username) => "Regisztrált a(z) @${username} felhasználónévvel";
 
-  static m52(takenConnectionsCircleName) => "A(z) \'${takenConnectionsCircleName}\' körnév már foglalt";
+  static m52(email) => "Függőben, meghívó elküldve erre az e-mail címre: ${email}";
 
-  static m53(listName) => "A(z) \'${listName}\' listanév már foglalt";
+  static m53(maxLength) => "A lista neve nem lehet ${maxLength} karakternél hosszabb.";
 
-  static m54(searchQuery) => "Nincs találat a(z) \"${searchQuery}\" keresésre.";
+  static m54(maxLength) => "A bemutatkozás nem lehet ${maxLength} karakternél hosszabb.";
 
-  static m55(resourcePluralName) => "Nem találhatóak ${resourcePluralName}.";
+  static m55(maxLength) => "A hely nem lehet ${maxLength} karakternél hosszabb.";
 
-  static m56(resourcePluralName) => "${resourcePluralName} keresése...";
+  static m56(age) => "On Okuna since ${age}";
 
-  static m57(searchQuery) => "Nem található közösség a(z) \"${searchQuery}\" keresésre.";
+  static m57(takenConnectionsCircleName) => "A(z) \'${takenConnectionsCircleName}\' körnév már foglalt";
 
-  static m58(searchQuery) => "Nincs találat a(z) \"${searchQuery}\" keresésre.";
+  static m58(listName) => "A(z) \'${listName}\' listanév már foglalt";
 
-  static m59(searchQuery) => "Nem található felhasználó a(z) \"${searchQuery}\" keresésre.";
+  static m59(searchQuery) => "Nincs találat a(z) \"${searchQuery}\" keresésre.";
 
-  static m60(searchQuery) => "\"${searchQuery}\" keresése";
+  static m60(resourcePluralName) => "Nem találhatóak ${resourcePluralName}.";
+
+  static m61(resourcePluralName) => "${resourcePluralName} keresése...";
+
+  static m62(searchQuery) => "Nem található közösség a(z) \"${searchQuery}\" keresésre.";
+
+  static m63(searchQuery) => "No hashtags found for \'${searchQuery}\'.";
+
+  static m64(searchQuery) => "Nincs találat a(z) \"${searchQuery}\" keresésre.";
+
+  static m65(searchQuery) => "Nem található felhasználó a(z) \"${searchQuery}\" keresésre.";
+
+  static m66(searchQuery) => "\"${searchQuery}\" keresése";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "application_settings__comment_sort_newest_first" : MessageLookupByLibrary.simpleMessage("Újak elől"),
     "application_settings__comment_sort_oldest_first" : MessageLookupByLibrary.simpleMessage("Régiek elől"),
-    "application_settings__link_previews" : MessageLookupByLibrary.simpleMessage("Link previews"),
-    "application_settings__link_previews_autoplay_always" : MessageLookupByLibrary.simpleMessage("Always"),
-    "application_settings__link_previews_autoplay_never" : MessageLookupByLibrary.simpleMessage("Never"),
-    "application_settings__link_previews_autoplay_wifi_only" : MessageLookupByLibrary.simpleMessage("Wifi only"),
-    "application_settings__link_previews_show" : MessageLookupByLibrary.simpleMessage("Show"),
+    "application_settings__link_previews" : MessageLookupByLibrary.simpleMessage("Link előnézetek"),
+    "application_settings__link_previews_autoplay_always" : MessageLookupByLibrary.simpleMessage("Mindig"),
+    "application_settings__link_previews_autoplay_never" : MessageLookupByLibrary.simpleMessage("Soha"),
+    "application_settings__link_previews_autoplay_wifi_only" : MessageLookupByLibrary.simpleMessage("Csak Wi-Fi hálózaton"),
+    "application_settings__link_previews_show" : MessageLookupByLibrary.simpleMessage("Megjelenít"),
     "application_settings__tap_to_change" : MessageLookupByLibrary.simpleMessage("(Koppints a módosításhoz)"),
     "application_settings__videos" : MessageLookupByLibrary.simpleMessage("Videók"),
     "application_settings__videos_autoplay" : MessageLookupByLibrary.simpleMessage("Automatikus lejátszás"),
@@ -179,7 +191,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "auth__create_acc__create_account" : MessageLookupByLibrary.simpleMessage("Fiók létrehozása"),
     "auth__create_acc__done" : MessageLookupByLibrary.simpleMessage("Fiók létrehozása"),
     "auth__create_acc__done_continue" : MessageLookupByLibrary.simpleMessage("Belépés"),
-    "auth__create_acc__done_created" : MessageLookupByLibrary.simpleMessage("A fiókod sikeresen létrejött! Íme a felhasználóneved: "),
+    "auth__create_acc__done_created" : MessageLookupByLibrary.simpleMessage("Your account has been created."),
     "auth__create_acc__done_description" : MessageLookupByLibrary.simpleMessage("A fiókod sikeresen létrejött."),
     "auth__create_acc__done_subtext" : MessageLookupByLibrary.simpleMessage("Ezt a profilod beállításaiban módosíthatod."),
     "auth__create_acc__done_title" : MessageLookupByLibrary.simpleMessage("Hurrá!"),
@@ -188,9 +200,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "auth__create_acc__email_placeholder" : MessageLookupByLibrary.simpleMessage("kis_otto@mail.com"),
     "auth__create_acc__email_server_error" : MessageLookupByLibrary.simpleMessage("😭 Problémákba ütköztek a szervereink! Kérünk, próbáld újra pár perc múlva."),
     "auth__create_acc__email_taken_error" : MessageLookupByLibrary.simpleMessage("🤔 Már létezik egy fiók ezzel az e-mail címmel."),
+    "auth__create_acc__invalid_token" : MessageLookupByLibrary.simpleMessage("Invalid token"),
     "auth__create_acc__lets_get_started" : MessageLookupByLibrary.simpleMessage("Lássunk neki"),
     "auth__create_acc__link_empty_error" : MessageLookupByLibrary.simpleMessage("A link mező nem lehet üres."),
-    "auth__create_acc__link_invalid_error" : MessageLookupByLibrary.simpleMessage("A megadott link érvénytelen."),
+    "auth__create_acc__link_invalid_error" : MessageLookupByLibrary.simpleMessage("This link is invalid."),
     "auth__create_acc__name_characters_error" : MessageLookupByLibrary.simpleMessage("😅 Egy név (jelenleg) csak alfanumerikus karakterekből állhat."),
     "auth__create_acc__name_empty_error" : MessageLookupByLibrary.simpleMessage("😱 A neved nem lehet üres."),
     "auth__create_acc__name_length_error" : MessageLookupByLibrary.simpleMessage("😱 A neved nem lehet 50 karakternél hosszabb. (Ha az, akkor elnézést kérünk.)"),
@@ -212,12 +225,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "auth__create_acc__submit_loading_title" : MessageLookupByLibrary.simpleMessage("Csak egy pillanat!"),
     "auth__create_acc__subscribe" : MessageLookupByLibrary.simpleMessage("Kérés"),
     "auth__create_acc__subscribe_to_waitlist_text" : MessageLookupByLibrary.simpleMessage("Kérj egy meghívót!"),
+    "auth__create_acc__suggested_communities" : MessageLookupByLibrary.simpleMessage("🥳 Get started by joining the following communities."),
     "auth__create_acc__username_characters_error" : MessageLookupByLibrary.simpleMessage("😅 A felhasználónév csak alfanumerikus karaktereket és alulvonásokat tartalmazhat."),
     "auth__create_acc__username_empty_error" : MessageLookupByLibrary.simpleMessage("😱 A felhasználónév nem lehet üres."),
     "auth__create_acc__username_length_error" : MessageLookupByLibrary.simpleMessage("😅 A felhasználónév nem lehet 30 karakternél hosszabb."),
     "auth__create_acc__username_placeholder" : MessageLookupByLibrary.simpleMessage("szegenylegeny"),
     "auth__create_acc__username_server_error" : MessageLookupByLibrary.simpleMessage("😭 Problémákba ütköztek a szervereink! Kérünk, próbáld újra pár perc múlva."),
     "auth__create_acc__username_taken_error" : MessageLookupByLibrary.simpleMessage("😩 A(z) @%s felhasználónév foglalt."),
+    "auth__create_acc__validating_token" : MessageLookupByLibrary.simpleMessage("Validating token..."),
     "auth__create_acc__welcome_to_beta" : MessageLookupByLibrary.simpleMessage("Üdv a bétában!"),
     "auth__create_acc__what_avatar" : MessageLookupByLibrary.simpleMessage("Válassz ki egy profilképet"),
     "auth__create_acc__what_email" : MessageLookupByLibrary.simpleMessage("Mi az e-mail címed?"),
@@ -239,9 +254,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "auth__login__credentials_mismatch_error" : MessageLookupByLibrary.simpleMessage("A megadott belépési adatok nem megfelelőek."),
     "auth__login__email_label" : MessageLookupByLibrary.simpleMessage("E-mail cím"),
     "auth__login__forgot_password" : MessageLookupByLibrary.simpleMessage("Elfelejtett jelszó"),
-    "auth__login__forgot_password_subtitle" : MessageLookupByLibrary.simpleMessage("Add meg a felhasználóneved vagy e-mail címed"),
+    "auth__login__forgot_password_subtitle" : MessageLookupByLibrary.simpleMessage("Enter your email"),
     "auth__login__login" : MessageLookupByLibrary.simpleMessage("Folytatás"),
-    "auth__login__or_text" : MessageLookupByLibrary.simpleMessage("vagy"),
     "auth__login__password_empty_error" : MessageLookupByLibrary.simpleMessage("A jelszó szükséges."),
     "auth__login__password_label" : MessageLookupByLibrary.simpleMessage("Jelszó"),
     "auth__login__password_length_error" : MessageLookupByLibrary.simpleMessage("A jelszónak min. 8 és max. 64 karakter hosszúnak kell lennie."),
@@ -262,7 +276,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "auth__username_characters_error" : MessageLookupByLibrary.simpleMessage("A felhasználónév csak alfanumerikus karaktereket és alulvonásokat tartalmazhat."),
     "auth__username_empty_error" : MessageLookupByLibrary.simpleMessage("A felhasználónév nem lehet üres."),
     "auth__username_maxlength_error" : m4,
+    "bottom_sheets__confirm_action_are_you_sure" : MessageLookupByLibrary.simpleMessage("Are you sure?"),
+    "bottom_sheets__confirm_action_no" : MessageLookupByLibrary.simpleMessage("No"),
+    "bottom_sheets__confirm_action_yes" : MessageLookupByLibrary.simpleMessage("Yes"),
     "community__about" : MessageLookupByLibrary.simpleMessage("A közösségről"),
+    "community__actions_disable_new_post_notifications_success" : MessageLookupByLibrary.simpleMessage("New post notifications enabled"),
+    "community__actions_disable_new_post_notifications_title" : MessageLookupByLibrary.simpleMessage("Disable new post notifications"),
+    "community__actions_enable_new_post_notifications_success" : MessageLookupByLibrary.simpleMessage("New post notifications enabled"),
+    "community__actions_enable_new_post_notifications_title" : MessageLookupByLibrary.simpleMessage("Enable new post notifications"),
     "community__actions_invite_people_title" : MessageLookupByLibrary.simpleMessage("Hívj meg embereket a közösséghez"),
     "community__actions_manage_text" : MessageLookupByLibrary.simpleMessage("Kezelés"),
     "community__add_administrators_title" : MessageLookupByLibrary.simpleMessage("Adminisztrátor hozzáadása"),
@@ -299,6 +320,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "community__delete_confirmation" : MessageLookupByLibrary.simpleMessage("Biztosan törölni szeretnéd ezt a közösséget?"),
     "community__delete_desc" : MessageLookupByLibrary.simpleMessage("Nem láthatod a bejegyzéseit többé a hírfolyamodban és nem hozhatsz létre több bejegyzést benne."),
     "community__description_range_error" : m8,
+    "community__details_favorite" : MessageLookupByLibrary.simpleMessage("In favorites"),
+    "community__exclude_joined_communities" : MessageLookupByLibrary.simpleMessage("Exclude joined communities"),
+    "community__exclude_joined_communities_desc" : MessageLookupByLibrary.simpleMessage("Don\'t show posts from communities I\'m a member of"),
+    "community__excluded_communities" : MessageLookupByLibrary.simpleMessage("excluded communities"),
+    "community__excluded_community" : MessageLookupByLibrary.simpleMessage("excluded community"),
     "community__favorite_action" : MessageLookupByLibrary.simpleMessage("Közösség kedvencnek jelölése"),
     "community__favorite_communities" : MessageLookupByLibrary.simpleMessage("kedvenc közösség"),
     "community__favorite_community" : MessageLookupByLibrary.simpleMessage("kedvenc közösség"),
@@ -328,6 +354,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "community__manage_delete_title" : MessageLookupByLibrary.simpleMessage("Közösség törlése"),
     "community__manage_details_desc" : MessageLookupByLibrary.simpleMessage("Cím, név, ikonkép, borítókép, stb. módosítása."),
     "community__manage_details_title" : MessageLookupByLibrary.simpleMessage("Részletek"),
+    "community__manage_disable_new_post_notifications" : MessageLookupByLibrary.simpleMessage("Disable new post notifications"),
+    "community__manage_enable_new_post_notifications" : MessageLookupByLibrary.simpleMessage("Enable new post notifications"),
     "community__manage_invite_desc" : MessageLookupByLibrary.simpleMessage("Hívd meg kapcsolataidat és követőidet a közösséghez."),
     "community__manage_invite_title" : MessageLookupByLibrary.simpleMessage("Emberek meghívása"),
     "community__manage_leave_desc" : MessageLookupByLibrary.simpleMessage("Kilépés a közösségből."),
@@ -392,8 +420,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "community__save_community_name_title" : MessageLookupByLibrary.simpleMessage("Név"),
     "community__save_community_name_title_hint_text" : MessageLookupByLibrary.simpleMessage(" pl.: utazas, fenykepeszet, videojatekok."),
     "community__save_community_save_text" : MessageLookupByLibrary.simpleMessage("Mentés"),
+    "community__tile_delete" : MessageLookupByLibrary.simpleMessage("Delete"),
     "community__title_empty_error" : MessageLookupByLibrary.simpleMessage("A cím nem lehet üres."),
     "community__title_range_error" : m16,
+    "community__top_posts_excluded_communities" : MessageLookupByLibrary.simpleMessage("Excluded communities"),
+    "community__top_posts_excluded_communities_desc" : MessageLookupByLibrary.simpleMessage("Manage communities excluded from the explore timeline"),
+    "community__top_posts_settings" : MessageLookupByLibrary.simpleMessage("Explore settings"),
     "community__trending_in_all" : MessageLookupByLibrary.simpleMessage("Felkapottak az összes kategóriában"),
     "community__trending_in_category" : m17,
     "community__trending_none_found" : MessageLookupByLibrary.simpleMessage("Nem találhatóak felkapott közösségek. Próbáld újra pár perc múlva."),
@@ -403,13 +435,19 @@ class MessageLookup extends MessageLookupByLibrary {
     "community__unfavorite_action" : MessageLookupByLibrary.simpleMessage("Törlés a kedvencek közül"),
     "community__user_you_text" : MessageLookupByLibrary.simpleMessage("Te"),
     "community__yes" : MessageLookupByLibrary.simpleMessage("Igen"),
+    "contextual_account_search_box__no_results" : MessageLookupByLibrary.simpleMessage("No results found"),
     "contextual_account_search_box__suggestions" : MessageLookupByLibrary.simpleMessage("Javaslatok"),
+    "contextual_community_search_box__no_results" : MessageLookupByLibrary.simpleMessage("No results found"),
+    "contextual_community_search_box__suggestions" : MessageLookupByLibrary.simpleMessage("Suggestions"),
+    "contextual_hashtag_search_box__be_the_first" : m18,
+    "drawer__about" : MessageLookupByLibrary.simpleMessage("Rólunk"),
+    "drawer__about_platform" : m19,
     "drawer__account_settings" : MessageLookupByLibrary.simpleMessage("Fiók beállításai"),
     "drawer__account_settings_blocked_users" : MessageLookupByLibrary.simpleMessage("Letiltott felhasználók"),
     "drawer__account_settings_change_email" : MessageLookupByLibrary.simpleMessage("E-mail cím módosítása"),
     "drawer__account_settings_change_password" : MessageLookupByLibrary.simpleMessage("Jelszó módosítása"),
     "drawer__account_settings_delete_account" : MessageLookupByLibrary.simpleMessage("Fiók törlése"),
-    "drawer__account_settings_language" : m18,
+    "drawer__account_settings_language" : m20,
     "drawer__account_settings_language_text" : MessageLookupByLibrary.simpleMessage("Nyelv"),
     "drawer__account_settings_notifications" : MessageLookupByLibrary.simpleMessage("Értesítések"),
     "drawer__app_account_text" : MessageLookupByLibrary.simpleMessage("App és fiók"),
@@ -450,9 +488,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "drawer__useful_links_title" : MessageLookupByLibrary.simpleMessage("Hasznos linkek"),
     "error__no_internet_connection" : MessageLookupByLibrary.simpleMessage("Nincs internetkapcsolat"),
     "error__unknown_error" : MessageLookupByLibrary.simpleMessage("Ismeretlen hiba"),
-    "image_picker__error_too_large" : m19,
+    "image_picker__error_too_large" : m21,
     "image_picker__from_camera" : MessageLookupByLibrary.simpleMessage("Kameráról"),
     "image_picker__from_gallery" : MessageLookupByLibrary.simpleMessage("Galériából"),
+    "media_service__crop_image" : MessageLookupByLibrary.simpleMessage("Crop image"),
     "moderation__actions_chat_with_team" : MessageLookupByLibrary.simpleMessage("Beszélgess a csapattal"),
     "moderation__actions_review" : MessageLookupByLibrary.simpleMessage("Áttekintés"),
     "moderation__category_text" : MessageLookupByLibrary.simpleMessage("Kategória"),
@@ -505,11 +544,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "moderation__report_account_text" : MessageLookupByLibrary.simpleMessage("Fiók bejelentése"),
     "moderation__report_comment_text" : MessageLookupByLibrary.simpleMessage("Hozzászólás jelentése"),
     "moderation__report_community_text" : MessageLookupByLibrary.simpleMessage("Közösség jelentése"),
+    "moderation__report_hashtag_text" : MessageLookupByLibrary.simpleMessage("Report hashtag"),
     "moderation__report_post_text" : MessageLookupByLibrary.simpleMessage("Bejegyzés jelentése"),
     "moderation__reporter_text" : MessageLookupByLibrary.simpleMessage("Bejelentő"),
     "moderation__reports_preview_resource_reports" : MessageLookupByLibrary.simpleMessage("jelentés"),
     "moderation__reports_preview_title" : MessageLookupByLibrary.simpleMessage("Jelentések"),
-    "moderation__reports_see_all" : m20,
+    "moderation__reports_see_all" : m22,
     "moderation__tap_to_retry" : MessageLookupByLibrary.simpleMessage("Koppints az elemek betöltésének újrapróbálásához"),
     "moderation__update_category_save" : MessageLookupByLibrary.simpleMessage("Mentés"),
     "moderation__update_category_title" : MessageLookupByLibrary.simpleMessage("Kategória módosítása"),
@@ -522,22 +562,26 @@ class MessageLookup extends MessageLookupByLibrary {
     "moderation__you_have_reported_account_text" : MessageLookupByLibrary.simpleMessage("Sikeresen jelentetted ezt a fiókot"),
     "moderation__you_have_reported_comment_text" : MessageLookupByLibrary.simpleMessage("Sikeresen jelentetted ezt a hozzászólást"),
     "moderation__you_have_reported_community_text" : MessageLookupByLibrary.simpleMessage("Sikeresen jelentetted ezt a közösséget"),
+    "moderation__you_have_reported_hashtag_text" : MessageLookupByLibrary.simpleMessage("You have reported this hashtag"),
     "moderation__you_have_reported_post_text" : MessageLookupByLibrary.simpleMessage("Sikeresen jelentetted ezt a bejegyzést"),
     "notifications__accepted_connection_request_tile" : MessageLookupByLibrary.simpleMessage("[name] [username] elfogadta a kapcsolatfelkérési kérelmedet."),
-    "notifications__comment_comment_notification_tile_user_also_commented" : m21,
-    "notifications__comment_comment_notification_tile_user_commented" : m22,
+    "notifications__comment_comment_notification_tile_user_also_commented" : m23,
+    "notifications__comment_comment_notification_tile_user_commented" : m24,
     "notifications__comment_desc" : MessageLookupByLibrary.simpleMessage("Értesülj, ha valaki hozzászólt egy bejegyzésedhez vagy egy bejegyzéshez amelyhez te is hozzászóltál"),
     "notifications__comment_reaction_desc" : MessageLookupByLibrary.simpleMessage("Értesülj, ha valaki reagált egy hozzászólásodra"),
     "notifications__comment_reaction_title" : MessageLookupByLibrary.simpleMessage("Reagálás hozzászólásra"),
     "notifications__comment_reply_desc" : MessageLookupByLibrary.simpleMessage("Értesülj, ha valaki válaszol egy hozzászólásodra vagy egy hozzászólásra melyre te is válaszoltál"),
-    "notifications__comment_reply_notification_tile_user_also_replied" : m23,
-    "notifications__comment_reply_notification_tile_user_replied" : m24,
+    "notifications__comment_reply_notification_tile_user_also_replied" : m25,
+    "notifications__comment_reply_notification_tile_user_replied" : m26,
     "notifications__comment_reply_title" : MessageLookupByLibrary.simpleMessage("Válasz hozzászólásra"),
     "notifications__comment_title" : MessageLookupByLibrary.simpleMessage("Hozzászólás küldése"),
     "notifications__comment_user_mention_desc" : MessageLookupByLibrary.simpleMessage("Értesülj, ha valaki megjelöl téged egy hozzászólásban"),
     "notifications__comment_user_mention_title" : MessageLookupByLibrary.simpleMessage("Megjelölés hozzászólásban"),
     "notifications__community_invite_desc" : MessageLookupByLibrary.simpleMessage("Értesülj, ha valaki meghív téged egy közösségbe"),
     "notifications__community_invite_title" : MessageLookupByLibrary.simpleMessage("Meghívás közösségbe"),
+    "notifications__community_new_post_desc" : MessageLookupByLibrary.simpleMessage("Be notified when there is a new post in a community you enabled post notifications on"),
+    "notifications__community_new_post_tile" : m27,
+    "notifications__community_new_post_title" : MessageLookupByLibrary.simpleMessage("Community new post"),
     "notifications__connection_desc" : MessageLookupByLibrary.simpleMessage("Értesülj, ha valaki kapcsolatfelkérést küldött neked"),
     "notifications__connection_request_tile" : MessageLookupByLibrary.simpleMessage("[name] [username] kapcsolatfelkérést küldött."),
     "notifications__connection_title" : MessageLookupByLibrary.simpleMessage("Függő kapcsolat"),
@@ -546,7 +590,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "notifications__following_you_tile" : MessageLookupByLibrary.simpleMessage("[name] [username] mostantól követ téged."),
     "notifications__general_desc" : MessageLookupByLibrary.simpleMessage("Értesülj, ha történik valami"),
     "notifications__general_title" : MessageLookupByLibrary.simpleMessage("Értesítések"),
-    "notifications__mentioned_in_post_comment_tile" : m25,
+    "notifications__mentioned_in_post_comment_tile" : m28,
     "notifications__mentioned_in_post_tile" : MessageLookupByLibrary.simpleMessage("[name] [username] megjelölt egy bejegyzésben."),
     "notifications__mute_post_turn_off_post_comment_notifications" : MessageLookupByLibrary.simpleMessage("Hozzászólás-értesítések kikapcsolása"),
     "notifications__mute_post_turn_off_post_notifications" : MessageLookupByLibrary.simpleMessage("Bejegyzésértesítések kikapcsolása"),
@@ -561,21 +605,28 @@ class MessageLookup extends MessageLookupByLibrary {
     "notifications__settings_title" : MessageLookupByLibrary.simpleMessage("Értesítési beálllítások"),
     "notifications__tab_general" : MessageLookupByLibrary.simpleMessage("Általános"),
     "notifications__tab_requests" : MessageLookupByLibrary.simpleMessage("Kérelmek"),
-    "notifications__user_community_invite_tile" : m26,
+    "notifications__user_community_invite_tile" : m29,
+    "notifications__user_new_post_desc" : MessageLookupByLibrary.simpleMessage("Be notified when there is a new post by a user you enabled notifications on"),
+    "notifications__user_new_post_tile" : MessageLookupByLibrary.simpleMessage("[name] [username] posted something."),
+    "notifications__user_new_post_title" : MessageLookupByLibrary.simpleMessage("User new post"),
+    "permissions_service__camera_permission_denied" : MessageLookupByLibrary.simpleMessage("We require the camera permission to allow you to take photos and record videos, please grant it in your settings."),
+    "permissions_service__storage_permission_denied" : MessageLookupByLibrary.simpleMessage("We require the storage permission to allow you to pick media items, please grant it in your settings."),
     "post__action_comment" : MessageLookupByLibrary.simpleMessage("Hozzászólás"),
     "post__action_react" : MessageLookupByLibrary.simpleMessage("Reagálás"),
     "post__action_reply" : MessageLookupByLibrary.simpleMessage("Válasz"),
     "post__actions_comment_deleted" : MessageLookupByLibrary.simpleMessage("Hozzászólás törölve"),
     "post__actions_delete" : MessageLookupByLibrary.simpleMessage("Bejegyzés törlése"),
     "post__actions_delete_comment" : MessageLookupByLibrary.simpleMessage("Hozzászólás törlése"),
+    "post__actions_delete_comment_description" : MessageLookupByLibrary.simpleMessage("The comment, as well as its replies and reactions will be permanently deleted."),
+    "post__actions_delete_description" : MessageLookupByLibrary.simpleMessage("The post, as well as its comments and reactions will be permanently deleted."),
     "post__actions_deleted" : MessageLookupByLibrary.simpleMessage("Bejegyzés törölve"),
     "post__actions_edit_comment" : MessageLookupByLibrary.simpleMessage("Hozzászólás szerkesztése"),
     "post__actions_report_text" : MessageLookupByLibrary.simpleMessage("Jelentés"),
     "post__actions_reported_text" : MessageLookupByLibrary.simpleMessage("Jelentve"),
     "post__actions_show_more_text" : MessageLookupByLibrary.simpleMessage("Bővebben"),
-    "post__close_create_post_label" : MessageLookupByLibrary.simpleMessage("Close create new post"),
+    "post__close_create_post_label" : MessageLookupByLibrary.simpleMessage("Bejegyzés létrehozása ablak bezárása"),
     "post__close_post" : MessageLookupByLibrary.simpleMessage("Bejegyzés bezárása"),
-    "post__comment_maxlength_error" : m27,
+    "post__comment_maxlength_error" : m30,
     "post__comment_reply_expanded_post" : MessageLookupByLibrary.simpleMessage("Bejegyzés"),
     "post__comment_reply_expanded_reply_comment" : MessageLookupByLibrary.simpleMessage("Válasz a hozzászólásra"),
     "post__comment_reply_expanded_reply_hint_text" : MessageLookupByLibrary.simpleMessage("A válaszod..."),
@@ -612,10 +663,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "post__comments_page_tap_to_retry" : MessageLookupByLibrary.simpleMessage("Koppints a hozzászólások betöltésének újrapróbálásához."),
     "post__comments_page_tap_to_retry_replies" : MessageLookupByLibrary.simpleMessage("Koppints a válaszok betöltésének újrapróbálásához."),
     "post__comments_page_title" : MessageLookupByLibrary.simpleMessage("Bejegyzés hozzászólásai"),
-    "post__comments_view_all_comments" : m28,
+    "post__comments_view_all_comments" : m31,
+    "post__community_not_found" : MessageLookupByLibrary.simpleMessage("This community does not exist"),
+    "post__create_hashtags_invalid" : m32,
     "post__create_new" : MessageLookupByLibrary.simpleMessage("Új bejegyzés"),
-    "post__create_new_community_post_label" : MessageLookupByLibrary.simpleMessage("Create new communtiy post"),
-    "post__create_new_post_label" : MessageLookupByLibrary.simpleMessage("Create new post"),
+    "post__create_new_community_post_label" : MessageLookupByLibrary.simpleMessage("Közösség-bejegyzés létrehozása"),
+    "post__create_new_post_label" : MessageLookupByLibrary.simpleMessage("Bejegyzés létrehozása"),
     "post__create_next" : MessageLookupByLibrary.simpleMessage("Tovább"),
     "post__create_photo" : MessageLookupByLibrary.simpleMessage("Fotó"),
     "post__create_video" : MessageLookupByLibrary.simpleMessage("Videó"),
@@ -623,11 +676,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "post__edit_save" : MessageLookupByLibrary.simpleMessage("Mentés"),
     "post__edit_title" : MessageLookupByLibrary.simpleMessage("Bejegyzés szerkesztése"),
     "post__enable_post_comments" : MessageLookupByLibrary.simpleMessage("Hozzászólások engedélyezése"),
+    "post__exclude_post_community" : MessageLookupByLibrary.simpleMessage("Don\'t show posts from this community"),
     "post__have_not_shared_anything" : MessageLookupByLibrary.simpleMessage("Még nem osztottál meg semmit sem."),
     "post__is_closed" : MessageLookupByLibrary.simpleMessage("Zárt bejegyzés"),
+    "post__load_more" : MessageLookupByLibrary.simpleMessage("Load more posts"),
     "post__my_circles" : MessageLookupByLibrary.simpleMessage("Köreim"),
     "post__my_circles_desc" : MessageLookupByLibrary.simpleMessage("Bejegyzés megosztása egy vagy több körödben."),
-    "post__no_circles_for" : m29,
+    "post__no_circles_for" : m33,
     "post__open_post" : MessageLookupByLibrary.simpleMessage("Bejegyzés megnyitása"),
     "post__post_closed" : MessageLookupByLibrary.simpleMessage("Zárt bejegyzés "),
     "post__post_opened" : MessageLookupByLibrary.simpleMessage("Nyitott bejegyzés"),
@@ -670,15 +725,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "post__timeline_posts_no_more_drhoo_subtitle" : MessageLookupByLibrary.simpleMessage("A kezdéshez kövess pár felhasználót vagy csatlakozz egy közösséghez!"),
     "post__timeline_posts_refresh_posts" : MessageLookupByLibrary.simpleMessage("Bejegyzések frissítése"),
     "post__timeline_posts_refreshing_drhoo_title" : MessageLookupByLibrary.simpleMessage("Csak egy pillanat!"),
+    "post__top_posts_title" : MessageLookupByLibrary.simpleMessage("Explore"),
+    "post__trending_posts_load_more" : MessageLookupByLibrary.simpleMessage("Load older posts"),
     "post__trending_posts_no_trending_posts" : MessageLookupByLibrary.simpleMessage("Nincsenek felkapott bejegyzések. Próbáld újra pár másodperc múlva."),
     "post__trending_posts_refresh" : MessageLookupByLibrary.simpleMessage("Frissítés"),
     "post__trending_posts_title" : MessageLookupByLibrary.simpleMessage("Felkapott bejegyzések"),
-    "post__user_has_not_shared_anything" : m30,
-    "post__usernames_circles" : m31,
+    "post__undo_exclude_post_community" : MessageLookupByLibrary.simpleMessage("Show posts from this community"),
+    "post__user_has_not_shared_anything" : m34,
+    "post__usernames_circles" : m35,
     "post__world_circle_name" : MessageLookupByLibrary.simpleMessage("Világ"),
     "post__you_shared_with" : MessageLookupByLibrary.simpleMessage("Itt megosztva:"),
-    "post_body_link_preview__empty" : MessageLookupByLibrary.simpleMessage("This link could not be previewed"),
-    "post_body_link_preview__error_with_description" : m32,
+    "post_body_link_preview__empty" : MessageLookupByLibrary.simpleMessage("Ennek a linknek nem lehet megjeleníteni az előnézetét"),
+    "post_body_link_preview__error_with_description" : m36,
     "post_body_media__unsupported" : MessageLookupByLibrary.simpleMessage("Nem támogatott médiaformátum"),
     "post_uploader__cancelled" : MessageLookupByLibrary.simpleMessage("Megszakítva!"),
     "post_uploader__cancelling" : MessageLookupByLibrary.simpleMessage("Megszakítás"),
@@ -713,8 +771,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__change_email_success_info" : MessageLookupByLibrary.simpleMessage("Elküldtünk egy visszaigazoló linket az új e-mail címedre. Kattints rá az új e-mail címed megerősítéséhez"),
     "user__change_email_title" : MessageLookupByLibrary.simpleMessage("E-mail cím módosítása"),
     "user__circle_name_empty_error" : MessageLookupByLibrary.simpleMessage("A kör neve nem lehet üres."),
-    "user__circle_name_range_error" : m33,
-    "user__circle_peoples_count" : m34,
+    "user__circle_name_range_error" : m37,
+    "user__circle_peoples_count" : m38,
     "user__clear_app_preferences_cleared_successfully" : MessageLookupByLibrary.simpleMessage("Beállítások sikeresen törölve"),
     "user__clear_app_preferences_desc" : MessageLookupByLibrary.simpleMessage("Az alkalmazás beállításainak törlése. Jelenleg ez az opció csak a hozzászólások megjelenítési sorrendjét vonja magába."),
     "user__clear_app_preferences_error" : MessageLookupByLibrary.simpleMessage("Nem sikerült törölni a beállításokat"),
@@ -726,13 +784,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__confirm_block_user_blocked" : MessageLookupByLibrary.simpleMessage("Felhasználó letiltva."),
     "user__confirm_block_user_info" : MessageLookupByLibrary.simpleMessage("Nem láthatjátok egymás bejegyzéseit és semmilyen módon nem léphettek kapcsolatba egymással."),
     "user__confirm_block_user_no" : MessageLookupByLibrary.simpleMessage("Nem"),
-    "user__confirm_block_user_question" : m35,
+    "user__confirm_block_user_question" : m39,
     "user__confirm_block_user_title" : MessageLookupByLibrary.simpleMessage("Megerősítés"),
     "user__confirm_block_user_yes" : MessageLookupByLibrary.simpleMessage("Igen"),
     "user__confirm_connection_add_connection" : MessageLookupByLibrary.simpleMessage("Kapcsolat hozzáadása körökhöz"),
     "user__confirm_connection_confirm_text" : MessageLookupByLibrary.simpleMessage("Megerősít"),
     "user__confirm_connection_connection_confirmed" : MessageLookupByLibrary.simpleMessage("Kapcsolat megerősítve"),
-    "user__confirm_connection_with" : m36,
+    "user__confirm_connection_with" : m40,
     "user__confirm_guidelines_reject_chat_community" : MessageLookupByLibrary.simpleMessage("Beszélgess a közösséggel."),
     "user__confirm_guidelines_reject_chat_immediately" : MessageLookupByLibrary.simpleMessage("Azonnali beszélgetés kezdeményezése."),
     "user__confirm_guidelines_reject_chat_with_team" : MessageLookupByLibrary.simpleMessage("Beszélgess a csapattal."),
@@ -742,7 +800,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__confirm_guidelines_reject_join_slack" : MessageLookupByLibrary.simpleMessage("Csatlakozz a Slack csatornánkhoz."),
     "user__confirm_guidelines_reject_title" : MessageLookupByLibrary.simpleMessage("Irányelvek elutasítása"),
     "user__connect_to_user_add_connection" : MessageLookupByLibrary.simpleMessage("Kapcsolat hozzáadása körökhöz"),
-    "user__connect_to_user_connect_with_username" : m37,
+    "user__connect_to_user_connect_with_username" : m41,
     "user__connect_to_user_done" : MessageLookupByLibrary.simpleMessage("Kész"),
     "user__connect_to_user_request_sent" : MessageLookupByLibrary.simpleMessage("Kapcsolódási kérelem elküldve"),
     "user__connection_circle_edit" : MessageLookupByLibrary.simpleMessage("Szerkeszt"),
@@ -760,7 +818,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__delete_account_current_pwd_hint" : MessageLookupByLibrary.simpleMessage("Írd be a jelenlegi jelszavad"),
     "user__delete_account_next" : MessageLookupByLibrary.simpleMessage("Következő"),
     "user__delete_account_title" : MessageLookupByLibrary.simpleMessage("Fiók törlése"),
-    "user__disconnect_from_user" : m38,
+    "user__disable_new_post_notifications" : MessageLookupByLibrary.simpleMessage("Disable new post notifications"),
+    "user__disconnect_from_user" : m42,
     "user__disconnect_from_user_success" : MessageLookupByLibrary.simpleMessage("Kapcsolat sikeresen törölve"),
     "user__edit_profile_bio" : MessageLookupByLibrary.simpleMessage("Bemutatkozás"),
     "user__edit_profile_community_posts" : MessageLookupByLibrary.simpleMessage("Közösségi bejegyzések"),
@@ -769,20 +828,23 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__edit_profile_location" : MessageLookupByLibrary.simpleMessage("Hely"),
     "user__edit_profile_name" : MessageLookupByLibrary.simpleMessage("Név"),
     "user__edit_profile_pick_image" : MessageLookupByLibrary.simpleMessage("Kép kiválasztása"),
-    "user__edit_profile_pick_image_error_too_large" : m39,
+    "user__edit_profile_pick_image_error_too_large" : m43,
     "user__edit_profile_save_text" : MessageLookupByLibrary.simpleMessage("Mentés"),
     "user__edit_profile_title" : MessageLookupByLibrary.simpleMessage("Profil szerkesztése"),
     "user__edit_profile_url" : MessageLookupByLibrary.simpleMessage("URL"),
-    "user__edit_profile_user_name_taken" : m40,
+    "user__edit_profile_user_name_taken" : m44,
     "user__edit_profile_username" : MessageLookupByLibrary.simpleMessage("Felhasználónév"),
     "user__email_verification_error" : MessageLookupByLibrary.simpleMessage("Hoppá! A tokened nem érvényes vagy már lejárt. Kérünk, próbáld újra"),
     "user__email_verification_successful" : MessageLookupByLibrary.simpleMessage("Remek! Az e-mail címed meg lett erősítve"),
     "user__emoji_field_none_selected" : MessageLookupByLibrary.simpleMessage("Nincs kiválasztott emoji"),
-    "user__emoji_search_none_found" : m41,
+    "user__emoji_search_none_found" : m45,
+    "user__enable_new_post_notifications" : MessageLookupByLibrary.simpleMessage("Enable new post notifications"),
+    "user__follow_button_follow_back_text" : MessageLookupByLibrary.simpleMessage("Follow back"),
     "user__follow_button_follow_text" : MessageLookupByLibrary.simpleMessage("Követés"),
+    "user__follow_button_following_text" : MessageLookupByLibrary.simpleMessage("Following"),
     "user__follow_button_unfollow_text" : MessageLookupByLibrary.simpleMessage("Követés törlése"),
     "user__follow_lists_no_list_found" : MessageLookupByLibrary.simpleMessage("Nem találhatóak listák."),
-    "user__follow_lists_no_list_found_for" : m42,
+    "user__follow_lists_no_list_found_for" : m46,
     "user__follow_lists_search_for" : MessageLookupByLibrary.simpleMessage("Listák keresése..."),
     "user__follow_lists_title" : MessageLookupByLibrary.simpleMessage("Listáim"),
     "user__follower_plural" : MessageLookupByLibrary.simpleMessage("követő"),
@@ -790,18 +852,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__followers_title" : MessageLookupByLibrary.simpleMessage("Követők"),
     "user__following_resource_name" : MessageLookupByLibrary.simpleMessage("követett felhasználó"),
     "user__following_text" : MessageLookupByLibrary.simpleMessage("Követve"),
-    "user__follows_list_accounts_count" : m43,
+    "user__follows_list_accounts_count" : m47,
     "user__follows_list_edit" : MessageLookupByLibrary.simpleMessage("Szerkeszt"),
     "user__follows_list_header_title" : MessageLookupByLibrary.simpleMessage("Felhasználók"),
     "user__follows_lists_account" : MessageLookupByLibrary.simpleMessage("1 fiók"),
-    "user__follows_lists_accounts" : m44,
-    "user__groups_see_all" : m45,
+    "user__follows_lists_accounts" : m48,
+    "user__groups_see_all" : m49,
     "user__guidelines_accept" : MessageLookupByLibrary.simpleMessage("Elfogad"),
     "user__guidelines_desc" : MessageLookupByLibrary.simpleMessage("Kérünk, szánj pár percet arra, hogy elolvasd és elfogadd az irányelveinket."),
     "user__guidelines_reject" : MessageLookupByLibrary.simpleMessage("Elutasít"),
     "user__invite" : MessageLookupByLibrary.simpleMessage("Meghívás"),
     "user__invite_member" : MessageLookupByLibrary.simpleMessage("Tag"),
-    "user__invite_someone_message" : m46,
+    "user__invite_someone_message" : m50,
     "user__invites_accepted_group_item_name" : MessageLookupByLibrary.simpleMessage("elfogadott meghívó"),
     "user__invites_accepted_group_name" : MessageLookupByLibrary.simpleMessage("elfogadott meghívók"),
     "user__invites_accepted_title" : MessageLookupByLibrary.simpleMessage("Elfogadva"),
@@ -820,11 +882,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__invites_email_text" : MessageLookupByLibrary.simpleMessage("E-mail cím"),
     "user__invites_invite_a_friend" : MessageLookupByLibrary.simpleMessage("Ismerős meghívása"),
     "user__invites_invite_text" : MessageLookupByLibrary.simpleMessage("Meghívás"),
-    "user__invites_joined_with" : m47,
+    "user__invites_joined_with" : m51,
     "user__invites_none_left" : MessageLookupByLibrary.simpleMessage("Jelenleg nem hozhatsz létre több meghívót."),
     "user__invites_none_used" : MessageLookupByLibrary.simpleMessage("Úgy fest nem használtál egy meghívót sem."),
     "user__invites_pending" : MessageLookupByLibrary.simpleMessage("Függőben"),
-    "user__invites_pending_email" : m48,
+    "user__invites_pending_email" : m52,
     "user__invites_pending_group_item_name" : MessageLookupByLibrary.simpleMessage("függő meghívó"),
     "user__invites_pending_group_name" : MessageLookupByLibrary.simpleMessage("függő meghívók"),
     "user__invites_refresh" : MessageLookupByLibrary.simpleMessage("Frissítés"),
@@ -837,14 +899,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__language_settings_saved_success" : MessageLookupByLibrary.simpleMessage("Nyelv sikeresen megváltoztatva"),
     "user__language_settings_title" : MessageLookupByLibrary.simpleMessage("Nyelvi beállítások"),
     "user__list_name_empty_error" : MessageLookupByLibrary.simpleMessage("A lista neve nem lehet üres."),
-    "user__list_name_range_error" : m49,
+    "user__list_name_range_error" : m53,
     "user__million_postfix" : MessageLookupByLibrary.simpleMessage("mln"),
     "user__profile_action_cancel_connection" : MessageLookupByLibrary.simpleMessage("Kapcsolódási kérelem visszavonása"),
     "user__profile_action_deny_connection" : MessageLookupByLibrary.simpleMessage("Kapcsolódási kérelem visszautasítása"),
     "user__profile_action_user_blocked" : MessageLookupByLibrary.simpleMessage("Felhasználó letiltva"),
+    "user__profile_action_user_post_notifications_disabled" : MessageLookupByLibrary.simpleMessage("New post notifications disabled"),
+    "user__profile_action_user_post_notifications_enabled" : MessageLookupByLibrary.simpleMessage("New post notifications enabled"),
     "user__profile_action_user_unblocked" : MessageLookupByLibrary.simpleMessage("Felhasználó tiltása törölve"),
-    "user__profile_bio_length_error" : m50,
-    "user__profile_location_length_error" : m51,
+    "user__profile_bio_length_error" : m54,
+    "user__profile_in_circles" : MessageLookupByLibrary.simpleMessage("In circles"),
+    "user__profile_location_length_error" : m55,
+    "user__profile_okuna_age_toast" : m56,
     "user__profile_url_invalid_error" : MessageLookupByLibrary.simpleMessage("Kérünk, adj meg egy érvényes URL-t."),
     "user__remove_account_from_list" : MessageLookupByLibrary.simpleMessage("Fiók törlése a listákból"),
     "user__remove_account_from_list_success" : MessageLookupByLibrary.simpleMessage("Siker"),
@@ -854,7 +920,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__save_connection_circle_edit" : MessageLookupByLibrary.simpleMessage("Kör szerkesztése"),
     "user__save_connection_circle_hint" : MessageLookupByLibrary.simpleMessage("pl.: Barátok, Család, Kollégák."),
     "user__save_connection_circle_name" : MessageLookupByLibrary.simpleMessage("Név"),
-    "user__save_connection_circle_name_taken" : m52,
+    "user__save_connection_circle_name_taken" : m57,
     "user__save_connection_circle_save" : MessageLookupByLibrary.simpleMessage("Mentés"),
     "user__save_connection_circle_users" : MessageLookupByLibrary.simpleMessage("Felhasználók"),
     "user__save_follows_list_create" : MessageLookupByLibrary.simpleMessage("Lista létrehozása"),
@@ -863,7 +929,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__save_follows_list_emoji_required_error" : MessageLookupByLibrary.simpleMessage("Az emoji kötelező"),
     "user__save_follows_list_hint_text" : MessageLookupByLibrary.simpleMessage("pl.: Utazás, Fényképészet"),
     "user__save_follows_list_name" : MessageLookupByLibrary.simpleMessage("Név"),
-    "user__save_follows_list_name_taken" : m53,
+    "user__save_follows_list_name_taken" : m58,
     "user__save_follows_list_save" : MessageLookupByLibrary.simpleMessage("Mentés"),
     "user__save_follows_list_users" : MessageLookupByLibrary.simpleMessage("Felhasználók"),
     "user__thousand_postfix" : MessageLookupByLibrary.simpleMessage("e"),
@@ -873,7 +939,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__timeline_filters_circles" : MessageLookupByLibrary.simpleMessage("Körök"),
     "user__timeline_filters_clear_all" : MessageLookupByLibrary.simpleMessage("Összes törlése"),
     "user__timeline_filters_lists" : MessageLookupByLibrary.simpleMessage("Listák"),
-    "user__timeline_filters_no_match" : m54,
+    "user__timeline_filters_no_match" : m59,
     "user__timeline_filters_search_desc" : MessageLookupByLibrary.simpleMessage("Körök és listák keresése..."),
     "user__timeline_filters_title" : MessageLookupByLibrary.simpleMessage("Idővonal szűrők"),
     "user__translate_see_translation" : MessageLookupByLibrary.simpleMessage("Fordítás megtekintése"),
@@ -885,15 +951,17 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__update_connection_circles_title" : MessageLookupByLibrary.simpleMessage("Kapcsolati körök frissítése"),
     "user_search__cancel" : MessageLookupByLibrary.simpleMessage("Mégse"),
     "user_search__communities" : MessageLookupByLibrary.simpleMessage("Közösségek"),
-    "user_search__list_no_results_found" : m55,
+    "user_search__hashtags" : MessageLookupByLibrary.simpleMessage("Hashtags"),
+    "user_search__list_no_results_found" : m60,
     "user_search__list_refresh_text" : MessageLookupByLibrary.simpleMessage("Frissítés"),
     "user_search__list_retry" : MessageLookupByLibrary.simpleMessage("Koppints az újrapróbálkozáshoz."),
-    "user_search__list_search_text" : m56,
-    "user_search__no_communities_for" : m57,
-    "user_search__no_results_for" : m58,
-    "user_search__no_users_for" : m59,
+    "user_search__list_search_text" : m61,
+    "user_search__no_communities_for" : m62,
+    "user_search__no_hashtags_for" : m63,
+    "user_search__no_results_for" : m64,
+    "user_search__no_users_for" : m65,
     "user_search__search_text" : MessageLookupByLibrary.simpleMessage("Keresés..."),
-    "user_search__searching_for" : m60,
+    "user_search__searching_for" : m66,
     "user_search__users" : MessageLookupByLibrary.simpleMessage("Felhasználók"),
     "video_picker__from_camera" : MessageLookupByLibrary.simpleMessage("Kameráról"),
     "video_picker__from_gallery" : MessageLookupByLibrary.simpleMessage("Galériából")
