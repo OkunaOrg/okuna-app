@@ -266,8 +266,6 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
       return;
     }
 
-    // if (isScrollingUp == _isScrollingUp) return;
-
     if (isScrollingUp) {
       _showTabSection();
     } else {
