@@ -1913,7 +1913,7 @@ class LocalizationService {
 
   String post__create_hashtags_invalid(int maxHashtags, int maxCharacters) {
     return Intl.message(
-        "Please add up to $maxHashtags hashtags and keep them under $maxCharacters characters.",
+        "Please add a maximum of $maxHashtags hashtags and keep them under $maxCharacters characters.",
         args: [maxHashtags, maxCharacters],
         name: 'post__create_hashtags_invalid');
   }

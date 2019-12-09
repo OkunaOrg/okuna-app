@@ -241,7 +241,7 @@
     "type": "text",
     "placeholders": {}
   },
-  "create_hashtags_invalid": "Please add up to {maxHashtags} hashtags and keep them under {maxCharacters} characters.",
+  "create_hashtags_invalid": "Please add a maximum of {maxHashtags} hashtags and keep them under {maxCharacters} characters.",
   "@create_hashtags_invalid": {
     "type": "text",
     "placeholders": {
