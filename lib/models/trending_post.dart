@@ -18,7 +18,7 @@ class TrendingPost extends UpdatableModel<TrendingPost> {
     return {
       'id': id,
       'post': post.toJson(),
-      'created': created.toString()
+      'created': created?.toString()
     };
   }
 

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:Okuna/models/community.dart';
 import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/top_post.dart';
@@ -188,13 +189,11 @@ class OBTopPostsState extends State<OBTopPosts>
     int indexTopPost = _currentTopPosts.indexWhere((topPost) {
       return topPost.post.id == post.id;
     });
-    if (indexTopPost >= 4) {
-      // cache 5 prev top posts 0,1,2,3,4,5,6,7
-      _cachablePosts =
-          _currentTopPosts.sublist(indexTopPost - 4, indexTopPost + 2);
-    } else if (indexTopPost >= 0 && indexTopPost < 5) {
-      _cachablePosts = _currentTopPosts.sublist(0, indexTopPost + 2);
-    }
+    int lastIndexTopPosts = _currentTopPosts.length - 1;
+    int cacheFromIndex = 0;
+    int cacheToIndex = min(indexTopPost + 2, lastIndexTopPosts);
+    if (indexTopPost >= 4) cacheFromIndex = indexTopPost - 4;
+    _cachablePosts = _currentTopPosts.sublist(cacheFromIndex, cacheToIndex);
     _userService.setTopPostsLastViewedId(post.id);
     _userService.setStoredTopPosts(_cachablePosts);
   }
