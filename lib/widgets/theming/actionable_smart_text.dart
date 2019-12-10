@@ -1,11 +1,9 @@
 import 'dart:async';
 
-import 'package:Okuna/models/communities_list.dart';
 import 'package:Okuna/models/community.dart';
 import 'package:Okuna/models/hashtag.dart';
 import 'package:Okuna/models/user.dart';
 import 'package:Okuna/provider.dart';
-import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/navigation_service.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/url_launcher.dart';
@@ -45,7 +43,6 @@ class OBActionableTextState extends State<OBActionableSmartText> {
   UserService _userService;
   UrlLauncherService _urlLauncherService;
   ToastService _toastService;
-  LocalizationService _localizationService;
 
   bool _needsBootstrap;
   StreamSubscription _requestSubscription;
@@ -69,7 +66,6 @@ class OBActionableTextState extends State<OBActionableSmartText> {
       _userService = openbookProvider.userService;
       _urlLauncherService = openbookProvider.urlLauncherService;
       _toastService = openbookProvider.toastService;
-      _localizationService = openbookProvider.localizationService;
       _needsBootstrap = false;
     }
 
@@ -90,34 +86,19 @@ class OBActionableTextState extends State<OBActionableSmartText> {
 
   void _onCommunityNameTapped(String communityName) {
     _clearRequestSubscription();
-    // [TODO] The getCommunity is too slow for retrieving on tap.
-    //  When we process c/communities inside posts in the same way as hashtags,
-    //  the model will already be included and therefore there will be no need
-    // to retrieve anything. Therefore, for now a "hotfix" for a faster get
-    // community using the SEARCH api instead of the GET of communities to
-    // retrieve a lighter model
-    StreamSubscription requestSubscription = _userService
-        .getCommunitiesWithQuery(communityName, count: 1)
-        .asStream()
-        .listen((CommunitiesList communities) {
-      if (communities.communities.isNotEmpty) {
-        Community community = communities.communities.first;
-        if (community.name.toLowerCase() == communityName.toLowerCase()) {
-          _navigationService.navigateToCommunity(
-              community: community, context: context);
-          return;
-        }
-      }
 
-      _toastService.error(
-          message: _localizationService.post__community_not_found,
-          context: context);
-    }, onError: _onError, onDone: _onRequestDone);
+    StreamSubscription requestSubscription = _userService
+        .getCommunityWithName(communityName)
+        .asStream()
+        .listen(_onCommunityNameCommunityRetrieved,
+            onError: _onError, onDone: _onRequestDone);
     _setRequestSubscription(requestSubscription);
   }
 
-  // Please see comments on _onCommunityNameTapped
-  //void _onCommunityNameCommunityRetrieved(Community community) {}
+  void _onCommunityNameCommunityRetrieved(Community community) {
+    _navigationService.navigateToCommunity(
+        community: community, context: context);
+  }
 
   void _onUsernameTapped(String username) {
     _clearRequestSubscription();
@@ -129,10 +110,8 @@ class OBActionableTextState extends State<OBActionableSmartText> {
     _setRequestSubscription(requestSubscription);
   }
 
-  void _onHashtagNameHashtagRetrieved(
-      {Hashtag hashtag, String rawHashtagName}) {
-    _navigationService.navigateToHashtag(
-        hashtag: hashtag, rawHashtagName: rawHashtagName, context: context);
+  void _onHashtagNameHashtagRetrieved({Hashtag hashtag, String rawHashtagName}) {
+    _navigationService.navigateToHashtag(hashtag: hashtag, rawHashtagName: rawHashtagName, context: context);
   }
 
   void _onUsernameUserRetrieved(User user) {

@@ -1287,9 +1287,9 @@ class UserService {
     return PostsList.fromJson(json.decode(response.body));
   }
 
-  Future<CommunitiesList> getCommunitiesWithQuery(String query, {int count}) async {
+  Future<CommunitiesList> getCommunitiesWithQuery(String query) async {
     HttpieResponse response =
-        await _communitiesApiService.getCommunitiesWithQuery(query: query, count:count);
+        await _communitiesApiService.getCommunitiesWithQuery(query: query);
     _checkResponseIsOk(response);
     return CommunitiesList.fromJson(json.decode(response.body));
   }
