@@ -74,7 +74,7 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
   StreamSubscription<CommunitiesList> _getCommunitiesWithQuerySubscription;
   StreamSubscription<HashtagsList> _getHashtagsWithQuerySubscription;
 
-  Throttling _setScrollPositionDebouncer;
+  Throttling _setScrollPositionThrottler;
 
   static const double OB_BOTTOM_TAB_BAR_HEIGHT = 50.0;
   static const double HEIGHT_SEARCH_BAR = 76.0;
@@ -99,7 +99,7 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
     _hashtagSearchResults = [];
     _selectedSearchResultsTab = OBUserSearchResultsTab.users;
     _tabController = new TabController(length: 2, vsync: this);
-    _setScrollPositionDebouncer = new Throttling(duration: Duration(milliseconds: 300));
+    _setScrollPositionThrottler = new Throttling(duration: Duration(milliseconds: 300));
     _animationController =
         AnimationController(vsync: this, duration: Duration(milliseconds: 100));
     _offset = Tween<Offset>(begin: Offset.zero, end: Offset(0.0, -1.0))
@@ -264,10 +264,10 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
       if (_offset.value.dy == -1.0) _showTabSection();
       return;
     }
-    _setScrollPositionDebouncer.throttle(() => _handScrollDebounce(position.pixels, isScrollingUp));
+    _setScrollPositionThrottler.throttle(() => _handleScrollThrottle(position.pixels, isScrollingUp));
   }
 
-  void _handScrollDebounce(double scrollPixels, bool isScrollingUp) {
+  void _handleScrollThrottle(double scrollPixels, bool isScrollingUp) {
     if (_lastScrollPosition != null) {
         double offset = (scrollPixels - _lastScrollPosition).abs();
         if (offset > MIN_SCROLL_OFFSET_TO_ANIMATE_TABS) _checkScrollDirectionAndAnimateTabs(isScrollingUp);
