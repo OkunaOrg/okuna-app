@@ -261,6 +261,16 @@
         "type": "text",
         "placeholders": {}
     },
+    "report_hashtag_text": "Hashtag melden",
+    "@report_hashtag_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "you_have_reported_hashtag_text": "Sie haben diesen Hashtag gemeldet",
+    "@you_have_reported_hashtag_text": {
+        "type": "text",
+        "placeholders": {}
+    },
     "report_community_text": "Community melden",
     "@report_community_text": {
         "type": "text",

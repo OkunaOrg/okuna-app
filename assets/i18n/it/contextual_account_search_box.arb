@@ -4,5 +4,10 @@
         "description": "The title to display on the suggestions when searching for accounts when trying to mention someone.",
         "type": "text",
         "placeholders": {}
+    },
+    "no_results": "Nessun risultato trovato",
+    "@no_results": {
+        "type": "text",
+        "placeholders": {}
     }
 }

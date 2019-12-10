@@ -1,0 +1,13 @@
+{
+    "suggestions": "Vorschläge",
+    "@suggestions": {
+        "description": "The title to display on the suggestions when searching for communitys when trying to mention someone.",
+        "type": "text",
+        "placeholders": {}
+    },
+    "no_results": "Keine Ergebnisse gefunden",
+    "@no_results": {
+        "type": "text",
+        "placeholders": {}
+    }
+}

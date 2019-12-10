@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:Okuna/models/community.dart';
 import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/top_post.dart';
@@ -33,7 +34,8 @@ class OBTopPosts extends StatefulWidget {
   }
 }
 
-class OBTopPostsState extends State<OBTopPosts> with AutomaticKeepAliveClientMixin {
+class OBTopPostsState extends State<OBTopPosts>
+    with AutomaticKeepAliveClientMixin {
   UserService _userService;
   LocalizationService _localizationService;
   NavigationService _navigationService;
@@ -53,7 +55,8 @@ class OBTopPostsState extends State<OBTopPosts> with AutomaticKeepAliveClientMix
   void initState() {
     super.initState();
     _needsBootstrap = true;
-    _storeLastViewedIdAndCachablePostsDebouncer = new Debouncing(duration: Duration(milliseconds: 500));
+    _storeLastViewedIdAndCachablePostsDebouncer =
+        new Debouncing(duration: Duration(milliseconds: 500));
     _obPostsStreamController = OBPostsStreamController();
     if (widget.controller != null) widget.controller.attach(this);
   }
@@ -79,7 +82,8 @@ class OBTopPostsState extends State<OBTopPosts> with AutomaticKeepAliveClientMix
     _userService = openbookProvider.userService;
     _localizationService = openbookProvider.localizationService;
     _navigationService = openbookProvider.navigationService;
-    _exploreTimelinePreferencesService = openbookProvider.exploreTimelinePreferencesService;
+    _exploreTimelinePreferencesService =
+        openbookProvider.exploreTimelinePreferencesService;
 
     if (_needsBootstrap) _bootstrap();
     if (!_needsBootstrap) {
@@ -96,14 +100,14 @@ class OBTopPostsState extends State<OBTopPosts> with AutomaticKeepAliveClientMix
         postBuilder: _topPostBuilder,
         prependedItems: <Widget>[
           Padding(
-            padding: EdgeInsets.only(left: 20, right: 20, bottom: 10, top: widget.extraTopPadding),
+            padding: EdgeInsets.only(
+                left: 20, right: 20, bottom: 10, top: widget.extraTopPadding),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                OBPrimaryAccentText(
-                    _localizationService.post__top_posts_title,
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 24)),
+                OBPrimaryAccentText(_localizationService.post__top_posts_title,
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 24)),
                 OBIconButton(
                   OBIcons.settings,
                   themeColor: OBIconThemeColor.primaryAccent,
@@ -122,18 +126,19 @@ class OBTopPostsState extends State<OBTopPosts> with AutomaticKeepAliveClientMix
   }
 
   void _bootstrap() async {
-    _excludeJoinedCommunitiesEnabled = await _exploreTimelinePreferencesService.getExcludeJoinedCommunitiesSetting();
+    _excludeJoinedCommunitiesEnabled = await _exploreTimelinePreferencesService
+        .getExcludeJoinedCommunitiesSetting();
 
     _excludeJoinedCommunitiesChangeSubscription =
-        _exploreTimelinePreferencesService.
-        excludeJoinedCommunitiesSettingChange.
-        listen(_onExcludeJoinedCommunitiesEnabledChanged);
+        _exploreTimelinePreferencesService.excludeJoinedCommunitiesSettingChange
+            .listen(_onExcludeJoinedCommunitiesEnabledChanged);
 
     _topPostLastViewedId = await _userService.getStoredTopPostsLastViewedId();
     TopPostsList topPostsList = await _userService.getStoredTopPosts();
     if (topPostsList.posts != null) {
       _currentTopPosts = topPostsList.posts;
-      List<Post> posts = topPostsList.posts.map((topPost) => topPost.post).toList();
+      List<Post> posts =
+          topPostsList.posts.map((topPost) => topPost.post).toList();
       _currentPosts = posts;
     }
 
@@ -144,35 +149,39 @@ class OBTopPostsState extends State<OBTopPosts> with AutomaticKeepAliveClientMix
     });
   }
 
-  void _onExcludeJoinedCommunitiesEnabledChanged(bool excludeJoinedCommunitiesEnabled) {
+  void _onExcludeJoinedCommunitiesEnabledChanged(
+      bool excludeJoinedCommunitiesEnabled) {
     setState(() {
       _excludeJoinedCommunitiesEnabled = excludeJoinedCommunitiesEnabled;
     });
   }
 
-  Widget _topPostBuilder(BuildContext context, Post post, String streamUniqueIdentifier, Function(Post) onPostDeleted) {
+  Widget _topPostBuilder(
+      {BuildContext context,
+      Post post,
+      String postIdentifier,
+      ValueChanged<Post> onPostDeleted}) {
     if (_excludedCommunities.contains(post.community.id)) {
       post.updateIsFromExcludedCommunity(true);
     } else {
       post.updateIsFromExcludedCommunity(false);
     }
 
-    String inViewId = '${streamUniqueIdentifier}_${post.id.toString()}';
-
     return OBPost(
       post,
-      key: Key(inViewId),
+      key: Key(postIdentifier),
       onPostDeleted: onPostDeleted,
       onPostIsInView: onPostIsInView,
       onCommunityExcluded: _onCommunityExcluded,
       onUndoCommunityExcluded: _onUndoCommunityExcluded,
-      inViewId: inViewId,
+      inViewId: postIdentifier,
       isTopPost: true,
     );
   }
 
   void onPostIsInView(Post post) async {
-    _storeLastViewedIdAndCachablePostsDebouncer.debounce(() => _storeLastViewedIdAndCachedPosts(post));
+    _storeLastViewedIdAndCachablePostsDebouncer
+        .debounce(() => _storeLastViewedIdAndCachedPosts(post));
   }
 
   void _storeLastViewedIdAndCachedPosts(Post post) async {
@@ -180,46 +189,47 @@ class OBTopPostsState extends State<OBTopPosts> with AutomaticKeepAliveClientMix
     int indexTopPost = _currentTopPosts.indexWhere((topPost) {
       return topPost.post.id == post.id;
     });
-    if (indexTopPost >= 4)  {
-      // cache 5 prev top posts 0,1,2,3,4,5,6,7
-      _cachablePosts = _currentTopPosts.sublist(indexTopPost - 4, indexTopPost+2);
-    } else if (indexTopPost >= 0 && indexTopPost < 5) {
-      _cachablePosts = _currentTopPosts.sublist(0, indexTopPost+2);
-    }
+    int lastIndexTopPosts = _currentTopPosts.length - 1;
+    int cacheFromIndex = 0;
+    int cacheToIndex = min(indexTopPost + 2, lastIndexTopPosts);
+    if (indexTopPost >= 4) cacheFromIndex = indexTopPost - 4;
+    _cachablePosts = _currentTopPosts.sublist(cacheFromIndex, cacheToIndex);
     _userService.setTopPostsLastViewedId(post.id);
     _userService.setStoredTopPosts(_cachablePosts);
   }
 
   void _onWantsToSeeTopPostSettings() async {
     bool excludeJoinedCommunitiesEnabled = _excludeJoinedCommunitiesEnabled;
-    Future routePopFuture = _navigationService.navigateToTopPostsSettings(context: context);
+    Future routePopFuture =
+        _navigationService.navigateToTopPostsSettings(context: context);
     await routePopFuture;
-    if (excludeJoinedCommunitiesEnabled != _excludeJoinedCommunitiesEnabled) refresh();
+    if (excludeJoinedCommunitiesEnabled != _excludeJoinedCommunitiesEnabled)
+      refresh();
   }
 
   void _onCommunityExcluded(Community community) {
-      _excludedCommunities.add(community.id);
-      _currentPosts.forEach((post) {
-        if(post.community.id == community.id) {
-          post.updateIsFromExcludedCommunity(true);
-        }
-      });
+    _excludedCommunities.add(community.id);
+    _currentPosts.forEach((post) {
+      if (post.community.id == community.id) {
+        post.updateIsFromExcludedCommunity(true);
+      }
+    });
   }
 
   void _onUndoCommunityExcluded(Community community) {
-      _excludedCommunities.remove(community.id);
-      _currentPosts.forEach((post) {
-        if(post.community.id == community.id) {
-          post.updateIsFromExcludedCommunity(false);
-        }
-      });
+    _excludedCommunities.remove(community.id);
+    _currentPosts.forEach((post) {
+      if (post.community.id == community.id) {
+        post.updateIsFromExcludedCommunity(false);
+      }
+    });
   }
 
   Future<List<Post>> _postsStreamRefresher() async {
     List<TopPost> topPosts = (await _userService.getTopPosts(
-        count: 10,
-        excludeJoinedCommunities: _excludeJoinedCommunitiesEnabled)
-    ).posts;
+            count: 10,
+            excludeJoinedCommunities: _excludeJoinedCommunitiesEnabled))
+        .posts;
     List<Post> posts = topPosts.map((topPost) => topPost.post).toList();
     _setTopPosts(topPosts);
     _setPosts(posts);
@@ -233,9 +243,9 @@ class OBTopPostsState extends State<OBTopPosts> with AutomaticKeepAliveClientMix
     int lastTopPostId = lastTopPost.id;
 
     List<TopPost> moreTopPosts = (await _userService.getTopPosts(
-        maxId: lastTopPostId,
-        excludeJoinedCommunities: _excludeJoinedCommunitiesEnabled,
-        count: 10))
+            maxId: lastTopPostId,
+            excludeJoinedCommunities: _excludeJoinedCommunitiesEnabled,
+            count: 10))
         .posts;
 
     List<Post> morePosts = moreTopPosts.map((topPost) => topPost.post).toList();
@@ -276,10 +286,8 @@ class OBTopPostsState extends State<OBTopPosts> with AutomaticKeepAliveClientMix
     });
   }
 
-
   @override
   bool get wantKeepAlive => true;
-
 }
 
 class OBTopPostsController {

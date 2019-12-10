@@ -1,0 +1,12 @@
+{
+    "storage_permission_denied": "Wir benötigen die Speicher-Berechtigung, um die Auswahl von Medienelementen zu ermöglichen. Bitte gewähre dies in deinen Einstellungen.",
+    "@storage_permission_denied": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "camera_permission_denied": "Wir benötigen die Erlaubnis der Kamera, Fotos und Videos aufzunehmen. Bitte erteile dies in deinen Einstellungen.",
+    "@camera_permission_denied": {
+        "type": "text",
+        "placeholders": {}
+    }
+}

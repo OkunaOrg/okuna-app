@@ -62,6 +62,21 @@
         "type": "text",
         "placeholders": {}
     },
+    "profile_action_user_post_notifications_enabled": "Nieuwe berichtmeldingen ingeschakeld",
+    "@profile_action_user_post_notifications_enabled": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "profile_action_user_post_notifications_disabled": "Nieuwe berichtmeldingen uitgeschakeld",
+    "@profile_action_user_post_notifications_disabled": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "profile_in_circles": "In cirkels",
+    "@profile_in_circles": {
+        "type": "text",
+        "placeholders": {}
+    },
     "profile_action_cancel_connection": "Annuleer verzoek tot connectie",
     "@profile_action_cancel_connection": {
         "type": "text",
@@ -86,8 +101,25 @@
             "maxLength": {}
         }
     },
+    "profile_okuna_age_toast": "Op Okuna sinds {age}",
+    "@profile_okuna_age_toast": {
+        "type": "text",
+        "placeholders": {
+            "age": {}
+        }
+    },
     "follow_button_follow_text": "Volg",
     "@follow_button_follow_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "follow_button_follow_back_text": "Terugvolgen",
+    "@follow_button_follow_back_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "follow_button_following_text": "Volgt",
+    "@follow_button_following_text": {
         "type": "text",
         "placeholders": {}
     },
@@ -339,11 +371,12 @@
         "type": "text",
         "placeholders": {}
     },
-    "invite_someone_message": "Hi, ik wil je graag uitnodigen voor Okuna. Download eerst de app in iTunes ({iosLink}) of de Play store ({androidLink}). Plak vervolgens deze gepersonaliseerde link met de uitnodiginging het formulier 'Aanmelden' in de Okuna App: {inviteLink}",
+    "invite_someone_message": "Hey, ik wil u uitnodigen voor Okuna.\n\nVoor Apple, eerst, download de TestFlight app op iTunes ({testFlightLink}) en download dan de Okuna app ({iosLink})\n\nvoor Android, download het uit de Play store ({androidLink}).\n\nseconde, plak deze persoonlijke uitnodiging in het formulier 'Aanmelden' in de Okuna App: {inviteLink}",
     "@invite_someone_message": {
         "type": "text",
         "placeholders": {
             "iosLink": {},
+            "testFlightLink": {},
             "androidLink": {},
             "inviteLink": {}
         }
@@ -953,6 +986,16 @@
     },
     "unblock_user": "Gebruiker deblokkeren",
     "@unblock_user": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "enable_new_post_notifications": "Nieuwe berichtmeldingen inschakelen",
+    "@enable_new_post_notifications": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "disable_new_post_notifications": "Nieuwe berichtmeldingen uitschakelen",
+    "@disable_new_post_notifications": {
         "type": "text",
         "placeholders": {}
     },

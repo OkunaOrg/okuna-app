@@ -159,6 +159,7 @@ class OBIcons {
   static const connections = OBIconData(nativeIcon: Icons.people);
   static const createPost = OBIconData(nativeIcon: Icons.add);
   static const add = OBIconData(nativeIcon: Icons.add);
+  static const loadMore = OBIconData(nativeIcon: Icons.add);
   static const moreVertical = OBIconData(nativeIcon: Icons.more_vert);
   static const moreHorizontal = OBIconData(nativeIcon: Icons.more_horiz);
   static const react = OBIconData(nativeIcon: Icons.sentiment_very_satisfied);

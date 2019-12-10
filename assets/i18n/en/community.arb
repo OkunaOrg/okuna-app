@@ -69,6 +69,11 @@
     "type": "text",
     "placeholders": {}
   },
+  "details_favorite": "In favorites",
+  "@details_favorite": {
+    "type": "text",
+    "placeholders": {}
+  },
   "admin_desc": "This will allow the member to edit the community details, administrators, moderators and banned users.",
   "@admin_desc": {
     "type": "text",
@@ -265,8 +270,18 @@
     "type": "text",
     "placeholders": {}
   },
-  "manage_remove_favourite": "Remove the community to your favorites",
+  "manage_remove_favourite": "Remove the community from your favorites",
   "@manage_remove_favourite": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "manage_enable_new_post_notifications": "Enable new post notifications",
+  "@manage_enable_new_post_notifications": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "manage_disable_new_post_notifications": "Disable new post notifications",
+  "@manage_disable_new_post_notifications": {
     "type": "text",
     "placeholders": {}
   },
@@ -680,6 +695,26 @@
   },
   "actions_invite_people_title": "Invite people to community",
   "@actions_invite_people_title": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "actions_enable_new_post_notifications_title": "Enable new post notifications",
+  "@actions_enable_new_post_notifications_title": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "actions_enable_new_post_notifications_success": "New post notifications enabled",
+  "@actions_enable_new_post_notifications_success": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "actions_disable_new_post_notifications_title": "Disable new post notifications",
+  "@actions_disable_new_post_notifications_title": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "actions_disable_new_post_notifications_success": "New post notifications enabled",
+  "@actions_disable_new_post_notifications_success": {
     "type": "text",
     "placeholders": {}
   },

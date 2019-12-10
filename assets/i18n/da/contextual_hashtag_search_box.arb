@@ -1,0 +1,9 @@
+{
+    "be_the_first": "Du er den første der bruger #{hashtag}",
+    "@be_the_first": {
+        "type": "text",
+        "placeholders": {
+            "hashtag": {}
+        }
+    }
+}

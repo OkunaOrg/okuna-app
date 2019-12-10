@@ -1,0 +1,12 @@
+{
+    "storage_permission_denied": "Exigimos a permissão de armazenamento para permitir a seleção de itens de mídia. Conceda-o em suas configurações.",
+    "@storage_permission_denied": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "camera_permission_denied": "Exigimos a permissão da câmera para permitir que você tire fotos e grave vídeos. Conceda-o nas suas configurações.",
+    "@camera_permission_denied": {
+        "type": "text",
+        "placeholders": {}
+    }
+}

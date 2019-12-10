@@ -5,7 +5,7 @@ import 'package:Okuna/pages/home/bottom_sheets/user_actions/widgets/confirm_conn
 import 'package:Okuna/pages/home/bottom_sheets/user_actions/widgets/connect_to_user_tile.dart';
 import 'package:Okuna/pages/home/bottom_sheets/user_actions/widgets/disconnect_from_user_tile.dart';
 import 'package:Okuna/pages/home/bottom_sheets/user_actions/widgets/remove_account_from_lists_tile.dart';
-import 'package:Okuna/pages/home/bottom_sheets/user_actions/widgets/subscribe_to_user_notifications_tile.dart';
+import 'package:Okuna/pages/home/bottom_sheets/user_actions/widgets/new_post_notifications_for_user_tile.dart';
 import 'package:Okuna/pages/home/bottom_sheets/user_actions/widgets/update_connection_with_user_tile.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/bottom_sheet.dart';
@@ -57,7 +57,7 @@ class OBUserActionsBottomSheet extends StatelessWidget {
           ));
         }
 
-        moreTiles.add(OBSubscribeToUserNotificationsTile(
+        moreTiles.add(OBNewPostNotificationsForUserTile(
           user: user,
           onSubscribed: () {
             dismissBottomSheet();
@@ -84,8 +84,7 @@ class OBUserActionsBottomSheet extends StatelessWidget {
               onDisconnectedFromUser: _dismissModalBottomSheet,
               title:
                   localizationService.user__profile_action_cancel_connection));
-          moreTiles.add(OBUpdateConnectionWithUserTile(user,
-              onWillShowModalBottomSheet: _dismissModalBottomSheet));
+          moreTiles.add(OBUpdateConnectionWithUserTile(user));
         } else if (user.isPendingConnectionConfirmation) {
           moreTiles.add(OBConfirmConnectionWithUserTile(
             user,
@@ -95,8 +94,7 @@ class OBUserActionsBottomSheet extends StatelessWidget {
               onDisconnectedFromUser: _dismissModalBottomSheet,
               title: localizationService.user__profile_action_deny_connection));
         } else if (user.isFullyConnected) {
-          moreTiles.add(OBUpdateConnectionWithUserTile(user,
-              onWillShowModalBottomSheet: _dismissModalBottomSheet));
+          moreTiles.add(OBUpdateConnectionWithUserTile(user));
           moreTiles.add(OBDisconnectFromUserTile(user,
               onDisconnectedFromUser: _dismissModalBottomSheet));
         } else {
@@ -114,18 +112,10 @@ class OBUserActionsBottomSheet extends StatelessWidget {
             onBlockedUser: () {
               // Bottom sheet
               dismissBottomSheet();
-              openbookProvider.toastService.success(
-                  message:
-                      localizationService.user__profile_action_user_blocked,
-                  context: context);
             },
             onUnblockedUser: () {
               // Bottom sheet
               dismissBottomSheet();
-              openbookProvider.toastService.success(
-                  message:
-                      localizationService.user__profile_action_user_unblocked,
-                  context: context);
             },
           ));
         }

@@ -241,6 +241,14 @@
         "type": "text",
         "placeholders": {}
     },
+    "create_hashtags_invalid": "Por favor, añade un máximo de {maxHashtags} hashtags y manténgalos con menos de {maxCharacters} caracteres.",
+    "@create_hashtags_invalid": {
+        "type": "text",
+        "placeholders": {
+            "maxHashtags": {},
+            "maxCharacters": {}
+        }
+    },
     "commenter_post_text": "Publicar",
     "@commenter_post_text": {
         "type": "text",
@@ -301,8 +309,23 @@
         "type": "text",
         "placeholders": {}
     },
+    "top_posts_title": "Explorar",
+    "@top_posts_title": {
+        "type": "text",
+        "placeholders": {}
+    },
     "trending_posts_title": "Posts trending",
     "@trending_posts_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "trending_posts_load_more": "Cargar publicaciones antiguas",
+    "@trending_posts_load_more": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "load_more": "Cargar más publicaciones",
+    "@load_more": {
         "type": "text",
         "placeholders": {}
     },
@@ -313,6 +336,11 @@
     },
     "trending_posts_refresh": "Refrescar",
     "@trending_posts_refresh": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "community_not_found": "Esta comunidad no existe",
+    "@community_not_found": {
         "type": "text",
         "placeholders": {}
     },
@@ -475,6 +503,16 @@
         "type": "text",
         "placeholders": {}
     },
+    "exclude_post_community": "No mostrar publicaciones de esta comunidad",
+    "@exclude_post_community": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "undo_exclude_post_community": "Mostrar publicaciones de esta comunidad",
+    "@undo_exclude_post_community": {
+        "type": "text",
+        "placeholders": {}
+    },
     "comments_enabled_message": "Comentarios habilitados",
     "@comments_enabled_message": {
         "type": "text",
@@ -490,6 +528,11 @@
         "type": "text",
         "placeholders": {}
     },
+    "actions_delete_description": "Esta publicación, así como sus comentarios y reacciones se eliminarán permanentemente.",
+    "@actions_delete_description": {
+        "type": "text",
+        "placeholders": {}
+    },
     "actions_deleted": "Post eliminado",
     "@actions_deleted": {
         "type": "text",
@@ -497,6 +540,11 @@
     },
     "actions_delete_comment": "Eliminar comentario",
     "@actions_delete_comment": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "actions_delete_comment_description": "Este comentario, así como sus respuestas y reacciones serán eliminadas permanentemente.",
+    "@actions_delete_comment_description": {
         "type": "text",
         "placeholders": {}
     },

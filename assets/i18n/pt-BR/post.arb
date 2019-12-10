@@ -211,17 +211,17 @@
         "type": "text",
         "placeholders": {}
     },
-    "create_new_post_label": "Create new post",
+    "create_new_post_label": "Criar publicação",
     "@create_new_post_label": {
         "type": "text",
         "placeholders": {}
     },
-    "create_new_community_post_label": "Create new communtiy post",
+    "create_new_community_post_label": "Criar publicação na comunidade",
     "@create_new_community_post_label": {
         "type": "text",
         "placeholders": {}
     },
-    "close_create_post_label": "Close create new post",
+    "close_create_post_label": "Fechar publicação",
     "@close_create_post_label": {
         "type": "text",
         "placeholders": {}
@@ -240,6 +240,14 @@
     "@create_video": {
         "type": "text",
         "placeholders": {}
+    },
+    "create_hashtags_invalid": "Please add a maximum of {maxHashtags} hashtags and keep them under {maxCharacters} characters.",
+    "@create_hashtags_invalid": {
+        "type": "text",
+        "placeholders": {
+            "maxHashtags": {},
+            "maxCharacters": {}
+        }
     },
     "commenter_post_text": "Enviar",
     "@commenter_post_text": {
@@ -301,8 +309,23 @@
         "type": "text",
         "placeholders": {}
     },
+    "top_posts_title": "Explorar",
+    "@top_posts_title": {
+        "type": "text",
+        "placeholders": {}
+    },
     "trending_posts_title": "Publicações em alta",
     "@trending_posts_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "trending_posts_load_more": "Carregar postagens mais antigas",
+    "@trending_posts_load_more": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "load_more": "Carregar mais postagens",
+    "@load_more": {
         "type": "text",
         "placeholders": {}
     },
@@ -313,6 +336,11 @@
     },
     "trending_posts_refresh": "Atualizar",
     "@trending_posts_refresh": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "community_not_found": "Esta comunidade não existe",
+    "@community_not_found": {
         "type": "text",
         "placeholders": {}
     },
@@ -475,6 +503,16 @@
         "type": "text",
         "placeholders": {}
     },
+    "exclude_post_community": "Não mostrar publicações desta comunidade",
+    "@exclude_post_community": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "undo_exclude_post_community": "Mostrar publicações desta comunidade",
+    "@undo_exclude_post_community": {
+        "type": "text",
+        "placeholders": {}
+    },
     "comments_enabled_message": "Comentários ativados no post",
     "@comments_enabled_message": {
         "type": "text",
@@ -490,6 +528,11 @@
         "type": "text",
         "placeholders": {}
     },
+    "actions_delete_description": "A postagem, assim como seus comentários e reações, serão excluídos permanentemente.",
+    "@actions_delete_description": {
+        "type": "text",
+        "placeholders": {}
+    },
     "actions_deleted": "Post excluído",
     "@actions_deleted": {
         "type": "text",
@@ -497,6 +540,11 @@
     },
     "actions_delete_comment": "Excluir comentário",
     "@actions_delete_comment": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "actions_delete_comment_description": "O comentário, assim como suas respostas e reações, serão excluídos permanentemente.",
+    "@actions_delete_comment_description": {
         "type": "text",
         "placeholders": {}
     },

@@ -1,22 +1,20 @@
 import 'package:Okuna/models/community.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/localization.dart';
-import 'package:Okuna/services/navigation_service.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/user.dart';
 import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/theming/text.dart';
-import 'package:Okuna/widgets/tiles/loading_tile.dart';
 import 'package:flutter/material.dart';
 
-class OBSubscribeToCommunityNotificationsTile extends StatefulWidget {
+class OBNewPostNotificationsForCommunityTile extends StatefulWidget {
   final Community community;
   final VoidCallback onSubscribed;
   final VoidCallback onUnsubscribed;
   final Widget title;
   final Widget subtitle;
 
-  const OBSubscribeToCommunityNotificationsTile({
+  const OBNewPostNotificationsForCommunityTile({
     Key key,
     @required this.community,
     this.onSubscribed,
@@ -26,12 +24,12 @@ class OBSubscribeToCommunityNotificationsTile extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  OBSubscribeToCommunityNotificationsTileState createState() {
-    return OBSubscribeToCommunityNotificationsTileState();
+  OBNewPostNotificationsForCommunityTileState createState() {
+    return OBNewPostNotificationsForCommunityTileState();
   }
 }
 
-class OBSubscribeToCommunityNotificationsTileState extends State<OBSubscribeToCommunityNotificationsTile> {
+class OBNewPostNotificationsForCommunityTileState extends State<OBNewPostNotificationsForCommunityTile> {
   bool _requestInProgress;
   UserService _userService;
   ToastService _toastService;
@@ -56,16 +54,16 @@ class OBSubscribeToCommunityNotificationsTileState extends State<OBSubscribeToCo
       builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
         var community = snapshot.data;
 
-        bool isSubscribed = community.isSubscribedToNotifications ?? false;
+        bool areNotificationsEnabled = community.areNewPostNotificationsEnabled ?? false;
 
         return ListTile(
           enabled: !_requestInProgress,
-          leading: OBIcon(isSubscribed ? OBIcons.notifications_off : OBIcons.notifications),
-          title: OBText(isSubscribed
+          leading: OBIcon(areNotificationsEnabled ? OBIcons.notifications_off : OBIcons.notifications),
+          title: OBText(areNotificationsEnabled
               ? _localizationService.community__actions_disable_new_post_notifications_title
               : _localizationService.community__actions_enable_new_post_notifications_title),
-          subtitle: isSubscribed ? widget.subtitle : widget.title,
-          onTap: isSubscribed ? _unsubscribeCommunity : _subscribeCommunity,
+          subtitle: areNotificationsEnabled ? widget.subtitle : widget.title,
+          onTap: areNotificationsEnabled ? _unsubscribeCommunity : _subscribeCommunity,
         );
       },
     );
@@ -74,7 +72,7 @@ class OBSubscribeToCommunityNotificationsTileState extends State<OBSubscribeToCo
   void _subscribeCommunity() async {
     _setRequestInProgress(true);
     try {
-      await _userService.subscribeToCommunityNotifications(widget.community);
+      await _userService.enableNewPostNotificationsForCommunity(widget.community);
       _toastService.success(message: _localizationService.community__actions_enable_new_post_notifications_success, context: context);
     } catch(e) {
       _onError(e);
@@ -87,7 +85,7 @@ class OBSubscribeToCommunityNotificationsTileState extends State<OBSubscribeToCo
   void _unsubscribeCommunity() async {
     _setRequestInProgress(true);
     try {
-      await _userService.unsubscribeFromCommunityNotifications(widget.community);
+      await _userService.disableNewPostNotificationsForCommunity(widget.community);
       _toastService.success(message: _localizationService.community__actions_disable_new_post_notifications_success, context: context);
     } catch(e) {
       _onError(e);

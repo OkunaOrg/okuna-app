@@ -9,12 +9,12 @@ import 'package:Okuna/widgets/theming/text.dart';
 import 'package:Okuna/widgets/tiles/loading_tile.dart';
 import 'package:flutter/material.dart';
 
-class OBSubscribeToUserNotificationsTile extends StatefulWidget {
+class OBNewPostNotificationsForUserTile extends StatefulWidget {
   final User user;
   final VoidCallback onSubscribed;
   final VoidCallback onUnsubscribed;
 
-  const OBSubscribeToUserNotificationsTile({
+  const OBNewPostNotificationsForUserTile({
     Key key,
     @required this.user,
     this.onSubscribed,
@@ -22,12 +22,12 @@ class OBSubscribeToUserNotificationsTile extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  OBSubscribeToUserNotificationsTileState createState() {
-    return OBSubscribeToUserNotificationsTileState();
+  OBNewPostNotificationsForUserTileState createState() {
+    return OBNewPostNotificationsForUserTileState();
   }
 }
 
-class OBSubscribeToUserNotificationsTileState extends State<OBSubscribeToUserNotificationsTile> {
+class OBNewPostNotificationsForUserTileState extends State<OBNewPostNotificationsForUserTile> {
   UserService _userService;
   ToastService _toastService;
   LocalizationService _localizationService;
@@ -52,15 +52,15 @@ class OBSubscribeToUserNotificationsTileState extends State<OBSubscribeToUserNot
       builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
         var user = snapshot.data;
 
-        bool isSubscribed = user.isSubscribedToNotifications ?? false;
+        bool areNotificationsEnabled = user.areNewPostNotificationsEnabled ?? false;
 
         return OBLoadingTile(
           isLoading: _requestInProgress,
-          leading: OBIcon(isSubscribed ? OBIcons.notifications_off : OBIcons.notifications),
-          title: OBText(isSubscribed
+          leading: OBIcon(areNotificationsEnabled ? OBIcons.notifications_off : OBIcons.notifications),
+          title: OBText(areNotificationsEnabled
               ? _localizationService.user__disable_new_post_notifications
               : _localizationService.user__enable_new_post_notifications),
-          onTap: isSubscribed ? _unsubscribeUser : _susbcribeUser,
+          onTap: areNotificationsEnabled ? _unsubscribeUser : _susbcribeUser,
         );
       },
     );
@@ -69,7 +69,7 @@ class OBSubscribeToUserNotificationsTileState extends State<OBSubscribeToUserNot
   void _susbcribeUser() async {
     _setRequestInProgress(true);
     try {
-      await _userService.subscribeToUserNotifications(widget.user);
+      await _userService.enableNewPostNotificationsForUser(widget.user);
       if (widget.onSubscribed != null) widget.onSubscribed();
     } catch (e) {
       _onError(e);
@@ -81,7 +81,7 @@ class OBSubscribeToUserNotificationsTileState extends State<OBSubscribeToUserNot
   void _unsubscribeUser() async {
     _setRequestInProgress(true);
     try {
-      await _userService.unsubscribeFromUserNotifications(widget.user);
+      await _userService.disableNewPostNotificationsForUser(widget.user);
       if (widget.onUnsubscribed != null) widget.onUnsubscribed();
     } catch (e) {
       _onError(e);

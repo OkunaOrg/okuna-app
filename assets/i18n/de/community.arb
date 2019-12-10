@@ -29,6 +29,26 @@
         "type": "text",
         "placeholders": {}
     },
+    "excluded_community": "ausgeschlossene Community",
+    "@excluded_community": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "excluded_communities": "ausgeschlossene Communities",
+    "@excluded_communities": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "exclude_joined_communities": "Beigetretene Communities ausschließen",
+    "@exclude_joined_communities": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "exclude_joined_communities_desc": "Zeige keine Beiträge von Communities, in denen ich Mitglied bin",
+    "@exclude_joined_communities_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
     "type_public": "Öffentlich",
     "@type_public": {
         "type": "text",
@@ -46,6 +66,11 @@
     },
     "members_capitalized": "Mitglieder",
     "@members_capitalized": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "details_favorite": "In Favoriten",
+    "@details_favorite": {
         "type": "text",
         "placeholders": {}
     },
@@ -250,6 +275,16 @@
         "type": "text",
         "placeholders": {}
     },
+    "manage_enable_new_post_notifications": "Enable new post notifications",
+    "@manage_enable_new_post_notifications": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "manage_disable_new_post_notifications": "Disable new post notifications",
+    "@manage_disable_new_post_notifications": {
+        "type": "text",
+        "placeholders": {}
+    },
     "is_private": "Diese Community ist privat.",
     "@is_private": {
         "type": "text",
@@ -336,6 +371,11 @@
     },
     "user_you_text": "Du",
     "@user_you_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "tile_delete": "Löschen",
+    "@tile_delete": {
         "type": "text",
         "placeholders": {}
     },
@@ -658,6 +698,26 @@
         "type": "text",
         "placeholders": {}
     },
+    "actions_enable_new_post_notifications_title": "Beitrags-Benachrichtigungen aktivieren",
+    "@actions_enable_new_post_notifications_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "actions_enable_new_post_notifications_success": "New post notifications enabled",
+    "@actions_enable_new_post_notifications_success": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "actions_disable_new_post_notifications_title": "Beitrags-Benachrichtigungen deaktivieren",
+    "@actions_disable_new_post_notifications_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "actions_disable_new_post_notifications_success": "New post notifications enabled",
+    "@actions_disable_new_post_notifications_success": {
+        "type": "text",
+        "placeholders": {}
+    },
     "join_community": "Beitreten",
     "@join_community": {
         "type": "text",
@@ -748,5 +808,20 @@
         "placeholders": {
             "maxLength": {}
         }
+    },
+    "top_posts_excluded_communities": "Ausgeschlossene Communities",
+    "@top_posts_excluded_communities": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "top_posts_excluded_communities_desc": "Verwalte Communities, die von der Timeline ausgeschlossen sind",
+    "@top_posts_excluded_communities_desc": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "top_posts_settings": "Einstellungen erkunden",
+    "@top_posts_settings": {
+        "type": "text",
+        "placeholders": {}
     }
 }

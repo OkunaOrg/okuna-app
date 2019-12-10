@@ -1,0 +1,7 @@
+{
+    "crop_image": "Recortar imagen",
+    "@crop_image": {
+        "type": "text",
+        "placeholders": {}
+    }
+}

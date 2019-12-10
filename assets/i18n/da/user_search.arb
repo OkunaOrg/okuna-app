@@ -9,6 +9,11 @@
         "type": "text",
         "placeholders": {}
     },
+    "hashtags": "Hashtags",
+    "@hashtags": {
+        "type": "text",
+        "placeholders": {}
+    },
     "users": "Brugere",
     "@users": {
         "type": "text",
@@ -61,6 +66,13 @@
     },
     "no_communities_for": "Ingen fællesskaber fundet for '{searchQuery}'.",
     "@no_communities_for": {
+        "type": "text",
+        "placeholders": {
+            "searchQuery": {}
+        }
+    },
+    "no_hashtags_for": "Ingen hashtags fundet for '{searchQuery}'.",
+    "@no_hashtags_for": {
         "type": "text",
         "placeholders": {
             "searchQuery": {}

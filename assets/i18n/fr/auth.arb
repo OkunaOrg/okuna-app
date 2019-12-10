@@ -24,7 +24,7 @@
         "type": "text",
         "placeholders": {}
     },
-    "username_characters_error": "Un nom d'utilisateur.trice ne peut contenir que des caractères alphanumériques et des underscores.",
+    "username_characters_error": "Un nom d'utilisateur.trice ne peut contenir que des caractères alphanumériques et des traits de soulignement (_).",
     "@username_characters_error": {
         "type": "text",
         "placeholders": {}
@@ -48,6 +48,16 @@
     },
     "create_acc__welcome_to_beta": "Bienvenue sur la version bêta !",
     "@create_acc__welcome_to_beta": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__invalid_token": "Invalid token",
+    "@create_acc__invalid_token": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__validating_token": "Validating token...",
+    "@create_acc__validating_token": {
         "type": "text",
         "placeholders": {}
     },
@@ -86,7 +96,7 @@
         "type": "text",
         "placeholders": {}
     },
-    "create_acc__link_invalid_error": "Ce lien semble invalide.",
+    "create_acc__link_invalid_error": "This link is invalid.",
     "@create_acc__link_invalid_error": {
         "type": "text",
         "placeholders": {}
@@ -210,12 +220,12 @@
         "type": "text",
         "placeholders": {}
     },
-    "create_acc__username_length_error": "😅 Un pseudo ne peut pas être plus long que 30 caractères.",
+    "create_acc__username_length_error": "😅 Un pseudo ne peut avoir plus 30 caractères.",
     "@create_acc__username_length_error": {
         "type": "text",
         "placeholders": {}
     },
-    "create_acc__username_characters_error": "😅 Un pseudo ne peut contenir que des caractères alphanumériques et des underscores.",
+    "create_acc__username_characters_error": "Un nom d'utilisateur.trice ne peut contenir que des caractères alphanumériques et des traits de soulignement (_).",
     "@create_acc__username_characters_error": {
         "type": "text",
         "placeholders": {}
@@ -323,8 +333,13 @@
         "type": "text",
         "placeholders": {}
     },
-    "create_acc__done_created": "Votre compte a été créé avec le nom d'utilisateur.trice suivant :",
+    "create_acc__done_created": "Your account has been created.",
     "@create_acc__done_created": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__suggested_communities": "🥳 Get started by joining the following communities.",
+    "@create_acc__suggested_communities": {
         "type": "text",
         "placeholders": {}
     },
@@ -418,7 +433,7 @@
         "type": "text",
         "placeholders": {}
     },
-    "login__forgot_password_subtitle": "Entrez votre nom d'utilisateur.trice ou votre adresse courriel",
+    "login__forgot_password_subtitle": "Enter your email",
     "@login__forgot_password_subtitle": {
         "type": "text",
         "placeholders": {}
@@ -435,11 +450,6 @@
     },
     "login__email_label": "Adresse courriel",
     "@login__email_label": {
-        "type": "text",
-        "placeholders": {}
-    },
-    "login__or_text": "Ou",
-    "@login__or_text": {
         "type": "text",
         "placeholders": {}
     },

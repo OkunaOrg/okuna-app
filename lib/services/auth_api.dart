@@ -30,7 +30,7 @@ class AuthApiService {
   static const SEARCH_LINKED_USERS_PATH = 'api/auth/linked-users/search/';
   static const GET_BLOCKED_USERS_PATH = 'api/auth/blocked-users/';
   static const SEARCH_BLOCKED_USERS_PATH = 'api/auth/blocked-users/search/';
-  static const SUBSCRIBE_USER_NOTIFICATIONS_PATH = 'api/auth/users/{userUsername}/notifications/subscribe/';
+  static const ENABLE_NEW_POST_NOTIFICATIONS_FOR_USER_PATH = 'api/auth/users/{userUsername}/notifications/subscribe/new-post/';
   static const BLOCK_USER_PATH = 'api/auth/users/{userUsername}/block/';
   static const UNBLOCK_USER_PATH = 'api/auth/users/{userUsername}/unblock/';
   static const GET_FOLLOWERS_PATH = 'api/auth/followers/';
@@ -261,13 +261,13 @@ class AuthApiService {
     return _httpService.post(_makeApiUrl(path), appendAuthorizationToken: true);
   }
 
-  Future<HttpieResponse> subscribeToUserWithUsernameNotifications(String userUsername) {
-    String path = _makeSubscribeToUserWithUsernameNotificationsPath(userUsername);
+  Future<HttpieResponse> enableNewPostNotificationsForUserWithUsername(String userUsername) {
+    String path = _makeEnableNewPostNotificationsForUserWithUsernamePath(userUsername);
     return _httpService.putJSON(_makeApiUrl(path), appendAuthorizationToken: true);
   }
 
-  Future<HttpieResponse> unsubscribeFromUserWithUsernameNotifications(String userUsername) {
-    String path = _makeSubscribeToUserWithUsernameNotificationsPath(userUsername);
+  Future<HttpieResponse> disableNewPostNotificationsForUserWithUsername(String userUsername) {
+    String path = _makeEnableNewPostNotificationsForUserWithUsernamePath(userUsername);
     return _httpService.delete(_makeApiUrl(path), appendAuthorizationToken: true);
   }
 
@@ -450,9 +450,9 @@ class AuthApiService {
         .parse(UNBLOCK_USER_PATH, {'userUsername': username});
   }
 
-  String _makeSubscribeToUserWithUsernameNotificationsPath(String username) {
+  String _makeEnableNewPostNotificationsForUserWithUsernamePath(String username) {
     return _stringTemplateService
-        .parse(SUBSCRIBE_USER_NOTIFICATIONS_PATH, {'userUsername': username});
+        .parse(ENABLE_NEW_POST_NOTIFICATIONS_FOR_USER_PATH, {'userUsername': username});
   }
 
   String _makeReportUserPath({@required username}) {

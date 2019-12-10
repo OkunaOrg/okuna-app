@@ -1,0 +1,14 @@
+{
+    "empty": "Voorbeeld kon niet weergegeven worden",
+    "@empty": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "error_with_description": "Voorbeeld weergeven mislukt met website-fout {description}",
+    "@error_with_description": {
+        "type": "text",
+        "placeholders": {
+            "description": {}
+        }
+    }
+}

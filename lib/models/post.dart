@@ -66,7 +66,7 @@ class Post extends UpdatableModel<Post> {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'created': created.toString(),
+      'created': created?.toString(),
       'uuid': uuid,
       'creator_id': creatorId,
       'creator': creator?.toJson(),
@@ -90,10 +90,10 @@ class Post extends UpdatableModel<Post> {
       'media': media?.postMedia
           ?.map((PostMedia mediaObj) => mediaObj.toJson())
           ?.toList(),
-      'comments_list': commentsList?.comments
+      'comments': commentsList?.comments
           ?.map((PostComment comment) => comment.toJson())
           ?.toList(),
-      'hashtags_list': hashtagsList?.hashtags
+      'hashtags': hashtagsList?.hashtags
           ?.map((Hashtag hashtag) => hashtag.toJson())
           ?.toList(),
       'community': community?.toJson(),
@@ -284,6 +284,10 @@ class Post extends UpdatableModel<Post> {
 
   bool isEncircledPost() {
     return isEncircled || false;
+  }
+
+  bool isOlderThan(Duration duration) {
+    return created.isBefore(DateTime.now().subtract(duration));
   }
 
   List<PostComment> getPostComments() {

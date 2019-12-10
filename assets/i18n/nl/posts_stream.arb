@@ -9,8 +9,13 @@
         "type": "text",
         "placeholders": {}
     },
-    "refreshing_drhoo_subtitle": "Je tijdlijn wordt geladen.",
+    "refreshing_drhoo_subtitle": "Stream vernieuwen.",
     "@refreshing_drhoo_subtitle": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "empty_drhoo_title": "Deze stream is leeg.",
+    "@empty_drhoo_title": {
         "type": "text",
         "placeholders": {}
     },

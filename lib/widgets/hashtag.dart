@@ -7,12 +7,14 @@ class OBHashtag extends StatelessWidget {
   final Hashtag hashtag;
   final ValueChanged<Hashtag> onPressed;
   final TextStyle textStyle;
+  final String rawHashtagName;
 
   const OBHashtag(
       {Key key,
       @required this.hashtag,
       this.onPressed,
-      this.textStyle})
+      this.textStyle,
+      this.rawHashtagName})
       : super(key: key);
 
   @override
@@ -23,26 +25,27 @@ class OBHashtag extends StatelessWidget {
     Color hashtagBackgroundColor = utilsService.parseHexColor(hashtag.color);
     Color hashtagTextColor = utilsService.parseHexColor(hashtag.textColor);
 
-
     TextStyle finalTextStyle = textStyle ?? TextStyle();
 
-    finalTextStyle = finalTextStyle.merge(TextStyle(color: hashtagTextColor, fontWeight: FontWeight.bold));
+    finalTextStyle = finalTextStyle
+        .merge(TextStyle(color: hashtagTextColor, fontWeight: FontWeight.bold));
 
-    Widget hashtagContent = Text('${hashtag.name}', style: finalTextStyle,);
+    Widget hashtagContent = Text(
+      rawHashtagName ?? hashtag.name,
+      style: finalTextStyle,
+    );
 
-
-
-    if(hashtag.hasEmoji()){
-      hashtagContent  = Row(
+    if (hashtag.hasEmoji()) {
+      hashtagContent = Row(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.only(right: 4),
-            child: Image(
-              height: 15,
-              image: AdvancedNetworkImage(hashtag.emoji.image, useDiskCache: true),
-            )
-          ),
+              padding: const EdgeInsets.only(right: 4),
+              child: Image(
+                height: 15,
+                image: AdvancedNetworkImage(hashtag.emoji.image,
+                    useDiskCache: true),
+              )),
           hashtagContent
         ],
       );

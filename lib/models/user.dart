@@ -35,7 +35,7 @@ class User extends UpdatableModel<User> {
   int pendingCommunitiesModeratedObjectsCount;
   int activeModerationPenaltiesCount;
   bool areGuidelinesAccepted;
-  bool isSubscribedToNotifications;
+  bool areNewPostNotificationsEnabled;
   bool isFollowing;
   bool isFollowed;
   bool isConnected;
@@ -93,7 +93,7 @@ class User extends UpdatableModel<User> {
       'pending_communities_moderated_objects_count': pendingCommunitiesModeratedObjectsCount,
       'active_moderation_penalties_count': activeModerationPenaltiesCount,
       'are_guidelines_accepted': areGuidelinesAccepted,
-      'is_subscribed_to_notifications': isSubscribedToNotifications,
+      'are_new_post_notifications_enabled': areNewPostNotificationsEnabled,
       'is_following': isFollowing,
       'is_followed': isFollowed,
       'is_connected': isConnected,
@@ -133,7 +133,7 @@ class User extends UpdatableModel<User> {
       this.unreadNotificationsCount,
       this.postsCount,
       this.inviteCount,
-      this.isSubscribedToNotifications,
+      this.areNewPostNotificationsEnabled,
       this.isFollowing,
       this.isFollowed,
       this.isBlocked,
@@ -189,7 +189,7 @@ class User extends UpdatableModel<User> {
       unreadNotificationsCount = json['unread_notifications_count'];
     if (json.containsKey('posts_count')) postsCount = json['posts_count'];
     if (json.containsKey('invite_count')) inviteCount = json['invite_count'];
-    if (json.containsKey('is_subscribed_to_notifications')) isSubscribedToNotifications = json['is_subscribed_to_notifications'];
+    if (json.containsKey('are_new_post_notifications_enabled')) areNewPostNotificationsEnabled = json['are_new_post_notifications_enabled'];
     if (json.containsKey('is_following')) isFollowing = json['is_following'];
     if (json.containsKey('is_followed')) isFollowed = json['is_followed'];
     if (json.containsKey('is_connected')) isConnected = json['is_connected'];
@@ -630,7 +630,7 @@ class UserFactory extends UpdatableModelFactory<User> {
         followingCount: json['following_count'],
         isFollowing: json['is_following'],
         isFollowed: json['is_followed'],
-        isSubscribedToNotifications: json['is_subscribed_to_notifications'],
+        areNewPostNotificationsEnabled: json['are_new_post_notifications_enabled'],
         isConnected: json['is_connected'],
         isGlobalModerator: json['is_global_moderator'],
         isBlocked: json['is_blocked'],
