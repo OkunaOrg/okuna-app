@@ -1095,8 +1095,7 @@ class LocalizationService {
   }
 
   String get community__manage_enable_new_post_notifications {
-    return Intl.message(
-        "Enable new post notifications",
+    return Intl.message("Enable new post notifications",
         name: 'community__manage_enable_new_post_notifications');
   }
 
@@ -1972,7 +1971,8 @@ class LocalizationService {
   }
 
   String get post__trending_posts_load_more {
-    return Intl.message("Load older posts", name: 'post__trending_posts_load_more');
+    return Intl.message("Load older posts",
+        name: 'post__trending_posts_load_more');
   }
 
   String get post__load_more {
@@ -3180,6 +3180,18 @@ class LocalizationService {
 
   String get user__block_user {
     return Intl.message("Block user", name: 'user__block_user');
+  }
+
+  String get user__block_description {
+    return Intl.message(
+        "You will both dissapear from each other\'s social network experience, with the exception of communities which the person is a staff member of.",
+        name: 'user__block_description');
+  }
+
+  String get user__unblock_description {
+    return Intl.message(
+        "You will both be able to follow, connect or explore each other's content again.",
+        name: 'user__unblock_description');
   }
 
   String get user__unblock_user {
