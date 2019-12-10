@@ -65,6 +65,7 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
   AnimationController _animationController;
   Animation<Offset> _offset;
   double _heightTabs;
+  double _lastScrollPosition;
   double _extraPaddingForSlidableSection;
 
   OBUserSearchResultsTab _selectedSearchResultsTab;
@@ -73,13 +74,12 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
   StreamSubscription<CommunitiesList> _getCommunitiesWithQuerySubscription;
   StreamSubscription<HashtagsList> _getHashtagsWithQuerySubscription;
 
-  Debouncing _showTabsDebouncer;
-  Debouncing _hideTabsDebouncer;
-  Debouncing _isScrollingContinuouslyDebouncer;
+  Throttling _setScrollPositionDebouncer;
 
   static const double OB_BOTTOM_TAB_BAR_HEIGHT = 50.0;
   static const double HEIGHT_SEARCH_BAR = 76.0;
   static const double HEIGHT_TABS_SECTION = 52.0;
+  static const double MIN_SCROLL_OFFSET_TO_ANIMATE_TABS = 250.0;
 
   @override
   void initState() {
@@ -99,8 +99,9 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
     _hashtagSearchResults = [];
     _selectedSearchResultsTab = OBUserSearchResultsTab.users;
     _tabController = new TabController(length: 2, vsync: this);
+    _setScrollPositionDebouncer = new Throttling(duration: Duration(milliseconds: 300));
     _animationController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 150));
+        AnimationController(vsync: this, duration: Duration(milliseconds: 100));
     _offset = Tween<Offset>(begin: Offset.zero, end: Offset(0.0, -1.0))
         .animate(_animationController);
 
@@ -257,19 +258,35 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
   }
 
   void _onScrollPositionChange(ScrollPosition position) {
-    bool isScrollingUp =
-        position.userScrollDirection == ScrollDirection.forward;
+    bool isScrollingUp = position.userScrollDirection == ScrollDirection.forward;
     _hideKeyboard();
     if (position.pixels < (HEIGHT_SEARCH_BAR + HEIGHT_TABS_SECTION)) {
       if (_offset.value.dy == -1.0) _showTabSection();
       return;
     }
+    _setScrollPositionDebouncer.throttle(() => _handScrollDebounce(position.pixels, isScrollingUp));
+  }
 
+  void _handScrollDebounce(double scrollPixels, bool isScrollingUp) {
+    if (_lastScrollPosition != null) {
+        double offset = (scrollPixels - _lastScrollPosition).abs();
+        if (offset > MIN_SCROLL_OFFSET_TO_ANIMATE_TABS) _checkScrollDirectionAndAnimateTabs(isScrollingUp);
+    }
+    _setScrollPosition(scrollPixels);
+  }
+
+  void _checkScrollDirectionAndAnimateTabs(bool isScrollingUp) {
     if (isScrollingUp) {
       _showTabSection();
     } else {
       _hideTabSection();
     }
+  }
+
+  void _setScrollPosition(double scrollPixels) {
+    setState(() {
+      _lastScrollPosition = scrollPixels;
+    });
   }
 
   void _onSearch(String query) {
@@ -406,62 +423,17 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
   }
 
   void _hideTabSection() {
-    if (_hideTabsDebouncer == null) {
-      _setHideTabsDebounce();
-    } else {
-      _resetIsScrollingContinuouslyDebouncer();
-    }
-    if (!_isScrollingUp) return;
-    setState(() {
-      _isScrollingUp = false;
-    });
+    _animationController.forward();
+//    setState(() {
+//      _isScrollingUp = false;
+//    });
   }
 
   void _showTabSection() {
-    if (_showTabsDebouncer == null) {
-      _setShowTabsDebounce();
-    } else {
-      _resetIsScrollingContinuouslyDebouncer();
-    }
-    if (_isScrollingUp) return;
-    setState(() {
-      _isScrollingUp = true;
-    });
-  }
-
-  void _setShowTabsDebounce() {
-    setState(() {
-      _showTabsDebouncer = new Debouncing(duration: Duration(milliseconds: 1000));
-    });
-    _showTabsDebouncer.debounce(() {
-      if (_showTabsDebouncer != null) _animationController.reverse();
-    });
-  }
-
-  void _setHideTabsDebounce() {
-    setState(() {
-      _hideTabsDebouncer = new Debouncing(duration: Duration(milliseconds: 1000));
-    });
-    _hideTabsDebouncer.debounce(() {
-      if (_hideTabsDebouncer != null) _animationController.forward();
-    });
-  }
-
-  void _resetIsScrollingContinuouslyDebouncer() {
-    setState(() {
-      _isScrollingContinuouslyDebouncer = new Debouncing(duration: Duration(milliseconds: 100));
-    });
-    _scheduleCancelIfNotScrolled();
-  }
-
-  void _scheduleCancelIfNotScrolled() {
-    _isScrollingContinuouslyDebouncer.debounce(() {
-      setState(() {
-        _isScrollingContinuouslyDebouncer = null;
-        _showTabsDebouncer = null;
-        _hideTabsDebouncer = null;
-      });
-    });
+    _animationController.reverse();
+//    setState(() {
+//      _isScrollingUp = true;
+//    });
   }
 
   void _setHasSearch(bool hasSearch) {
