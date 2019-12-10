@@ -40,8 +40,6 @@ class OBTrendingPostsState extends State<OBTrendingPosts>
   List<TrendingPost> _currentTrendingPosts;
   List<Post> _currentPosts;
 
-  int olderTrendingPostsPostDelimiterId;
-
   @override
   void initState() {
     super.initState();
@@ -74,7 +72,8 @@ class OBTrendingPostsState extends State<OBTrendingPosts>
 
     return OBPostsStream(
       onScrollLoadMoreLimit: 20,
-      onScrollLoadMoreLimitLoadMoreText: _localizationService.post__trending_posts_load_more,
+      onScrollLoadMoreLimitLoadMoreText:
+          _localizationService.post__trending_posts_load_more,
       streamIdentifier: 'trendingPosts',
       refresher: _postsStreamRefresher,
       onScrollLoader: _postsStreamOnScrollLoader,
@@ -98,7 +97,7 @@ class OBTrendingPostsState extends State<OBTrendingPosts>
     List<TrendingPost> trendingPosts =
         (await _userService.getTrendingPosts(count: 10)).posts;
     List<Post> posts =
-    trendingPosts.map((trendingPost) => trendingPost.post).toList();
+        trendingPosts.map((trendingPost) => trendingPost.post).toList();
 
     _setTrendingPosts(trendingPosts);
     _setPosts(posts);
@@ -111,11 +110,11 @@ class OBTrendingPostsState extends State<OBTrendingPosts>
     int lastTrendingPostId = lastTrendingPost.id;
 
     List<TrendingPost> moreTrendingPosts = (await _userService.getTrendingPosts(
-        maxId: lastTrendingPostId, count: 10))
+            maxId: lastTrendingPostId, count: 10))
         .posts;
 
     List<Post> morePosts =
-    moreTrendingPosts.map((trendingPost) => trendingPost.post).toList();
+        moreTrendingPosts.map((trendingPost) => trendingPost.post).toList();
 
     _appendCurrentTrendingPosts(moreTrendingPosts);
     _appendCurrentPosts(morePosts);
@@ -123,53 +122,17 @@ class OBTrendingPostsState extends State<OBTrendingPosts>
     return morePosts;
   }
 
-  Widget _trendingPostBuilder({BuildContext context,
-    Post post,
-    String postIdentifier,
-    ValueChanged<Post> onPostDeleted}) {
-    Widget postWidget = OBPost(
+  Widget _trendingPostBuilder(
+      {BuildContext context,
+      Post post,
+      String postIdentifier,
+      ValueChanged<Post> onPostDeleted}) {
+    return OBPost(
       post,
       key: Key(postIdentifier),
       onPostDeleted: onPostDeleted,
       inViewId: postIdentifier,
     );
-
-    if (post.isOlderThan(Duration(hours: 12))) {
-      if (olderTrendingPostsPostDelimiterId == null) {
-        olderTrendingPostsPostDelimiterId = post.id;
-      }
-
-      if (olderTrendingPostsPostDelimiterId == post.id) {
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              child: OBHighlightedBox(
-                borderRadius: BorderRadius.circular(5),
-                child: ListTile(
-                  title: OBText(
-                    _localizationService.post__load_more,
-                    size: OBTextSize.large,
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ),
-            ),
-            postWidget,
-          ],
-        );
-      }
-    }
-
-    return postWidget;
-  }
-
-  bool _trendingPostsLoadMoreLimitCondition({BuildContext context,
-    List<Post> posts,
-    OBPostsStreamStatus status}) {
-    if(posts.isEmpty) return true;
-    return posts.last.isOlderThan(Duration(hours: 12));
   }
 
   void _setTrendingPosts(List<TrendingPost> posts) async {
