@@ -1,0 +1,12 @@
+{
+    "storage_permission_denied": "Richiediamo il permesso di memorizzazione per poter selezionare elementi multimediali, per favore permettilo nelle impostazioni.",
+    "@storage_permission_denied": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "camera_permission_denied": "Richiediamo l'autorizzazione per la fotocamera per permetterti di scattare foto e registrare video, per favore permettila nelle tue impostazioni.",
+    "@camera_permission_denied": {
+        "type": "text",
+        "placeholders": {}
+    }
+}

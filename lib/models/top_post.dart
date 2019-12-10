@@ -18,7 +18,7 @@ class TopPost extends UpdatableModel<TopPost> {
     return {
       'id': id,
       'post': post.toJson(),
-      'created': created.toString()
+      'created': created?.toString()
     };
   }
 

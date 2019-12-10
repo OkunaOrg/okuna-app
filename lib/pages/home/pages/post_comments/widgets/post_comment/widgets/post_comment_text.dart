@@ -19,9 +19,7 @@ class OBPostCommentText extends StatefulWidget {
   final VoidCallback onUsernamePressed;
   final int postCommentMaxVisibleLength = 500;
 
-
-  OBPostCommentText(this.postComment,
-      this.post,
+  OBPostCommentText(this.postComment, this.post,
       {Key key, this.onUsernamePressed})
       : super(key: key);
 
@@ -29,7 +27,6 @@ class OBPostCommentText extends StatefulWidget {
   State<StatefulWidget> createState() {
     return OBPostCommentTextState();
   }
-
 }
 
 class OBPostCommentTextState extends State<OBPostCommentText> {
@@ -38,7 +35,6 @@ class OBPostCommentTextState extends State<OBPostCommentText> {
   UserService _userService;
   ToastService _toastService;
   LocalizationService _localizationService;
-
 
   @override
   void initState() {
@@ -64,7 +60,8 @@ class OBPostCommentTextState extends State<OBPostCommentText> {
                 onLongPress: () {
                   OpenbookProviderState openbookProvider =
                       OpenbookProvider.of(context);
-                  Clipboard.setData(ClipboardData(text: widget.postComment.text));
+                  Clipboard.setData(
+                      ClipboardData(text: widget.postComment.text));
                   openbookProvider.toastService.toast(
                       message: 'Text copied!',
                       context: context,
@@ -87,18 +84,21 @@ class OBPostCommentTextState extends State<OBPostCommentText> {
             width: 10.0,
             height: 10.0,
             child: CircularProgressIndicator(strokeWidth: 2.0),
-          )
-      );
+          ));
     }
 
     User loggedInUser = _userService.getLoggedInUser();
-    if (loggedInUser != null && loggedInUser.canTranslatePostComment(widget.postComment, widget.post)) {
+    if (loggedInUser != null &&
+        loggedInUser.canTranslatePostComment(widget.postComment, widget.post)) {
       return GestureDetector(
         onTap: _toggleTranslatePostComment,
-        child: _translatedText != null ?
-          OBSecondaryText(_localizationService.user__translate_show_original, size: OBTextSize.large):
-          OBSecondaryText(_localizationService.user__translate_see_translation, size: OBTextSize.large),
-
+        child: _translatedText != null
+            ? OBSecondaryText(
+                _localizationService.user__translate_show_original,
+                size: OBTextSize.large)
+            : OBSecondaryText(
+                _localizationService.user__translate_see_translation,
+                size: OBTextSize.large),
       );
     } else {
       return SizedBox();
@@ -110,12 +110,10 @@ class OBPostCommentTextState extends State<OBPostCommentText> {
       if (_translatedText == null) {
         _setRequestInProgress(true);
         CancelableOperation<String> _getTranslationOperation =
-        CancelableOperation.fromFuture(
-            _userService.translatePostComment(
-                postComment: widget.postComment,
-                post: widget.post,
-              )
-        );
+            CancelableOperation.fromFuture(_userService.translatePostComment(
+          postComment: widget.postComment,
+          post: widget.post,
+        ));
 
         String translatedText = await _getTranslationOperation.value;
         _setPostCommentTranslatedText(translatedText);
@@ -136,14 +134,16 @@ class OBPostCommentTextState extends State<OBPostCommentText> {
         text: _translatedText ?? widget.postComment.text,
         trailingSmartTextElement: SecondaryTextElement(' (edited)'),
         maxlength: widget.postCommentMaxVisibleLength,
-        getChild: _getPostCommentTranslateButton
+        getChild: _getPostCommentTranslateButton,
+        hashtagsMap: widget.postComment.hashtagsMap,
       );
     } else {
       return OBCollapsibleSmartText(
         size: OBTextSize.large,
         text: _translatedText ?? widget.postComment.text,
         maxlength: widget.postCommentMaxVisibleLength,
-        getChild: _getPostCommentTranslateButton
+        getChild: _getPostCommentTranslateButton,
+        hashtagsMap: widget.postComment.hashtagsMap,
       );
     }
   }

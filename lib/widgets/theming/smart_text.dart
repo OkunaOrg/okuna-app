@@ -1,14 +1,16 @@
+import 'package:Okuna/models/hashtag.dart';
 import 'package:Okuna/models/theme.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/theme.dart';
 import 'package:Okuna/services/theme_value_parser.dart';
+import 'package:Okuna/widgets/hashtag.dart';
 import 'package:Okuna/widgets/theming/text.dart';
 export 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:tinycolor/tinycolor.dart';
-
+import 'dart:ui' as ui;
 // Based on https://github.com/knoxpo/flutter_smart_text_view
 
 abstract class SmartTextElement {
@@ -31,10 +33,10 @@ class LinkElement extends SmartTextElement {
 }
 
 /// Represents an element containing a hastag
-class HashTagElement extends SmartTextElement {
+class HashtagElement extends SmartTextElement {
   final String tag;
 
-  HashTagElement(this.tag) : super(tag);
+  HashtagElement(this.tag) : super(tag);
 
   @override
   String toString() {
@@ -89,6 +91,7 @@ class SecondaryTextElement extends SmartTextElement {
 final linkRegex = RegExp(
     r"(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})",
     caseSensitive: false);
+
 final _tagRegex = RegExp(r"\B#\w*[a-zA-Z]+\w*", caseSensitive: false);
 
 // Architecture of this regex:
@@ -112,7 +115,7 @@ final _usernameRegex = RegExp(
 
 // Same idea as inner part of above regex, but only _ is allowed as special character
 final _communityNameRegex = RegExp(
-    r"((?:(?<=\s)|^)/c/([A-Za-z0-9]|[_](?![_])){1,30})(?=\b|$)",
+    r"((?:(?<=\s)|^)([/]?)c/([A-Za-z0-9]|[_](?![_])){1,30})(?=\b|$)",
     caseSensitive: false);
 
 class SmartMatch {
@@ -135,6 +138,10 @@ List<SmartTextElement> _smartify(String text) {
   }));
   matches.addAll(linkRegex.allMatches(text).map((m) {
     return SmartMatch(LinkElement(m.group(0)), m.start, m.end);
+  }));
+
+  matches.addAll(_tagRegex.allMatches(text).map((m) {
+    return SmartMatch(HashtagElement(m.group(0)), m.start, m.end);
   }));
   // matches.addAll(_tagRegex.allMatches(text).map((m) { return SmartMatch(HashTagElement(m.group(0)), m.start, m.end); }));
   matches.sort((a, b) {
@@ -207,7 +214,7 @@ class OBSmartText extends StatelessWidget {
   final StringCallback onLinkTapped;
 
   /// Callback for tapping a link
-  final StringCallback onTagTapped;
+  final OnHashtagTapped onHashtagTapped;
 
   /// Callback for tapping a link
   final StringCallback onUsernameTapped;
@@ -224,6 +231,8 @@ class OBSmartText extends StatelessWidget {
 
   final TextOverflow lengthOverflow;
 
+  final Map<String, Hashtag> hashtagsMap;
+
   const OBSmartText({
     Key key,
     this.text,
@@ -234,15 +243,16 @@ class OBSmartText extends StatelessWidget {
     this.linkStyle,
     this.tagStyle,
     this.onLinkTapped,
-    this.onTagTapped,
+    this.onHashtagTapped,
     this.onUsernameTapped,
     this.onCommunityNameTapped,
     this.trailingSmartTextElement,
     this.size = OBTextSize.medium,
+    this.hashtagsMap,
   }) : super(key: key);
 
   /// Raw TextSpan builder for more control on the RichText
-  TextSpan _buildTextSpan({
+  TextSpan _buildSpan({
     String text,
     TextStyle style,
     TextStyle secondaryTextStyle,
@@ -261,28 +271,29 @@ class OBSmartText extends StatelessWidget {
       }
     }
 
-    void _onTagTapped(String tag) {
-      if (onTagTapped != null) {
-        // Remove #
-        String cleanedTag = tag.substring(1, tag.length).toLowerCase();
-        onTagTapped(cleanedTag);
-      }
-    }
-
     void _onUsernameTapped(String username) {
       if (onUsernameTapped != null) {
         // Remove @
         String cleanedUsername =
-            username.substring(1, username.length).toLowerCase();
+        username.substring(1, username.length).toLowerCase();
         onUsernameTapped(cleanedUsername);
       }
     }
 
     void _onCommunityNameTapped(String communityName) {
       if (onCommunityNameTapped != null) {
-        // Remove /c/
-        String cleanedCommunityName =
-            communityName.substring(3, communityName.length).toLowerCase();
+        String cleanedCommunityName = communityName;
+        // Remove c/
+        if (cleanedCommunityName.startsWith('/c/')) {
+          cleanedCommunityName =
+              cleanedCommunityName.substring(3, communityName.length);
+        } else if (cleanedCommunityName.startsWith('c/')) {
+          cleanedCommunityName =
+              cleanedCommunityName.substring(2, communityName.length);
+        }
+
+        cleanedCommunityName = cleanedCommunityName.toLowerCase();
+
         onCommunityNameTapped(cleanedCommunityName);
       }
     }
@@ -298,43 +309,68 @@ class OBSmartText extends StatelessWidget {
     }
 
     return TextSpan(
-        children: elements.map<TextSpan>((element) {
-      if (element is TextElement) {
-        return TextSpan(
-          text: element.text,
-          style: style,
-        );
-      } else if (element is SecondaryTextElement) {
-        return TextSpan(
-          text: element.text,
-          style: secondaryTextStyle,
-        );
-      } else if (element is LinkElement) {
-        return LinkTextSpan(
-          text: element.text,
-          style: linkStyle,
-          onPressed: () => _onOpen(element.url),
-        );
-      } else if (element is HashTagElement) {
-        return LinkTextSpan(
-          text: element.text,
-          style: tagStyle,
-          onPressed: () => _onTagTapped(element.tag),
-        );
-      } else if (element is UsernameElement) {
-        return LinkTextSpan(
-          text: element.text,
-          style: usernameStyle,
-          onPressed: () => _onUsernameTapped(element.username),
-        );
-      } else if (element is CommunityNameElement) {
-        return LinkTextSpan(
-          text: element.text,
-          style: communityNameStyle,
-          onPressed: () => _onCommunityNameTapped(element.communityName),
-        );
-      }
-    }).toList());
+        children: elements.map<InlineSpan>((element) {
+          InlineSpan textSpan;
+          if (element is TextElement) {
+            textSpan = TextSpan(
+              text: element.text,
+              style: style,
+            );
+          } else if (element is SecondaryTextElement) {
+            textSpan = TextSpan(
+              text: element.text,
+              style: secondaryTextStyle,
+            );
+          } else if (element is LinkElement) {
+            textSpan = LinkTextSpan(
+              text: element.text,
+              style: linkStyle,
+              onPressed: () => _onOpen(element.url),
+            );
+          } else if (element is HashtagElement) {
+            String rawHashtagName =
+            element.text.substring(1, element.text.length);
+            String hashtagName = rawHashtagName.toLowerCase();
+            if (this.hashtagsMap != null &&
+                this.hashtagsMap.containsKey(hashtagName)) {
+              Hashtag hashtag = this.hashtagsMap[hashtagName];
+              textSpan = WidgetSpan(
+                  baseline: TextBaseline.alphabetic,
+                  alignment: ui.PlaceholderAlignment.baseline,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 3),
+                    child: OBHashtag(
+                      hashtag: hashtag,
+                      rawHashtagName: rawHashtagName,
+                      onPressed: (Hashtag hashtag) {
+                        if (onHashtagTapped != null) onHashtagTapped(
+                            hashtag: hashtag, rawHashtagName: rawHashtagName);
+                      },
+                      textStyle: usernameStyle,
+                    ),
+                  ));
+            } else {
+              textSpan = TextSpan(
+                text: element.text,
+                style: style,
+              );
+            }
+          } else if (element is UsernameElement) {
+            textSpan = LinkTextSpan(
+              text: element.text,
+              style: usernameStyle,
+              onPressed: () => _onUsernameTapped(element.username),
+            );
+          } else if (element is CommunityNameElement) {
+            textSpan = LinkTextSpan(
+              text: element.text,
+              style: communityNameStyle,
+              onPressed: () => _onCommunityNameTapped(element.communityName),
+            );
+          }
+
+          return textSpan;
+        }).toList());
   }
 
   String runeSubstring({String input, int start, int end}) {
@@ -356,7 +392,9 @@ class OBSmartText extends StatelessWidget {
 
       if (length + elementLength > maxlength) {
         elements.removeRange(i + 1, elements.length);
-        element.text = runeSubstring(input: element.text, start: 0, end: maxlength - length).trimRight();
+        element.text = runeSubstring(
+            input: element.text, start: 0, end: maxlength - length)
+            .trimRight();
 
         if (lengthOverflow == TextOverflow.ellipsis) {
           element.text = element.text + '...';
@@ -384,7 +422,7 @@ class OBSmartText extends StatelessWidget {
         OBTheme theme = snapshot.data;
 
         Color primaryTextColor =
-            themeValueParserService.parseColor(theme.primaryTextColor);
+        themeValueParserService.parseColor(theme.primaryTextColor);
 
         TextStyle textStyle = TextStyle(
             color: primaryTextColor,
@@ -396,8 +434,10 @@ class OBSmartText extends StatelessWidget {
         if (trailingSmartTextElement != null) {
           // This is ugly af, why do we even need this.
           Color secondaryTextColor =
-              themeValueParserService.parseColor(theme.secondaryTextColor);
-          secondaryTextColor = TinyColor(secondaryTextColor).lighten(10).color;
+          themeValueParserService.parseColor(theme.secondaryTextColor);
+          secondaryTextColor = TinyColor(secondaryTextColor)
+              .lighten(10)
+              .color;
           secondaryTextStyle = TextStyle(
               color: secondaryTextColor,
               fontSize: fontSize * 0.8,
@@ -417,7 +457,7 @@ class OBSmartText extends StatelessWidget {
         return RichText(
           overflow: overflow,
           softWrap: true,
-          text: _buildTextSpan(
+          text: _buildSpan(
               text: text,
               style: textStyle,
               secondaryTextStyle: secondaryTextStyle,
@@ -426,7 +466,6 @@ class OBSmartText extends StatelessWidget {
               communityNameStyle: smartItemsStyle,
               usernameStyle: smartItemsStyle,
               onLinkTapped: onLinkTapped,
-              onTagTapped: onTagTapped,
               onCommunityNameTapped: onCommunityNameTapped,
               onUsernameTapped: onUsernameTapped),
         );
@@ -438,8 +477,11 @@ class OBSmartText extends StatelessWidget {
 class LinkTextSpan extends TextSpan {
   LinkTextSpan({TextStyle style, VoidCallback onPressed, String text})
       : super(
-          style: style,
-          text: text,
-          recognizer: new TapGestureRecognizer()..onTap = onPressed,
-        );
+    style: style,
+    text: text,
+    recognizer: new TapGestureRecognizer()
+      ..onTap = onPressed,
+  );
 }
+
+typedef OnHashtagTapped({Hashtag hashtag, String rawHashtagName});

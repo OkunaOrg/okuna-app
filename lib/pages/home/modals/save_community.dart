@@ -149,7 +149,7 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
                           child: Column(
                             children: <Widget>[
                               const SizedBox(
-                                height: (OBCover.normalSizeHeight) -
+                                height: (OBCover.largeSizeHeight) -
                                     (OBAvatar.AVATAR_SIZE_LARGE / 2),
                               ),
                               _buildAvatar()
@@ -157,7 +157,7 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
                           ),
                         ),
                         const SizedBox(
-                            height: OBCover.normalSizeHeight +
+                            height: OBCover.largeSizeHeight +
                                 OBAvatar.AVATAR_SIZE_LARGE / 2)
                       ],
                     ),
@@ -191,7 +191,7 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
                                 decoration: InputDecoration(
                                     prefixIcon: const OBIcon(OBIcons.shortText),
                                     labelText: _localizationService.community__save_community_name_title,
-                                    prefixText: '/c/',
+                                    prefixText: 'c/',
                                     hintText:
                                     _localizationService.community__save_community_name_title_hint_text),
                                 validator: (String communityName) {

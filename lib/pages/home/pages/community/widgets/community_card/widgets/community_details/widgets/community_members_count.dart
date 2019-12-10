@@ -68,6 +68,9 @@ class OBCommunityMembersCount extends StatelessWidget {
                                 .parseColor(theme.secondaryTextColor)))
                   ])),
                 ),
+                const SizedBox(
+                  width: 10,
+                ),
               ],
             ),
           );

@@ -56,39 +56,46 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
     _validationService = openbookProvider.validationService;
     _userService = openbookProvider.userService;
 
-    return Scaffold(
-      body: Center(
-        child: SingleChildScrollView(
-            child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 40.0),
-                child: Column(
-                  children: <Widget>[
-                    _buildHeading(context: context),
-                    const SizedBox(
-                      height: 30.0,
-                    ),
-                    _buildLoginForm(),
-                    const SizedBox(
-                      height: 20.0,
-                    ),
-                    _buildLoginFeedback()
-                  ],
-                ))),
-      ),
-      bottomNavigationBar: BottomAppBar(
-        color: Colors.transparent,
-        elevation: 0.0,
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Expanded(
-                child: _buildPreviousButton(context: context),
-              ),
-              Expanded(child: _buildContinueButton(context)),
-            ],
+    return Container(
+      color: Colors.white,
+      child: Scaffold(
+        body: Center(
+          child: SingleChildScrollView(
+              child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 40.0),
+                  child: Column(
+                    children: <Widget>[
+                      _buildHeading(context: context),
+                      const SizedBox(
+                        height: 30.0,
+                      ),
+                      _buildLoginForm(),
+                      const SizedBox(
+                        height: 20.0,
+                      ),
+                      _buildLoginFeedback()
+                    ],
+                  ))),
+        ),
+        resizeToAvoidBottomInset: true,
+        bottomNavigationBar: BottomAppBar(
+          color: Colors.transparent,
+          elevation: 0.0,
+          child: Padding(
+            padding: EdgeInsets.only(bottom: 20.0 + MediaQuery
+                .of(context)
+                .viewInsets
+                .bottom, top: 20.0, left: 20.0, right: 20.0),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Expanded(
+                  child: _buildPreviousButton(context: context),
+                ),
+                Expanded(child: _buildContinueButton(context)),
+              ],
+            ),
           ),
         ),
       ),
@@ -131,13 +138,16 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
     try {
       await _userService.loginWithCredentials(
           username: username, password: password);
-      Navigator.pop(context);  //pop the login form screen
-      Navigator.pushReplacementNamed(context, '/'); //replace the underlying login splash screen too
+      Navigator.pop(context); //pop the login form screen
+      Navigator.pushReplacementNamed(
+          context, '/'); //replace the underlying login splash screen too
     } on CredentialsMismatchError {
       _setLoginFeedback(
-          _localizationService.trans('auth__login__credentials_mismatch_error'));
+          _localizationService.trans(
+              'auth__login__credentials_mismatch_error'));
     } on HttpieRequestError {
-      _setLoginFeedback(_localizationService.trans('auth__login__server_error'));
+      _setLoginFeedback(
+          _localizationService.trans('auth__login__server_error'));
     } on HttpieConnectionRefusedError {
       _setLoginFeedback(
           _localizationService.trans('auth__login__connection_error'));
@@ -170,7 +180,8 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
   }
 
   Widget _buildForgotPasswordButton({@required BuildContext context}) {
-    String buttonText = _localizationService.trans('auth__login__forgot_password');
+    String buttonText = _localizationService.trans(
+        'auth__login__forgot_password');
 
     return OBSecondaryButton(
       isFullWidth: true,
@@ -221,13 +232,13 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
     // the stream changes. Therefore a flag is used to bootstrap initial value
 
     String usernameInputLabel =
-        _localizationService.trans('auth__login__username_label');
+    _localizationService.trans('auth__login__username_label');
 
     String passwordInputLabel =
-        _localizationService.trans('auth__login__password_label');
+    _localizationService.trans('auth__login__password_label');
 
     EdgeInsetsGeometry inputContentPadding =
-        EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0);
+    EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0);
 
     return Form(
         key: _formKey,
@@ -246,10 +257,10 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
                             controller: _usernameController,
                             validator: _validateUsername,
                             decoration: InputDecoration(
-                              contentPadding: inputContentPadding,
-                              labelText: usernameInputLabel,
-                              border: OutlineInputBorder(),
-                              errorMaxLines: 3
+                                contentPadding: inputContentPadding,
+                                labelText: usernameInputLabel,
+                                border: OutlineInputBorder(),
+                                errorMaxLines: 3
                             ),
                             autocorrect: false,
                           ),
@@ -279,7 +290,8 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
                             height: 20.0,
                           ),
                           Center(
-                            child: _buildForgotPasswordButton(context: context)
+                              child: _buildForgotPasswordButton(
+                                  context: context)
                           )
                         ],
                       )),

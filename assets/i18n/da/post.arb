@@ -241,6 +241,14 @@
         "type": "text",
         "placeholders": {}
     },
+    "create_hashtags_invalid": "Tilføj venligst højest {maxHashtags} hashtags og hold dem under {maxCharacters} tegn.",
+    "@create_hashtags_invalid": {
+        "type": "text",
+        "placeholders": {
+            "maxHashtags": {},
+            "maxCharacters": {}
+        }
+    },
     "commenter_post_text": "Opslag",
     "@commenter_post_text": {
         "type": "text",
@@ -301,8 +309,23 @@
         "type": "text",
         "placeholders": {}
     },
+    "top_posts_title": "Udforsk",
+    "@top_posts_title": {
+        "type": "text",
+        "placeholders": {}
+    },
     "trending_posts_title": "Populære opslag",
     "@trending_posts_title": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "trending_posts_load_more": "Indlæs ældre indlæg",
+    "@trending_posts_load_more": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "load_more": "Indlæs flere indlæg",
+    "@load_more": {
         "type": "text",
         "placeholders": {}
     },
@@ -313,6 +336,11 @@
     },
     "trending_posts_refresh": "Opdater",
     "@trending_posts_refresh": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "community_not_found": "Denne gruppe findes ikke",
+    "@community_not_found": {
         "type": "text",
         "placeholders": {}
     },
@@ -475,6 +503,16 @@
         "type": "text",
         "placeholders": {}
     },
+    "exclude_post_community": "Vis ingen indlæg fra denne gruppe",
+    "@exclude_post_community": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "undo_exclude_post_community": "Vis indlæg fra denne gruppe",
+    "@undo_exclude_post_community": {
+        "type": "text",
+        "placeholders": {}
+    },
     "comments_enabled_message": "Kommentarer aktiveret for opslag",
     "@comments_enabled_message": {
         "type": "text",
@@ -490,6 +528,11 @@
         "type": "text",
         "placeholders": {}
     },
+    "actions_delete_description": "Indlægget samt kommentarerne og reaktionerne dertil vil slettes varig.",
+    "@actions_delete_description": {
+        "type": "text",
+        "placeholders": {}
+    },
     "actions_deleted": "Opslag slettet",
     "@actions_deleted": {
         "type": "text",
@@ -497,6 +540,11 @@
     },
     "actions_delete_comment": "Slet kommentar",
     "@actions_delete_comment": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "actions_delete_comment_description": "Kommentaren samt svarene og reaktionerne dertil vil slettes varig.",
+    "@actions_delete_comment_description": {
         "type": "text",
         "placeholders": {}
     },

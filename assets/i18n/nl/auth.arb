@@ -51,6 +51,16 @@
         "type": "text",
         "placeholders": {}
     },
+    "create_acc__invalid_token": "Ongeldig token",
+    "@create_acc__invalid_token": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__validating_token": "Token valideren...",
+    "@create_acc__validating_token": {
+        "type": "text",
+        "placeholders": {}
+    },
     "create_acc__previous": "Terug",
     "@create_acc__previous": {
         "type": "text",
@@ -86,7 +96,7 @@
         "type": "text",
         "placeholders": {}
     },
-    "create_acc__link_invalid_error": "Deze link lijkt ongeldig.",
+    "create_acc__link_invalid_error": "Deze link is ongeldig.",
     "@create_acc__link_invalid_error": {
         "type": "text",
         "placeholders": {}
@@ -323,8 +333,13 @@
         "type": "text",
         "placeholders": {}
     },
-    "create_acc__done_created": "Je account is aangemaakt met gebruikersnaam ",
+    "create_acc__done_created": "Je account is aangemaakt.",
     "@create_acc__done_created": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "create_acc__suggested_communities": "🥳 Ga aan de slag door deel te nemen aan de volgende communities.",
+    "@create_acc__suggested_communities": {
         "type": "text",
         "placeholders": {}
     },
@@ -418,7 +433,7 @@
         "type": "text",
         "placeholders": {}
     },
-    "login__forgot_password_subtitle": "Voer je gebruikersnaam of email adres in",
+    "login__forgot_password_subtitle": "Voer je e-mailadres in",
     "@login__forgot_password_subtitle": {
         "type": "text",
         "placeholders": {}
@@ -435,11 +450,6 @@
     },
     "login__email_label": "E-mail",
     "@login__email_label": {
-        "type": "text",
-        "placeholders": {}
-    },
-    "login__or_text": "Of",
-    "@login__or_text": {
         "type": "text",
         "placeholders": {}
     },

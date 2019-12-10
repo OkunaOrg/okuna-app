@@ -1,3 +1,5 @@
+import 'package:Okuna/models/hashtag.dart';
+import 'package:Okuna/models/hashtags_list.dart';
 import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/post_comment_list.dart';
 import 'package:Okuna/models/post_comment_reaction.dart';
@@ -23,6 +25,8 @@ class PostComment extends UpdatableModel<PostComment> {
   PostCommentList replies;
   ReactionsEmojiCountList reactionsEmojiCounts;
   PostCommentReaction reaction;
+  HashtagsList hashtagsList;
+  Map<String, Hashtag> hashtagsMap;
 
   Post post;
   bool isEdited;
@@ -73,10 +77,13 @@ class PostComment extends UpdatableModel<PostComment> {
       this.isReported,
       this.isMuted,
       this.parentComment,
+      this.hashtagsList,
       this.replies,
       this.repliesCount,
       this.reactionsEmojiCounts,
-      this.reaction});
+      this.reaction}) {
+    _updateHashtagsMap();
+  }
 
   static final factory = PostCommentFactory();
 
@@ -88,7 +95,7 @@ class PostComment extends UpdatableModel<PostComment> {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'created': created.toString(),
+      'created': created?.toString(),
       'text': text,
       'language': language.toJson(),
       'creator_id': creatorId,
@@ -98,9 +105,15 @@ class PostComment extends UpdatableModel<PostComment> {
       'is_reported': isReported,
       'is_muted': isMuted,
       'parent_comment': parentComment.toJson(),
-      'replies': replies.comments.map((PostComment reply) => reply.toJson())?.toList(),
+      'replies':
+          replies.comments.map((PostComment reply) => reply.toJson())?.toList(),
+      'hashtags': hashtagsList?.hashtags
+          ?.map((Hashtag hashtag) => hashtag.toJson())
+          ?.toList(),
       'replies_count': repliesCount,
-      'reactions_emoji_counts': reactionsEmojiCounts.counts.map((ReactionsEmojiCount reaction) => reaction.toJson())?.toList(),
+      'reactions_emoji_counts': reactionsEmojiCounts.counts
+          .map((ReactionsEmojiCount reaction) => reaction.toJson())
+          ?.toList(),
       'reaction': reaction.toJson()
     };
   }
@@ -160,6 +173,11 @@ class PostComment extends UpdatableModel<PostComment> {
           factory.parseReactionsEmojiCounts(json['reactions_emoji_counts']);
     if (json.containsKey('reaction'))
       reaction = factory.parseReaction(json['reaction']);
+
+    if (json.containsKey('hashtags')) {
+      hashtagsList = factory.parseHashtagsList(json['hashtags']);
+      _updateHashtagsMap();
+    }
   }
 
   String getRelativeCreated() {
@@ -228,7 +246,9 @@ class PostComment extends UpdatableModel<PostComment> {
       throw 'Trying to remove no reaction';
     }
 
-    var newEmojiCounts = reactionsEmojiCounts.counts != null ? reactionsEmojiCounts.counts.toList() : [];
+    var newEmojiCounts = reactionsEmojiCounts.counts != null
+        ? reactionsEmojiCounts.counts.toList()
+        : [];
 
     if (hasReaction) {
       var currentReactionEmojiCount = newEmojiCounts.firstWhere((emojiCount) {
@@ -273,6 +293,18 @@ class PostComment extends UpdatableModel<PostComment> {
   bool hasReaction() {
     return reaction != null;
   }
+
+  void _updateHashtagsMap() {
+    if (hashtagsList == null) {
+      this.hashtagsMap = null;
+      return;
+    }
+
+    Map<String, Hashtag> updatedMap = Map();
+    hashtagsList.hashtags
+        .forEach((hashtag) => updatedMap[hashtag.name] = hashtag);
+    hashtagsMap = updatedMap;
+  }
 }
 
 class PostCommentFactory extends UpdatableModelFactory<PostComment> {
@@ -297,6 +329,7 @@ class PostCommentFactory extends UpdatableModelFactory<PostComment> {
         text: json['text'],
         language: parseLanguage(json['language']),
         reaction: parseReaction(json['reaction']),
+        hashtagsList: parseHashtagsList(json['hashtags']),
         reactionsEmojiCounts:
             parseReactionsEmojiCounts(json['reactions_emoji_counts']));
   }
@@ -339,6 +372,11 @@ class PostCommentFactory extends UpdatableModelFactory<PostComment> {
   Language parseLanguage(Map languageData) {
     if (languageData == null) return null;
     return Language.fromJson(languageData);
+  }
+
+  HashtagsList parseHashtagsList(List hashtagsList) {
+    if (hashtagsList == null) return null;
+    return HashtagsList.fromJson(hashtagsList);
   }
 }
 

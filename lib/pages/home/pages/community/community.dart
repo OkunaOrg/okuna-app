@@ -72,6 +72,16 @@ class OBCommunityPageState extends State<OBCommunityPage>
       _userService = openbookProvider.userService;
       _localizationService = openbookProvider.localizationService;
       _needsBootstrap = false;
+
+      // If the user doesn't have permission to view the community we need to
+      // manually trigger a refresh here to make sure the model contains all
+      // relevant community information (like admins and moderators).
+      //
+      // If the user can see the content, a refresh will be triggered
+      // automatically by the OBPostsStream.
+      if (!_userCanSeeCommunityContent(_community)) {
+        _refreshCommunity();
+      }
     }
 
     return CupertinoPageScaffold(
@@ -91,16 +101,7 @@ class OBCommunityPageState extends State<OBCommunityPage>
                         AsyncSnapshot<Community> snapshot) {
                       Community latestCommunity = snapshot.data;
 
-                      bool communityIsPrivate = latestCommunity.isPrivate();
-
-                      User loggedInUser = _userService.getLoggedInUser();
-                      bool userIsMember =
-                          latestCommunity.isMember(loggedInUser);
-
-                      bool userCanSeeCommunityContent =
-                          !communityIsPrivate || userIsMember;
-
-                      return userCanSeeCommunityContent
+                      return _userCanSeeCommunityContent(latestCommunity)
                           ? _buildCommunityContent()
                           : _buildPrivateCommunityContent();
                     }),
@@ -108,6 +109,15 @@ class OBCommunityPageState extends State<OBCommunityPage>
             ],
           ),
         ));
+  }
+
+  bool _userCanSeeCommunityContent(Community community) {
+    bool communityIsPrivate = community.isPrivate();
+
+    User loggedInUser = _userService.getLoggedInUser();
+    bool userIsMember = community.isMember(loggedInUser);
+
+    return !communityIsPrivate || userIsMember;
   }
 
   Widget _buildCommunityContent() {
@@ -181,6 +191,7 @@ class OBCommunityPageState extends State<OBCommunityPage>
   void _onNewPostDataUploaderPostPublished(
       Post publishedPost, OBNewPostData newPostData) {
     _removeNewPostData(newPostData);
+    _community.incrementPostsCount();
     _obPostsStreamController.addPostToTop(publishedPost);
   }
 

@@ -9,6 +9,8 @@ import 'package:Okuna/pages/home/lib/poppable_page_controller.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/modal_service.dart';
+import 'package:Okuna/services/theme.dart';
+import 'package:Okuna/services/theme_value_parser.dart';
 import 'package:Okuna/services/user.dart';
 import 'package:Okuna/widgets/badges/badge.dart';
 import 'package:Okuna/widgets/buttons/button.dart';
@@ -41,6 +43,8 @@ class OBTimelinePageState extends State<OBTimelinePage> {
   ModalService _modalService;
   UserService _userService;
   LocalizationService _localizationService;
+  ThemeService _themeService;
+  ThemeValueParserService _themeValueParserService;
 
   List<Post> _initialPosts;
   List<OBNewPostData> _newPostsData;
@@ -80,44 +84,43 @@ class OBTimelinePageState extends State<OBTimelinePage> {
     if (_needsBootstrap) {
       var openbookProvider = OpenbookProvider.of(context);
       _modalService = openbookProvider.modalService;
-      _localizationService =
-          openbookProvider.localizationService;
+      _localizationService = openbookProvider.localizationService;
       _userService = openbookProvider.userService;
+      _themeService = openbookProvider.themeService;
+      _themeService = openbookProvider.themeService;
+      _themeValueParserService = openbookProvider.themeValueParserService;
       _bootstrap();
       _needsBootstrap = false;
     }
 
-
-
     return OBCupertinoPageScaffold(
+      backgroundColor: _themeValueParserService.parseColor(_themeService.getActiveTheme().primaryColor),
         navigationBar: OBThemedNavigationBar(
             title: 'Home', trailing: _buildFiltersButton()),
-        child: OBPrimaryColorContainer(
-          child: Stack(
-            children: <Widget>[
-              _loggedInUserBootstrapped
-                  ? OBPostsStream(
-                      controller: _timelinePostsStreamController,
-                      prependedItems: _buildPostsStreamPrependedItems(),
-                      streamIdentifier: 'timeline',
-                      onScrollLoader: _postsStreamOnScrollLoader,
-                      refresher: _postsStreamRefresher,
-                      initialPosts: _initialPosts,
-                    )
-                  : const SizedBox(),
-              Positioned(
-                  bottom: 20.0,
-                  right: 20.0,
-                  child: Semantics(
-                      button: true,
-                      label: _localizationService.post__create_new_post_label,
-                      child: OBFloatingActionButton(
-                          type: OBButtonType.primary,
-                          onPressed: _onCreatePost,
-                          child: const OBIcon(OBIcons.createPost,
-                              size: OBIconSize.large, color: Colors.white))))
-            ],
-          ),
+        child: Stack(
+          children: <Widget>[
+            _loggedInUserBootstrapped
+                ? OBPostsStream(
+              controller: _timelinePostsStreamController,
+              prependedItems: _buildPostsStreamPrependedItems(),
+              streamIdentifier: 'timeline',
+              onScrollLoader: _postsStreamOnScrollLoader,
+              refresher: _postsStreamRefresher,
+              initialPosts: _initialPosts,
+            )
+                : const SizedBox(),
+            Positioned(
+                bottom: 20.0,
+                right: 20.0,
+                child: Semantics(
+                    button: true,
+                    label: _localizationService.post__create_new_post_label,
+                    child: OBFloatingActionButton(
+                        type: OBButtonType.primary,
+                        onPressed: _onCreatePost,
+                        child: const OBIcon(OBIcons.createPost,
+                            size: OBIconSize.large, color: Colors.white))))
+          ],
         ));
   }
 
@@ -197,12 +200,11 @@ class OBTimelinePageState extends State<OBTimelinePage> {
   }
 
   Future<bool> _onCreatePost({String text, File image, File video}) async {
-    OBNewPostData createPostData = await _modalService
-        .openCreatePost(text: text, image: image, video: video, context: context);
+    OBNewPostData createPostData = await _modalService.openCreatePost(
+        text: text, image: image, video: video, context: context);
     if (createPostData != null) {
       addNewPostData(createPostData);
-      _timelinePostsStreamController.scrollToTop(
-          skipRefresh: true);
+      _timelinePostsStreamController.scrollToTop(skipRefresh: true);
 
       return true;
     }

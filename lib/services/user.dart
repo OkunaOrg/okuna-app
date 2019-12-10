@@ -17,6 +17,8 @@ import 'package:Okuna/models/emoji.dart';
 import 'package:Okuna/models/emoji_group_list.dart';
 import 'package:Okuna/models/follow.dart';
 import 'package:Okuna/models/follows_list.dart';
+import 'package:Okuna/models/hashtag.dart';
+import 'package:Okuna/models/hashtags_list.dart';
 import 'package:Okuna/models/language.dart';
 import 'package:Okuna/models/language_list.dart';
 import 'package:Okuna/models/moderation/moderated_object.dart';
@@ -40,6 +42,7 @@ import 'package:Okuna/models/reactions_emoji_count_list.dart';
 import 'package:Okuna/models/posts_list.dart';
 import 'package:Okuna/models/top_post.dart';
 import 'package:Okuna/models/top_posts_list.dart';
+import 'package:Okuna/models/trending_posts_list.dart';
 import 'package:Okuna/models/user.dart';
 import 'package:Okuna/models/user_invite.dart';
 import 'package:Okuna/models/user_invites_list.dart';
@@ -55,6 +58,7 @@ import 'package:Okuna/services/devices_api.dart';
 import 'package:Okuna/services/draft.dart';
 import 'package:Okuna/services/emojis_api.dart';
 import 'package:Okuna/services/follows_api.dart';
+import 'package:Okuna/services/hashtags_api.dart';
 import 'package:Okuna/services/httpie.dart';
 import 'package:Okuna/services/follows_lists_api.dart';
 import 'package:Okuna/services/localization.dart';
@@ -75,6 +79,8 @@ export 'package:Okuna/services/httpie.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
 
+import 'intercom.dart';
+
 class UserService {
   OBStorage _userStorage;
 
@@ -89,6 +95,7 @@ class UserService {
   PostsApiService _postsApiService;
   ModerationApiService _moderationApiService;
   CommunitiesApiService _communitiesApiService;
+  HashtagsApiService _hashtagsApiService;
   CategoriesApiService _categoriesApiService;
   EmojisApiService _emojisApiService;
   FollowsApiService _followsApiService;
@@ -103,6 +110,7 @@ class UserService {
   LocalizationService _localizationService;
   DraftService _draftService;
   PushNotificationsService _pushNotificationService;
+  IntercomService _intercomService;
 
   // If this is null, means user logged out.
   Stream<User> get loggedInUserChange => _loggedInUserChangeSubject.stream;
@@ -124,6 +132,10 @@ class UserService {
   void setPushNotificationsService(
       PushNotificationsService pushNotificationsService) {
     _pushNotificationService = pushNotificationsService;
+  }
+
+  void setIntercomService(IntercomService intercomService) {
+    _intercomService = intercomService;
   }
 
   void setModerationApiService(ModerationApiService moderationApiService) {
@@ -158,6 +170,10 @@ class UserService {
 
   void setCommunitiesApiService(CommunitiesApiService communitiesApiService) {
     _communitiesApiService = communitiesApiService;
+  }
+
+  void setHashtagsApiService(HashtagsApiService hashtagsApiService) {
+    _hashtagsApiService = hashtagsApiService;
   }
 
   void setCategoriesApiService(CategoriesApiService categoriesApiService) {
@@ -208,16 +224,22 @@ class UserService {
   }
 
   Future<void> logout() async {
-    _deleteCurrentDevice();
-    await _removeStoredUserData();
-    await _removeStoredAuthToken();
-    _httpieService.removeAuthorizationToken();
-    _draftService.clear();
-    _pushNotificationService.clearPromptedUserForPermission();
-    _removeLoggedInUser();
-    await clearCache();
-    User.clearSessionCache();
-    _getOrCreateCurrentDeviceCache = null;
+    try {
+      await _pushNotificationService.clearPromptedUserForPermission();
+      await _intercomService.disableIntercom();
+    } catch (error) {
+      throw error;
+    } finally {
+      _deleteCurrentDevice();
+      await _removeStoredUserData();
+      await _removeStoredAuthToken();
+      _httpieService.removeAuthorizationToken();
+      _draftService.clear();
+      _removeLoggedInUser();
+      await clearCache();
+      User.clearSessionCache();
+      _getOrCreateCurrentDeviceCache = null;
+    }
   }
 
   Future<void> clearCache() async {
@@ -323,9 +345,9 @@ class UserService {
     }
   }
 
-  Future<void> requestPasswordReset({String username, String email}) async {
-    HttpieResponse response = await _authApiService.requestPasswordReset(
-        username: username, email: email);
+  Future<void> requestPasswordReset({@required String email}) async {
+    HttpieResponse response =
+        await _authApiService.requestPasswordReset(email: email);
     _checkResponseIsOk(response);
   }
 
@@ -470,13 +492,14 @@ class UserService {
     return TopPostsList.fromJson(json.decode(response.body));
   }
 
-  Future<PostsList> getTrendingPosts() async {
-    HttpieResponse response =
-        await _postsApiService.getTrendingPosts(authenticatedRequest: true);
+  Future<TrendingPostsList> getTrendingPosts(
+      {int maxId, int minId, int count}) async {
+    HttpieResponse response = await _postsApiService.getTrendingPosts(
+        maxId: maxId, minId: minId, count: count, authenticatedRequest: true);
 
     _checkResponseIsOk(response);
 
-    return PostsList.fromJson(json.decode(response.body));
+    return TrendingPostsList.fromJson(json.decode(response.body));
   }
 
   Future<PostsList> getTimelinePosts(
@@ -945,6 +968,20 @@ class UserService {
     return User.fromJson(json.decode(response.body));
   }
 
+  Future<User> enableNewPostNotificationsForUser(User user) async {
+    HttpieResponse response = await _authApiService
+        .enableNewPostNotificationsForUserWithUsername(user.username);
+    _checkResponseIsCreated(response);
+    return User.fromJson(json.decode(response.body));
+  }
+
+  Future<User> disableNewPostNotificationsForUser(User user) async {
+    HttpieResponse response = await _authApiService
+        .disableNewPostNotificationsForUserWithUsername(user.username);
+    _checkResponseIsOk(response);
+    return User.fromJson(json.decode(response.body));
+  }
+
   Future<UsersList> searchBlockedUsers(
       {@required String query, int count}) async {
     HttpieResponse response =
@@ -1213,6 +1250,13 @@ class UserService {
     return CommunitiesList.fromJson(json.decode(response.body));
   }
 
+  Future<CommunitiesList> getSuggestedCommunities() async {
+    HttpieResponse response =
+        await _communitiesApiService.getSuggestedCommunities();
+    _checkResponseIsOk(response);
+    return CommunitiesList.fromJson(json.decode(response.body));
+  }
+
   Future<Post> createPostForCommunity(Community community,
       {String text, File image, File video, bool isDraft}) async {
     HttpieStreamedResponse response = await _communitiesApiService
@@ -1243,9 +1287,9 @@ class UserService {
     return PostsList.fromJson(json.decode(response.body));
   }
 
-  Future<CommunitiesList> getCommunitiesWithQuery(String query) async {
+  Future<CommunitiesList> getCommunitiesWithQuery(String query, {int count}) async {
     HttpieResponse response =
-        await _communitiesApiService.getCommunitiesWithQuery(query: query);
+        await _communitiesApiService.getCommunitiesWithQuery(query: query, count:count);
     _checkResponseIsOk(response);
     return CommunitiesList.fromJson(json.decode(response.body));
   }
@@ -1596,6 +1640,16 @@ class UserService {
     return CommunitiesList.fromJson(json.decode(response.body));
   }
 
+  Future<CommunitiesList> searchFavoriteCommunities(
+      {String query, int count}) async {
+    HttpieResponse response = await _communitiesApiService
+        .searchFavoriteCommunities(query: query, count: count);
+
+    _checkResponseIsOk(response);
+
+    return CommunitiesList.fromJson(json.decode(response.body));
+  }
+
   Future<void> favoriteCommunity(Community community) async {
     HttpieResponse response = await _communitiesApiService.favoriteCommunity(
         communityName: community.name);
@@ -1610,9 +1664,36 @@ class UserService {
     return Community.fromJSON(json.decode(response.body));
   }
 
+  Future<void> enableNewPostNotificationsForCommunity(Community community) async {
+    HttpieResponse response = await _communitiesApiService
+        .enableNewPostNotificationsForCommunity(communityName: community.name);
+    _checkResponseIsCreated(response);
+
+    return Community.fromJSON(json.decode(response.body));
+  }
+
+  Future<void> disableNewPostNotificationsForCommunity(
+      Community community) async {
+    HttpieResponse response = await _communitiesApiService
+        .disableNewPostNotificationsForCommunity(communityName: community.name);
+    _checkResponseIsOk(response);
+
+    return Community.fromJSON(json.decode(response.body));
+  }
+
   Future<CommunitiesList> getAdministratedCommunities({int offset}) async {
     HttpieResponse response = await _communitiesApiService
         .getAdministratedCommunities(offset: offset);
+
+    _checkResponseIsOk(response);
+
+    return CommunitiesList.fromJson(json.decode(response.body));
+  }
+
+  Future<CommunitiesList> searchAdministratedCommunities(
+      {String query, int count}) async {
+    HttpieResponse response = await _communitiesApiService
+        .searchAdministratedCommunities(query: query, count: count);
 
     _checkResponseIsOk(response);
 
@@ -1628,10 +1709,42 @@ class UserService {
     return CommunitiesList.fromJson(json.decode(response.body));
   }
 
+  Future<CommunitiesList> searchModeratedCommunities(
+      {String query, int count}) async {
+    HttpieResponse response = await _communitiesApiService
+        .searchModeratedCommunities(query: query, count: count);
+
+    _checkResponseIsOk(response);
+
+    return CommunitiesList.fromJson(json.decode(response.body));
+  }
+
   Future<CategoriesList> getCategories() async {
     HttpieResponse response = await _categoriesApiService.getCategories();
     _checkResponseIsOk(response);
     return CategoriesList.fromJson(json.decode(response.body));
+  }
+
+  Future<HashtagsList> getHashtagsWithQuery(String query) async {
+    HttpieResponse response =
+        await _hashtagsApiService.getHashtagsWithQuery(query: query);
+    _checkResponseIsOk(response);
+    return HashtagsList.fromJson(json.decode(response.body));
+  }
+
+  Future<PostsList> getPostsForHashtag(Hashtag hashtag,
+      {int maxId, int count}) async {
+    HttpieResponse response = await _hashtagsApiService
+        .getPostsForHashtagWithName(hashtag.name, count: count, maxId: maxId);
+    _checkResponseIsOk(response);
+    return PostsList.fromJson(json.decode(response.body));
+  }
+
+  Future<Hashtag> getHashtagWithName(String name) async {
+    HttpieResponse response =
+        await _hashtagsApiService.getHashtagWithName(name);
+    _checkResponseIsOk(response);
+    return Hashtag.fromJSON(json.decode(response.body));
   }
 
   Future<NotificationsList> getNotifications(
@@ -1790,6 +1903,8 @@ class UserService {
     bool connectionRequestNotifications,
     bool connectionConfirmedNotifications,
     bool communityInviteNotifications,
+    bool communityNewPostNotifications,
+    bool userNewPostNotifications,
   }) async {
     HttpieResponse response =
         await _authApiService.updateAuthenticatedUserNotificationsSettings(
@@ -1803,7 +1918,9 @@ class UserService {
             followNotifications: followNotifications,
             connectionConfirmedNotifications: connectionConfirmedNotifications,
             communityInviteNotifications: communityInviteNotifications,
-            connectionRequestNotifications: connectionRequestNotifications);
+            connectionRequestNotifications: connectionRequestNotifications,
+            communityNewPostNotifications: communityNewPostNotifications,
+            userNewPostNotifications: userNewPostNotifications);
     _checkResponseIsOk(response);
     return UserNotificationsSettings.fromJSON(json.decode(response.body));
   }
@@ -1819,11 +1936,22 @@ class UserService {
     _checkResponseIsCreated(response);
   }
 
+  Future<void> reportHashtag(
+      {@required Hashtag hashtag,
+      String description,
+      @required ModerationCategory moderationCategory}) async {
+    HttpieResponse response = await _hashtagsApiService.reportHashtagWithName(
+        description: description,
+        hashtagName: hashtag.name,
+        moderationCategoryId: moderationCategory.id);
+    _checkResponseIsCreated(response);
+  }
+
   Future<void> reportCommunity(
       {@required Community community,
       String description,
       @required ModerationCategory moderationCategory}) async {
-    HttpieResponse response = await _communitiesApiService.reportCommunity(
+    HttpieResponse response = await _communitiesApiService.reportCommunityWithName(
         communityName: community.name,
         description: description,
         moderationCategoryId: moderationCategory.id);

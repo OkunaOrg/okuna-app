@@ -20,6 +20,7 @@ class AuthApiService {
   static const GET_NEW_LANGUAGE = 'api/auth/user/languages/';
   static const UPDATE_PASSWORD_PATH = 'api/auth/user/settings/';
   static const CREATE_ACCOUNT_PATH = 'api/auth/register/';
+  static const VERIFY_REGISTER_TOKEN = 'api/auth/register/verify-token/';
   static const DELETE_ACCOUNT_PATH = 'api/auth/user/delete/';
   static const GET_AUTHENTICATED_USER_PATH = 'api/auth/user/';
   static const UPDATE_AUTHENTICATED_USER_PATH = 'api/auth/user/';
@@ -29,6 +30,7 @@ class AuthApiService {
   static const SEARCH_LINKED_USERS_PATH = 'api/auth/linked-users/search/';
   static const GET_BLOCKED_USERS_PATH = 'api/auth/blocked-users/';
   static const SEARCH_BLOCKED_USERS_PATH = 'api/auth/blocked-users/search/';
+  static const ENABLE_NEW_POST_NOTIFICATIONS_FOR_USER_PATH = 'api/auth/users/{userUsername}/notifications/subscribe/new-post/';
   static const BLOCK_USER_PATH = 'api/auth/users/{userUsername}/block/';
   static const UNBLOCK_USER_PATH = 'api/auth/users/{userUsername}/unblock/';
   static const GET_FOLLOWERS_PATH = 'api/auth/followers/';
@@ -142,6 +144,7 @@ class AuthApiService {
       {@required String email,
       @required String token,
       @required String name,
+      @required String username,
       @required bool isOfLegalAge,
       @required bool areGuidelinesAccepted,
       @required String password,
@@ -150,6 +153,7 @@ class AuthApiService {
       'email': email,
       'token': token,
       'name': name,
+      'username': username,
       'is_of_legal_age': isOfLegalAge,
       'are_guidelines_accepted': areGuidelinesAccepted,
       'password': password
@@ -160,6 +164,14 @@ class AuthApiService {
     }
 
     return _httpService.postMultiform('$apiURL$CREATE_ACCOUNT_PATH',
+        body: body);
+  }
+
+  Future<HttpieResponse> verifyRegisterToken(
+      {@required String token}) {
+    Map<String, dynamic> body = {'token': token};
+
+    return _httpService.post('$apiURL$VERIFY_REGISTER_TOKEN',
         body: body);
   }
 
@@ -249,6 +261,16 @@ class AuthApiService {
     return _httpService.post(_makeApiUrl(path), appendAuthorizationToken: true);
   }
 
+  Future<HttpieResponse> enableNewPostNotificationsForUserWithUsername(String userUsername) {
+    String path = _makeEnableNewPostNotificationsForUserWithUsernamePath(userUsername);
+    return _httpService.putJSON(_makeApiUrl(path), appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> disableNewPostNotificationsForUserWithUsername(String userUsername) {
+    String path = _makeEnableNewPostNotificationsForUserWithUsernamePath(userUsername);
+    return _httpService.delete(_makeApiUrl(path), appendAuthorizationToken: true);
+  }
+
   Future<HttpieResponse> searchFollowers({@required String query, int count}) {
     Map<String, dynamic> queryParams = {'query': query};
 
@@ -302,11 +324,8 @@ class AuthApiService {
         body: {'username': username, 'password': password});
   }
 
-  Future<HttpieResponse> requestPasswordReset({String username, String email}) {
+  Future<HttpieResponse> requestPasswordReset({@required String email}) {
     var body = {};
-    if (username != null && username != '') {
-      body = {'username': username};
-    }
     if (email != null && email != '') {
       body['email'] = email;
     }
@@ -338,6 +357,8 @@ class AuthApiService {
     bool connectionRequestNotifications,
     bool connectionConfirmedNotifications,
     bool communityInviteNotifications,
+    bool communityNewPostNotifications,
+    bool userNewPostNotifications,
   }) {
     Map<String, dynamic> body = {};
 
@@ -369,6 +390,12 @@ class AuthApiService {
 
     if (communityInviteNotifications != null)
       body['community_invite_notifications'] = communityInviteNotifications;
+
+    if (communityNewPostNotifications != null)
+      body['community_new_post_notifications'] = communityNewPostNotifications;
+
+    if (userNewPostNotifications != null)
+      body['user_new_post_notifications'] = userNewPostNotifications;
 
     if (connectionConfirmedNotifications != null)
       body['connection_confirmed_notifications'] =
@@ -421,6 +448,11 @@ class AuthApiService {
   String _makeUnblockUserWithUsernamePath(String username) {
     return _stringTemplateService
         .parse(UNBLOCK_USER_PATH, {'userUsername': username});
+  }
+
+  String _makeEnableNewPostNotificationsForUserWithUsernamePath(String username) {
+    return _stringTemplateService
+        .parse(ENABLE_NEW_POST_NOTIFICATIONS_FOR_USER_PATH, {'userUsername': username});
   }
 
   String _makeReportUserPath({@required username}) {

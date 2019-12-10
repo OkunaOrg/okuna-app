@@ -1,28 +1,40 @@
+import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/widgets/buttons/button.dart';
 import 'package:Okuna/widgets/buttons/success_button.dart';
 import 'package:Okuna/widgets/buttons/secondary_button.dart';
 import 'package:flutter/material.dart';
 
-class OBAuthGetStartedPage extends StatelessWidget {
+
+class OBAuthGetStartedPage extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return OBAuthGetStartedPageState();
+  }
+}
+
+class OBAuthGetStartedPageState extends State<OBAuthGetStartedPage> {
+  LocalizationService _localizationService;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    var localizationService = LocalizationService.of(context);
-    String letsGetStartedText =
-        localizationService.auth__create_acc__lets_get_started;
-    String welcomeToAlphaText =
-        localizationService.auth__create_acc__welcome_to_beta;
+    var openbookProvider = OpenbookProvider.of(context);
+    _localizationService = openbookProvider.localizationService;
 
-    String previousText = localizationService.auth__create_acc__previous;
-    String nextText = localizationService.auth__create_acc__next;
+    String previousText = _localizationService.auth__create_acc__previous;
+    String nextText = _localizationService.auth__create_acc__next;
 
     return Scaffold(
       backgroundColor: Color(0xFF151726),
       body: DecoratedBox(
         decoration: _buildGetStartedDecoration(),
-        child: Center(
-            child: SingleChildScrollView(
-                child: _buildLetsGetStarted(getStartedText: letsGetStartedText, welcomeText: welcomeToAlphaText))),
+        child:
+            Center(child: SingleChildScrollView(child: _buildLetsGetStarted())),
       ),
       bottomNavigationBar: BottomAppBar(
         color: Colors.transparent,
@@ -46,7 +58,11 @@ class OBAuthGetStartedPage extends StatelessWidget {
     );
   }
 
-  Widget _buildLetsGetStarted({@required String getStartedText, @required String welcomeText}) {
+  Widget _buildLetsGetStarted() {
+    String getStartedText =
+        _localizationService.auth__create_acc__lets_get_started;
+    String welcomeText = _localizationService.auth__create_acc__welcome_to_beta;
+
     return Column(
       children: <Widget>[
         Text(
@@ -68,7 +84,7 @@ class OBAuthGetStartedPage extends StatelessWidget {
             style: TextStyle(
                 fontSize: 24.0,
                 fontWeight: FontWeight.bold,
-                color: Colors.white))
+                color: Colors.white)),
       ],
     );
   }

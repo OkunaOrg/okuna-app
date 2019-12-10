@@ -55,11 +55,11 @@ class PushNotificationsService {
 
     if (permissionState.status == OSNotificationPermission.authorized) {
       // Subscribe
-      OSSubscriptionState subscriptionState =
-          await this._getSubscriptionState();
-      if (subscriptionState.subscribed) {
+      bool isSubscribed = await this.isSubscribedToPushNotifications();
+      if (isSubscribed) {
         debugLog(
             'Push notifications permissions were given and is already subscribed');
+        _onSubscribedToPushNotifications();
       } else {
         if (promptedBefore) {
           debugLog(

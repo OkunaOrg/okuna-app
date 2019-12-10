@@ -25,6 +25,7 @@ class User extends UpdatableModel<User> {
   String username;
   Language language;
   UserProfile profile;
+  DateTime dateJoined;
   UserNotificationsSettings notificationsSettings;
   int followersCount;
   int followingCount;
@@ -34,7 +35,9 @@ class User extends UpdatableModel<User> {
   int pendingCommunitiesModeratedObjectsCount;
   int activeModerationPenaltiesCount;
   bool areGuidelinesAccepted;
+  bool areNewPostNotificationsEnabled;
   bool isFollowing;
+  bool isFollowed;
   bool isConnected;
   bool isReported;
   bool isBlocked;
@@ -62,7 +65,6 @@ class User extends UpdatableModel<User> {
 
     User user = navigationUsersFactory.getItemWithIdFromCache(userId) ??
         sessionUsersFactory.getItemWithIdFromCache(userId);
-
     if (user != null) {
       user.update(json);
       return user;
@@ -76,6 +78,7 @@ class User extends UpdatableModel<User> {
     return {
       'id': id,
       'uuid': uuid,
+      'date_joined': dateJoined?.toString(),
       'connections_circle_id': connectionsCircleId,
       'email': email,
       'username': username,
@@ -90,7 +93,9 @@ class User extends UpdatableModel<User> {
       'pending_communities_moderated_objects_count': pendingCommunitiesModeratedObjectsCount,
       'active_moderation_penalties_count': activeModerationPenaltiesCount,
       'are_guidelines_accepted': areGuidelinesAccepted,
+      'are_new_post_notifications_enabled': areNewPostNotificationsEnabled,
       'is_following': isFollowing,
+      'is_followed': isFollowed,
       'is_connected': isConnected,
       'is_reported': isReported,
       'is_blocked': isBlocked,
@@ -116,6 +121,7 @@ class User extends UpdatableModel<User> {
   User(
       {this.id,
       this.uuid,
+      this.dateJoined,
       this.connectionsCircleId,
       this.username,
       this.email,
@@ -127,7 +133,9 @@ class User extends UpdatableModel<User> {
       this.unreadNotificationsCount,
       this.postsCount,
       this.inviteCount,
+      this.areNewPostNotificationsEnabled,
       this.isFollowing,
+      this.isFollowed,
       this.isBlocked,
       this.isGlobalModerator,
       this.isConnected,
@@ -145,6 +153,7 @@ class User extends UpdatableModel<User> {
   void updateFromJson(Map json) {
     if (json.containsKey('username')) username = json['username'];
     if (json.containsKey('uuid')) uuid = json['uuid'];
+    if (json.containsKey('date_joined')) dateJoined = navigationUsersFactory.parseDateJoined(json['date_joined']);
     if (json.containsKey('are_guidelines_accepted'))
       areGuidelinesAccepted = json['are_guidelines_accepted'];
     if (json.containsKey('email')) email = json['email'];
@@ -180,7 +189,9 @@ class User extends UpdatableModel<User> {
       unreadNotificationsCount = json['unread_notifications_count'];
     if (json.containsKey('posts_count')) postsCount = json['posts_count'];
     if (json.containsKey('invite_count')) inviteCount = json['invite_count'];
+    if (json.containsKey('are_new_post_notifications_enabled')) areNewPostNotificationsEnabled = json['are_new_post_notifications_enabled'];
     if (json.containsKey('is_following')) isFollowing = json['is_following'];
+    if (json.containsKey('is_followed')) isFollowed = json['is_followed'];
     if (json.containsKey('is_connected')) isConnected = json['is_connected'];
     if (json.containsKey('is_global_moderator'))
       isGlobalModerator = json['is_global_moderator'];
@@ -224,6 +235,10 @@ class User extends UpdatableModel<User> {
 
   bool hasProfileUrl() {
     return profile.hasUrl();
+  }
+
+  bool hasAge() {
+    return dateJoined != null;
   }
 
   bool hasProfileAvatar() {
@@ -598,6 +613,7 @@ class UserFactory extends UpdatableModelFactory<User> {
     return User(
         id: json['id'],
         uuid: json['uuid'],
+        dateJoined: parseDateJoined(json['date_joined']),
         areGuidelinesAccepted: json['are_guidelines_accepted'],
         connectionsCircleId: json['connections_circle_id'],
         followersCount: json['followers_count'],
@@ -613,6 +629,8 @@ class UserFactory extends UpdatableModelFactory<User> {
         language: parseLanguage(json['language']),
         followingCount: json['following_count'],
         isFollowing: json['is_following'],
+        isFollowed: json['is_followed'],
+        areNewPostNotificationsEnabled: json['are_new_post_notifications_enabled'],
         isConnected: json['is_connected'],
         isGlobalModerator: json['is_global_moderator'],
         isBlocked: json['is_blocked'],
@@ -661,5 +679,10 @@ class UserFactory extends UpdatableModelFactory<User> {
   Language parseLanguage(Map languageData) {
     if (languageData == null) return null;
     return Language.fromJson(languageData);
+  }
+
+  DateTime parseDateJoined(String dateJoined) {
+    if (dateJoined == null) return null;
+    return DateTime.parse(dateJoined).toLocal();
   }
 }

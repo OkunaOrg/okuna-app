@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:Okuna/models/communities_list.dart';
 import 'package:Okuna/models/community.dart';
+import 'package:Okuna/models/hashtag.dart';
+import 'package:Okuna/models/hashtags_list.dart';
 import 'package:Okuna/models/theme.dart';
 import 'package:Okuna/models/user.dart';
 import 'package:Okuna/models/users_list.dart';
@@ -9,7 +11,7 @@ import 'package:Okuna/pages/home/pages/search/widgets/top_posts.dart';
 import 'package:Okuna/pages/home/pages/search/widgets/trending_posts.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/navigation_service.dart';
-import 'package:Okuna/pages/home/pages/search/widgets/user_search_results.dart';
+import 'package:Okuna/pages/home/pages/search/widgets/search_results.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/httpie.dart';
 import 'package:Okuna/services/theme.dart';
@@ -28,8 +30,9 @@ class OBMainSearchPage extends StatefulWidget {
   final OBMainSearchPageController controller;
   final OBSearchPageTab selectedTab;
 
-  const OBMainSearchPage({Key key, this.controller,
-    this.selectedTab = OBSearchPageTab.trending}) : super(key: key);
+  const OBMainSearchPage(
+      {Key key, this.controller, this.selectedTab = OBSearchPageTab.trending})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -37,7 +40,7 @@ class OBMainSearchPage extends StatefulWidget {
   }
 }
 
-class OBMainSearchPageState extends State<OBMainSearchPage> 
+class OBMainSearchPageState extends State<OBMainSearchPage>
     with WidgetsBindingObserver, TickerProviderStateMixin {
   UserService _userService;
   ToastService _toastService;
@@ -50,9 +53,11 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
   bool _isScrollingUp;
   bool _userSearchRequestInProgress;
   bool _communitySearchRequestInProgress;
+  bool _hashtagSearchRequestInProgress;
   String _searchQuery;
   List<User> _userSearchResults;
   List<Community> _communitySearchResults;
+  List<Hashtag> _hashtagSearchResults;
   OBTopPostsController _topPostsController;
   OBTrendingPostsController _trendingPostsController;
   TabController _tabController;
@@ -65,6 +70,7 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
 
   StreamSubscription<UsersList> _getUsersWithQuerySubscription;
   StreamSubscription<CommunitiesList> _getCommunitiesWithQuerySubscription;
+  StreamSubscription<HashtagsList> _getHashtagsWithQuerySubscription;
 
   static const double OB_BOTTOM_TAB_BAR_HEIGHT = 50.0;
   static const double HEIGHT_SEARCH_BAR = 76.0;
@@ -79,15 +85,19 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
     _trendingPostsController = OBTrendingPostsController();
     _userSearchRequestInProgress = false;
     _communitySearchRequestInProgress = false;
+    _hashtagSearchRequestInProgress = false;
     _hasSearch = false;
     _isScrollingUp = true;
     _heightTabs = HEIGHT_TABS_SECTION;
     _userSearchResults = [];
     _communitySearchResults = [];
+    _hashtagSearchResults = [];
     _selectedSearchResultsTab = OBUserSearchResultsTab.users;
     _tabController = new TabController(length: 2, vsync: this);
-    _animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 150));
-    _offset = Tween<Offset>(begin: Offset.zero, end: Offset(0.0, -1.0)).animate(_animationController);
+    _animationController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 150));
+    _offset = Tween<Offset>(begin: Offset.zero, end: Offset(0.0, -1.0))
+        .animate(_animationController);
 
     switch (widget.selectedTab) {
       case OBSearchPageTab.explore:
@@ -131,7 +141,7 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
     double slidableSectionHeight = HEIGHT_SEARCH_BAR + HEIGHT_TABS_SECTION;
 
     return IndexedStack(
-      index: _hasSearch ? 1: 0,
+      index: _hasSearch ? 1 : 0,
       children: <Widget>[
         SafeArea(
           bottom: false,
@@ -141,27 +151,29 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
             children: <Widget>[
               OBTrendingPosts(
                   controller: _trendingPostsController,
-                  onScrollCallback :_onScrollPositionChange,
-                  extraTopPadding: slidableSectionHeight
-              ),
+                  onScrollCallback: _onScrollPositionChange,
+                  extraTopPadding: slidableSectionHeight),
               OBTopPosts(
                   controller: _topPostsController,
-                  onScrollCallback :_onScrollPositionChange,
-                  extraTopPadding: slidableSectionHeight
-              ),
+                  onScrollCallback: _onScrollPositionChange,
+                  extraTopPadding: slidableSectionHeight),
             ],
           ),
         ),
         Padding(
-          padding: EdgeInsets.only(top: HEIGHT_SEARCH_BAR + _extraPaddingForSlidableSection),
-          child: OBUserSearchResults(
+          padding: EdgeInsets.only(
+              top: HEIGHT_SEARCH_BAR + _extraPaddingForSlidableSection),
+          child: OBSearchResults(
             searchQuery: _searchQuery,
             userResults: _userSearchResults,
             userSearchInProgress: _userSearchRequestInProgress,
             communityResults: _communitySearchResults,
             communitySearchInProgress: _communitySearchRequestInProgress,
+            hashtagResults: _hashtagSearchResults,
+            hashtagSearchInProgress: _hashtagSearchRequestInProgress,
             onUserPressed: _onSearchUserPressed,
             onCommunityPressed: _onSearchCommunityPressed,
+            onHashtagPressed: _onSearchHashtagPressed,
             selectedTab: _selectedSearchResultsTab,
             onScroll: _onScrollSearchResults,
             onTabSelectionChanged: _onSearchTabSelectionChanged,
@@ -176,7 +188,8 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
     // flutter has diff heights for notched phones, see also issues with bottom tab bar
     // iphone with notches have a top/bottom padding
     // this adds 20.0 extra padding for notched phones
-    if (existingMediaQuery.padding.top != 0 && existingMediaQuery.padding.bottom != 0) return 20.0;
+    if (existingMediaQuery.padding.top != 0 &&
+        existingMediaQuery.padding.bottom != 0) return 20.0;
     return 0.0;
   }
 
@@ -184,22 +197,24 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
     MediaQueryData existingMediaQuery = MediaQuery.of(context);
 
     return Positioned(
-      left: 0,
-      top: 0,
-      height: HEIGHT_SEARCH_BAR + _heightTabs + _extraPaddingForSlidableSection,
-      width: existingMediaQuery.size.width,
-      child: OBCupertinoPageScaffold(
-      backgroundColor: Colors.transparent,
-      child: _getSlideTransitionWidget(),
-      )
-    );
+        left: 0,
+        top: 0,
+        height:
+            HEIGHT_SEARCH_BAR + _heightTabs + _extraPaddingForSlidableSection,
+        width: existingMediaQuery.size.width,
+        child: OBCupertinoPageScaffold(
+          backgroundColor: Colors.transparent,
+          child: _getSlideTransitionWidget(),
+        ));
   }
 
   Widget _getSlideTransitionWidget() {
     OBTheme theme = _themeService.getActiveTheme();
-    Color tabIndicatorColor =
-    _themeValueParserService.parseGradient(theme.primaryAccentColor).colors[1];
-    Color tabLabelColor = _themeValueParserService.parseColor(theme.primaryTextColor);
+    Color tabIndicatorColor = _themeValueParserService
+        .parseGradient(theme.primaryAccentColor)
+        .colors[1];
+    Color tabLabelColor =
+        _themeValueParserService.parseColor(theme.primaryTextColor);
 
     return SlideTransition(
       position: _offset,
@@ -213,20 +228,22 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
                 onSearch: _onSearch,
                 hintText: _localizationService.user_search__search_text,
               ),
-              _hasSearch ? const SizedBox(height: 0) : TabBar(
-                  controller: _tabController,
-                  tabs: <Widget>[
-                    Tab(
-                      icon: OBIcon(OBIcons.trending),
+              _hasSearch
+                  ? const SizedBox(height: 0)
+                  : TabBar(
+                      controller: _tabController,
+                      tabs: <Widget>[
+                        Tab(
+                          icon: OBIcon(OBIcons.trending),
+                        ),
+                        Tab(
+                          icon: OBIcon(OBIcons.explore),
+                        ),
+                      ],
+                      isScrollable: false,
+                      indicatorColor: tabIndicatorColor,
+                      labelColor: tabLabelColor,
                     ),
-                    Tab(
-                      icon: OBIcon(OBIcons.explore),
-                    ),
-                  ],
-                  isScrollable: false,
-                  indicatorColor: tabIndicatorColor,
-                  labelColor: tabLabelColor,
-                ),
             ],
           ),
         ),
@@ -235,7 +252,8 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
   }
 
   void _onScrollPositionChange(ScrollPosition position) {
-    bool isScrollingUp = position.userScrollDirection == ScrollDirection.forward;
+    bool isScrollingUp =
+        position.userScrollDirection == ScrollDirection.forward;
     _hideKeyboard();
     if (position.pixels < (HEIGHT_SEARCH_BAR + HEIGHT_TABS_SECTION)) {
       if (_offset.value.dy == -1.0) _showTabSection();
@@ -255,10 +273,14 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
     _setSearchQuery(query);
     if (query.isEmpty) {
       _setHasSearch(false);
-    } else {
-      _setHasSearch(true);
-      _searchWithQuery(query);
+      return;
     }
+
+    if (_hasSearch == false) {
+      _setHasSearch(true);
+    }
+
+    _searchWithQuery(query);
   }
 
   void _onScrollSearchResults() {
@@ -270,10 +292,26 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
   }
 
   Future<void> _searchWithQuery(String query) {
+    String cleanedUpQuery = _cleanUpQuery(query);
+    if(cleanedUpQuery.isEmpty) return null;
+
     return Future.wait([
-      _searchForUsersWithQuery(query),
-      _searchForCommunitiesWithQuery(query)
+      _searchForUsersWithQuery(cleanedUpQuery),
+      _searchForCommunitiesWithQuery(cleanedUpQuery),
+      _searchForHashtagsWithQuery(cleanedUpQuery)
     ]);
+  }
+
+  final hashtagAndUsernamesRegexp = RegExp(r'^#|@');
+
+  String _cleanUpQuery(String query) {
+    String cleanQuery = query;
+    if (cleanQuery.startsWith(hashtagAndUsernamesRegexp)) {
+      cleanQuery = cleanQuery.substring(1, cleanQuery.length);
+    } else if (cleanQuery.startsWith('c/')) {
+      cleanQuery = cleanQuery.substring(2, cleanQuery.length);
+    }
+    return cleanQuery;
   }
 
   Future<void> _searchForUsersWithQuery(String query) async {
@@ -311,6 +349,23 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
             });
   }
 
+  Future<void> _searchForHashtagsWithQuery(String query) async {
+    if (_getHashtagsWithQuerySubscription != null)
+      _getHashtagsWithQuerySubscription.cancel();
+
+    _setHashtagSearchRequestInProgress(true);
+
+    _getHashtagsWithQuerySubscription =
+        _userService.getHashtagsWithQuery(query).asStream().listen(
+            (HashtagsList hashtagsList) {
+              _setHashtagSearchResults(hashtagsList.hashtags);
+            },
+            onError: _onError,
+            onDone: () {
+              _setHashtagSearchRequestInProgress(false);
+            });
+  }
+
   void _onError(error) async {
     if (error is HttpieConnectionRefusedError) {
       _toastService.error(
@@ -319,7 +374,8 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: _localizationService.error__unknown_error, context: context);
+      _toastService.error(
+          message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }
@@ -337,6 +393,12 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
   void _setCommunitySearchRequestInProgress(bool requestInProgress) {
     setState(() {
       _communitySearchRequestInProgress = requestInProgress;
+    });
+  }
+
+  void _setHashtagSearchRequestInProgress(bool requestInProgress) {
+    setState(() {
+      _hashtagSearchRequestInProgress = requestInProgress;
     });
   }
 
@@ -385,6 +447,12 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
     });
   }
 
+  void _setHashtagSearchResults(List<Hashtag> searchResults) {
+    setState(() {
+      _hashtagSearchResults = searchResults;
+    });
+  }
+
   void _onSearchUserPressed(User user) {
     _hideKeyboard();
     _navigationService.navigateToUserProfile(user: user, context: context);
@@ -394,6 +462,11 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
     _hideKeyboard();
     _navigationService.navigateToCommunity(
         community: community, context: context);
+  }
+
+  void _onSearchHashtagPressed(Hashtag hashtag) {
+    _hideKeyboard();
+    _navigationService.navigateToHashtag(hashtag: hashtag, context: context);
   }
 
   void scrollToTop() {

@@ -10,6 +10,7 @@ import 'package:Okuna/provider.dart';
 import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:Okuna/widgets/theming/text.dart';
 import 'package:Okuna/widgets/tiles/actions/favorite_community_tile.dart';
+import 'package:Okuna/widgets/tiles/actions/new_post_notifications_for_community_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -120,6 +121,16 @@ class OBManageCommunityPage extends StatelessWidget {
         },
       ));
     }
+
+
+    menuListTiles.add(OBNewPostNotificationsForCommunityTile(
+        community: community,
+        title: OBText(_localizationService.community__manage_enable_new_post_notifications,
+          style: listItemSubtitleStyle,
+        ),
+        subtitle: OBText(_localizationService.community__manage_disable_new_post_notifications,
+          style: listItemSubtitleStyle,
+        )));
 
     menuListTiles.add(ListTile(
       leading: const OBIcon(OBIcons.communityInvites),

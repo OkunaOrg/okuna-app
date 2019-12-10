@@ -10,6 +10,8 @@ import 'package:Okuna/widgets/video_player/widgets/chewie/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
+import '../../icon.dart';
+
 class OBVideoPlayerControls extends StatefulWidget {
   final Function(Function) onExpandCollapse;
   final Function(Function) onPause;
@@ -76,10 +78,10 @@ class OBVideoPlayerControlsState extends State<OBVideoPlayerControls> {
               chewieController.videoPlayerController.value.errorDescription,
             )
           : Center(
-              child: Icon(
-                Icons.error,
+              child: new OBIcon(
+                OBIcons.error,
                 color: Colors.white,
-                size: 42,
+                customSize: 42,
               ),
             );
     } else {
@@ -103,8 +105,8 @@ class OBVideoPlayerControlsState extends State<OBVideoPlayerControls> {
       _hideStuff || !_isDismissable
           ? new Container()
           : new IconButton(
-              icon: new Icon(
-                Icons.close,
+              icon: new OBIcon(
+                OBIcons.close,
                 color: Colors.white,
               ),
               onPressed: () async {
@@ -193,10 +195,10 @@ class OBVideoPlayerControlsState extends State<OBVideoPlayerControls> {
             right: 8.0,
           ),
           child: new Center(
-            child: new Icon(
+            child: new OBIcon(
               chewieController.isFullScreen
-                  ? Icons.fullscreen_exit
-                  : Icons.fullscreen,
+                  ? OBIcons.fullscreen_exit
+                  : OBIcons.fullscreen,
               color: Colors.white,
             ),
           ),
@@ -239,9 +241,9 @@ class OBVideoPlayerControlsState extends State<OBVideoPlayerControls> {
                   ),
                   child: new Padding(
                     padding: new EdgeInsets.only(top: 30.0),
-                    child: new Icon(
-                      Icons.play_arrow,
-                      size: 50.0,
+                    child: new OBIcon(
+                      OBIcons.play_arrow,
+                      customSize: 50.0,
                       color: Colors.white,
                     ),
                   ),
@@ -286,10 +288,10 @@ class OBVideoPlayerControlsState extends State<OBVideoPlayerControls> {
                 left: 8.0,
                 right: 8.0,
               ),
-              child: new Icon(
+              child: new OBIcon(
                 (_latestValue != null && _latestValue.volume > 0)
-                    ? Icons.volume_up
-                    : Icons.volume_off,
+                    ? OBIcons.volume_up
+                    : OBIcons.volume_off,
                 color: Colors.white,
               ),
             ),

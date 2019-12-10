@@ -1,6 +1,6 @@
 import 'package:Okuna/models/community.dart';
+import 'package:Okuna/pages/home/bottom_sheets/rounded_bottom_sheet.dart';
 import 'package:Okuna/services/localization.dart';
-import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -49,8 +49,7 @@ class OBCommunityTypePickerBottomSheetState
       _needsBootstrap = false;
     }
 
-    return OBPrimaryColorContainer(
-      mainAxisSize: MainAxisSize.min,
+    return OBRoundedBottomSheet(
       child: SizedBox(
         height: 216,
         child: CupertinoPicker(

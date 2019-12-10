@@ -141,6 +141,18 @@
         "type": "text",
         "placeholders": {}
     },
+    "about": "Over",
+    "@about": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "about_platform": "Draaiend op {platform}",
+    "@about_platform": {
+        "type": "text",
+        "placeholders": {
+            "platform": {}
+        }
+    },
     "logout": "Afmelden",
     "@logout": {
         "type": "text",

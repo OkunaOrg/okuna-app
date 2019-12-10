@@ -1,7 +1,10 @@
 import 'package:Okuna/models/user.dart';
+import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/widgets/cirles_wrap.dart';
 import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../../../../provider.dart';
 
 class OBProfileConnectedIn extends StatelessWidget {
   final User user;
@@ -10,6 +13,8 @@ class OBProfileConnectedIn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    LocalizationService localizationService = OpenbookProvider.of(context).localizationService;
+
     return StreamBuilder(
       stream: user.updateSubject,
       initialData: user,
@@ -27,8 +32,8 @@ class OBProfileConnectedIn extends StatelessWidget {
             padding: EdgeInsets.only(top: 20),
             child: OBCirclesWrap(
               circles: connectedCircles,
-              leading: const OBText(
-                'In circles',
+              leading: OBText(
+                localizationService.user__profile_in_circles,
               ),
             ));
       },

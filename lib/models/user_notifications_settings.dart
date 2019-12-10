@@ -10,6 +10,8 @@ class UserNotificationsSettings {
   bool connectionRequestNotifications;
   bool connectionConfirmedNotifications;
   bool communityInviteNotifications;
+  bool communityNewPostNotifications;
+  bool userNewPostNotifications;
 
   UserNotificationsSettings(
       {this.id,
@@ -22,7 +24,9 @@ class UserNotificationsSettings {
       this.postUserMentionNotifications,
       this.postCommentReplyNotifications,
       this.postReactionNotifications,
-      this.communityInviteNotifications});
+      this.communityInviteNotifications,
+      this.communityNewPostNotifications,
+      this.userNewPostNotifications});
 
   factory UserNotificationsSettings.fromJSON(Map<String, dynamic> parsedJson) {
     return UserNotificationsSettings(
@@ -44,6 +48,10 @@ class UserNotificationsSettings {
       postReactionNotifications: parsedJson['post_reaction_notifications'],
       communityInviteNotifications:
           parsedJson['community_invite_notifications'],
+      communityNewPostNotifications:
+          parsedJson['community_new_post_notifications'],
+      userNewPostNotifications:
+          parsedJson['user_new_post_notifications'],
     );
   }
 
@@ -60,6 +68,8 @@ class UserNotificationsSettings {
       'post_comment_reply_notifications': postCommentReplyNotifications,
       'post_reaction_notifications': postReactionNotifications,
       'community_invite_notifications': communityInviteNotifications,
+      'community_new_post_notifications': communityNewPostNotifications,
+      'user_new_post_notifications': userNewPostNotifications,
     };
   }
 
@@ -91,5 +101,9 @@ class UserNotificationsSettings {
       postReactionNotifications = json['post_reaction_notifications'];
     if (json.containsKey('community_invite_notifications'))
       communityInviteNotifications = json['community_invite_notifications'];
+    if (json.containsKey('community_new_post_notifications'))
+      communityNewPostNotifications = json['community_new_post_notifications'];
+    if (json.containsKey('user_new_post_notifications'))
+      userNewPostNotifications = json['user_new_post_notifications'];
   }
 }

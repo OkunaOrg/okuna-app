@@ -56,10 +56,12 @@ class OBFollowButtonState extends State<OBFollowButton> {
   }
 
   Widget _buildFollowButton() {
+    final followButtonText = widget.user.isFollowed != null && widget.user.isFollowed ? _localizationService.user__follow_button_follow_back_text : _localizationService.user__follow_button_follow_text;
+
     return OBButton(
       size: widget.size,
       child: Text(
-        _localizationService.user__follow_button_follow_text,
+        followButtonText,
         style: TextStyle(fontWeight: FontWeight.bold),
       ),
       isLoading: _requestInProgress,
@@ -71,7 +73,8 @@ class OBFollowButtonState extends State<OBFollowButton> {
     return OBButton(
       size: widget.size,
       child: Text(
-        _localizationService.user__follow_button_unfollow_text,
+        _localizationService.user__follow_button_following_text,
+        style: TextStyle(fontWeight: FontWeight.bold),
       ),
       isLoading: _requestInProgress,
       onPressed: _unFollowUser,

@@ -15,7 +15,9 @@ import 'package:flutter/material.dart';
 
 class OBMyCommunitiesGroup extends StatefulWidget {
   final OBHttpListRefresher<Community> communityGroupListRefresher;
+  final OBHttpListSearcher<Community> communityGroupListSearcher;
   final OBHttpListItemBuilder<Community> communityGroupListItemBuilder;
+  final OBHttpListItemBuilder<Community> communitySearchResultListItemBuilder;
   final OBHttpListOnScrollLoader<Community> communityGroupListOnScrollLoader;
   final OBMyCommunitiesGroupFallbackBuilder noGroupItemsFallbackBuilder;
   final OBMyCommunitiesGroupController controller;
@@ -33,6 +35,8 @@ class OBMyCommunitiesGroup extends StatefulWidget {
     @required this.title,
     @required this.maxGroupListPreviewItems,
     @required this.communityGroupListItemBuilder,
+    this.communityGroupListSearcher,
+    this.communitySearchResultListItemBuilder,
     this.noGroupItemsFallbackBuilder,
     this.controller,
   }) : super(key: key);
@@ -201,11 +205,13 @@ class OBMyCommunitiesGroupState extends State<OBMyCommunitiesGroup> {
       children: <Widget>[
         Expanded(
             child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
           child: OBHttpList<Community>(
               separatorBuilder: _buildCommunitySeparator,
               listItemBuilder: widget.communityGroupListItemBuilder,
               listRefresher: widget.communityGroupListRefresher,
+              listSearcher: widget.communityGroupListSearcher,
+              searchResultListItemBuilder: widget.communitySearchResultListItemBuilder,
               listOnScrollLoader: widget.communityGroupListOnScrollLoader,
               resourcePluralName: widget.groupName,
               resourceSingularName: widget.groupItemName),

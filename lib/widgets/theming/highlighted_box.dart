@@ -31,13 +31,15 @@ class OBHighlightedBox extends StatelessWidget {
           final bool isDarkPrimaryColor =
               primaryColor.computeLuminance() < 0.179;
 
+          final highlightedColor = isDarkPrimaryColor
+              ? Color.fromARGB(30, 255, 255, 255)
+              : Color.fromARGB(10, 0, 0, 0);
+
           return Container(
             padding: padding,
             decoration: BoxDecoration(
               borderRadius: borderRadius,
-              color: isDarkPrimaryColor
-                  ? Color.fromARGB(30, 255, 255, 255)
-                  : Color.fromARGB(10, 0, 0, 0),
+              color: highlightedColor,
             ),
             child: child,
           );

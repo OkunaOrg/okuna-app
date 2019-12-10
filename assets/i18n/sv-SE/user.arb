@@ -62,6 +62,21 @@
         "type": "text",
         "placeholders": {}
     },
+    "profile_action_user_post_notifications_enabled": "Aviseringar har aktiverats för nya inlägg",
+    "@profile_action_user_post_notifications_enabled": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "profile_action_user_post_notifications_disabled": "Aviseringar har inaktiverats för nya inlägg",
+    "@profile_action_user_post_notifications_disabled": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "profile_in_circles": "I kretsar",
+    "@profile_in_circles": {
+        "type": "text",
+        "placeholders": {}
+    },
     "profile_action_cancel_connection": "Avbryt kontaktförfrågan",
     "@profile_action_cancel_connection": {
         "type": "text",
@@ -86,8 +101,25 @@
             "maxLength": {}
         }
     },
+    "profile_okuna_age_toast": "På Okuna sedan {age}",
+    "@profile_okuna_age_toast": {
+        "type": "text",
+        "placeholders": {
+            "age": {}
+        }
+    },
     "follow_button_follow_text": "Följ",
     "@follow_button_follow_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "follow_button_follow_back_text": "Följ tillbaka",
+    "@follow_button_follow_back_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "follow_button_following_text": "Följer",
+    "@follow_button_following_text": {
         "type": "text",
         "placeholders": {}
     },
@@ -339,11 +371,12 @@
         "type": "text",
         "placeholders": {}
     },
-    "invite_someone_message": "Hej, jag vill bjuda in dig till Okuna. Först, ladda ner appen från iTunes ({iosLink}) eller Play Store ({androidLink}). Sedan klistrar du in din personliga inbjudningslänk i 'Registrera dig'-formuläret i Okuna-appen: {inviteLink}",
+    "invite_someone_message": "Hej, jag vill bjuda in dig till Okuna.\n\nFör Apple, ladda först ner TestFlight-appen från iTunes ({testFlightLink}) och ladda sedan ner Okuna-appen ({iosLink}).\n\nFör Android, ladda ner Okuna-appen från Play Store ({androidLink}).\n\nEfter det så klistrar du in den här personliga inbjudningslänken i 'Registrera dig'-formuläret i Okuna-appen: {inviteLink}",
     "@invite_someone_message": {
         "type": "text",
         "placeholders": {
             "iosLink": {},
+            "testFlightLink": {},
             "androidLink": {},
             "inviteLink": {}
         }
@@ -953,6 +986,16 @@
     },
     "unblock_user": "Avblockera användare",
     "@unblock_user": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "enable_new_post_notifications": "Aktivera aviseringar för nya inlägg",
+    "@enable_new_post_notifications": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "disable_new_post_notifications": "Inaktivera aviseringar för nya inlägg",
+    "@disable_new_post_notifications": {
         "type": "text",
         "placeholders": {}
     },

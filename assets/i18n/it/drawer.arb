@@ -141,6 +141,18 @@
         "type": "text",
         "placeholders": {}
     },
+    "about": "Informazioni",
+    "@about": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "about_platform": "Gira su {platform}",
+    "@about_platform": {
+        "type": "text",
+        "placeholders": {
+            "platform": {}
+        }
+    },
     "logout": "Disconnetti",
     "@logout": {
         "type": "text",

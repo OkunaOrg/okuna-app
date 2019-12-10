@@ -41,7 +41,7 @@ class PostCommentReaction {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'created': created.toString(),
+      'created': created?.toString(),
       'emoji': emoji.toJson(),
       'reactor': reactor.toJson(),
       'post_comment': postComment.toJson()

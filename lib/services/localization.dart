@@ -115,6 +115,16 @@ class LocalizationService {
         name: 'auth__create_acc__welcome_to_beta');
   }
 
+  String get auth__create_acc__invalid_token {
+    return Intl.message("Invalid token",
+        name: 'auth__create_acc__invalid_token');
+  }
+
+  String get auth__create_acc__validating_token {
+    return Intl.message("Validating token...",
+        name: 'auth__create_acc__validating_token');
+  }
+
   String get auth__create_acc__previous {
     return Intl.message("Back", name: 'auth__create_acc__previous');
   }
@@ -150,7 +160,7 @@ class LocalizationService {
   }
 
   String get auth__create_acc__link_invalid_error {
-    return Intl.message("This link appears to be invalid.",
+    return Intl.message("This link is invalid.",
         name: 'auth__create_acc__link_invalid_error');
   }
 
@@ -384,8 +394,13 @@ class LocalizationService {
   }
 
   String get auth__create_acc__done_created {
-    return Intl.message("Your account has been created with username ",
+    return Intl.message("Your account has been created.",
         name: 'auth__create_acc__done_created');
+  }
+
+  String get auth__create_acc__suggested_communities {
+    return Intl.message("🥳 Get started by joining the following communities.",
+        name: 'auth__create_acc__suggested_communities');
   }
 
   String get auth__create_acc__submit_loading_title {
@@ -476,7 +491,7 @@ class LocalizationService {
   }
 
   String get auth__login__forgot_password_subtitle {
-    return Intl.message("Enter your username or email",
+    return Intl.message("Enter your email",
         name: 'auth__login__forgot_password_subtitle');
   }
 
@@ -490,10 +505,6 @@ class LocalizationService {
 
   String get auth__login__email_label {
     return Intl.message("Email", name: 'auth__login__email_label');
-  }
-
-  String get auth__login__or_text {
-    return Intl.message("Or", name: 'auth__login__or_text');
   }
 
   String get auth__login__password_empty_error {
@@ -883,6 +894,10 @@ class LocalizationService {
     return Intl.message("Members", name: 'community__members_capitalized');
   }
 
+  String get community__details_favorite {
+    return Intl.message("In favorites", name: 'community__details_favorite');
+  }
+
   String get community__admin_desc {
     return Intl.message(
         "This will allow the member to edit the community details, administrators, moderators and banned users.",
@@ -1075,8 +1090,18 @@ class LocalizationService {
   }
 
   String get community__manage_remove_favourite {
-    return Intl.message("Remove the community to your favorites",
+    return Intl.message("Remove the community from your favorites",
         name: 'community__manage_remove_favourite');
+  }
+
+  String get community__manage_enable_new_post_notifications {
+    return Intl.message("Enable new post notifications",
+        name: 'community__manage_enable_new_post_notifications');
+  }
+
+  String get community__manage_disable_new_post_notifications {
+    return Intl.message("Disable new post notifications",
+        name: 'community__manage_disable_new_post_notifications');
   }
 
   String get community__is_private {
@@ -1483,6 +1508,26 @@ class LocalizationService {
         name: 'community__actions_invite_people_title');
   }
 
+  String get community__actions_enable_new_post_notifications_title {
+    return Intl.message("Enable new post notifications",
+        name: 'community__actions_enable_new_post_notifications_title');
+  }
+
+  String get community__actions_enable_new_post_notifications_success {
+    return Intl.message("New post notifications enabled",
+        name: 'community__actions_enable_new_post_notifications_success');
+  }
+
+  String get community__actions_disable_new_post_notifications_title {
+    return Intl.message("Disable new post notifications",
+        name: 'community__actions_disable_new_post_notifications_title');
+  }
+
+  String get community__actions_disable_new_post_notifications_success {
+    return Intl.message("New post notifications enabled",
+        name: 'community__actions_disable_new_post_notifications_success');
+  }
+
   String get community__join_community {
     return Intl.message("Join", name: 'community__join_community');
   }
@@ -1586,6 +1631,10 @@ class LocalizationService {
     return Intl.message("Communities", name: 'user_search__communities');
   }
 
+  String get user_search__hashtags {
+    return Intl.message("Hashtags", name: 'user_search__hashtags');
+  }
+
   String get user_search__users {
     return Intl.message("Users", name: 'user_search__users');
   }
@@ -1631,6 +1680,11 @@ class LocalizationService {
   String user_search__no_communities_for(String searchQuery) {
     return Intl.message("No communities found for '$searchQuery'.",
         args: [searchQuery], name: 'user_search__no_communities_for');
+  }
+
+  String user_search__no_hashtags_for(String searchQuery) {
+    return Intl.message("No hashtags found for '$searchQuery'.",
+        args: [searchQuery], name: 'user_search__no_hashtags_for');
   }
 
   String user_search__no_users_for(String searchQuery) {
@@ -1847,6 +1901,13 @@ class LocalizationService {
     return Intl.message("Video", name: 'post__create_video');
   }
 
+  String post__create_hashtags_invalid(int maxHashtags, int maxCharacters) {
+    return Intl.message(
+        "Please add a maximum of $maxHashtags hashtags and keep them under $maxCharacters characters.",
+        args: [maxHashtags, maxCharacters],
+        name: 'post__create_hashtags_invalid');
+  }
+
   String get post__commenter_post_text {
     return Intl.message("Post", name: 'post__commenter_post_text');
   }
@@ -1909,6 +1970,15 @@ class LocalizationService {
     return Intl.message("Trending", name: 'post__trending_posts_title');
   }
 
+  String get post__trending_posts_load_more {
+    return Intl.message("Load older posts",
+        name: 'post__trending_posts_load_more');
+  }
+
+  String get post__load_more {
+    return Intl.message("Load more posts", name: 'post__load_more');
+  }
+
   String get post__trending_posts_no_trending_posts {
     return Intl.message(
         "There are no trending posts. Try refreshing in a couple seconds.",
@@ -1917,6 +1987,11 @@ class LocalizationService {
 
   String get post__trending_posts_refresh {
     return Intl.message("Refresh", name: 'post__trending_posts_refresh');
+  }
+
+  String get post__community_not_found {
+    return Intl.message("This community does not exist",
+        name: 'post__community_not_found');
   }
 
   String post__comments_view_all_comments(int commentsCount) {
@@ -2091,12 +2166,24 @@ class LocalizationService {
     return Intl.message("Delete post", name: 'post__actions_delete');
   }
 
+  String get post__actions_delete_description {
+    return Intl.message(
+        "The post, as well as its comments and reactions will be permanently deleted.",
+        name: 'post__actions_delete_description');
+  }
+
   String get post__actions_deleted {
     return Intl.message("Post deleted", name: 'post__actions_deleted');
   }
 
   String get post__actions_delete_comment {
     return Intl.message("Delete comment", name: 'post__actions_delete_comment');
+  }
+
+  String get post__actions_delete_comment_description {
+    return Intl.message(
+        "The comment, as well as its replies and reactions will be permanently deleted.",
+        name: 'post__actions_delete_comment_description');
   }
 
   String get post__actions_edit_comment {
@@ -2264,6 +2351,20 @@ class LocalizationService {
         name: 'user__profile_action_user_unblocked');
   }
 
+  String get user__profile_action_user_post_notifications_enabled {
+    return Intl.message("New post notifications enabled",
+        name: 'user__profile_action_user_post_notifications_enabled');
+  }
+
+  String get user__profile_action_user_post_notifications_disabled {
+    return Intl.message("New post notifications disabled",
+        name: 'user__profile_action_user_post_notifications_disabled');
+  }
+
+  String get user__profile_in_circles {
+    return Intl.message("In circles", name: 'user__profile_in_circles');
+  }
+
   String get user__profile_action_cancel_connection {
     return Intl.message("Cancel connection request",
         name: 'user__profile_action_cancel_connection');
@@ -2284,8 +2385,23 @@ class LocalizationService {
         args: [maxLength], name: 'user__profile_bio_length_error');
   }
 
+  String user__profile_okuna_age_toast(String age) {
+    return Intl.message("On Okuna since $age",
+        args: [age], name: 'user__profile_okuna_age_toast');
+  }
+
   String get user__follow_button_follow_text {
     return Intl.message("Follow", name: 'user__follow_button_follow_text');
+  }
+
+  String get user__follow_button_follow_back_text {
+    return Intl.message("Follow back",
+        name: 'user__follow_button_follow_back_text');
+  }
+
+  String get user__follow_button_following_text {
+    return Intl.message("Following",
+        name: 'user__follow_button_following_text');
   }
 
   String get user__follow_button_unfollow_text {
@@ -3066,8 +3182,30 @@ class LocalizationService {
     return Intl.message("Block user", name: 'user__block_user');
   }
 
+  String get user__block_description {
+    return Intl.message(
+        "You will both dissapear from each other\'s social network experience, with the exception of communities which the person is a staff member of.",
+        name: 'user__block_description');
+  }
+
+  String get user__unblock_description {
+    return Intl.message(
+        "You will both be able to follow, connect or explore each other's content again.",
+        name: 'user__unblock_description');
+  }
+
   String get user__unblock_user {
     return Intl.message("Unblock user", name: 'user__unblock_user');
+  }
+
+  String get user__enable_new_post_notifications {
+    return Intl.message("Enable new post notifications",
+        name: 'user__enable_new_post_notifications');
+  }
+
+  String get user__disable_new_post_notifications {
+    return Intl.message("Disable new post notifications",
+        name: 'user__disable_new_post_notifications');
   }
 
   String user__disconnect_from_user(String userName) {
@@ -3201,6 +3339,28 @@ class LocalizationService {
         name: 'notifications__community_invite_desc');
   }
 
+  String get notifications__community_new_post_title {
+    return Intl.message("Community new post",
+        name: 'notifications__community_new_post_title');
+  }
+
+  String get notifications__community_new_post_desc {
+    return Intl.message(
+        "Be notified when there is a new post in a community you enabled post notifications on",
+        name: 'notifications__community_new_post_desc');
+  }
+
+  String get notifications__user_new_post_title {
+    return Intl.message("User new post",
+        name: 'notifications__user_new_post_title');
+  }
+
+  String get notifications__user_new_post_desc {
+    return Intl.message(
+        "Be notified when there is a new post by a user you enabled notifications on",
+        name: 'notifications__user_new_post_desc');
+  }
+
   String get notifications__mute_post_turn_on_post_notifications {
     return Intl.message("Turn on post notifications",
         name: 'notifications__mute_post_turn_on_post_notifications');
@@ -3253,10 +3413,17 @@ class LocalizationService {
 
   String notifications__user_community_invite_tile(String communityName) {
     return Intl.message(
-        "[name] [username] has invited you to join community /c/$communityName.",
+        "[name] [username] has invited you to join community c/$communityName.",
         args: [communityName],
-        desc: "Eg.: James @jamest has invited you to join community /c/okuna.",
+        desc: "Eg.: James @jamest has invited you to join community c/okuna.",
         name: 'notifications__user_community_invite_tile');
+  }
+
+  String notifications__community_new_post_tile(String communityName) {
+    return Intl.message("There was a new post in c/$communityName.",
+        args: [communityName],
+        desc: "Eg.: There was a new post in c/okuna.",
+        name: 'notifications__community_new_post_tile');
   }
 
   String notifications__comment_reply_notification_tile_user_replied(
@@ -3545,6 +3712,16 @@ class LocalizationService {
         name: 'moderation__you_have_reported_account_text');
   }
 
+  String get moderation__report_hashtag_text {
+    return Intl.message("Report hashtag",
+        name: 'moderation__report_hashtag_text');
+  }
+
+  String get moderation__you_have_reported_hashtag_text {
+    return Intl.message("You have reported this hashtag",
+        name: 'moderation__you_have_reported_hashtag_text');
+  }
+
   String get moderation__report_community_text {
     return Intl.message("Report community",
         name: 'moderation__report_community_text');
@@ -3650,6 +3827,12 @@ class LocalizationService {
         name: 'notifications__mentioned_in_post_tile');
   }
 
+  String get notifications__user_new_post_tile {
+    return Intl.message("[name] [username] posted something.",
+        desc: "Eg.: James @jamest posted something.",
+        name: 'notifications__user_new_post_tile');
+  }
+
   String get contextual_account_search_box__suggestions {
     return Intl.message("Suggestions",
         desc:
@@ -3657,11 +3840,26 @@ class LocalizationService {
         name: 'contextual_account_search_box__suggestions');
   }
 
+  String get contextual_account_search_box__no_results {
+    return Intl.message("No results found",
+        name: 'contextual_account_search_box__no_results');
+  }
+
   String get contextual_community_search_box__suggestions {
     return Intl.message("Suggestions",
         desc:
             "The title to display on the suggestions when searching for communitys when trying to mention someone.",
         name: 'contextual_community_search_box__suggestions');
+  }
+
+  String get contextual_community_search_box__no_results {
+    return Intl.message("No results found",
+        name: 'contextual_community_search_box__no_results');
+  }
+
+  String contextual_hashtag_search_box__be_the_first(String hashtag) {
+    return Intl.message("You\'ll be the first to use #$hashtag",
+        args: [hashtag], name: 'contextual_hashtag_search_box__be_the_first');
   }
 
   String get image_picker__from_gallery {
@@ -3886,6 +4084,19 @@ class LocalizationService {
     return Intl.message(
         "We require the camera permission to allow you to take photos and record videos, please grant it in your settings.",
         name: 'permissions_service__camera_permission_denied');
+  }
+
+  String get bottom_sheets__confirm_action_are_you_sure {
+    return Intl.message("Are you sure?",
+        name: 'bottom_sheets__confirm_action_are_you_sure');
+  }
+
+  String get bottom_sheets__confirm_action_yes {
+    return Intl.message("Yes", name: 'bottom_sheets__confirm_action_yes');
+  }
+
+  String get bottom_sheets__confirm_action_no {
+    return Intl.message("No", name: 'bottom_sheets__confirm_action_no');
   }
 
   Locale getLocale() {

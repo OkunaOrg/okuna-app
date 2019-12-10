@@ -317,7 +317,8 @@ class OBModeratedObjectsPageState extends State<OBModeratedObjectsPage> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: _localizationService.error__unknown_error, context: context);
+      _toastService.error(
+          message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }
@@ -338,8 +339,11 @@ class OBModeratedObjectsFilters {
     ];
 
     if (isGlobalModeration) {
-      filterTypes
-          .addAll([ModeratedObjectType.user, ModeratedObjectType.community]);
+      filterTypes.addAll([
+        ModeratedObjectType.user,
+        ModeratedObjectType.community,
+        ModeratedObjectType.hashtag
+      ]);
       filterStatuses.addAll(
           [ModeratedObjectStatus.approved, ModeratedObjectStatus.rejected]);
     }

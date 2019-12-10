@@ -141,6 +141,18 @@
         "type": "text",
         "placeholders": {}
     },
+    "about": "Acerca de",
+    "@about": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "about_platform": "Disponible en {platform}",
+    "@about_platform": {
+        "type": "text",
+        "placeholders": {
+            "platform": {}
+        }
+    },
     "logout": "Cerrar sesión",
     "@logout": {
         "type": "text",

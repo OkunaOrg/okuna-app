@@ -1,15 +1,16 @@
 import 'package:Okuna/models/community.dart';
 import 'package:Okuna/models/user.dart';
+import 'package:Okuna/pages/home/bottom_sheets/rounded_bottom_sheet.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/modal_service.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/user.dart';
 import 'package:Okuna/widgets/icon.dart';
-import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:Okuna/widgets/theming/text.dart';
 import 'package:Okuna/widgets/tiles/actions/favorite_community_tile.dart';
 import 'package:Okuna/widgets/tiles/actions/report_community_tile.dart';
+import 'package:Okuna/widgets/tiles/actions/new_post_notifications_for_community_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -32,6 +33,7 @@ class OBCommunityActionsBottomSheetState
   UserService _userService;
   ToastService _toastService;
   ModalService _modalService;
+  LocalizationService _localizationService;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +41,7 @@ class OBCommunityActionsBottomSheetState
     _userService = openbookProvider.userService;
     _toastService = openbookProvider.toastService;
     _modalService = openbookProvider.modalService;
-    LocalizationService _localizationService = openbookProvider.localizationService;
+    _localizationService = openbookProvider.localizationService;
 
     List<Widget> communityActions = [
       OBFavoriteCommunityTile(
@@ -56,6 +58,14 @@ class OBCommunityActionsBottomSheetState
     bool isCommunityAdministrator = community.isAdministrator(loggedInUser);
     bool isCommunityModerator = community.isModerator(loggedInUser);
     bool communityHasInvitesEnabled = community.invitesEnabled;
+
+    if (isMemberOfCommunity) {
+      communityActions.add(OBNewPostNotificationsForCommunityTile(
+        community: community,
+        onSubscribed: _dismiss,
+        onUnsubscribed: _dismiss,
+      ));
+    }
 
     if (communityHasInvitesEnabled && isMemberOfCommunity) {
       communityActions.add(ListTile(
@@ -76,8 +86,7 @@ class OBCommunityActionsBottomSheetState
       ));
     }
 
-    return OBPrimaryColorContainer(
-      mainAxisSize: MainAxisSize.min,
+    return OBRoundedBottomSheet(
       child: Column(
         children: communityActions,
         mainAxisSize: MainAxisSize.min,

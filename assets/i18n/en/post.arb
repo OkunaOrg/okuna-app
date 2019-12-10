@@ -241,6 +241,14 @@
     "type": "text",
     "placeholders": {}
   },
+  "create_hashtags_invalid": "Please add a maximum of {maxHashtags} hashtags and keep them under {maxCharacters} characters.",
+  "@create_hashtags_invalid": {
+    "type": "text",
+    "placeholders": {
+      "maxHashtags": {},
+      "maxCharacters": {}
+    }
+  },
   "commenter_post_text": "Post",
   "@commenter_post_text": {
     "type": "text",
@@ -311,6 +319,16 @@
     "type": "text",
     "placeholders": {}
   },
+  "trending_posts_load_more": "Load older posts",
+  "@trending_posts_load_more": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "load_more": "Load more posts",
+  "@load_more": {
+    "type": "text",
+    "placeholders": {}
+  },
   "trending_posts_no_trending_posts": "There are no trending posts. Try refreshing in a couple seconds.",
   "@trending_posts_no_trending_posts": {
     "type": "text",
@@ -318,6 +336,11 @@
   },
   "trending_posts_refresh": "Refresh",
   "@trending_posts_refresh": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "community_not_found": "This community does not exist",
+  "@community_not_found": {
     "type": "text",
     "placeholders": {}
   },
@@ -505,6 +528,11 @@
     "type": "text",
     "placeholders": {}
   },
+  "actions_delete_description": "The post, as well as its comments and reactions will be permanently deleted.",
+  "@actions_delete_description": {
+    "type": "text",
+    "placeholders": {}
+  },
   "actions_deleted": "Post deleted",
   "@actions_deleted": {
     "type": "text",
@@ -512,6 +540,11 @@
   },
   "actions_delete_comment": "Delete comment",
   "@actions_delete_comment": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "actions_delete_comment_description": "The comment, as well as its replies and reactions will be permanently deleted.",
+  "@actions_delete_comment_description": {
     "type": "text",
     "placeholders": {}
   },

@@ -1,0 +1,12 @@
+{
+    "storage_permission_denied": "We require the storage permission to allow you to pick media items, please grant it in your settings.",
+    "@storage_permission_denied": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "camera_permission_denied": "We require the camera permission to allow you to take photos and record videos, please grant it in your settings.",
+    "@camera_permission_denied": {
+        "type": "text",
+        "placeholders": {}
+    }
+}

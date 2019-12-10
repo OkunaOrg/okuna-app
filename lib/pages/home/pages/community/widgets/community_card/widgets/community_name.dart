@@ -22,7 +22,7 @@ class OBCommunityName extends StatelessWidget {
           );
 
         return OBSecondaryText(
-          '/c/' + communityName,
+          'c/' + communityName,
           style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black45),
         );
       },

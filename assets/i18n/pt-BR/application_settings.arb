@@ -4,7 +4,7 @@
         "type": "text",
         "placeholders": {}
     },
-    "link_previews": "Link previews",
+    "link_previews": "Prévia do link",
     "@link_previews": {
         "type": "text",
         "placeholders": {}
@@ -14,7 +14,7 @@
         "type": "text",
         "placeholders": {}
     },
-    "link_previews_show": "Show",
+    "link_previews_show": "Mostrar",
     "@link_previews_show": {
         "type": "text",
         "placeholders": {}
@@ -34,17 +34,17 @@
         "type": "text",
         "placeholders": {}
     },
-    "link_previews_autoplay_always": "Always",
+    "link_previews_autoplay_always": "Sempre",
     "@link_previews_autoplay_always": {
         "type": "text",
         "placeholders": {}
     },
-    "link_previews_autoplay_wifi_only": "Wifi only",
+    "link_previews_autoplay_wifi_only": "Somente Wi-Fi",
     "@link_previews_autoplay_wifi_only": {
         "type": "text",
         "placeholders": {}
     },
-    "link_previews_autoplay_never": "Never",
+    "link_previews_autoplay_never": "Nunca",
     "@link_previews_autoplay_never": {
         "type": "text",
         "placeholders": {}

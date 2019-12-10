@@ -91,7 +91,7 @@ class OBTextFormField extends StatelessWidget {
                 keyboardAppearance:
                     isDarkPrimaryColor ? Brightness.dark : Brightness.light,
                 autocorrect: autocorrect,
-                maxLines: maxLines,
+                maxLines: obscureText ? 1 : maxLines,
                 obscureText: obscureText,
                 style: finalStyle,
                 decoration: InputDecoration(

@@ -1,10 +1,14 @@
 import 'dart:async';
 import 'package:Okuna/models/post.dart';
+import 'package:Okuna/models/trending_post.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/user.dart';
+import 'package:Okuna/widgets/post/post.dart';
 import 'package:Okuna/widgets/posts_stream/posts_stream.dart';
+import 'package:Okuna/widgets/theming/highlighted_box.dart';
 import 'package:Okuna/widgets/theming/primary_accent_text.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 
@@ -26,13 +30,15 @@ class OBTrendingPosts extends StatefulWidget {
 }
 
 class OBTrendingPostsState extends State<OBTrendingPosts>
- with AutomaticKeepAliveClientMixin {
+    with AutomaticKeepAliveClientMixin {
   UserService _userService;
   LocalizationService _localizationService;
 
   CancelableOperation _getTrendingPostsOperation;
 
   OBPostsStreamController _obPostsStreamController;
+  List<TrendingPost> _currentTrendingPosts;
+  List<Post> _currentPosts;
 
   @override
   void initState() {
@@ -65,15 +71,20 @@ class OBTrendingPostsState extends State<OBTrendingPosts>
     _localizationService = openbookProvider.localizationService;
 
     return OBPostsStream(
+      onScrollLoadMoreLimit: 20,
+      onScrollLoadMoreLimitLoadMoreText:
+          _localizationService.post__trending_posts_load_more,
       streamIdentifier: 'trendingPosts',
       refresher: _postsStreamRefresher,
       onScrollLoader: _postsStreamOnScrollLoader,
       controller: _obPostsStreamController,
+      postBuilder: _trendingPostBuilder,
       onScrollCallback: widget.onScrollCallback,
       refreshIndicatorDisplacement: 110.0,
       prependedItems: <Widget>[
         Padding(
-          padding: EdgeInsets.only(left: 20, right: 20, bottom: 10, top: widget.extraTopPadding),
+          padding: EdgeInsets.only(
+              left: 20, right: 20, bottom: 10, top: widget.extraTopPadding),
           child: OBPrimaryAccentText(
               _localizationService.post__trending_posts_title,
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24)),
@@ -83,13 +94,69 @@ class OBTrendingPostsState extends State<OBTrendingPosts>
   }
 
   Future<List<Post>> _postsStreamRefresher() async {
-    List<Post> posts = (await _userService.getTrendingPosts()).posts;
+    List<TrendingPost> trendingPosts =
+        (await _userService.getTrendingPosts(count: 10)).posts;
+    List<Post> posts =
+        trendingPosts.map((trendingPost) => trendingPost.post).toList();
+
+    _setTrendingPosts(trendingPosts);
+    _setPosts(posts);
 
     return posts;
   }
 
   Future<List<Post>> _postsStreamOnScrollLoader(List<Post> posts) async {
-    return [];
+    TrendingPost lastTrendingPost = _currentTrendingPosts.last;
+    int lastTrendingPostId = lastTrendingPost.id;
+
+    List<TrendingPost> moreTrendingPosts = (await _userService.getTrendingPosts(
+            maxId: lastTrendingPostId, count: 10))
+        .posts;
+
+    List<Post> morePosts =
+        moreTrendingPosts.map((trendingPost) => trendingPost.post).toList();
+
+    _appendCurrentTrendingPosts(moreTrendingPosts);
+    _appendCurrentPosts(morePosts);
+
+    return morePosts;
+  }
+
+  Widget _trendingPostBuilder(
+      {BuildContext context,
+      Post post,
+      String postIdentifier,
+      ValueChanged<Post> onPostDeleted}) {
+    return OBPost(
+      post,
+      key: Key(postIdentifier),
+      onPostDeleted: onPostDeleted,
+      inViewId: postIdentifier,
+    );
+  }
+
+  void _setTrendingPosts(List<TrendingPost> posts) async {
+    setState(() {
+      _currentTrendingPosts = posts;
+    });
+  }
+
+  void _setPosts(List<Post> posts) {
+    setState(() {
+      _currentPosts = posts;
+    });
+  }
+
+  void _appendCurrentTrendingPosts(List<TrendingPost> posts) {
+    List<TrendingPost> newPosts = _currentTrendingPosts + posts;
+    _setTrendingPosts(newPosts);
+  }
+
+  void _appendCurrentPosts(List<Post> posts) {
+    List<Post> newPosts = _currentPosts + posts;
+    setState(() {
+      _currentPosts = newPosts;
+    });
   }
 }
 

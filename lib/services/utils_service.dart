@@ -1,14 +1,27 @@
 import 'dart:io';
+import 'dart:ui';
 
+import 'package:dcache/dcache.dart';
+import 'package:flutter/material.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:mime/mime.dart';
 
 /// Temporal until https://github.com/dart-lang/mime/issues/13 hits
 import 'package:mime/src/default_extension_map.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:pigment/pigment.dart';
 
 import 'localization.dart';
 
 class UtilsService {
+  static SimpleCache<String, bool> hexColorIsDarkCache =
+      SimpleCache(storage: SimpleStorage(size: 30));
+
+  static SimpleCache<String, Color> parseHexColorCache =
+      SimpleCache(storage: SimpleStorage(size: 30));
+
+  static RegExp hashtagsRegExp = RegExp(r"\B#\w*[a-zA-Z]+\w*", caseSensitive: false);
+
   Future<bool> fileHasImageMimeType(File file) async {
     String fileMimeType =
         await getFileMimeType(file) ?? 'application/octet-stream';
@@ -40,6 +53,40 @@ class UtilsService {
     }
 
     return mimeType ?? 'application/octet-stream';
+  }
+
+  bool hexColorIsDark(String hexColor) {
+    return hexColorIsDarkCache.get(hexColor) ??
+        _checkAndStoreHexColorIsDark(hexColor);
+  }
+
+  bool _checkAndStoreHexColorIsDark(String hexColor) {
+    Color color = parseHexColor(hexColor);
+    bool isDark = colorIsDark(color);
+    hexColorIsDarkCache.set(hexColor, isDark);
+    return isDark;
+  }
+
+  List<String> extractHashtagsInString(String str) {
+    return hashtagsRegExp.allMatches(str).map((match) => match.group(0)).toList();
+  }
+
+  int countHashtagsInString(String str) {
+    return extractHashtagsInString(str).length;
+  }
+
+  bool colorIsDark(Color color) {
+    return color.computeLuminance() < 0.179;
+  }
+
+  Color parseHexColor(String hexColor) {
+    return parseHexColorCache.get(hexColor) ?? _parseAndStoreColor(hexColor);
+  }
+
+  Color _parseAndStoreColor(String colorValue) {
+    Color color = Pigment.fromString(colorValue);
+    parseHexColorCache.set(colorValue, color);
+    return color;
   }
 
   // LocalizationService localizationService
@@ -79,6 +126,16 @@ class UtilsService {
     } else {
       return _localizationService.post__time_short_now_text;
     }
+  }
+
+  Future<dynamic> initialiseDateFormatting(LocalizationService localizationService) async {
+    Locale locale = localizationService.getLocale();
+    String localeName = locale.toString();
+
+    if (LocalizationService.localizedLocales.contains(locale.languageCode)) {
+      localeName = locale.languageCode.replaceFirst('-', '_');
+    }
+    return initializeDateFormatting(localeName, null);
   }
 
   Future<String> _getFileMimeTypeFromMagicHeaders(File file) async {

@@ -72,6 +72,8 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
   String _linkPreviewUrl;
 
   bool _isPostTextAllowedLength;
+  bool _isPostTextContainingValidHashtags;
+
   bool _hasFocus;
   bool _hasImage;
   bool _hasVideo;
@@ -107,6 +109,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
     _hasFocus = false;
     _linkPreviewUrl = '';
     _isPostTextAllowedLength = false;
+    _isPostTextContainingValidHashtags = false;
     _isCreateCommunityPostInProgress = false;
     _needsBootstrap = true;
 
@@ -165,6 +168,8 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
     _charactersCount = _textController.text.length;
     _isPostTextAllowedLength =
         _validationService.isPostTextAllowedLength(_textController.text);
+    _isPostTextContainingValidHashtags = _validationService
+        .isPostTextContainingValidHashtags(_textController.text);
     if (!_isEditingPost) {
       _shareService.subscribe(_onShare);
     }
@@ -269,7 +274,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
           type: OBButtonType.primary,
           child: Text(_localizationService.trans('post__share')),
           size: OBButtonSize.small,
-          onPressed: _createCommunityPost,
+          onPressed: _onWantsToCreateCommunityPost,
           isDisabled: !isEnabled || _isCreateCommunityPostInProgress,
           isLoading: _isCreateCommunityPostInProgress);
     } else {
@@ -289,7 +294,28 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
     return nextButton;
   }
 
+  Future<void> _onWantsToCreateCommunityPost() {
+    if (!_isPostTextContainingValidHashtags) {
+      _toastService.error(
+          message: _localizationService.post__create_hashtags_invalid(
+              ValidationService.POST_MAX_HASHTAGS,
+              ValidationService.HASHTAG_MAX_LENGTH),
+          context: context);
+      return null;
+    }
+    return _createCommunityPost();
+  }
+
   void _onWantsToGoNext() async {
+    if (!_isPostTextContainingValidHashtags) {
+      _toastService.error(
+          message: _localizationService.post__create_hashtags_invalid(
+              ValidationService.POST_MAX_HASHTAGS,
+              ValidationService.HASHTAG_MAX_LENGTH),
+          context: context);
+      return;
+    }
+
     OBNewPostData createPostData = await _navigationService.navigateToSharePost(
         context: context, createPostData: _makeNewPostData());
 
@@ -423,6 +449,8 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
       _charactersCount = text.length;
       _isPostTextAllowedLength =
           _validationService.isPostTextAllowedLength(text);
+      _isPostTextContainingValidHashtags =
+          _validationService.isPostTextContainingValidHashtags(text);
     });
   }
 
