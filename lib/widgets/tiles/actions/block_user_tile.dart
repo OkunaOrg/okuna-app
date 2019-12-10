@@ -49,7 +49,7 @@ class OBBlockUserTile extends StatelessWidget {
                       context: context,
                       subtitle: localizationService.user__unblock_description,
                       actionCompleter: (BuildContext context) async {
-                        userService.unblockUser(user);
+                        await userService.unblockUser(user);
                         toastService.success(
                             message: localizationService.user__profile_action_user_unblocked,
                             context: context);
@@ -61,7 +61,7 @@ class OBBlockUserTile extends StatelessWidget {
                       context: context,
                       subtitle: localizationService.user__block_description,
                       actionCompleter: (BuildContext context) async {
-                        userService.blockUser(user);
+                        await userService.blockUser(user);
                         toastService.success(
                             message: localizationService.user__profile_action_user_blocked,
                             context: context);

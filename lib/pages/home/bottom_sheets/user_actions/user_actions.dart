@@ -112,18 +112,10 @@ class OBUserActionsBottomSheet extends StatelessWidget {
             onBlockedUser: () {
               // Bottom sheet
               dismissBottomSheet();
-              openbookProvider.toastService.success(
-                  message:
-                      localizationService.user__profile_action_user_blocked,
-                  context: context);
             },
             onUnblockedUser: () {
               // Bottom sheet
               dismissBottomSheet();
-              openbookProvider.toastService.success(
-                  message:
-                      localizationService.user__profile_action_user_unblocked,
-                  context: context);
             },
           ));
         }
