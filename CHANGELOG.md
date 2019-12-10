@@ -26,10 +26,9 @@ The change log for the Okuna app.
 
 #### Bugs
 - Verify token on invite opened
-- Fix blank flash when opening app
 - Ungroup push notifications
 - Fix profiles posts count was off
-- Remove posibility to request password reset with username
+- Remove possibility to request password reset with username
 - Fix status bar should match selected theme
 
 #### For contributors

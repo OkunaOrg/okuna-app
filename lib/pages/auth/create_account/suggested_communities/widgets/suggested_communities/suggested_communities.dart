@@ -54,16 +54,10 @@ class OBSuggestedCommunitiesState extends State<OBSuggestedCommunities>
   }
 
   Widget _buildProgressIndicator() {
-    return Column(
-      children: <Widget>[
-        Row(
-          children: <Widget>[
-            Center(
-              child: const CircularProgressIndicator(),
-            )
-          ],
-        )
-      ],
+    return Container(
+      child: Center(
+        child: const CircularProgressIndicator(),
+      ),
     );
   }
 
