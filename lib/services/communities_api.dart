@@ -187,10 +187,8 @@ class CommunitiesApiService {
   }
 
   Future<HttpieResponse> getCommunitiesWithQuery(
-      {bool authenticatedRequest = true, @required String query, int count}) {
+      {bool authenticatedRequest = true, @required String query}) {
     Map<String, dynamic> queryParams = {'query': query};
-
-    if(count != null) queryParams['count'] = count;
 
     return _httpService.get('$apiURL$SEARCH_COMMUNITIES_PATH',
         queryParameters: queryParams,
