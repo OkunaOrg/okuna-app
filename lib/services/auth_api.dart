@@ -188,6 +188,12 @@ class AuthApiService {
         appendAuthorizationToken: authenticatedRequest);
   }
 
+  Future<HttpieResponse> getPostsCountForUserWithName(String username,
+      {bool authenticatedRequest = true}) {
+    return _httpService.get('$apiURL$GET_USERS_PATH$username/posts/count/',
+        appendAuthorizationToken: authenticatedRequest);
+  }
+
   Future<HttpieResponse> getUsersWithQuery(String query,
       {bool authenticatedRequest = true}) {
     return _httpService.get('$apiURL$GET_USERS_PATH',

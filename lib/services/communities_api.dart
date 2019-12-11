@@ -14,7 +14,8 @@ class CommunitiesApiService {
   static const GET_TRENDING_COMMUNITIES_PATH = 'api/communities/trending/';
   static const GET_SUGGESTED_COMMUNITIES_PATH = 'api/communities/suggested/';
   static const GET_JOINED_COMMUNITIES_PATH = 'api/communities/joined/';
-  static const SEARCH_JOINED_COMMUNITIES_PATH = 'api/communities/joined/search/';
+  static const SEARCH_JOINED_COMMUNITIES_PATH =
+      'api/communities/joined/search/';
   static const CHECK_COMMUNITY_NAME_PATH = 'api/communities/name-check/';
   static const CREATE_COMMUNITY_PATH = 'api/communities/';
   static const DELETE_COMMUNITY_PATH = 'api/communities/{communityName}/';
@@ -47,16 +48,24 @@ class CommunitiesApiService {
       'api/communities/{communityName}/notifications/subscribe/new-post/';
   static const EXCLUDE_COMMUNITY_PATH =
       'api/communities/{communityName}/top-posts/exclude/';
-  static const GET_EXCLUDED_COMMUNITIES_PATH = 'api/communities/top-posts/exclusions/';
-  static const SEARCH_EXCLUDED_COMMUNITIES_PATH = 'api/communities/top-posts/exclusions/search/';
+  static const GET_EXCLUDED_COMMUNITIES_PATH =
+      'api/communities/top-posts/exclusions/';
+  static const SEARCH_EXCLUDED_COMMUNITIES_PATH =
+      'api/communities/top-posts/exclusions/search/';
   static const GET_FAVORITE_COMMUNITIES_PATH = 'api/communities/favorites/';
-  static const SEARCH_FAVORITE_COMMUNITIES_PATH = 'api/communities/favorites/search/';
-  static const GET_ADMINISTRATED_COMMUNITIES_PATH = 'api/communities/administrated/';
-  static const SEARCH_ADMINISTRATED_COMMUNITIES_PATH = 'api/communities/administrated/search/';
+  static const SEARCH_FAVORITE_COMMUNITIES_PATH =
+      'api/communities/favorites/search/';
+  static const GET_ADMINISTRATED_COMMUNITIES_PATH =
+      'api/communities/administrated/';
+  static const SEARCH_ADMINISTRATED_COMMUNITIES_PATH =
+      'api/communities/administrated/search/';
   static const GET_MODERATED_COMMUNITIES_PATH = 'api/communities/moderated/';
-  static const SEARCH_MODERATED_COMMUNITIES_PATH = 'api/communities/moderated/search/';
+  static const SEARCH_MODERATED_COMMUNITIES_PATH =
+      'api/communities/moderated/search/';
   static const GET_COMMUNITY_POSTS_PATH =
       'api/communities/{communityName}/posts/';
+  static const COUNT_COMMUNITY_POSTS_PATH =
+      'api/communities/{communityName}/posts/count/';
   static const CREATE_COMMUNITY_POST_PATH =
       'api/communities/{communityName}/posts/';
   static const CLOSED_COMMUNITY_POSTS_PATH =
@@ -118,7 +127,6 @@ class CommunitiesApiService {
 
   Future<HttpieResponse> getSuggestedCommunities(
       {bool authenticatedRequest = true}) {
-
     return _httpService.get('$apiURL$GET_SUGGESTED_COMMUNITIES_PATH',
         appendAuthorizationToken: authenticatedRequest);
   }
@@ -168,6 +176,14 @@ class CommunitiesApiService {
         appendAuthorizationToken: authenticatedRequest);
   }
 
+  Future<HttpieResponse> getPostsCountForCommunityWithName(String communityName,
+      {bool authenticatedRequest = true}) {
+    String url = _makeGetPostsCountForCommunityWithNamePath(communityName);
+
+    return _httpService.get(_makeApiUrl(url),
+        appendAuthorizationToken: authenticatedRequest);
+  }
+
   Future<HttpieResponse> getClosedPostsForCommunityWithName(
       String communityName,
       {int maxId,
@@ -199,7 +215,8 @@ class CommunitiesApiService {
       {bool authenticatedRequest = true}) {
     String url = _makeGetCommunityPath(name);
     return _httpService.get(_makeApiUrl(url),
-        appendAuthorizationToken: authenticatedRequest);
+        appendAuthorizationToken: authenticatedRequest,
+        headers: {'Accept': 'application/json; version=1.0'});
   }
 
   Future<HttpieStreamedResponse> createCommunity(
@@ -588,14 +605,18 @@ class CommunitiesApiService {
         appendAuthorizationToken: true);
   }
 
-  Future<HttpieResponse> enableNewPostNotificationsForCommunity({@required String communityName}) {
-    String path = _makeEnableNewPostNotificationsForCommunityPath(communityName);
+  Future<HttpieResponse> enableNewPostNotificationsForCommunity(
+      {@required String communityName}) {
+    String path =
+        _makeEnableNewPostNotificationsForCommunityPath(communityName);
     return _httpService.putJSON(_makeApiUrl(path),
         appendAuthorizationToken: true);
   }
 
-  Future<HttpieResponse> disableNewPostNotificationsForCommunity({@required String communityName}) {
-    String path = _makeEnableNewPostNotificationsForCommunityPath(communityName);
+  Future<HttpieResponse> disableNewPostNotificationsForCommunity(
+      {@required String communityName}) {
+    String path =
+        _makeEnableNewPostNotificationsForCommunityPath(communityName);
     return _httpService.delete(_makeApiUrl(path),
         appendAuthorizationToken: true);
   }
@@ -617,13 +638,15 @@ class CommunitiesApiService {
         queryParameters: queryParams, appendAuthorizationToken: true);
   }
 
-  Future<HttpieResponse> excludeCommunityFromTopPosts({@required String communityName}) {
+  Future<HttpieResponse> excludeCommunityFromTopPosts(
+      {@required String communityName}) {
     String path = _makeExcludeCommunityPath(communityName);
     return _httpService.putJSON(_makeApiUrl(path),
         appendAuthorizationToken: true);
   }
 
-  Future<HttpieResponse> undoExcludeCommunityFromTopPosts({@required String communityName}) {
+  Future<HttpieResponse> undoExcludeCommunityFromTopPosts(
+      {@required String communityName}) {
     String path = _makeExcludeCommunityPath(communityName);
     return _httpService.delete(_makeApiUrl(path),
         appendAuthorizationToken: true);
@@ -788,14 +811,20 @@ class CommunitiesApiService {
         .parse(GET_COMMUNITY_POSTS_PATH, {'communityName': communityName});
   }
 
+  String _makeGetPostsCountForCommunityWithNamePath(String communityName) {
+    return _stringTemplateService
+        .parse(COUNT_COMMUNITY_POSTS_PATH, {'communityName': communityName});
+  }
+
   String _makeFavoriteCommunityPath(String communityName) {
     return _stringTemplateService
         .parse(FAVORITE_COMMUNITY_PATH, {'communityName': communityName});
   }
 
   String _makeEnableNewPostNotificationsForCommunityPath(String communityName) {
-    return _stringTemplateService
-        .parse(ENABLE_NEW_POST_NOTIFICATIONS_FOR_COMMUNITY_PATH, {'communityName': communityName});
+    return _stringTemplateService.parse(
+        ENABLE_NEW_POST_NOTIFICATIONS_FOR_COMMUNITY_PATH,
+        {'communityName': communityName});
   }
 
   String _makeExcludeCommunityPath(String communityName) {
