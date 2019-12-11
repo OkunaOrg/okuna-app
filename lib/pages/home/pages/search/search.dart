@@ -51,7 +51,6 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
   ThemeValueParserService _themeValueParserService;
 
   bool _hasSearch;
-  bool _isScrollingUp;
   bool _userSearchRequestInProgress;
   bool _communitySearchRequestInProgress;
   bool _hashtagSearchRequestInProgress;
@@ -92,7 +91,6 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
     _communitySearchRequestInProgress = false;
     _hashtagSearchRequestInProgress = false;
     _hasSearch = false;
-    _isScrollingUp = true;
     _heightTabs = HEIGHT_TABS_SECTION;
     _userSearchResults = [];
     _communitySearchResults = [];
@@ -424,16 +422,10 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
 
   void _hideTabSection() {
     _animationController.forward();
-//    setState(() {
-//      _isScrollingUp = false;
-//    });
   }
 
   void _showTabSection() {
     _animationController.reverse();
-//    setState(() {
-//      _isScrollingUp = true;
-//    });
   }
 
   void _setHasSearch(bool hasSearch) {
