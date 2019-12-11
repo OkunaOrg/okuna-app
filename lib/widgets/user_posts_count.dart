@@ -72,7 +72,9 @@ class OBUserPostsCountState extends State<OBUserPostsCount> {
   }
 
   Widget _buildLoadingIcon() {
-    return OBProgressIndicator();
+    return OBProgressIndicator(
+      size: 15.0,
+    );
   }
 
   void _refreshUserPostsCount() async {
