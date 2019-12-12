@@ -928,6 +928,15 @@ class UserService {
     return User.fromJson(json.decode(response.body));
   }
 
+  Future<int> countPostsForUser(User user,
+      {int maxId, int count}) async {
+    HttpieResponse response =
+        await _authApiService.getPostsCountForUserWithName(user.username);
+    _checkResponseIsOk(response);
+    User responseUser = User.fromJson(json.decode(response.body));
+    return responseUser.postsCount;
+  }
+
   Future<UsersList> getUsersWithQuery(String query) async {
     HttpieResponse response = await _authApiService.getUsersWithQuery(query,
         authenticatedRequest: true);
@@ -1278,6 +1287,16 @@ class UserService {
     return PostsList.fromJson(json.decode(response.body));
   }
 
+  Future<int> countPostsForCommunity(Community community,
+      {int maxId, int count}) async {
+    HttpieResponse response = await _communitiesApiService
+        .getPostsCountForCommunityWithName(community.name);
+    _checkResponseIsOk(response);
+    Community responseCommunity =
+        Community.fromJSON(json.decode(response.body));
+    return responseCommunity.postsCount;
+  }
+
   Future<PostsList> getClosedPostsForCommunity(Community community,
       {int maxId, int count}) async {
     HttpieResponse response = await _communitiesApiService
@@ -1287,9 +1306,9 @@ class UserService {
     return PostsList.fromJson(json.decode(response.body));
   }
 
-  Future<CommunitiesList> getCommunitiesWithQuery(String query, {int count}) async {
+  Future<CommunitiesList> getCommunitiesWithQuery(String query) async {
     HttpieResponse response =
-        await _communitiesApiService.getCommunitiesWithQuery(query: query, count:count);
+        await _communitiesApiService.getCommunitiesWithQuery(query: query);
     _checkResponseIsOk(response);
     return CommunitiesList.fromJson(json.decode(response.body));
   }
@@ -1664,7 +1683,8 @@ class UserService {
     return Community.fromJSON(json.decode(response.body));
   }
 
-  Future<void> enableNewPostNotificationsForCommunity(Community community) async {
+  Future<void> enableNewPostNotificationsForCommunity(
+      Community community) async {
     HttpieResponse response = await _communitiesApiService
         .enableNewPostNotificationsForCommunity(communityName: community.name);
     _checkResponseIsCreated(response);
@@ -1951,10 +1971,11 @@ class UserService {
       {@required Community community,
       String description,
       @required ModerationCategory moderationCategory}) async {
-    HttpieResponse response = await _communitiesApiService.reportCommunityWithName(
-        communityName: community.name,
-        description: description,
-        moderationCategoryId: moderationCategory.id);
+    HttpieResponse response =
+        await _communitiesApiService.reportCommunityWithName(
+            communityName: community.name,
+            description: description,
+            moderationCategoryId: moderationCategory.id);
     _checkResponseIsCreated(response);
   }
 

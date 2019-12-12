@@ -1,4 +1,4 @@
-import 'package:Okuna/models/community.dart';
+import 'package:Okuna/models/user.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/toast.dart';
@@ -7,18 +7,18 @@ import 'package:Okuna/widgets/posts_count.dart';
 import 'package:Okuna/widgets/progress_indicator.dart';
 import 'package:flutter/material.dart';
 
-class OBCommunityPostsCount extends StatefulWidget {
-  final Community community;
+class OBUserPostsCount extends StatefulWidget {
+  final User user;
 
-  OBCommunityPostsCount(this.community);
+  OBUserPostsCount(this.user);
 
   @override
-  OBCommunityPostsCountState createState() {
-    return OBCommunityPostsCountState();
+  OBUserPostsCountState createState() {
+    return OBUserPostsCountState();
   }
 }
 
-class OBCommunityPostsCountState extends State<OBCommunityPostsCount> {
+class OBUserPostsCountState extends State<OBUserPostsCount> {
   UserService _userService;
   ToastService _toastService;
   LocalizationService _localizationService;
@@ -41,30 +41,29 @@ class OBCommunityPostsCountState extends State<OBCommunityPostsCount> {
     if(_needsBootstrap){
       _localizationService = openbookProvider.localizationService;
       _toastService = openbookProvider.toastService;
-      _refreshCommunityPostsCount();
+      _refreshUserPostsCount();
       _needsBootstrap = false;
     }
 
     return StreamBuilder(
-      stream: widget.community.updateSubject,
-      initialData: widget.community,
-      builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
-        var community = snapshot.data;
+      stream: widget.user.updateSubject,
+      initialData: widget.user,
+      builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
+        var user = snapshot.data;
 
         return _hasError
             ? _buildErrorIcon()
             : _requestInProgress
                 ? _buildLoadingIcon()
-                : _buildPostsCount(community);
+                : _buildPostsCount(user);
       },
     );
   }
 
-  Widget _buildPostsCount(Community community) {
+  Widget _buildPostsCount(User user) {
     return OBPostsCount(
-      community.postsCount,
+      user.postsCount,
       showZero: true,
-      fontSize: 16,
     );
   }
 
@@ -78,10 +77,10 @@ class OBCommunityPostsCountState extends State<OBCommunityPostsCount> {
     );
   }
 
-  void _refreshCommunityPostsCount() async {
+  void _refreshUserPostsCount() async {
     _setRequestInProgress(true);
     try {
-      await _userService.countPostsForCommunity(widget.community);
+      await _userService.countPostsForUser(widget.user);
     } catch (e) {
       _onError(e);
     } finally {
