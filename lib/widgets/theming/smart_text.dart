@@ -334,16 +334,26 @@ class OBSmartText extends StatelessWidget {
             if (this.hashtagsMap != null &&
                 this.hashtagsMap.containsKey(hashtagName)) {
               Hashtag hashtag = this.hashtagsMap[hashtagName];
+              textSpan = WidgetSpan(
+                  baseline: TextBaseline.alphabetic,
+                  alignment: ui.PlaceholderAlignment.baseline,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 3),
+                    child: OBHashtag(
+                      hashtag: hashtag,
+                      rawHashtagName: rawHashtagName,
+                      onPressed: (Hashtag hashtag) {
+                        if (onHashtagTapped != null) onHashtagTapped(
+                            hashtag: hashtag, rawHashtagName: rawHashtagName);
+                      },
+                      textStyle: linkStyle,
+                    ),
+                  ));
+            } else {
               textSpan = LinkTextSpan(
                 text: element.text,
-                style: usernameStyle,
-                onPressed: () => onHashtagTapped(
-                    hashtag: hashtag, rawHashtagName: rawHashtagName),
-              );
-            } else {
-              textSpan = TextSpan(
-                text: element.text,
-                style: style,
+                style: linkStyle,
+                onPressed: () => onHashtagTapped(rawHashtagName: rawHashtagName),
               );
             }
           } else if (element is UsernameElement) {

@@ -24,10 +24,9 @@ class OBHashtag extends StatelessWidget {
 
     Color hashtagTextColor = utilsService.parseHexColor(hashtag.textColor);
 
-    TextStyle finalTextStyle = textStyle ?? TextStyle();
+    TextStyle finalTextStyle = TextStyle(color: hashtagTextColor, fontWeight: FontWeight.bold);
 
-    finalTextStyle = finalTextStyle
-        .merge(TextStyle(color: hashtagTextColor, fontWeight: FontWeight.bold));
+    if(textStyle != null) finalTextStyle = finalTextStyle.merge(textStyle);
 
     Widget hashtagContent = Text(
       '#' + (rawHashtagName ?? hashtag.name),
