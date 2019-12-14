@@ -22,7 +22,6 @@ class OBHashtag extends StatelessWidget {
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
     var utilsService = openbookProvider.utilsService;
 
-    Color hashtagBackgroundColor = utilsService.parseHexColor(hashtag.color);
     Color hashtagTextColor = utilsService.parseHexColor(hashtag.textColor);
 
     TextStyle finalTextStyle = textStyle ?? TextStyle();
@@ -31,7 +30,7 @@ class OBHashtag extends StatelessWidget {
         .merge(TextStyle(color: hashtagTextColor, fontWeight: FontWeight.bold));
 
     Widget hashtagContent = Text(
-      rawHashtagName ?? hashtag.name,
+      '#' + (rawHashtagName ?? hashtag.name),
       style: finalTextStyle,
     );
 
@@ -53,14 +52,7 @@ class OBHashtag extends StatelessWidget {
 
     return GestureDetector(
       onTap: onPressed != null ? () => onPressed(hashtag) : null,
-      child: Container(
-        decoration: BoxDecoration(
-          color: hashtagBackgroundColor,
-          borderRadius: BorderRadius.circular(5),
-        ),
-        padding: const EdgeInsets.symmetric(horizontal: 2.5),
-        child: hashtagContent,
-      ),
+      child: hashtagContent
     );
   }
 }
