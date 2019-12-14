@@ -39,6 +39,7 @@ class OBHashtagNavBar extends StatelessWidget
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       OBHashtag(
+                        textStyle: TextStyle(color: Colors.white),
                           hashtag: hashtag, rawHashtagName: rawHashtagName),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 3),
