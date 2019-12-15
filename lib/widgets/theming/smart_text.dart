@@ -346,13 +346,14 @@ class OBSmartText extends StatelessWidget {
                         if (onHashtagTapped != null) onHashtagTapped(
                             hashtag: hashtag, rawHashtagName: rawHashtagName);
                       },
-                      textStyle: usernameStyle,
+                      textStyle: linkStyle,
                     ),
                   ));
             } else {
-              textSpan = TextSpan(
+              textSpan = LinkTextSpan(
                 text: element.text,
-                style: style,
+                style: linkStyle,
+                onPressed: () => onHashtagTapped(rawHashtagName: rawHashtagName),
               );
             }
           } else if (element is UsernameElement) {

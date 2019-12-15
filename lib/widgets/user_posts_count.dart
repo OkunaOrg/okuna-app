@@ -72,8 +72,11 @@ class OBUserPostsCountState extends State<OBUserPostsCount> {
   }
 
   Widget _buildLoadingIcon() {
-    return OBProgressIndicator(
-      size: 15.0,
+    return Padding(
+      padding: const EdgeInsets.only(right: 5),
+      child: OBProgressIndicator(
+        size: 15.0,
+      ),
     );
   }
 

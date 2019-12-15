@@ -110,8 +110,26 @@ class OBActionableTextState extends State<OBActionableSmartText> {
     _setRequestSubscription(requestSubscription);
   }
 
-  void _onHashtagNameHashtagRetrieved({Hashtag hashtag, String rawHashtagName}) {
-    _navigationService.navigateToHashtag(hashtag: hashtag, rawHashtagName: rawHashtagName, context: context);
+  void _onHashtagNameHashtagRetrieved(
+      {Hashtag hashtag, String rawHashtagName}) {
+    if (hashtag != null) {
+      _onHashtagRetrieved(hashtag: hashtag, rawHashtagName: rawHashtagName);
+      return;
+    }
+
+    _clearRequestSubscription();
+
+    StreamSubscription requestSubscription = _userService
+        .getHashtagWithName(rawHashtagName)
+        .asStream()
+        .listen((Hashtag hashtag)=> _onHashtagRetrieved(hashtag: hashtag, rawHashtagName: rawHashtagName),
+            onError: _onError, onDone: _onRequestDone);
+    _setRequestSubscription(requestSubscription);
+  }
+
+  void _onHashtagRetrieved({Hashtag hashtag, String rawHashtagName}) {
+    _navigationService.navigateToHashtag(
+        rawHashtagName: rawHashtagName, hashtag: hashtag, context: context);
   }
 
   void _onUsernameUserRetrieved(User user) {

@@ -195,19 +195,6 @@ class ThemeService {
   void setActiveTheme(OBTheme theme) {
     _setActiveTheme(theme);
     _storeActiveThemeId(theme.id);
-
-    Color primaryColor = Pigment.fromString(theme.primaryColor);
-
-    Brightness iconsBrightness = _utilsService.colorIsDark(primaryColor)
-        ? Brightness.light
-        : Brightness.dark;
-
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-        statusBarBrightness: iconsBrightness,
-        statusBarIconBrightness: iconsBrightness,
-        systemNavigationBarIconBrightness: iconsBrightness,
-        systemNavigationBarColor: primaryColor,
-        statusBarColor: primaryColor));
   }
 
   void _bootstrap() async {
