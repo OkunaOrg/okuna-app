@@ -5,6 +5,17 @@ The change log for the Okuna app.
 ## Table of contents
 
 - [Release 0.0.59](#release-0.0.59)
+- [Release 0.0.61](#release-0.0.61)
+
+## Release 0.0.61
+
+#### Features
+ - 🏷 Change hashtags to be just like mentions
+ - 🏘 Make hashtags work in profile bios, community descriptions and rules
+ - ༕ Add Android festive icon
+
+#### Bugs
+- Fixed header color on communities and hashtags is color of theme with no icons
 
 ## Release 0.0.59
 
