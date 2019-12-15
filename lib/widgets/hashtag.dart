@@ -24,7 +24,7 @@ class OBHashtag extends StatelessWidget {
 
     if(textStyle != null) finalTextStyle = finalTextStyle.merge(textStyle);
 
-    Widget hashtagContent = Text(
+    Widget hashtagContent = OBText(
       '#' + (rawHashtagName ?? hashtag.name),
       style: finalTextStyle,
     );
