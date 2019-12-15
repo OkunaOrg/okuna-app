@@ -7,7 +7,7 @@ description: Social Network
 # Both the version and the builder number may be overridden in flutter
 # build by specifying --build-name and --build-number, respectively.
 # Read more about versioning at semver.org.
-version: 0.0.61+74
+version: 0.0.61+75
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -91,7 +91,6 @@ flutter_icons:
   android: true
   ios: true
   image_path: "assets/images/icon.png"
-  adaptive_icon_background: "#FFFFFFFF"
   adaptive_icon_foreground: "assets/images/icon-adaptive-foreground.png"
 
 # For information on the generic Dart part of this file, see the
