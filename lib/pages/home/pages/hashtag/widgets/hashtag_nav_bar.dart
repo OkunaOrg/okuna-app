@@ -1,6 +1,7 @@
 import 'package:Okuna/models/hashtag.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/widgets/hashtag.dart';
+import 'package:Okuna/widgets/more_buttons/hashtag_more_button.dart';
 import 'package:Okuna/widgets/nav_bars/image_nav_bar.dart';
 import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Okuna/widgets/posts_count.dart';
@@ -11,8 +12,10 @@ import 'package:flutter/material.dart';
 class OBHashtagNavBar extends StatelessWidget
     implements ObstructingPreferredSizeWidget {
   final Hashtag hashtag;
+  final String rawHashtagName;
 
-  OBHashtagNavBar(this.hashtag);
+  const OBHashtagNavBar({Key key, this.hashtag, this.rawHashtagName})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,22 +31,35 @@ class OBHashtagNavBar extends StatelessWidget
 
           return hashtag.image != null
               ? OBImageNavBar(
+                  trailing: OBHashtagMoreButton(
+                    hashtag: hashtag,
+                  ),
                   imageSrc: hashtag.image,
                   middle: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
                       OBHashtag(
-                        hashtag: hashtag,
-                      ),
+                        textStyle: TextStyle(color: Colors.white),
+                          hashtag: hashtag, rawHashtagName: rawHashtagName),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 3),
-                        child: Text('·', style: TextStyle(color: Colors.white),),
+                        child: Text(
+                          '·',
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ),
-                      OBPostsCount(hashtag.postsCount, color: Colors.white)
+                      OBPostsCount(
+                        hashtag.postsCount,
+                        color: Colors.white,
+                        showZero: true,
+                      )
                     ],
                   ),
                   textColor: hashtagTextColor)
               : OBThemedNavigationBar(
+                  trailing: OBHashtagMoreButton(
+                    hashtag: hashtag,
+                  ),
                   middle: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
@@ -54,10 +70,12 @@ class OBHashtagNavBar extends StatelessWidget
                         padding: const EdgeInsets.symmetric(horizontal: 3),
                         child: OBText('·'),
                       ),
-                      OBPostsCount(hashtag.postsCount)
+                      OBPostsCount(
+                        hashtag.postsCount,
+                        showZero: true,
+                      )
                     ],
-                  )
-                );
+                  ));
         });
   }
 

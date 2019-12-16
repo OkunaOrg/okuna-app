@@ -47,7 +47,7 @@ class CommunityInvite {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'creator_d': creatorId,
+      'creator_id': creatorId,
       'invited_user_id': invitedUserId,
       'community_id': communityId,
       'community': community?.toJson(),

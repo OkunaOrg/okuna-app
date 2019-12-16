@@ -4,26 +4,30 @@ import 'package:Okuna/services/httpie.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/user.dart';
-import 'package:Okuna/widgets/buttons/button.dart';
-export 'package:Okuna/widgets/buttons/button.dart';
+import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/theming/text.dart';
+import 'package:Okuna/widgets/tiles/loading_tile.dart';
 import 'package:flutter/material.dart';
 
-class OBUserSubscribeButton extends StatefulWidget {
+class OBNewPostNotificationsForUserTile extends StatefulWidget {
   final User user;
-  final OBButtonSize size;
-  final OBButtonType unsubscribeButtonType;
+  final VoidCallback onSubscribed;
+  final VoidCallback onUnsubscribed;
 
-  OBUserSubscribeButton(this.user,
-      {this.size = OBButtonSize.medium,
-      this.unsubscribeButtonType = OBButtonType.primary});
+  const OBNewPostNotificationsForUserTile({
+    Key key,
+    @required this.user,
+    this.onSubscribed,
+    this.onUnsubscribed,
+  }) : super(key: key);
 
   @override
-  OBUserSubscribeButtonState createState() {
-    return OBUserSubscribeButtonState();
+  OBNewPostNotificationsForUserTileState createState() {
+    return OBNewPostNotificationsForUserTileState();
   }
 }
 
-class OBUserSubscribeButtonState extends State<OBUserSubscribeButton> {
+class OBNewPostNotificationsForUserTileState extends State<OBNewPostNotificationsForUserTile> {
   UserService _userService;
   ToastService _toastService;
   LocalizationService _localizationService;
@@ -48,54 +52,39 @@ class OBUserSubscribeButtonState extends State<OBUserSubscribeButton> {
       builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
         var user = snapshot.data;
 
-        if (user?.isSubscribed == null) return const SizedBox();
+        bool areNotificationsEnabled = user.areNewPostNotificationsEnabled ?? false;
 
-        return user.isSubscribed ? _buildUnsubscribeButton() : _buildSubscribeButton();
+        return OBLoadingTile(
+          isLoading: _requestInProgress,
+          leading: OBIcon(areNotificationsEnabled ? OBIcons.notifications_off : OBIcons.notifications),
+          title: OBText(areNotificationsEnabled
+              ? _localizationService.user__disable_new_post_notifications
+              : _localizationService.user__enable_new_post_notifications),
+          onTap: areNotificationsEnabled ? _unsubscribeUser : _susbcribeUser,
+        );
       },
     );
   }
 
-  Widget _buildSubscribeButton() {
-    return OBButton(
-      size: widget.size,
-      child: Text(
-        _localizationService.user__subscribe_button_subscribe_text,
-        style: TextStyle(fontWeight: FontWeight.bold),
-      ),
-      isLoading: _requestInProgress,
-      onPressed: _subscribeUser,
-    );
-  }
-
-  Widget _buildUnsubscribeButton() {
-    return OBButton(
-      size: widget.size,
-      child: Text(
-        _localizationService.user__unsubscribe_button_unsubscribe_text,
-      ),
-      isLoading: _requestInProgress,
-      onPressed: _unSubscribeUser,
-      type: widget.unsubscribeButtonType,
-    );
-  }
-
-  void _subscribeUser() async {
+  void _susbcribeUser() async {
     _setRequestInProgress(true);
     try {
-      await _userService.subscribeUser(widget.user);
-    } catch (error) {
-      _onError(error);
+      await _userService.enableNewPostNotificationsForUser(widget.user);
+      if (widget.onSubscribed != null) widget.onSubscribed();
+    } catch (e) {
+      _onError(e);
     } finally {
       _setRequestInProgress(false);
     }
   }
 
-  void _unSubscribeUser() async {
+  void _unsubscribeUser() async {
     _setRequestInProgress(true);
     try {
-      await _userService.unsubscribeUser(widget.user);
-    } catch (error) {
-      _onError(error);
+      await _userService.disableNewPostNotificationsForUser(widget.user);
+      if (widget.onUnsubscribed != null) widget.onUnsubscribed();
+    } catch (e) {
+      _onError(e);
     } finally {
       _setRequestInProgress(false);
     }

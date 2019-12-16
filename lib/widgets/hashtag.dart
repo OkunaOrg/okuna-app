@@ -1,5 +1,6 @@
 import 'package:Okuna/models/hashtag.dart';
 import 'package:Okuna/provider.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
 
@@ -7,57 +8,46 @@ class OBHashtag extends StatelessWidget {
   final Hashtag hashtag;
   final ValueChanged<Hashtag> onPressed;
   final TextStyle textStyle;
+  final String rawHashtagName;
 
   const OBHashtag(
       {Key key,
       @required this.hashtag,
       this.onPressed,
-      this.textStyle})
+      this.textStyle,
+      this.rawHashtagName})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
-    var utilsService = openbookProvider.utilsService;
+    TextStyle finalTextStyle = TextStyle(fontWeight: FontWeight.bold);
 
-    Color hashtagBackgroundColor = utilsService.parseHexColor(hashtag.color);
-    Color hashtagTextColor = utilsService.parseHexColor(hashtag.textColor);
+    if(textStyle != null) finalTextStyle = finalTextStyle.merge(textStyle);
 
+    Widget hashtagContent = OBText(
+      '#' + (rawHashtagName ?? hashtag.name),
+      style: finalTextStyle,
+    );
 
-    TextStyle finalTextStyle = textStyle ?? TextStyle();
-
-    finalTextStyle = finalTextStyle.merge(TextStyle(color: hashtagTextColor, fontWeight: FontWeight.bold));
-
-    Widget hashtagContent = Text('${hashtag.name}', style: finalTextStyle,);
-
-
-
-    if(hashtag.hasEmoji()){
-      hashtagContent  = Row(
+    if (hashtag.hasEmoji()) {
+      hashtagContent = Row(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
+          hashtagContent,
           Padding(
-            padding: const EdgeInsets.only(right: 4),
-            child: Image(
-              height: 15,
-              image: AdvancedNetworkImage(hashtag.emoji.image, useDiskCache: true),
-            )
-          ),
-          hashtagContent
+              padding: const EdgeInsets.only(left: 2),
+              child: Image(
+                height: 15,
+                image: AdvancedNetworkImage(hashtag.emoji.image,
+                    useDiskCache: true),
+              )),
         ],
       );
     }
 
     return GestureDetector(
       onTap: onPressed != null ? () => onPressed(hashtag) : null,
-      child: Container(
-        decoration: BoxDecoration(
-          color: hashtagBackgroundColor,
-          borderRadius: BorderRadius.circular(5),
-        ),
-        padding: const EdgeInsets.symmetric(horizontal: 2.5),
-        child: hashtagContent,
-      ),
+      child: hashtagContent
     );
   }
 }

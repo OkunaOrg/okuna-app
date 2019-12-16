@@ -261,6 +261,16 @@
         "type": "text",
         "placeholders": {}
     },
+    "report_hashtag_text": "Rapporter hashtaget",
+    "@report_hashtag_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "you_have_reported_hashtag_text": "Du har rapporteret dette hashtag",
+    "@you_have_reported_hashtag_text": {
+        "type": "text",
+        "placeholders": {}
+    },
     "report_community_text": "Anmeld fællesskab",
     "@report_community_text": {
         "type": "text",

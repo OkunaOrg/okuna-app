@@ -4,7 +4,7 @@
         "type": "text",
         "placeholders": {}
     },
-    "link_previews": "Link previews",
+    "link_previews": "Aperçus des liens",
     "@link_previews": {
         "type": "text",
         "placeholders": {}
@@ -14,7 +14,7 @@
         "type": "text",
         "placeholders": {}
     },
-    "link_previews_show": "Show",
+    "link_previews_show": "Afficher",
     "@link_previews_show": {
         "type": "text",
         "placeholders": {}
@@ -34,17 +34,17 @@
         "type": "text",
         "placeholders": {}
     },
-    "link_previews_autoplay_always": "Always",
+    "link_previews_autoplay_always": "Toujours",
     "@link_previews_autoplay_always": {
         "type": "text",
         "placeholders": {}
     },
-    "link_previews_autoplay_wifi_only": "Wifi only",
+    "link_previews_autoplay_wifi_only": "Wifi uniquement",
     "@link_previews_autoplay_wifi_only": {
         "type": "text",
         "placeholders": {}
     },
-    "link_previews_autoplay_never": "Never",
+    "link_previews_autoplay_never": "Jamais",
     "@link_previews_autoplay_never": {
         "type": "text",
         "placeholders": {}

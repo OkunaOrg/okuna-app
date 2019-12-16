@@ -1,66 +1,111 @@
-import 'package:Okuna/libs/pretty_count.dart';
-import 'package:Okuna/libs/str_utils.dart';
-import 'package:Okuna/models/theme.dart';
 import 'package:Okuna/models/community.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/toast.dart';
+import 'package:Okuna/services/user.dart';
+import 'package:Okuna/widgets/posts_count.dart';
+import 'package:Okuna/widgets/progress_indicator.dart';
 import 'package:flutter/material.dart';
 
-class OBCommunityPostsCount extends StatelessWidget {
+class OBCommunityPostsCount extends StatefulWidget {
   final Community community;
 
   OBCommunityPostsCount(this.community);
 
   @override
+  OBCommunityPostsCountState createState() {
+    return OBCommunityPostsCountState();
+  }
+}
+
+class OBCommunityPostsCountState extends State<OBCommunityPostsCount> {
+  UserService _userService;
+  ToastService _toastService;
+  LocalizationService _localizationService;
+  bool _requestInProgress;
+  bool _hasError;
+  bool _needsBootstrap;
+
+  @override
+  void initState() {
+    super.initState();
+    _requestInProgress = false;
+    _hasError = false;
+    _needsBootstrap = true;
+  }
+
+  @override
   Widget build(BuildContext context) {
-    int postsCount = community.postsCount;
-    LocalizationService localizationService = OpenbookProvider.of(context).localizationService;
-
-    if (postsCount == null || postsCount == 0) return const SizedBox();
-
-    String count = getPrettyCount(postsCount, localizationService);
-
     var openbookProvider = OpenbookProvider.of(context);
-    var themeService = openbookProvider.themeService;
-    var themeValueParserService = openbookProvider.themeValueParserService;
-    var userService = openbookProvider.userService;
+    _userService = openbookProvider.userService;
+    if(_needsBootstrap){
+      _localizationService = openbookProvider.localizationService;
+      _toastService = openbookProvider.toastService;
+      _refreshCommunityPostsCount();
+      _needsBootstrap = false;
+    }
+
     return StreamBuilder(
-        stream: themeService.themeChange,
-        initialData: themeService.getActiveTheme(),
-        builder: (BuildContext context, AsyncSnapshot<OBTheme> snapshot) {
-          var theme = snapshot.data;
-          bool isPublicCommunity = community.isPublic();
-          bool isLoggedInUserMember = community.isMember(userService.getLoggedInUser());
+      stream: widget.community.updateSubject,
+      initialData: widget.community,
+      builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
+        var community = snapshot.data;
 
-          if (!isPublicCommunity && !isLoggedInUserMember) return SizedBox();
+        return _hasError
+            ? _buildErrorIcon()
+            : _requestInProgress
+                ? _buildLoadingIcon()
+                : _buildPostsCount(community);
+      },
+    );
+  }
 
-          return Row(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Flexible(
-                  child: RichText(
-                      text: TextSpan(children: [
-                    TextSpan(
-                        text: count,
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: themeValueParserService
-                                .parseColor(theme.primaryTextColor))),
-                    TextSpan(text: ' '),
-                    TextSpan(
-                        text:
-                            postsCount == 1 ?
-                            toCapital(localizationService.community__post_singular) :
-                            toCapital(localizationService.community__post_plural),
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: themeValueParserService
-                                .parseColor(theme.secondaryTextColor)))
-                  ])),
-                ),
-              ],
-            );
-        });
+  Widget _buildPostsCount(Community community) {
+    return OBPostsCount(
+      community.postsCount,
+      showZero: true,
+      fontSize: 16,
+    );
+  }
+
+  Widget _buildErrorIcon() {
+    return const SizedBox();
+  }
+
+  Widget _buildLoadingIcon() {
+    return OBProgressIndicator(
+      size: 15.0,
+    );
+  }
+
+  void _refreshCommunityPostsCount() async {
+    _setRequestInProgress(true);
+    try {
+      await _userService.countPostsForCommunity(widget.community);
+    } catch (e) {
+      _onError(e);
+    } finally {
+      _setRequestInProgress(false);
+    }
+  }
+
+  void _onError(error) async {
+    if (error is HttpieConnectionRefusedError) {
+      _toastService.error(
+          message: error.toHumanReadableMessage(), context: context);
+    } else if (error is HttpieRequestError) {
+      String errorMessage = await error.toHumanReadableMessage();
+      _toastService.error(message: errorMessage, context: context);
+    } else {
+      _toastService.error(
+          message: _localizationService.error__unknown_error, context: context);
+      throw error;
+    }
+  }
+
+  void _setRequestInProgress(bool requestInProgress) {
+    setState(() {
+      _requestInProgress = requestInProgress;
+    });
   }
 }

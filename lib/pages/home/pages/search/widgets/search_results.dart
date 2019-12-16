@@ -85,6 +85,14 @@ class OBSearchResultsState extends State<OBSearchResults>
   }
 
   @override
+  void didUpdateWidget(OBSearchResults oldWidget) {
+    if (oldWidget.searchQuery != widget.searchQuery) {
+      this._onSearchQueryChanged(widget.searchQuery);
+    }
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
   Widget build(BuildContext context) {
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
     ThemeService _themeService = openbookProvider.themeService;
@@ -125,7 +133,11 @@ class OBSearchResultsState extends State<OBSearchResults>
         Expanded(
           child: TabBarView(
             controller: _tabController,
-            children: [_buildUserResults(), _buildCommunityResults(), _buildHashtagResults()],
+            children: [
+              _buildUserResults(),
+              _buildCommunityResults(),
+              _buildHashtagResults()
+            ],
           ),
         )
       ],
@@ -224,7 +236,7 @@ class OBSearchResultsState extends State<OBSearchResults>
         return true;
       },
       child: ListView.builder(
-        padding: const EdgeInsets.all(0),
+          padding: const EdgeInsets.all(0),
           physics: const ClampingScrollPhysics(),
           itemCount: widget.hashtagResults.length + 1,
           itemBuilder: (BuildContext context, int index) {
@@ -251,6 +263,7 @@ class OBSearchResultsState extends State<OBSearchResults>
 
             return OBHashtagTile(
               hashtag,
+              key: Key(hashtag.name),
               onHashtagTilePressed: widget.onHashtagPressed,
             );
           }),
@@ -262,6 +275,34 @@ class OBSearchResultsState extends State<OBSearchResults>
         OBUserSearchResultsTab.values[_tabController.previousIndex];
     widget.onTabSelectionChanged(newSelection);
   }
+
+  void _onSearchQueryChanged(String searchQuery) {
+    OBUserSearchResultsTab currentTab = _getCurrentTab();
+
+    if (searchQuery.length <= 2) {
+      if (searchQuery.startsWith('#') &&
+          currentTab != OBUserSearchResultsTab.hashtags) {
+        _setCurrentTab(OBUserSearchResultsTab.hashtags);
+      } else if (searchQuery.startsWith('@') &&
+          currentTab != OBUserSearchResultsTab.users) {
+        _setCurrentTab(OBUserSearchResultsTab.users);
+      } else if (searchQuery.startsWith('c/') &&
+          currentTab != OBUserSearchResultsTab.communities) {
+        _setCurrentTab(OBUserSearchResultsTab.communities);
+      }
+    }
+  }
+
+  void _setCurrentTab(OBUserSearchResultsTab tab) {
+    int tabIndex = OBUserSearchResultsTab.values.indexOf(tab);
+    setState(() {
+      _tabController.index = tabIndex;
+    });
+  }
+
+  OBUserSearchResultsTab _getCurrentTab() {
+    return OBUserSearchResultsTab.values[_tabController.index];
+  }
 }
 
-enum OBUserSearchResultsTab { communities, users, hashtags }
+enum OBUserSearchResultsTab { users, communities, hashtags }

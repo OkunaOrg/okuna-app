@@ -1,10 +1,10 @@
 import 'package:Okuna/pages/home/pages/hashtag/widgets/cupertino_nav_bar.dart';
-import 'package:Okuna/provider.dart';
-import 'package:Okuna/services/theme_value_parser.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
 
+//AutomaticKeepAliveClientMixin
 /// A coloured navigation bar, used in communities.
 class OBImageNavBar extends StatelessWidget
     implements ObstructingPreferredSizeWidget {
@@ -27,9 +27,6 @@ class OBImageNavBar extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    ThemeValueParserService themeValueParserService =
-        OpenbookProvider.of(context).themeValueParserService;
-
     return Stack(
       children: <Widget>[
         Positioned(
@@ -37,16 +34,14 @@ class OBImageNavBar extends StatelessWidget
           right: 0,
           left: 0,
           top: 0,
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: AdvancedNetworkImage(imageSrc,
-                        useDiskCache: true,
-                        fallbackAssetImage:
-                            'assets/images/fallbacks/post-fallback.png',
-                        retryLimit: 3,
-                        timeoutDuration: const Duration(minutes: 1)))),
+          child: Image(
+            fit: BoxFit.cover,
+            gaplessPlayback: true,
+            image: AdvancedNetworkImage(imageSrc,
+                useDiskCache: true,
+                fallbackAssetImage: 'assets/images/fallbacks/post-fallback.png',
+                retryLimit: 3,
+                timeoutDuration: const Duration(minutes: 1)),
           ),
         ),
         OBCupertinoNavigationBar(

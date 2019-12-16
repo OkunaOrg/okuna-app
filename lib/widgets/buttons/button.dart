@@ -40,7 +40,6 @@ class OBButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     var provider = OpenbookProvider.of(context);
     var themeService = provider.themeService;
     var themeValueParser = provider.themeValueParserService;
@@ -197,7 +196,7 @@ class OBButton extends StatelessWidget {
         buttonPadding = EdgeInsets.symmetric(vertical: 8, horizontal: 12);
         break;
       case OBButtonSize.small:
-        buttonPadding = EdgeInsets.symmetric(vertical: 6, horizontal: 2);
+        buttonPadding = EdgeInsets.symmetric(vertical: 6, horizontal: 10);
         break;
       default:
     }

@@ -1,0 +1,12 @@
+{
+    "storage_permission_denied": "We hebben de opslagmachtiging nodig om media-items te kunnen selecteren. Schakel de betreffende optie in bij Instellingen.",
+    "@storage_permission_denied": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "camera_permission_denied": "We hebben de cameramachtiging nodig om foto's te kunnen maken en video's op te kunnen nemen. Schakel de betreffende optie in bij Instellingen.",
+    "@camera_permission_denied": {
+        "type": "text",
+        "placeholders": {}
+    }
+}

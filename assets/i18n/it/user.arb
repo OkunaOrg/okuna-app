@@ -62,6 +62,21 @@
         "type": "text",
         "placeholders": {}
     },
+    "profile_action_user_post_notifications_enabled": "Notifiche dei nuovi post attivate",
+    "@profile_action_user_post_notifications_enabled": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "profile_action_user_post_notifications_disabled": "Notifiche dei nuovi post disabilitate",
+    "@profile_action_user_post_notifications_disabled": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "profile_in_circles": "Nelle cerchie",
+    "@profile_in_circles": {
+        "type": "text",
+        "placeholders": {}
+    },
     "profile_action_cancel_connection": "Annulla richiesta di connessione",
     "@profile_action_cancel_connection": {
         "type": "text",
@@ -86,8 +101,25 @@
             "maxLength": {}
         }
     },
+    "profile_okuna_age_toast": "Su Okuna dal {age}",
+    "@profile_okuna_age_toast": {
+        "type": "text",
+        "placeholders": {
+            "age": {}
+        }
+    },
     "follow_button_follow_text": "Segui",
     "@follow_button_follow_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "follow_button_follow_back_text": "Segui a tua volta",
+    "@follow_button_follow_back_text": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "follow_button_following_text": "Seguendo",
+    "@follow_button_following_text": {
         "type": "text",
         "placeholders": {}
     },
@@ -339,11 +371,12 @@
         "type": "text",
         "placeholders": {}
     },
-    "invite_someone_message": "Ehi, vorrei invitarti su Okuna. Per prima cosa scarica l'app da iTunes ({iosLink}) o dal Play store ({androidLink}). Poi incolla questo link di invito personalizzato nel modulo 'Iscriviti' nell'App Okuna: {inviteLink}",
+    "invite_someone_message": "Ehi, vorrei invitarti su Okuna.\n\nPer Apple, prima scarica l'app TestFlight su iTunes ({testFlightLink}) e poi scarica l'app Okuna ({iosLink})\n\nPer Android, scaricala dal Play store ({androidLink}).\n\nIn seguito, incolla questo link di invito personalizzato nel modulo 'Iscriviti' nell'App Okuna: {inviteLink}",
     "@invite_someone_message": {
         "type": "text",
         "placeholders": {
             "iosLink": {},
+            "testFlightLink": {},
             "androidLink": {},
             "inviteLink": {}
         }
@@ -953,6 +986,16 @@
     },
     "unblock_user": "Sblocca utente",
     "@unblock_user": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "enable_new_post_notifications": "Attiva le notifiche dei nuovi post",
+    "@enable_new_post_notifications": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "disable_new_post_notifications": "Disabilita le notifiche dei nuovi post",
+    "@disable_new_post_notifications": {
         "type": "text",
         "placeholders": {}
     },

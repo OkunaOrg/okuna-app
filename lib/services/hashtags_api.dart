@@ -61,7 +61,7 @@ class HashtagsApiService {
         appendAuthorizationToken: authenticatedRequest);
   }
 
-  Future<HttpieResponse> reportHashtag(
+  Future<HttpieResponse> reportHashtagWithName(
       {@required String hashtagName,
       @required int moderationCategoryId,
       String description}) {

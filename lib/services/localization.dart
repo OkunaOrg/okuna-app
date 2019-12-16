@@ -617,10 +617,6 @@ class LocalizationService {
     return Intl.message("My following", name: 'drawer__my_following');
   }
 
-  String get drawer__my_user_subscriptions {
-    return Intl.message("My user subscriptions", name: 'drawer__my_user_subscriptions');
-  }
-
   String get drawer__my_invites {
     return Intl.message("My invites", name: 'drawer__my_invites');
   }
@@ -902,10 +898,6 @@ class LocalizationService {
     return Intl.message("In favorites", name: 'community__details_favorite');
   }
 
-  String get community__details_subscribed {
-    return Intl.message("Subscribed", name: 'community__details_subscribed');
-  }
-
   String get community__admin_desc {
     return Intl.message(
         "This will allow the member to edit the community details, administrators, moderators and banned users.",
@@ -1102,14 +1094,14 @@ class LocalizationService {
         name: 'community__manage_remove_favourite');
   }
 
-  String get community__manage_subscribe_community {
-    return Intl.message("Subscribe to notifications when there are new posts in this community",
-        name: 'community__manage_subscribe_community');
+  String get community__manage_enable_new_post_notifications {
+    return Intl.message("Enable new post notifications",
+        name: 'community__manage_enable_new_post_notifications');
   }
 
-  String get community__manage_unsubscribe_community {
-    return Intl.message("Unsubscribe to notifications from this community",
-        name: 'community__manage_unsubscribe_community');
+  String get community__manage_disable_new_post_notifications {
+    return Intl.message("Disable new post notifications",
+        name: 'community__manage_disable_new_post_notifications');
   }
 
   String get community__is_private {
@@ -1522,7 +1514,7 @@ class LocalizationService {
   }
 
   String get community__actions_enable_new_post_notifications_success {
-    return Intl.message("You'll now get new post notifications",
+    return Intl.message("New post notifications enabled",
         name: 'community__actions_enable_new_post_notifications_success');
   }
 
@@ -1532,7 +1524,7 @@ class LocalizationService {
   }
 
   String get community__actions_disable_new_post_notifications_success {
-    return Intl.message("Successfully disabled notifications",
+    return Intl.message("New post notifications enabled",
         name: 'community__actions_disable_new_post_notifications_success');
   }
 
@@ -1911,7 +1903,7 @@ class LocalizationService {
 
   String post__create_hashtags_invalid(int maxHashtags, int maxCharacters) {
     return Intl.message(
-        "Please add up to $maxHashtags hashtags and under $maxCharacters characters.",
+        "Please add a maximum of $maxHashtags hashtags and keep them under $maxCharacters characters.",
         args: [maxHashtags, maxCharacters],
         name: 'post__create_hashtags_invalid');
   }
@@ -1976,6 +1968,15 @@ class LocalizationService {
 
   String get post__trending_posts_title {
     return Intl.message("Trending", name: 'post__trending_posts_title');
+  }
+
+  String get post__trending_posts_load_more {
+    return Intl.message("Load older posts",
+        name: 'post__trending_posts_load_more');
+  }
+
+  String get post__load_more {
+    return Intl.message("Load more posts", name: 'post__load_more');
   }
 
   String get post__trending_posts_no_trending_posts {
@@ -2356,8 +2357,7 @@ class LocalizationService {
   }
 
   String get user__profile_in_circles {
-    return Intl.message("In circles",
-        name: 'user__profile_in_circles');
+    return Intl.message("In circles", name: 'user__profile_in_circles');
   }
 
   String get user__profile_action_cancel_connection {
@@ -2390,23 +2390,17 @@ class LocalizationService {
   }
 
   String get user__follow_button_follow_back_text {
-    return Intl.message("Follow back", name: 'user__follow_button_follow_back_text');
+    return Intl.message("Follow back",
+        name: 'user__follow_button_follow_back_text');
   }
 
   String get user__follow_button_following_text {
-    return Intl.message("Following", name: 'user__follow_button_following_text');
+    return Intl.message("Following",
+        name: 'user__follow_button_following_text');
   }
 
   String get user__follow_button_unfollow_text {
     return Intl.message("Unfollow", name: 'user__follow_button_unfollow_text');
-  }
-
-  String get user__subscribe_button_subscribe_text {
-    return Intl.message("Subscribe", name: 'user__subscribe_button_subscribe_text');
-  }
-
-  String get user__unsubscribe_button_unsubscribe_text {
-    return Intl.message("Unsubscribe", name: 'user__unsubscribe_button_unsubscribe_text');
   }
 
   String get user__edit_profile_username {
@@ -2594,20 +2588,10 @@ class LocalizationService {
     return Intl.message("Following", name: 'user__following_text');
   }
 
-  String get user__user_subscriptions_text {
-    return Intl.message("User subscriptions", name: 'user__user_subscriptions_text');
-  }
-
   String get user__following_resource_name {
     return Intl.message("followed users",
         desc: 'Eg: Search followed users.., No followed users found. etc ',
         name: 'user__following_resource_name');
-  }
-
-  String get user__user_subscriptions_resource_name {
-    return Intl.message("user subscriptions",
-        desc: 'Eg: Search user subscriptions.., No user subscriptions found. etc ',
-        name: 'user__user_subscriptions_resource_name');
   }
 
   String get user__tile_delete {
@@ -3193,16 +3177,30 @@ class LocalizationService {
     return Intl.message("Block user", name: 'user__block_user');
   }
 
+  String get user__block_description {
+    return Intl.message(
+        "You will both dissapear from each other\'s social network experience, with the exception of communities which the person is a staff member of.",
+        name: 'user__block_description');
+  }
+
+  String get user__unblock_description {
+    return Intl.message(
+        "You will both be able to follow, connect or explore each other's content again.",
+        name: 'user__unblock_description');
+  }
+
   String get user__unblock_user {
     return Intl.message("Unblock user", name: 'user__unblock_user');
   }
 
   String get user__enable_new_post_notifications {
-    return Intl.message("Enable new post notifications", name: 'user__enable_new_post_notifications');
+    return Intl.message("Enable new post notifications",
+        name: 'user__enable_new_post_notifications');
   }
 
   String get user__disable_new_post_notifications {
-    return Intl.message("Disable new post notifications", name: 'user__disable_new_post_notifications');
+    return Intl.message("Disable new post notifications",
+        name: 'user__disable_new_post_notifications');
   }
 
   String user__disconnect_from_user(String userName) {
@@ -3343,7 +3341,7 @@ class LocalizationService {
 
   String get notifications__community_new_post_desc {
     return Intl.message(
-        "Be notified when there is a new post in a community you are subscribed to",
+        "Be notified when there is a new post in a community you enabled post notifications on",
         name: 'notifications__community_new_post_desc');
   }
 
@@ -3354,7 +3352,7 @@ class LocalizationService {
 
   String get notifications__user_new_post_desc {
     return Intl.message(
-        "Be notified when there is a new post by a user you are subscribed to",
+        "Be notified when there is a new post by a user you enabled notifications on",
         name: 'notifications__user_new_post_desc');
   }
 
@@ -3410,17 +3408,16 @@ class LocalizationService {
 
   String notifications__user_community_invite_tile(String communityName) {
     return Intl.message(
-        "[name] [username] has invited you to join community /c/$communityName.",
+        "[name] [username] has invited you to join community c/$communityName.",
         args: [communityName],
-        desc: "Eg.: James @jamest has invited you to join community /c/okuna.",
+        desc: "Eg.: James @jamest has invited you to join community c/okuna.",
         name: 'notifications__user_community_invite_tile');
   }
 
   String notifications__community_new_post_tile(String communityName) {
-    return Intl.message(
-        "There was a new post in /c/$communityName.",
+    return Intl.message("There was a new post in c/$communityName.",
         args: [communityName],
-        desc: "Eg.: There was a new post in /c/okuna.",
+        desc: "Eg.: There was a new post in c/okuna.",
         name: 'notifications__community_new_post_tile');
   }
 
@@ -3710,6 +3707,16 @@ class LocalizationService {
         name: 'moderation__you_have_reported_account_text');
   }
 
+  String get moderation__report_hashtag_text {
+    return Intl.message("Report hashtag",
+        name: 'moderation__report_hashtag_text');
+  }
+
+  String get moderation__you_have_reported_hashtag_text {
+    return Intl.message("You have reported this hashtag",
+        name: 'moderation__you_have_reported_hashtag_text');
+  }
+
   String get moderation__report_community_text {
     return Intl.message("Report community",
         name: 'moderation__report_community_text');
@@ -3846,10 +3853,8 @@ class LocalizationService {
   }
 
   String contextual_hashtag_search_box__be_the_first(String hashtag) {
-    return Intl.message(
-        "You\'ll be the first to use #$hashtag",
-        args: [hashtag],
-        name: 'contextual_hashtag_search_box__be_the_first');
+    return Intl.message("You\'ll be the first to use #$hashtag",
+        args: [hashtag], name: 'contextual_hashtag_search_box__be_the_first');
   }
 
   String get image_picker__from_gallery {

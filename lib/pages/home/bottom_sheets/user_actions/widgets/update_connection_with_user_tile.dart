@@ -12,10 +12,9 @@ import 'package:flutter/material.dart';
 
 class OBUpdateConnectionWithUserTile extends StatefulWidget {
   final User user;
-  final VoidCallback onWillShowModalBottomSheet;
 
   const OBUpdateConnectionWithUserTile(this.user,
-      {Key key, @required this.onWillShowModalBottomSheet})
+      {Key key})
       : super(key: key);
 
   @override
@@ -46,9 +45,6 @@ class OBUpdateConnectionWithUserTileState
   }
 
   void _displayAddConnectionToCirclesBottomSheet() {
-    if (widget.onWillShowModalBottomSheet != null)
-      widget.onWillShowModalBottomSheet();
-
     List<Circle> connectedCircles = widget.user.connectedCircles.circles;
 
     _bottomSheetService.showConnectionsCirclesPicker(

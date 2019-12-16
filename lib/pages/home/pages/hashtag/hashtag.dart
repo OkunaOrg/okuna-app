@@ -1,7 +1,6 @@
 import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/hashtag.dart';
 import 'package:Okuna/pages/home/pages/hashtag/widgets/hashtag_nav_bar.dart';
-import 'package:Okuna/pages/home/pages/hashtag/widgets/hashtag_posts_stream_status_indicator.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/user.dart';
 import 'package:Okuna/widgets/posts_stream/posts_stream.dart';
@@ -12,11 +11,11 @@ import 'package:flutter/material.dart';
 class OBHashtagPage extends StatefulWidget {
   final OBHashtagPageController controller;
   final Hashtag hashtag;
+  final String rawHashtagName;
 
-  OBHashtagPage(
-    this.hashtag, {
-    this.controller,
-  });
+  const OBHashtagPage(
+      {Key key, this.controller, this.hashtag, this.rawHashtagName})
+      : super(key: key);
 
   @override
   OBHashtagPageState createState() {
@@ -49,7 +48,10 @@ class OBHashtagPageState extends State<OBHashtagPage> {
 
     return CupertinoPageScaffold(
         backgroundColor: Color.fromARGB(0, 0, 0, 0),
-        navigationBar: OBHashtagNavBar(_hashtag),
+        navigationBar: OBHashtagNavBar(
+            key: Key('navBarHeader_${_hashtag.name}'),
+            hashtag: _hashtag,
+            rawHashtagName: widget.rawHashtagName),
         child: OBPrimaryColorContainer(
           child: Column(
             mainAxisSize: MainAxisSize.max,
@@ -60,24 +62,11 @@ class OBHashtagPageState extends State<OBHashtagPage> {
                     controller: _obPostsStreamController,
                     secondaryRefresher: _refreshHashtag,
                     refresher: _refreshPosts,
-                    onScrollLoader: _loadMorePosts,
-                    statusIndicatorBuilder: _buildPostsStreamStatusIndicator),
+                    onScrollLoader: _loadMorePosts),
               )
             ],
           ),
         ));
-  }
-
-  Widget _buildPostsStreamStatusIndicator(
-      {BuildContext context,
-      OBPostsStreamStatus streamStatus,
-      List<Widget> streamPrependedItems,
-      Function streamRefresher}) {
-    return OBHashtagPostsStreamStatusIndicator(
-        hashtag: widget.hashtag,
-        streamRefresher: streamRefresher,
-        streamPrependedItems: streamPrependedItems,
-        streamStatus: streamStatus);
   }
 
   void scrollToTop() {

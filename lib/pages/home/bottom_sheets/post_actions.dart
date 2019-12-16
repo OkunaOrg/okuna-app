@@ -143,9 +143,6 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
   }
 
   Future _onWantsToDeletePost() async {
-    // Pop current
-    Navigator.pop(context);
-
     _bottomSheetService.showConfirmAction(
         context: context,
         subtitle: _localizationService.post__actions_delete_description,
@@ -161,7 +158,7 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
   Future _onWantsToEditPost() async {
     try {
       await _modalService.openEditPost(context: context, post: widget.post);
-      Navigator.pop(context);
+      _dismiss();
     } catch (error) {
       _onError(error);
     }
@@ -182,7 +179,7 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
   }
 
   void _dismiss() {
-    Navigator.pop(context);
+    _bottomSheetService.dismissActiveBottomSheet(context: context);
   }
 }
 

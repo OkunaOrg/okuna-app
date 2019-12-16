@@ -81,7 +81,9 @@ class PostComment extends UpdatableModel<PostComment> {
       this.replies,
       this.repliesCount,
       this.reactionsEmojiCounts,
-      this.reaction});
+      this.reaction}) {
+    _updateHashtagsMap();
+  }
 
   static final factory = PostCommentFactory();
 
@@ -93,7 +95,7 @@ class PostComment extends UpdatableModel<PostComment> {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'created': created.toString(),
+      'created': created?.toString(),
       'text': text,
       'language': language.toJson(),
       'creator_id': creatorId,
@@ -105,7 +107,7 @@ class PostComment extends UpdatableModel<PostComment> {
       'parent_comment': parentComment.toJson(),
       'replies':
           replies.comments.map((PostComment reply) => reply.toJson())?.toList(),
-      'hashtags_list': hashtagsList?.hashtags
+      'hashtags': hashtagsList?.hashtags
           ?.map((Hashtag hashtag) => hashtag.toJson())
           ?.toList(),
       'replies_count': repliesCount,

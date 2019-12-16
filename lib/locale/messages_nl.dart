@@ -55,99 +55,120 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m17(categoryName) => "Trending in ${categoryName}";
 
-  static m18(currentUserLanguage) => "Taal (${currentUserLanguage})";
+  static m18(hashtag) => "Je bent de eerste die #${hashtag} gebruikt";
 
-  static m20(resourceCount, resourceName) => "Zie alle ${resourceCount} ${resourceName}";
+  static m19(platform) => "Draaiend op ${platform}";
 
-  static m21(postCommentText) => "[name] [username] heeft ook commentaar gegeven: ${postCommentText}";
+  static m20(currentUserLanguage) => "Taal (${currentUserLanguage})";
 
-  static m22(postCommentText) => "[name] [username] had commentaar op jouw bericht: ${postCommentText}";
+  static m21(limit) => "Bestand te groot (limiet: ${limit} MB)";
 
-  static m23(postCommentText) => "[name] [username] heeft ook geantwoord: ${postCommentText}";
+  static m22(resourceCount, resourceName) => "Zie alle ${resourceCount} ${resourceName}";
 
-  static m24(postCommentText) => "[name] [username] antwoordde: ${postCommentText}";
+  static m23(postCommentText) => "[name] [username] heeft ook commentaar gegeven: ${postCommentText}";
 
-  static m25(postCommentText) => "[name] [username] heeft je in een commentaar genoemd: ${postCommentText}";
+  static m24(postCommentText) => "[name] [username] had commentaar op jouw bericht: ${postCommentText}";
 
-  static m26(communityName) => "[name] [username] heeft je uitgenodigd om deel te nemen aan de community /c/${communityName}.";
+  static m25(postCommentText) => "[name] [username] heeft ook geantwoord: ${postCommentText}";
 
-  static m27(maxLength) => "Een reactie mag niet langer zijn dan ${maxLength} tekens.";
+  static m26(postCommentText) => "[name] [username] antwoordde: ${postCommentText}";
 
-  static m28(commentsCount) => "Bekijk alle ${commentsCount} commentaren";
+  static m27(communityName) => "Er was een nieuw bericht in c/${communityName}.";
 
-  static m29(circlesSearchQuery) => "Geen cirkels gevonden die overeenkomen met \'${circlesSearchQuery}\'.";
+  static m28(postCommentText) => "[name] [username] heeft je in een commentaar genoemd: ${postCommentText}";
 
-  static m30(name) => "${name} heeft nog niets gedeeld.";
+  static m29(communityName) => "[name] [username] heeft je uitgenodigd om deel te nemen aan de community /c/${communityName}.";
 
-  static m31(postCreatorUsername) => "@${postCreatorUsername}\'s kringen";
+  static m30(maxLength) => "Een reactie mag niet langer zijn dan ${maxLength} tekens.";
 
-  static m33(maxLength) => "De naam van de cirkel mag niet langer zijn dan ${maxLength} tekens.";
+  static m31(commentsCount) => "Bekijk alle ${commentsCount} commentaren";
 
-  static m34(prettyUsersCount) => "${prettyUsersCount} mensen";
+  static m32(maxHashtags, maxCharacters) => "Please add a maximum of ${maxHashtags} hashtags and keep them under ${maxCharacters} characters.";
 
-  static m35(username) => "Weet je zeker dat je @${username} wil blokkeren?";
+  static m33(circlesSearchQuery) => "Geen cirkels gevonden die overeenkomen met \'${circlesSearchQuery}\'.";
 
-  static m36(userName) => "Bevestig connectie met ${userName}";
+  static m34(name) => "${name} heeft nog niets gedeeld.";
 
-  static m37(userName) => "Verbind met ${userName}";
+  static m35(postCreatorUsername) => "@${postCreatorUsername}\'s kringen";
 
-  static m38(userName) => "Verbinding verbreken met ${userName}";
+  static m36(description) => "Voorbeeld weergeven mislukt met website-fout ${description}";
 
-  static m39(limit) => "Afbeelding is te groot (limiet: ${limit} MB)";
+  static m37(maxLength) => "De naam van de cirkel mag niet langer zijn dan ${maxLength} tekens.";
 
-  static m40(username) => "De gebruikersnaam @${username} is al bezet";
+  static m38(prettyUsersCount) => "${prettyUsersCount} mensen";
 
-  static m41(searchQuery) => "Geen emoji gevonden die overeenkomen met \'${searchQuery}\'.";
+  static m39(username) => "Weet je zeker dat je @${username} wil blokkeren?";
 
-  static m42(searchQuery) => "Geen lijst gevonden voor \'${searchQuery}\'";
+  static m40(userName) => "Bevestig connectie met ${userName}";
 
-  static m43(prettyUsersCount) => "${prettyUsersCount} accounts";
+  static m41(userName) => "Verbind met ${userName}";
 
-  static m44(prettyUsersCount) => "${prettyUsersCount} Accounts";
+  static m42(userName) => "Verbinding verbreken met ${userName}";
 
-  static m45(groupName) => "Zie alle ${groupName}";
+  static m43(limit) => "Afbeelding is te groot (limiet: ${limit} MB)";
 
-  static m46(iosLink, testFlightLink, androidLink, inviteLink) => "Hi, ik wil je graag uitnodigen voor Okuna. Download eerst de app in iTunes (${iosLink}) of de Play store (${androidLink}). Plak vervolgens deze gepersonaliseerde link met de uitnodiginging het formulier \'Aanmelden\' in de Okuna App: ${inviteLink}";
+  static m44(username) => "De gebruikersnaam @${username} is al bezet";
 
-  static m47(username) => "Doet mee met gebruikersnaam @${username}";
+  static m45(searchQuery) => "Geen emoji gevonden die overeenkomen met \'${searchQuery}\'.";
 
-  static m48(email) => "In afwachting, uitnodigings-mail verzonden naar ${email}";
+  static m46(searchQuery) => "Geen lijst gevonden voor \'${searchQuery}\'";
 
-  static m49(maxLength) => "De naam van de lijst mag niet langer zijn dan ${maxLength} tekens.";
+  static m47(prettyUsersCount) => "${prettyUsersCount} accounts";
 
-  static m50(maxLength) => "De biografie kan niet langer zijn dan ${maxLength} tekens.";
+  static m48(prettyUsersCount) => "${prettyUsersCount} Accounts";
 
-  static m51(maxLength) => "De locatie mag niet langer zijn dan ${maxLength} tekens.";
+  static m49(groupName) => "Zie alle ${groupName}";
 
-  static m52(takenConnectionsCircleName) => "De naam van de cirkel ‘${takenConnectionsCircleName}’ is al bezet";
+  static m50(iosLink, testFlightLink, androidLink, inviteLink) => "Hey, ik wil u uitnodigen voor Okuna.\n\nVoor Apple, eerst, download de TestFlight app op iTunes (${testFlightLink}) en download dan de Okuna app (${iosLink})\n\nvoor Android, download het uit de Play store (${androidLink}).\n\nseconde, plak deze persoonlijke uitnodiging in het formulier \'Aanmelden\' in de Okuna App: ${inviteLink}";
 
-  static m53(listName) => "De naam van de lijst ‘${listName}’ is al bezet";
+  static m51(username) => "Doet mee met gebruikersnaam @${username}";
 
-  static m54(searchQuery) => "Geen resultaat voor \'${searchQuery}\'.";
+  static m52(email) => "In afwachting, uitnodigings-mail verzonden naar ${email}";
 
-  static m55(resourcePluralName) => "${resourcePluralName} niet gevonden.";
+  static m53(maxLength) => "De naam van de lijst mag niet langer zijn dan ${maxLength} tekens.";
 
-  static m56(resourcePluralName) => "Zoek ${resourcePluralName} ...";
+  static m54(maxLength) => "De biografie kan niet langer zijn dan ${maxLength} tekens.";
 
-  static m57(searchQuery) => "Geen communities gevonden voor \'${searchQuery}\'.";
+  static m55(maxLength) => "De locatie mag niet langer zijn dan ${maxLength} tekens.";
 
-  static m58(searchQuery) => "Geen resultaten voor \'${searchQuery}\' gevonden.";
+  static m56(age) => "Op Okuna sinds ${age}";
 
-  static m59(searchQuery) => "Geen gebruikers gevonden voor \'${searchQuery}\'.";
+  static m57(takenConnectionsCircleName) => "De naam van de cirkel ‘${takenConnectionsCircleName}’ is al bezet";
 
-  static m60(searchQuery) => "Zoeken naar \'${searchQuery}\'";
+  static m58(listName) => "De naam van de lijst ‘${listName}’ is al bezet";
+
+  static m59(searchQuery) => "Geen resultaat voor \'${searchQuery}\'.";
+
+  static m60(resourcePluralName) => "${resourcePluralName} niet gevonden.";
+
+  static m61(resourcePluralName) => "Zoek ${resourcePluralName} ...";
+
+  static m62(searchQuery) => "Geen communities gevonden voor \'${searchQuery}\'.";
+
+  static m63(searchQuery) => "Geen hashtags gevonden voor \'${searchQuery}\'.";
+
+  static m64(searchQuery) => "Geen resultaten voor \'${searchQuery}\' gevonden.";
+
+  static m65(searchQuery) => "Geen gebruikers gevonden voor \'${searchQuery}\'.";
+
+  static m66(searchQuery) => "Zoeken naar \'${searchQuery}\'";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "application_settings__comment_sort_newest_first" : MessageLookupByLibrary.simpleMessage("Nieuwste eerst"),
     "application_settings__comment_sort_oldest_first" : MessageLookupByLibrary.simpleMessage("Oudste eerst"),
-    "application_settings__tap_to_change" : MessageLookupByLibrary.simpleMessage("(Tap to change)"),
-    "application_settings__videos" : MessageLookupByLibrary.simpleMessage("Videos"),
-    "application_settings__videos_autoplay" : MessageLookupByLibrary.simpleMessage("Autoplay"),
+    "application_settings__link_previews" : MessageLookupByLibrary.simpleMessage("Link-voorbeelden"),
+    "application_settings__link_previews_autoplay_always" : MessageLookupByLibrary.simpleMessage("Altijd"),
+    "application_settings__link_previews_autoplay_never" : MessageLookupByLibrary.simpleMessage("Nooit"),
+    "application_settings__link_previews_autoplay_wifi_only" : MessageLookupByLibrary.simpleMessage("Alleen via Wifi"),
+    "application_settings__link_previews_show" : MessageLookupByLibrary.simpleMessage("Toon"),
+    "application_settings__tap_to_change" : MessageLookupByLibrary.simpleMessage("(Tik om te wijzigen)"),
+    "application_settings__videos" : MessageLookupByLibrary.simpleMessage("Video \'s"),
+    "application_settings__videos_autoplay" : MessageLookupByLibrary.simpleMessage("Automatisch afspelen"),
     "application_settings__videos_autoplay_always" : MessageLookupByLibrary.simpleMessage("Altijd"),
     "application_settings__videos_autoplay_never" : MessageLookupByLibrary.simpleMessage("Nooit"),
     "application_settings__videos_autoplay_wifi_only" : MessageLookupByLibrary.simpleMessage("Alleen via Wifi"),
-    "application_settings__videos_sound" : MessageLookupByLibrary.simpleMessage("Sound"),
+    "application_settings__videos_sound" : MessageLookupByLibrary.simpleMessage("Geluid"),
     "application_settings__videos_sound_disabled" : MessageLookupByLibrary.simpleMessage("Uitgeschakeld"),
     "application_settings__videos_sound_enabled" : MessageLookupByLibrary.simpleMessage("Ingeschakeld"),
     "auth__change_password_current_pwd" : MessageLookupByLibrary.simpleMessage("Huidig wachtwoord"),
@@ -170,7 +191,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "auth__create_acc__create_account" : MessageLookupByLibrary.simpleMessage("Account aanmaken"),
     "auth__create_acc__done" : MessageLookupByLibrary.simpleMessage("Account aanmaken"),
     "auth__create_acc__done_continue" : MessageLookupByLibrary.simpleMessage("Inloggen"),
-    "auth__create_acc__done_created" : MessageLookupByLibrary.simpleMessage("Je account is aangemaakt met gebruikersnaam "),
+    "auth__create_acc__done_created" : MessageLookupByLibrary.simpleMessage("Je account is aangemaakt."),
     "auth__create_acc__done_description" : MessageLookupByLibrary.simpleMessage("Je account is aangemaakt."),
     "auth__create_acc__done_subtext" : MessageLookupByLibrary.simpleMessage("Je kunt dit wijzigen in je profielinstellingen."),
     "auth__create_acc__done_title" : MessageLookupByLibrary.simpleMessage("Hoera!"),
@@ -179,9 +200,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "auth__create_acc__email_placeholder" : MessageLookupByLibrary.simpleMessage("v.vangogh@kwasten.nl"),
     "auth__create_acc__email_server_error" : MessageLookupByLibrary.simpleMessage("😭 We ervaren problemen met onze servers. Probeer het over een paar minuten alsjeblieft opnieuw."),
     "auth__create_acc__email_taken_error" : MessageLookupByLibrary.simpleMessage("🤔 Er bestaat al een account voor dat e-mailadres."),
+    "auth__create_acc__invalid_token" : MessageLookupByLibrary.simpleMessage("Ongeldig token"),
     "auth__create_acc__lets_get_started" : MessageLookupByLibrary.simpleMessage("Laten we beginnen"),
     "auth__create_acc__link_empty_error" : MessageLookupByLibrary.simpleMessage("Link mag niet leeg zijn."),
-    "auth__create_acc__link_invalid_error" : MessageLookupByLibrary.simpleMessage("Deze link lijkt ongeldig."),
+    "auth__create_acc__link_invalid_error" : MessageLookupByLibrary.simpleMessage("Deze link is ongeldig."),
     "auth__create_acc__name_characters_error" : MessageLookupByLibrary.simpleMessage("😅 Een naam kan alleen alfanumerieke karakters bevatten (voor nu)."),
     "auth__create_acc__name_empty_error" : MessageLookupByLibrary.simpleMessage("😱 Je naam kan niet leeg zijn."),
     "auth__create_acc__name_length_error" : MessageLookupByLibrary.simpleMessage("😱 Je naam kan niet langer zijn dan 50 karakters. (Als dat zo is, dan spijt dat ons zeer.)"),
@@ -203,12 +225,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "auth__create_acc__submit_loading_title" : MessageLookupByLibrary.simpleMessage("Nog even volhouden!"),
     "auth__create_acc__subscribe" : MessageLookupByLibrary.simpleMessage("Verzoek"),
     "auth__create_acc__subscribe_to_waitlist_text" : MessageLookupByLibrary.simpleMessage("Een uitnodiging aanvragen!"),
+    "auth__create_acc__suggested_communities" : MessageLookupByLibrary.simpleMessage("🥳 Ga aan de slag door deel te nemen aan de volgende communities."),
     "auth__create_acc__username_characters_error" : MessageLookupByLibrary.simpleMessage("😅 Een gebruikersnaam kan alleen alfanumerieke karakters en onderliggend streepje bevatten."),
     "auth__create_acc__username_empty_error" : MessageLookupByLibrary.simpleMessage("😱 De gebruikersnaam kan niet leeg zijn."),
     "auth__create_acc__username_length_error" : MessageLookupByLibrary.simpleMessage("😅 Een gebruiksnaam kan niet langer zijn dan 30 karakters."),
     "auth__create_acc__username_placeholder" : MessageLookupByLibrary.simpleMessage("vincentvangogh"),
     "auth__create_acc__username_server_error" : MessageLookupByLibrary.simpleMessage("😭 We ervaren problemen met onze servers. Probeer alsjeblieft het over een paar minuten opnieuw."),
     "auth__create_acc__username_taken_error" : MessageLookupByLibrary.simpleMessage("😩 De gebruikersnaam @%s is al bezet."),
+    "auth__create_acc__validating_token" : MessageLookupByLibrary.simpleMessage("Token valideren..."),
     "auth__create_acc__welcome_to_beta" : MessageLookupByLibrary.simpleMessage("Welkom bij de Bèta!"),
     "auth__create_acc__what_avatar" : MessageLookupByLibrary.simpleMessage("Kies een profielfoto"),
     "auth__create_acc__what_email" : MessageLookupByLibrary.simpleMessage("Wat is je e-mail adres?"),
@@ -230,9 +254,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "auth__login__credentials_mismatch_error" : MessageLookupByLibrary.simpleMessage("De versterkte inloggegevens komen niet overeen."),
     "auth__login__email_label" : MessageLookupByLibrary.simpleMessage("E-mail"),
     "auth__login__forgot_password" : MessageLookupByLibrary.simpleMessage("Wachtwoord vergeten"),
-    "auth__login__forgot_password_subtitle" : MessageLookupByLibrary.simpleMessage("Voer je gebruikersnaam of email adres in"),
+    "auth__login__forgot_password_subtitle" : MessageLookupByLibrary.simpleMessage("Voer je e-mailadres in"),
     "auth__login__login" : MessageLookupByLibrary.simpleMessage("Doorgaan"),
-    "auth__login__or_text" : MessageLookupByLibrary.simpleMessage("Of"),
     "auth__login__password_empty_error" : MessageLookupByLibrary.simpleMessage("Wachtwoord is vereist."),
     "auth__login__password_label" : MessageLookupByLibrary.simpleMessage("Wachtwoord"),
     "auth__login__password_length_error" : MessageLookupByLibrary.simpleMessage("Wachtwoord moet tussen 8 en 64 karakters zijn."),
@@ -253,7 +276,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "auth__username_characters_error" : MessageLookupByLibrary.simpleMessage("Een gebruikersnaam kan alleen alfanumerieke karakters en onderliggend streepje bevatten."),
     "auth__username_empty_error" : MessageLookupByLibrary.simpleMessage("Gebruikersnaam mag niet leeg zijn."),
     "auth__username_maxlength_error" : m4,
+    "bottom_sheets__confirm_action_are_you_sure" : MessageLookupByLibrary.simpleMessage("Weet je het zeker?"),
+    "bottom_sheets__confirm_action_no" : MessageLookupByLibrary.simpleMessage("Nee"),
+    "bottom_sheets__confirm_action_yes" : MessageLookupByLibrary.simpleMessage("Ja"),
     "community__about" : MessageLookupByLibrary.simpleMessage("Over"),
+    "community__actions_disable_new_post_notifications_success" : MessageLookupByLibrary.simpleMessage("New post notifications enabled"),
+    "community__actions_disable_new_post_notifications_title" : MessageLookupByLibrary.simpleMessage("Nieuwe berichtmeldingen uitschakelen"),
+    "community__actions_enable_new_post_notifications_success" : MessageLookupByLibrary.simpleMessage("New post notifications enabled"),
+    "community__actions_enable_new_post_notifications_title" : MessageLookupByLibrary.simpleMessage("Nieuwe berichtmeldingen inschakelen"),
     "community__actions_invite_people_title" : MessageLookupByLibrary.simpleMessage("Nodig mensen uit voor deze community"),
     "community__actions_manage_text" : MessageLookupByLibrary.simpleMessage("Beheer"),
     "community__add_administrators_title" : MessageLookupByLibrary.simpleMessage("Een beheerder toevoegen."),
@@ -290,6 +320,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "community__delete_confirmation" : MessageLookupByLibrary.simpleMessage("Weet je zeker dat je deze community wil verwijderen?"),
     "community__delete_desc" : MessageLookupByLibrary.simpleMessage("Je zult de berichten niet meer in je tijdslijn zien, noch in staat zijn om er in te posten."),
     "community__description_range_error" : m8,
+    "community__details_favorite" : MessageLookupByLibrary.simpleMessage("In favorieten"),
+    "community__exclude_joined_communities" : MessageLookupByLibrary.simpleMessage("Aangemelde communities uitsluiten"),
+    "community__exclude_joined_communities_desc" : MessageLookupByLibrary.simpleMessage("Geen berichten tonen van gemeenschappen waar ik lid van ben"),
+    "community__excluded_communities" : MessageLookupByLibrary.simpleMessage("uitgesloten communities"),
+    "community__excluded_community" : MessageLookupByLibrary.simpleMessage("uitgesloten community"),
     "community__favorite_action" : MessageLookupByLibrary.simpleMessage("Favoriete community"),
     "community__favorite_communities" : MessageLookupByLibrary.simpleMessage("favoriete communities"),
     "community__favorite_community" : MessageLookupByLibrary.simpleMessage("favoriete community"),
@@ -319,6 +354,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "community__manage_delete_title" : MessageLookupByLibrary.simpleMessage("Een community verwijderen"),
     "community__manage_details_desc" : MessageLookupByLibrary.simpleMessage("Verander de titel, naam, avatar, omslagfoto en meer."),
     "community__manage_details_title" : MessageLookupByLibrary.simpleMessage("Details"),
+    "community__manage_disable_new_post_notifications" : MessageLookupByLibrary.simpleMessage("Disable new post notifications"),
+    "community__manage_enable_new_post_notifications" : MessageLookupByLibrary.simpleMessage("Enable new post notifications"),
     "community__manage_invite_desc" : MessageLookupByLibrary.simpleMessage("Nodig je connecties en volgers uit om deel te nemen aan de community."),
     "community__manage_invite_title" : MessageLookupByLibrary.simpleMessage("Mensen uitnodigen"),
     "community__manage_leave_desc" : MessageLookupByLibrary.simpleMessage("De community verlaten."),
@@ -354,6 +391,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "community__posts" : MessageLookupByLibrary.simpleMessage("Posts"),
     "community__refresh_text" : MessageLookupByLibrary.simpleMessage("Ververs"),
     "community__refreshing" : MessageLookupByLibrary.simpleMessage("Verversen community"),
+    "community__retry_loading_posts" : MessageLookupByLibrary.simpleMessage("Tik om het opnieuw te proberen"),
     "community__rules_empty_error" : MessageLookupByLibrary.simpleMessage("Regels invullen is verplicht."),
     "community__rules_range_error" : m14,
     "community__rules_text" : MessageLookupByLibrary.simpleMessage("Regels"),
@@ -382,8 +420,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "community__save_community_name_title" : MessageLookupByLibrary.simpleMessage("Naam"),
     "community__save_community_name_title_hint_text" : MessageLookupByLibrary.simpleMessage(" bijv. reizen, fotografie, gaming."),
     "community__save_community_save_text" : MessageLookupByLibrary.simpleMessage("Opslaan"),
+    "community__tile_delete" : MessageLookupByLibrary.simpleMessage("Verwijderen"),
     "community__title_empty_error" : MessageLookupByLibrary.simpleMessage("Titel invullen is verplicht."),
     "community__title_range_error" : m16,
+    "community__top_posts_excluded_communities" : MessageLookupByLibrary.simpleMessage("Uitgesloten communities"),
+    "community__top_posts_excluded_communities_desc" : MessageLookupByLibrary.simpleMessage("Communities beheren die uitgesloten zijn van de verkenningstijdlijn"),
+    "community__top_posts_settings" : MessageLookupByLibrary.simpleMessage("Explore settings"),
     "community__trending_in_all" : MessageLookupByLibrary.simpleMessage("Trending in alle categorieën"),
     "community__trending_in_category" : m17,
     "community__trending_none_found" : MessageLookupByLibrary.simpleMessage("Geen trending communities gevonden. Probeer het over enkele minuten opnieuw."),
@@ -393,13 +435,19 @@ class MessageLookup extends MessageLookupByLibrary {
     "community__unfavorite_action" : MessageLookupByLibrary.simpleMessage("Niet favoriete community"),
     "community__user_you_text" : MessageLookupByLibrary.simpleMessage("Jij"),
     "community__yes" : MessageLookupByLibrary.simpleMessage("Ja"),
+    "contextual_account_search_box__no_results" : MessageLookupByLibrary.simpleMessage("Geen resultaten gevonden"),
     "contextual_account_search_box__suggestions" : MessageLookupByLibrary.simpleMessage("Suggesties"),
+    "contextual_community_search_box__no_results" : MessageLookupByLibrary.simpleMessage("Geen resultaten gevonden"),
+    "contextual_community_search_box__suggestions" : MessageLookupByLibrary.simpleMessage("Suggesties"),
+    "contextual_hashtag_search_box__be_the_first" : m18,
+    "drawer__about" : MessageLookupByLibrary.simpleMessage("Over"),
+    "drawer__about_platform" : m19,
     "drawer__account_settings" : MessageLookupByLibrary.simpleMessage("Account instellingen"),
     "drawer__account_settings_blocked_users" : MessageLookupByLibrary.simpleMessage("Geblokkeerde gebruikers"),
     "drawer__account_settings_change_email" : MessageLookupByLibrary.simpleMessage("E-mailadres wijzigen"),
     "drawer__account_settings_change_password" : MessageLookupByLibrary.simpleMessage("Wachtwoord wijzigen"),
     "drawer__account_settings_delete_account" : MessageLookupByLibrary.simpleMessage("Verwijder account"),
-    "drawer__account_settings_language" : m18,
+    "drawer__account_settings_language" : m20,
     "drawer__account_settings_language_text" : MessageLookupByLibrary.simpleMessage("Taal"),
     "drawer__account_settings_notifications" : MessageLookupByLibrary.simpleMessage("Notificaties"),
     "drawer__app_account_text" : MessageLookupByLibrary.simpleMessage("App & Account"),
@@ -440,8 +488,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "drawer__useful_links_title" : MessageLookupByLibrary.simpleMessage("Handige links"),
     "error__no_internet_connection" : MessageLookupByLibrary.simpleMessage("Geen internet verbinding"),
     "error__unknown_error" : MessageLookupByLibrary.simpleMessage("Onbekende fout"),
+    "image_picker__error_too_large" : m21,
     "image_picker__from_camera" : MessageLookupByLibrary.simpleMessage("Van camera"),
     "image_picker__from_gallery" : MessageLookupByLibrary.simpleMessage("Van galerij"),
+    "media_service__crop_image" : MessageLookupByLibrary.simpleMessage("Afbeelding bijsnijden"),
     "moderation__actions_chat_with_team" : MessageLookupByLibrary.simpleMessage("Met het team chatten"),
     "moderation__actions_review" : MessageLookupByLibrary.simpleMessage("Beoordelen"),
     "moderation__category_text" : MessageLookupByLibrary.simpleMessage("Categorie"),
@@ -494,11 +544,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "moderation__report_account_text" : MessageLookupByLibrary.simpleMessage("Rapporteer account"),
     "moderation__report_comment_text" : MessageLookupByLibrary.simpleMessage("Rapporteer commentaar"),
     "moderation__report_community_text" : MessageLookupByLibrary.simpleMessage("Rapporteer community"),
+    "moderation__report_hashtag_text" : MessageLookupByLibrary.simpleMessage("Hashtag melden"),
     "moderation__report_post_text" : MessageLookupByLibrary.simpleMessage("Rapporteer bericht"),
     "moderation__reporter_text" : MessageLookupByLibrary.simpleMessage("Rapporteur"),
     "moderation__reports_preview_resource_reports" : MessageLookupByLibrary.simpleMessage("rapporten"),
     "moderation__reports_preview_title" : MessageLookupByLibrary.simpleMessage("Rapporten"),
-    "moderation__reports_see_all" : m20,
+    "moderation__reports_see_all" : m22,
     "moderation__tap_to_retry" : MessageLookupByLibrary.simpleMessage("Tik om te proberen de items opnieuw te laden"),
     "moderation__update_category_save" : MessageLookupByLibrary.simpleMessage("Opslaan"),
     "moderation__update_category_title" : MessageLookupByLibrary.simpleMessage("Categorie updaten"),
@@ -511,22 +562,26 @@ class MessageLookup extends MessageLookupByLibrary {
     "moderation__you_have_reported_account_text" : MessageLookupByLibrary.simpleMessage("Je hebt dit account gerapporteerd"),
     "moderation__you_have_reported_comment_text" : MessageLookupByLibrary.simpleMessage("Je hebt dit commentaar gerapporteerd"),
     "moderation__you_have_reported_community_text" : MessageLookupByLibrary.simpleMessage("Je hebt deze community gerapporteerd"),
+    "moderation__you_have_reported_hashtag_text" : MessageLookupByLibrary.simpleMessage("Je hebt deze hashtag gemeld"),
     "moderation__you_have_reported_post_text" : MessageLookupByLibrary.simpleMessage("Je hebt dit bericht gerapporteerd"),
     "notifications__accepted_connection_request_tile" : MessageLookupByLibrary.simpleMessage("[name] [username] heeft jouw verbindingsverzoek geaccepteerd."),
-    "notifications__comment_comment_notification_tile_user_also_commented" : m21,
-    "notifications__comment_comment_notification_tile_user_commented" : m22,
+    "notifications__comment_comment_notification_tile_user_also_commented" : m23,
+    "notifications__comment_comment_notification_tile_user_commented" : m24,
     "notifications__comment_desc" : MessageLookupByLibrary.simpleMessage("Melden wanneer iemand commentaar geeft op een van je berichten of een bericht waarop je commentaar gegeven hebt"),
     "notifications__comment_reaction_desc" : MessageLookupByLibrary.simpleMessage("Melden wanneer iemand reageert op één van jouw bericht commentaren"),
     "notifications__comment_reaction_title" : MessageLookupByLibrary.simpleMessage("Plaats commentaar reactie"),
     "notifications__comment_reply_desc" : MessageLookupByLibrary.simpleMessage("Melden wanneer iemand antwoord geeft op een van jouw commentaren of een commentaar waarop je geantwoord hebt"),
-    "notifications__comment_reply_notification_tile_user_also_replied" : m23,
-    "notifications__comment_reply_notification_tile_user_replied" : m24,
+    "notifications__comment_reply_notification_tile_user_also_replied" : m25,
+    "notifications__comment_reply_notification_tile_user_replied" : m26,
     "notifications__comment_reply_title" : MessageLookupByLibrary.simpleMessage("Plaats antwoord op commentaar"),
     "notifications__comment_title" : MessageLookupByLibrary.simpleMessage("Plaats commentaar"),
     "notifications__comment_user_mention_desc" : MessageLookupByLibrary.simpleMessage("Krijg een melding als iemand je noemt in een commentaar"),
     "notifications__comment_user_mention_title" : MessageLookupByLibrary.simpleMessage("Bericht commentaar vermelding"),
     "notifications__community_invite_desc" : MessageLookupByLibrary.simpleMessage("Melden wanneer iemand je uitnodigt om lid te worden van een community"),
     "notifications__community_invite_title" : MessageLookupByLibrary.simpleMessage("Community uitnodiging"),
+    "notifications__community_new_post_desc" : MessageLookupByLibrary.simpleMessage("Be notified when there is a new post in a community you enabled post notifications on"),
+    "notifications__community_new_post_tile" : m27,
+    "notifications__community_new_post_title" : MessageLookupByLibrary.simpleMessage("Nieuw bericht community"),
     "notifications__connection_desc" : MessageLookupByLibrary.simpleMessage("Melden wanneer iemand met je wil verbinden"),
     "notifications__connection_request_tile" : MessageLookupByLibrary.simpleMessage("[name] [username] wil met je verbinden."),
     "notifications__connection_title" : MessageLookupByLibrary.simpleMessage("Verbindingsverzoek"),
@@ -535,7 +590,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "notifications__following_you_tile" : MessageLookupByLibrary.simpleMessage("[name] [username] volgt je nu."),
     "notifications__general_desc" : MessageLookupByLibrary.simpleMessage("Krijg een melding als iets gebeurt"),
     "notifications__general_title" : MessageLookupByLibrary.simpleMessage("Meldingen"),
-    "notifications__mentioned_in_post_comment_tile" : m25,
+    "notifications__mentioned_in_post_comment_tile" : m28,
     "notifications__mentioned_in_post_tile" : MessageLookupByLibrary.simpleMessage("[name] @[username] heeft je in een bericht genoemd."),
     "notifications__mute_post_turn_off_post_comment_notifications" : MessageLookupByLibrary.simpleMessage("Meldingen voor commentaren uitzetten"),
     "notifications__mute_post_turn_off_post_notifications" : MessageLookupByLibrary.simpleMessage("Meldingen voor berichten uitzetten"),
@@ -550,20 +605,28 @@ class MessageLookup extends MessageLookupByLibrary {
     "notifications__settings_title" : MessageLookupByLibrary.simpleMessage("Instellingen voor meldingen"),
     "notifications__tab_general" : MessageLookupByLibrary.simpleMessage("Algemeen"),
     "notifications__tab_requests" : MessageLookupByLibrary.simpleMessage("Verzoeken"),
-    "notifications__user_community_invite_tile" : m26,
+    "notifications__user_community_invite_tile" : m29,
+    "notifications__user_new_post_desc" : MessageLookupByLibrary.simpleMessage("Be notified when there is a new post by a user you enabled notifications on"),
+    "notifications__user_new_post_tile" : MessageLookupByLibrary.simpleMessage("[name] [username] heeft iets geplaatst."),
+    "notifications__user_new_post_title" : MessageLookupByLibrary.simpleMessage("Nieuw bericht gebruiker"),
+    "permissions_service__camera_permission_denied" : MessageLookupByLibrary.simpleMessage("We hebben de cameramachtiging nodig om foto\'s te kunnen maken en video\'s op te kunnen nemen. Schakel de betreffende optie in bij Instellingen."),
+    "permissions_service__storage_permission_denied" : MessageLookupByLibrary.simpleMessage("We hebben de opslagmachtiging nodig om media-items te kunnen selecteren. Schakel de betreffende optie in bij Instellingen."),
     "post__action_comment" : MessageLookupByLibrary.simpleMessage("Reactie"),
     "post__action_react" : MessageLookupByLibrary.simpleMessage("Reageren"),
     "post__action_reply" : MessageLookupByLibrary.simpleMessage("Antwoorden"),
     "post__actions_comment_deleted" : MessageLookupByLibrary.simpleMessage("Commentaar verwijderd"),
     "post__actions_delete" : MessageLookupByLibrary.simpleMessage("Bericht verwijderen"),
     "post__actions_delete_comment" : MessageLookupByLibrary.simpleMessage("Commentaar verwijderen"),
+    "post__actions_delete_comment_description" : MessageLookupByLibrary.simpleMessage("De opmerking en de bijbehorende antwoorden en reacties worden definitief verwijderd."),
+    "post__actions_delete_description" : MessageLookupByLibrary.simpleMessage("Het bericht en de bijbehorende opmerkingen en reacties worden definitief verwijderd."),
     "post__actions_deleted" : MessageLookupByLibrary.simpleMessage("Bericht verwijderd"),
     "post__actions_edit_comment" : MessageLookupByLibrary.simpleMessage("Wijzig commentaar"),
     "post__actions_report_text" : MessageLookupByLibrary.simpleMessage("Rapporteer"),
     "post__actions_reported_text" : MessageLookupByLibrary.simpleMessage("Gerapporteerd"),
     "post__actions_show_more_text" : MessageLookupByLibrary.simpleMessage("Meer tonen"),
+    "post__close_create_post_label" : MessageLookupByLibrary.simpleMessage("Sluiten"),
     "post__close_post" : MessageLookupByLibrary.simpleMessage("Sluit bericht"),
-    "post__comment_maxlength_error" : m27,
+    "post__comment_maxlength_error" : m30,
     "post__comment_reply_expanded_post" : MessageLookupByLibrary.simpleMessage("Beantwoord"),
     "post__comment_reply_expanded_reply_comment" : MessageLookupByLibrary.simpleMessage("Reageer op commentaar"),
     "post__comment_reply_expanded_reply_hint_text" : MessageLookupByLibrary.simpleMessage("Jouw antwoord..."),
@@ -600,8 +663,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "post__comments_page_tap_to_retry" : MessageLookupByLibrary.simpleMessage("Tik om commentaren opnieuw te laden."),
     "post__comments_page_tap_to_retry_replies" : MessageLookupByLibrary.simpleMessage("Tik om antwoorden opnieuw te laden."),
     "post__comments_page_title" : MessageLookupByLibrary.simpleMessage("Commentaren"),
-    "post__comments_view_all_comments" : m28,
+    "post__comments_view_all_comments" : m31,
+    "post__community_not_found" : MessageLookupByLibrary.simpleMessage("Deze community bestaat niet"),
+    "post__create_hashtags_invalid" : m32,
     "post__create_new" : MessageLookupByLibrary.simpleMessage("Nieuw bericht"),
+    "post__create_new_community_post_label" : MessageLookupByLibrary.simpleMessage("Nieuw communitybericht maken"),
+    "post__create_new_post_label" : MessageLookupByLibrary.simpleMessage("Nieuw bericht maken"),
     "post__create_next" : MessageLookupByLibrary.simpleMessage("Volgende"),
     "post__create_photo" : MessageLookupByLibrary.simpleMessage("Foto"),
     "post__create_video" : MessageLookupByLibrary.simpleMessage("Video"),
@@ -609,11 +676,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "post__edit_save" : MessageLookupByLibrary.simpleMessage("Bewaren"),
     "post__edit_title" : MessageLookupByLibrary.simpleMessage("Wijzig bericht"),
     "post__enable_post_comments" : MessageLookupByLibrary.simpleMessage("Commentaren inschakelen"),
+    "post__exclude_post_community" : MessageLookupByLibrary.simpleMessage("Geen berichten van deze community tonen"),
     "post__have_not_shared_anything" : MessageLookupByLibrary.simpleMessage("Je hebt nog niets gedeeld."),
     "post__is_closed" : MessageLookupByLibrary.simpleMessage("Gesloten bericht"),
+    "post__load_more" : MessageLookupByLibrary.simpleMessage("Meer berichten laden"),
     "post__my_circles" : MessageLookupByLibrary.simpleMessage("Mijn cirkels"),
     "post__my_circles_desc" : MessageLookupByLibrary.simpleMessage("Deel het bericht met één of meer van je cirkels."),
-    "post__no_circles_for" : m29,
+    "post__no_circles_for" : m33,
     "post__open_post" : MessageLookupByLibrary.simpleMessage("Open bericht"),
     "post__post_closed" : MessageLookupByLibrary.simpleMessage("Bericht gesloten "),
     "post__post_opened" : MessageLookupByLibrary.simpleMessage("Bericht geopend"),
@@ -623,6 +692,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "post__profile_counts_following" : MessageLookupByLibrary.simpleMessage(" Aan het volgen"),
     "post__profile_counts_post" : MessageLookupByLibrary.simpleMessage(" Bericht"),
     "post__profile_counts_posts" : MessageLookupByLibrary.simpleMessage(" Berichten"),
+    "post__profile_retry_loading_posts" : MessageLookupByLibrary.simpleMessage("Tik om het opnieuw te proberen"),
     "post__reaction_list_tap_retry" : MessageLookupByLibrary.simpleMessage("Tik om opnieuw reacties te laden."),
     "post__search_circles" : MessageLookupByLibrary.simpleMessage("Doorzoek cirkels..."),
     "post__share" : MessageLookupByLibrary.simpleMessage("Deel"),
@@ -655,13 +725,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "post__timeline_posts_no_more_drhoo_subtitle" : MessageLookupByLibrary.simpleMessage("Volg gebruikers of word lid van een community om aan de slag te gaan!"),
     "post__timeline_posts_refresh_posts" : MessageLookupByLibrary.simpleMessage("Berichten vernieuwen"),
     "post__timeline_posts_refreshing_drhoo_title" : MessageLookupByLibrary.simpleMessage("Nog even volhouden!"),
+    "post__top_posts_title" : MessageLookupByLibrary.simpleMessage("Verkennen"),
+    "post__trending_posts_load_more" : MessageLookupByLibrary.simpleMessage("Oudere berichten laden"),
     "post__trending_posts_no_trending_posts" : MessageLookupByLibrary.simpleMessage("Er zijn geen populaire berichten. Probeer opnieuw over een paar seconden."),
     "post__trending_posts_refresh" : MessageLookupByLibrary.simpleMessage("Verversen"),
     "post__trending_posts_title" : MessageLookupByLibrary.simpleMessage("Populaire berichten"),
-    "post__user_has_not_shared_anything" : m30,
-    "post__usernames_circles" : m31,
+    "post__undo_exclude_post_community" : MessageLookupByLibrary.simpleMessage("Berichten van deze community tonen"),
+    "post__user_has_not_shared_anything" : m34,
+    "post__usernames_circles" : m35,
     "post__world_circle_name" : MessageLookupByLibrary.simpleMessage("Wereld"),
     "post__you_shared_with" : MessageLookupByLibrary.simpleMessage("Je hebt gedeeld met"),
+    "post_body_link_preview__empty" : MessageLookupByLibrary.simpleMessage("Voorbeeld kon niet weergegeven worden"),
+    "post_body_link_preview__error_with_description" : m36,
     "post_body_media__unsupported" : MessageLookupByLibrary.simpleMessage("Niet-ondersteund mediatype"),
     "post_uploader__cancelled" : MessageLookupByLibrary.simpleMessage("Geannuleerd!"),
     "post_uploader__cancelling" : MessageLookupByLibrary.simpleMessage("Bezig met annuleren"),
@@ -674,9 +749,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "post_uploader__uploading_media" : MessageLookupByLibrary.simpleMessage("Media uploaden..."),
     "posts_stream__all_loaded" : MessageLookupByLibrary.simpleMessage("🎉  Alle berichten geladen"),
     "posts_stream__empty_drhoo_subtitle" : MessageLookupByLibrary.simpleMessage("Probeer over een paar seconden te verversen."),
+    "posts_stream__empty_drhoo_title" : MessageLookupByLibrary.simpleMessage("Deze stream is leeg."),
     "posts_stream__failed_drhoo_subtitle" : MessageLookupByLibrary.simpleMessage("Probeer het over enkele seconden opnieuw"),
     "posts_stream__failed_drhoo_title" : MessageLookupByLibrary.simpleMessage("Kan de stream niet laden."),
-    "posts_stream__refreshing_drhoo_subtitle" : MessageLookupByLibrary.simpleMessage("Je tijdlijn wordt geladen."),
+    "posts_stream__refreshing_drhoo_subtitle" : MessageLookupByLibrary.simpleMessage("Stream vernieuwen."),
     "posts_stream__refreshing_drhoo_title" : MessageLookupByLibrary.simpleMessage("Nog even volhouden!"),
     "posts_stream__status_tile_empty" : MessageLookupByLibrary.simpleMessage("Geen berichten gevonden"),
     "posts_stream__status_tile_no_more_to_load" : MessageLookupByLibrary.simpleMessage("🎉  Alle berichten geladen"),
@@ -695,8 +771,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__change_email_success_info" : MessageLookupByLibrary.simpleMessage("We hebben een bevestigingslink naar je nieuwe e-mailadres gestuurd, klik erop om je nieuwe e-mailadres te verifiëren"),
     "user__change_email_title" : MessageLookupByLibrary.simpleMessage("Verander e-mail"),
     "user__circle_name_empty_error" : MessageLookupByLibrary.simpleMessage("Het veld met de naam van de cirkel mag niet leeg zijn."),
-    "user__circle_name_range_error" : m33,
-    "user__circle_peoples_count" : m34,
+    "user__circle_name_range_error" : m37,
+    "user__circle_peoples_count" : m38,
     "user__clear_app_preferences_cleared_successfully" : MessageLookupByLibrary.simpleMessage("Voorkeuren succesvol gewist"),
     "user__clear_app_preferences_desc" : MessageLookupByLibrary.simpleMessage("Verwijder de applicatie voorkeuren. Momenteel is dit alleen de voorkeursvolgorde van commentaren."),
     "user__clear_app_preferences_error" : MessageLookupByLibrary.simpleMessage("Kan voorkeuren niet wissen"),
@@ -708,13 +784,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__confirm_block_user_blocked" : MessageLookupByLibrary.simpleMessage("Gebruiker geblokkeerd."),
     "user__confirm_block_user_info" : MessageLookupByLibrary.simpleMessage("Je ziet elkaars posts niet, noch ben je instaat om op welke wijze dan ook interactie met elkaar te hebben."),
     "user__confirm_block_user_no" : MessageLookupByLibrary.simpleMessage("Nee"),
-    "user__confirm_block_user_question" : m35,
+    "user__confirm_block_user_question" : m39,
     "user__confirm_block_user_title" : MessageLookupByLibrary.simpleMessage("Bevestiging"),
     "user__confirm_block_user_yes" : MessageLookupByLibrary.simpleMessage("Ja"),
     "user__confirm_connection_add_connection" : MessageLookupByLibrary.simpleMessage("Voeg connectie toe aan de cirkel"),
     "user__confirm_connection_confirm_text" : MessageLookupByLibrary.simpleMessage("Bevestig"),
     "user__confirm_connection_connection_confirmed" : MessageLookupByLibrary.simpleMessage("Connectie bevestigd"),
-    "user__confirm_connection_with" : m36,
+    "user__confirm_connection_with" : m40,
     "user__confirm_guidelines_reject_chat_community" : MessageLookupByLibrary.simpleMessage("Chat met de community."),
     "user__confirm_guidelines_reject_chat_immediately" : MessageLookupByLibrary.simpleMessage("Start nu een chat."),
     "user__confirm_guidelines_reject_chat_with_team" : MessageLookupByLibrary.simpleMessage("Met het team chatten."),
@@ -724,7 +800,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__confirm_guidelines_reject_join_slack" : MessageLookupByLibrary.simpleMessage("Neem deel aan het Slack-kanaal."),
     "user__confirm_guidelines_reject_title" : MessageLookupByLibrary.simpleMessage("Afwijzing van richtlijnen"),
     "user__connect_to_user_add_connection" : MessageLookupByLibrary.simpleMessage("Voeg connectie toe aan de cirkel"),
-    "user__connect_to_user_connect_with_username" : m37,
+    "user__connect_to_user_connect_with_username" : m41,
     "user__connect_to_user_done" : MessageLookupByLibrary.simpleMessage("Voltooid"),
     "user__connect_to_user_request_sent" : MessageLookupByLibrary.simpleMessage("Uitnodiging verzonden"),
     "user__connection_circle_edit" : MessageLookupByLibrary.simpleMessage("Wijzig"),
@@ -742,7 +818,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__delete_account_current_pwd_hint" : MessageLookupByLibrary.simpleMessage("Voer je huidige wachtwoord in"),
     "user__delete_account_next" : MessageLookupByLibrary.simpleMessage("Volgende"),
     "user__delete_account_title" : MessageLookupByLibrary.simpleMessage("Verwijder account"),
-    "user__disconnect_from_user" : m38,
+    "user__disable_new_post_notifications" : MessageLookupByLibrary.simpleMessage("Nieuwe berichtmeldingen uitschakelen"),
+    "user__disconnect_from_user" : m42,
     "user__disconnect_from_user_success" : MessageLookupByLibrary.simpleMessage("Verbinding met succes verbroken"),
     "user__edit_profile_bio" : MessageLookupByLibrary.simpleMessage("Bio"),
     "user__edit_profile_community_posts" : MessageLookupByLibrary.simpleMessage("Community berichten"),
@@ -751,20 +828,23 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__edit_profile_location" : MessageLookupByLibrary.simpleMessage("Locatie"),
     "user__edit_profile_name" : MessageLookupByLibrary.simpleMessage("Naam"),
     "user__edit_profile_pick_image" : MessageLookupByLibrary.simpleMessage("Kies afbeelding"),
-    "user__edit_profile_pick_image_error_too_large" : m39,
+    "user__edit_profile_pick_image_error_too_large" : m43,
     "user__edit_profile_save_text" : MessageLookupByLibrary.simpleMessage("Opslaan"),
     "user__edit_profile_title" : MessageLookupByLibrary.simpleMessage("Wijzig profiel"),
     "user__edit_profile_url" : MessageLookupByLibrary.simpleMessage("URL"),
-    "user__edit_profile_user_name_taken" : m40,
+    "user__edit_profile_user_name_taken" : m44,
     "user__edit_profile_username" : MessageLookupByLibrary.simpleMessage("Gebruikersnaam"),
     "user__email_verification_error" : MessageLookupByLibrary.simpleMessage("Oeps! Je token was niet geldig of verlopen, probeer het opnieuw"),
     "user__email_verification_successful" : MessageLookupByLibrary.simpleMessage("Hoera! Je e-mailadres is nu geverifieerd"),
     "user__emoji_field_none_selected" : MessageLookupByLibrary.simpleMessage("Geen emoji geselecteerd"),
-    "user__emoji_search_none_found" : m41,
+    "user__emoji_search_none_found" : m45,
+    "user__enable_new_post_notifications" : MessageLookupByLibrary.simpleMessage("Nieuwe berichtmeldingen inschakelen"),
+    "user__follow_button_follow_back_text" : MessageLookupByLibrary.simpleMessage("Terugvolgen"),
     "user__follow_button_follow_text" : MessageLookupByLibrary.simpleMessage("Volg"),
+    "user__follow_button_following_text" : MessageLookupByLibrary.simpleMessage("Volgt"),
     "user__follow_button_unfollow_text" : MessageLookupByLibrary.simpleMessage("Ontvolgen"),
     "user__follow_lists_no_list_found" : MessageLookupByLibrary.simpleMessage("Geen lijst gevonden."),
-    "user__follow_lists_no_list_found_for" : m42,
+    "user__follow_lists_no_list_found_for" : m46,
     "user__follow_lists_search_for" : MessageLookupByLibrary.simpleMessage("Naar een lijst zoeken..."),
     "user__follow_lists_title" : MessageLookupByLibrary.simpleMessage("Mijn lijsten"),
     "user__follower_plural" : MessageLookupByLibrary.simpleMessage("volgers"),
@@ -772,18 +852,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__followers_title" : MessageLookupByLibrary.simpleMessage("Volgers"),
     "user__following_resource_name" : MessageLookupByLibrary.simpleMessage("gebruikers die ik volg"),
     "user__following_text" : MessageLookupByLibrary.simpleMessage("Aan het volgen"),
-    "user__follows_list_accounts_count" : m43,
+    "user__follows_list_accounts_count" : m47,
     "user__follows_list_edit" : MessageLookupByLibrary.simpleMessage("Wijzig"),
     "user__follows_list_header_title" : MessageLookupByLibrary.simpleMessage("Gebruikers"),
     "user__follows_lists_account" : MessageLookupByLibrary.simpleMessage("1 Account"),
-    "user__follows_lists_accounts" : m44,
-    "user__groups_see_all" : m45,
+    "user__follows_lists_accounts" : m48,
+    "user__groups_see_all" : m49,
     "user__guidelines_accept" : MessageLookupByLibrary.simpleMessage("Accepteren"),
     "user__guidelines_desc" : MessageLookupByLibrary.simpleMessage("Neem alstublieft een moment om onze richtlijnen te lezen en te aanvaarden."),
     "user__guidelines_reject" : MessageLookupByLibrary.simpleMessage("Afwijzen"),
     "user__invite" : MessageLookupByLibrary.simpleMessage("Uitnodigen"),
     "user__invite_member" : MessageLookupByLibrary.simpleMessage("Lid"),
-    "user__invite_someone_message" : m46,
+    "user__invite_someone_message" : m50,
     "user__invites_accepted_group_item_name" : MessageLookupByLibrary.simpleMessage("geaccepteerde uitnodiging"),
     "user__invites_accepted_group_name" : MessageLookupByLibrary.simpleMessage("geaccepteerde uitnodigingen"),
     "user__invites_accepted_title" : MessageLookupByLibrary.simpleMessage("Geaccepteerd"),
@@ -802,11 +882,11 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__invites_email_text" : MessageLookupByLibrary.simpleMessage("E-mail"),
     "user__invites_invite_a_friend" : MessageLookupByLibrary.simpleMessage("Nodig een vriend uit"),
     "user__invites_invite_text" : MessageLookupByLibrary.simpleMessage("Uitnodigen"),
-    "user__invites_joined_with" : m47,
+    "user__invites_joined_with" : m51,
     "user__invites_none_left" : MessageLookupByLibrary.simpleMessage("Je hebt geen uitnodigingen meer."),
     "user__invites_none_used" : MessageLookupByLibrary.simpleMessage("Het lijkt erop dat je geen uitnodiging hebt gebruikt."),
     "user__invites_pending" : MessageLookupByLibrary.simpleMessage("In behandeling"),
-    "user__invites_pending_email" : m48,
+    "user__invites_pending_email" : m52,
     "user__invites_pending_group_item_name" : MessageLookupByLibrary.simpleMessage("openstaande uitnodiging"),
     "user__invites_pending_group_name" : MessageLookupByLibrary.simpleMessage("openstaande uitnodigingen"),
     "user__invites_refresh" : MessageLookupByLibrary.simpleMessage("Verversen"),
@@ -819,14 +899,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__language_settings_saved_success" : MessageLookupByLibrary.simpleMessage("Taal is succesvol gewijzigd"),
     "user__language_settings_title" : MessageLookupByLibrary.simpleMessage("Taalinstellingen"),
     "user__list_name_empty_error" : MessageLookupByLibrary.simpleMessage("Het veld met de naam van de lijst mag niet leeg zijn."),
-    "user__list_name_range_error" : m49,
+    "user__list_name_range_error" : m53,
     "user__million_postfix" : MessageLookupByLibrary.simpleMessage("M"),
     "user__profile_action_cancel_connection" : MessageLookupByLibrary.simpleMessage("Annuleer verzoek tot connectie"),
     "user__profile_action_deny_connection" : MessageLookupByLibrary.simpleMessage("Negeer het verzoek tot connectie"),
     "user__profile_action_user_blocked" : MessageLookupByLibrary.simpleMessage("Gebruiker geblokkeerd"),
+    "user__profile_action_user_post_notifications_disabled" : MessageLookupByLibrary.simpleMessage("Nieuwe berichtmeldingen uitgeschakeld"),
+    "user__profile_action_user_post_notifications_enabled" : MessageLookupByLibrary.simpleMessage("Nieuwe berichtmeldingen ingeschakeld"),
     "user__profile_action_user_unblocked" : MessageLookupByLibrary.simpleMessage("Gebruiker gedeblokkeerd"),
-    "user__profile_bio_length_error" : m50,
-    "user__profile_location_length_error" : m51,
+    "user__profile_bio_length_error" : m54,
+    "user__profile_in_circles" : MessageLookupByLibrary.simpleMessage("In cirkels"),
+    "user__profile_location_length_error" : m55,
+    "user__profile_okuna_age_toast" : m56,
     "user__profile_url_invalid_error" : MessageLookupByLibrary.simpleMessage("Geef een geldige URL op."),
     "user__remove_account_from_list" : MessageLookupByLibrary.simpleMessage("Account uit de lijst verwijderen"),
     "user__remove_account_from_list_success" : MessageLookupByLibrary.simpleMessage("Geslaagd"),
@@ -836,7 +920,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__save_connection_circle_edit" : MessageLookupByLibrary.simpleMessage("Wijzig de cirkel"),
     "user__save_connection_circle_hint" : MessageLookupByLibrary.simpleMessage("bijv. vrienden, familie, werk."),
     "user__save_connection_circle_name" : MessageLookupByLibrary.simpleMessage("Naam"),
-    "user__save_connection_circle_name_taken" : m52,
+    "user__save_connection_circle_name_taken" : m57,
     "user__save_connection_circle_save" : MessageLookupByLibrary.simpleMessage("Opslaan"),
     "user__save_connection_circle_users" : MessageLookupByLibrary.simpleMessage("Gebruikers"),
     "user__save_follows_list_create" : MessageLookupByLibrary.simpleMessage("Maak een lijst aan"),
@@ -845,7 +929,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__save_follows_list_emoji_required_error" : MessageLookupByLibrary.simpleMessage("Een emoji is vereist"),
     "user__save_follows_list_hint_text" : MessageLookupByLibrary.simpleMessage("bijv. Reizen, Fotografie"),
     "user__save_follows_list_name" : MessageLookupByLibrary.simpleMessage("Naam"),
-    "user__save_follows_list_name_taken" : m53,
+    "user__save_follows_list_name_taken" : m58,
     "user__save_follows_list_save" : MessageLookupByLibrary.simpleMessage("Opslaan"),
     "user__save_follows_list_users" : MessageLookupByLibrary.simpleMessage("Gebruikers"),
     "user__thousand_postfix" : MessageLookupByLibrary.simpleMessage("k"),
@@ -855,7 +939,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__timeline_filters_circles" : MessageLookupByLibrary.simpleMessage("Kringen"),
     "user__timeline_filters_clear_all" : MessageLookupByLibrary.simpleMessage("Wis alles"),
     "user__timeline_filters_lists" : MessageLookupByLibrary.simpleMessage("Lijsten"),
-    "user__timeline_filters_no_match" : m54,
+    "user__timeline_filters_no_match" : m59,
     "user__timeline_filters_search_desc" : MessageLookupByLibrary.simpleMessage("Zoek naar cirkels en lijsten..."),
     "user__timeline_filters_title" : MessageLookupByLibrary.simpleMessage("Tijdlijn filters"),
     "user__translate_see_translation" : MessageLookupByLibrary.simpleMessage("Bekijk vertaling"),
@@ -867,15 +951,17 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__update_connection_circles_title" : MessageLookupByLibrary.simpleMessage("Connectie cirkels bijwerken"),
     "user_search__cancel" : MessageLookupByLibrary.simpleMessage("Annuleren"),
     "user_search__communities" : MessageLookupByLibrary.simpleMessage("Communities"),
-    "user_search__list_no_results_found" : m55,
+    "user_search__hashtags" : MessageLookupByLibrary.simpleMessage("Hashtags"),
+    "user_search__list_no_results_found" : m60,
     "user_search__list_refresh_text" : MessageLookupByLibrary.simpleMessage("Ververs"),
     "user_search__list_retry" : MessageLookupByLibrary.simpleMessage("Tik om opnieuw te proberen."),
-    "user_search__list_search_text" : m56,
-    "user_search__no_communities_for" : m57,
-    "user_search__no_results_for" : m58,
-    "user_search__no_users_for" : m59,
+    "user_search__list_search_text" : m61,
+    "user_search__no_communities_for" : m62,
+    "user_search__no_hashtags_for" : m63,
+    "user_search__no_results_for" : m64,
+    "user_search__no_users_for" : m65,
     "user_search__search_text" : MessageLookupByLibrary.simpleMessage("Zoeken..."),
-    "user_search__searching_for" : m60,
+    "user_search__searching_for" : m66,
     "user_search__users" : MessageLookupByLibrary.simpleMessage("Gebruikers"),
     "video_picker__from_camera" : MessageLookupByLibrary.simpleMessage("Van camera"),
     "video_picker__from_gallery" : MessageLookupByLibrary.simpleMessage("Uit Galerij")

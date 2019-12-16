@@ -9,8 +9,9 @@ class OBPostsCount extends StatelessWidget {
   final int postsCount;
   final bool showZero;
   final Color color;
+  final double fontSize;
 
-  OBPostsCount(this.postsCount, {this.showZero = false, this.color});
+  OBPostsCount(this.postsCount, {this.showZero = false, this.color, this.fontSize});
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +41,7 @@ class OBPostsCount extends StatelessWidget {
                   TextSpan(
                       text: count,
                       style: TextStyle(
+                        fontSize: fontSize,
                           fontWeight: FontWeight.bold,
                           color: color ?? themeValueParserService
                               .parseColor(theme.primaryTextColor))),
@@ -48,9 +50,13 @@ class OBPostsCount extends StatelessWidget {
                           ? _localizationService.post__profile_counts_post
                           : _localizationService.post__profile_counts_posts,
                       style: TextStyle(
+                          fontSize: fontSize,
                           color: color ?? themeValueParserService
                               .parseColor(theme.secondaryTextColor)))
                 ])),
+              ),
+              const SizedBox(
+                width: 10,
               )
             ],
           );

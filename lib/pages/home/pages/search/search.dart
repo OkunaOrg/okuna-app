@@ -25,6 +25,7 @@ import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:throttling/throttling.dart';
 
 class OBMainSearchPage extends StatefulWidget {
   final OBMainSearchPageController controller;
@@ -50,7 +51,6 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
   ThemeValueParserService _themeValueParserService;
 
   bool _hasSearch;
-  bool _isScrollingUp;
   bool _userSearchRequestInProgress;
   bool _communitySearchRequestInProgress;
   bool _hashtagSearchRequestInProgress;
@@ -64,6 +64,7 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
   AnimationController _animationController;
   Animation<Offset> _offset;
   double _heightTabs;
+  double _lastScrollPosition;
   double _extraPaddingForSlidableSection;
 
   OBUserSearchResultsTab _selectedSearchResultsTab;
@@ -72,9 +73,12 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
   StreamSubscription<CommunitiesList> _getCommunitiesWithQuerySubscription;
   StreamSubscription<HashtagsList> _getHashtagsWithQuerySubscription;
 
+  Throttling _setScrollPositionThrottler;
+
   static const double OB_BOTTOM_TAB_BAR_HEIGHT = 50.0;
   static const double HEIGHT_SEARCH_BAR = 76.0;
   static const double HEIGHT_TABS_SECTION = 52.0;
+  static const double MIN_SCROLL_OFFSET_TO_ANIMATE_TABS = 250.0;
 
   @override
   void initState() {
@@ -87,15 +91,15 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
     _communitySearchRequestInProgress = false;
     _hashtagSearchRequestInProgress = false;
     _hasSearch = false;
-    _isScrollingUp = true;
     _heightTabs = HEIGHT_TABS_SECTION;
     _userSearchResults = [];
     _communitySearchResults = [];
     _hashtagSearchResults = [];
     _selectedSearchResultsTab = OBUserSearchResultsTab.users;
     _tabController = new TabController(length: 2, vsync: this);
+    _setScrollPositionThrottler = new Throttling(duration: Duration(milliseconds: 300));
     _animationController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 150));
+        AnimationController(vsync: this, duration: Duration(milliseconds: 100));
     _offset = Tween<Offset>(begin: Offset.zero, end: Offset(0.0, -1.0))
         .animate(_animationController);
 
@@ -252,16 +256,24 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
   }
 
   void _onScrollPositionChange(ScrollPosition position) {
-    bool isScrollingUp =
-        position.userScrollDirection == ScrollDirection.forward;
+    bool isScrollingUp = position.userScrollDirection == ScrollDirection.forward;
     _hideKeyboard();
     if (position.pixels < (HEIGHT_SEARCH_BAR + HEIGHT_TABS_SECTION)) {
       if (_offset.value.dy == -1.0) _showTabSection();
       return;
     }
+    _setScrollPositionThrottler.throttle(() => _handleScrollThrottle(position.pixels, isScrollingUp));
+  }
 
-    if (isScrollingUp == _isScrollingUp) return;
+  void _handleScrollThrottle(double scrollPixels, bool isScrollingUp) {
+    if (_lastScrollPosition != null) {
+        double offset = (scrollPixels - _lastScrollPosition).abs();
+        if (offset > MIN_SCROLL_OFFSET_TO_ANIMATE_TABS) _checkScrollDirectionAndAnimateTabs(isScrollingUp);
+    }
+    _setScrollPosition(scrollPixels);
+  }
 
+  void _checkScrollDirectionAndAnimateTabs(bool isScrollingUp) {
     if (isScrollingUp) {
       _showTabSection();
     } else {
@@ -269,14 +281,24 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
     }
   }
 
+  void _setScrollPosition(double scrollPixels) {
+    setState(() {
+      _lastScrollPosition = scrollPixels;
+    });
+  }
+
   void _onSearch(String query) {
     _setSearchQuery(query);
     if (query.isEmpty) {
       _setHasSearch(false);
-    } else {
-      _setHasSearch(true);
-      _searchWithQuery(query);
+      return;
     }
+
+    if (_hasSearch == false) {
+      _setHasSearch(true);
+    }
+
+    _searchWithQuery(query);
   }
 
   void _onScrollSearchResults() {
@@ -288,11 +310,26 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
   }
 
   Future<void> _searchWithQuery(String query) {
+    String cleanedUpQuery = _cleanUpQuery(query);
+    if(cleanedUpQuery.isEmpty) return null;
+
     return Future.wait([
-      _searchForUsersWithQuery(query),
-      _searchForCommunitiesWithQuery(query),
-      _searchForHashtagsWithQuery(query)
+      _searchForUsersWithQuery(cleanedUpQuery),
+      _searchForCommunitiesWithQuery(cleanedUpQuery),
+      _searchForHashtagsWithQuery(cleanedUpQuery)
     ]);
+  }
+
+  final hashtagAndUsernamesRegexp = RegExp(r'^#|@');
+
+  String _cleanUpQuery(String query) {
+    String cleanQuery = query;
+    if (cleanQuery.startsWith(hashtagAndUsernamesRegexp)) {
+      cleanQuery = cleanQuery.substring(1, cleanQuery.length);
+    } else if (cleanQuery.startsWith('c/')) {
+      cleanQuery = cleanQuery.substring(2, cleanQuery.length);
+    }
+    return cleanQuery;
   }
 
   Future<void> _searchForUsersWithQuery(String query) async {
@@ -385,16 +422,10 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
 
   void _hideTabSection() {
     _animationController.forward();
-    setState(() {
-      _isScrollingUp = false;
-    });
   }
 
   void _showTabSection() {
     _animationController.reverse();
-    setState(() {
-      _isScrollingUp = true;
-    });
   }
 
   void _setHasSearch(bool hasSearch) {

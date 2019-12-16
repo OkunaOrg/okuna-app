@@ -10,7 +10,7 @@ import 'package:Okuna/provider.dart';
 import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:Okuna/widgets/theming/text.dart';
 import 'package:Okuna/widgets/tiles/actions/favorite_community_tile.dart';
-import 'package:Okuna/widgets/tiles/actions/subscribe_community_tile.dart';
+import 'package:Okuna/widgets/tiles/actions/new_post_notifications_for_community_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -123,12 +123,12 @@ class OBManageCommunityPage extends StatelessWidget {
     }
 
 
-    menuListTiles.add(OBSubscribeCommunityTile(
+    menuListTiles.add(OBNewPostNotificationsForCommunityTile(
         community: community,
-        subscribeSubtitle: OBText(_localizationService.community__manage_subscribe_community,
+        title: OBText(_localizationService.community__manage_enable_new_post_notifications,
           style: listItemSubtitleStyle,
         ),
-        unsubscribeSubtitle: OBText(_localizationService.community__manage_unsubscribe_community,
+        subtitle: OBText(_localizationService.community__manage_disable_new_post_notifications,
           style: listItemSubtitleStyle,
         )));
 

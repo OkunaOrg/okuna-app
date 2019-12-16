@@ -1,5 +1,6 @@
 import 'package:Okuna/libs/str_utils.dart';
 import 'package:Okuna/models/community.dart';
+import 'package:Okuna/models/hashtag.dart';
 import 'package:Okuna/models/moderation/moderation_category.dart';
 import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/post_comment.dart';
@@ -19,6 +20,8 @@ class ModeratedObject extends UpdatableModel<ModeratedObject> {
   static String objectTypePostComment = 'PC';
   static String objectTypeCommunity = 'C';
   static String objectTypeUser = 'U';
+  static String objectTypeHashtag = 'H';
+
   static String statusPending = 'P';
   static String statusApproved = 'A';
   static String statusRejected = 'R';
@@ -149,6 +152,8 @@ class ModeratedObjectFactory extends UpdatableModelFactory<ModeratedObject> {
       moderatedObjectType = ModeratedObjectType.postComment;
     } else if (moderatedObjectTypeStr == ModeratedObject.objectTypeUser) {
       moderatedObjectType = ModeratedObjectType.user;
+    } else if (moderatedObjectTypeStr == ModeratedObject.objectTypeHashtag) {
+      moderatedObjectType = ModeratedObjectType.hashtag;
     } else {
       // Don't throw as we might introduce new moderatedObjects on the API which might not be yet in code
       print('Unsupported moderatedObject type');
@@ -221,6 +226,8 @@ class ModeratedObjectFactory extends UpdatableModelFactory<ModeratedObject> {
         return ModeratedObject.objectTypeCommunity;
       case ModeratedObjectType.user:
         return ModeratedObject.objectTypeUser;
+        case ModeratedObjectType.hashtag:
+        return ModeratedObject.objectTypeHashtag;
       case ModeratedObjectType.post:
         return ModeratedObject.objectTypePost;
       case ModeratedObjectType.postComment:
@@ -243,6 +250,9 @@ class ModeratedObjectFactory extends UpdatableModelFactory<ModeratedObject> {
         break;
       case ModeratedObjectType.user:
         result = 'user';
+        break;
+      case ModeratedObjectType.hashtag:
+        result = 'hashtag';
         break;
       case ModeratedObjectType.post:
         result = 'post';
@@ -274,6 +284,9 @@ class ModeratedObjectFactory extends UpdatableModelFactory<ModeratedObject> {
       case ModeratedObjectType.user:
         contentObject = User.fromJson(contentObjectData);
         break;
+      case ModeratedObjectType.hashtag:
+        contentObject = Hashtag.fromJSON(contentObjectData);
+        break;
       default:
     }
     return contentObject;
@@ -284,7 +297,7 @@ class ModeratedObjectFactory extends UpdatableModelFactory<ModeratedObject> {
   }
 }
 
-enum ModeratedObjectType { post, postComment, user, community }
+enum ModeratedObjectType { post, postComment, user, community, hashtag }
 
 enum ModeratedObjectStatus {
   approved,

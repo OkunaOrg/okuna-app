@@ -206,7 +206,7 @@ class OBPostBodyMediaState extends State<OBPostBodyMedia> {
     _setRetrievePostMediaInProgress(true);
     try {
       _retrievePostMediaOperation = CancelableOperation.fromFuture(
-          _userService.getMediaForPost(post: widget.post));
+          _userService.getMediaForPost(post: widget.post), onCancel: _onRetrievePostMediaOperationCancelled);
       PostMediaList mediaList = await _retrievePostMediaOperation.value;
       widget.post.setMedia(mediaList);
     } catch (error) {
@@ -214,6 +214,11 @@ class OBPostBodyMediaState extends State<OBPostBodyMedia> {
     } finally {
       _setRetrievePostMediaInProgress(false);
     }
+  }
+
+  void _onRetrievePostMediaOperationCancelled() {
+    debugPrint('Cancelled retrievePostMediaOperation');
+    _setRetrievePostMediaInProgress(false);
   }
 
   void _onError(error) async {
@@ -235,6 +240,7 @@ class OBPostBodyMediaState extends State<OBPostBodyMedia> {
   }
 
   void _setRetrievePostMediaInProgress(bool retrievePostMediaInProgress) {
+    if (!mounted) return;
     setState(() {
       _retrievePostMediaInProgress = retrievePostMediaInProgress;
     });
