@@ -76,6 +76,9 @@ class UserPreferencesService {
 
     _connectivityChangeSubscription =
         _connectivityService.onConnectivityChange(_onConnectivityChange);
+
+    HashtagsDisplaySetting hashtagsDisplaySetting = await getHashtagsDisplaySetting();
+    _hashtagsDisplaySettingChangeSubject.add(hashtagsDisplaySetting);
   }
 
   void _onConnectivityChange(ConnectivityResult newConnectivity) {
@@ -98,6 +101,7 @@ class UserPreferencesService {
     _videosAutoPlaySettingChangeSubject.close();
     _videosAutoPlayEnabledChangeSubject.close();
     _hashtagsDisplaySettingChangeSubject.close();
+
   }
 
   bool getLinkPreviewsAreEnabled() {

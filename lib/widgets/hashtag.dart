@@ -10,11 +10,13 @@ class OBHashtag extends StatelessWidget {
   final ValueChanged<Hashtag> onPressed;
   final TextStyle textStyle;
   final String rawHashtagName;
+  final EdgeInsets discoDisplayMargin;
 
   const OBHashtag(
       {Key key,
       @required this.hashtag,
       this.onPressed,
+      this.discoDisplayMargin,
       this.textStyle,
       this.rawHashtagName})
       : super(key: key);
@@ -63,6 +65,7 @@ class OBHashtag extends StatelessWidget {
         color: hashtagBackgroundColor,
         borderRadius: BorderRadius.circular(5),
       ),
+      margin: discoDisplayMargin,
       padding: const EdgeInsets.symmetric(horizontal: 2.5),
       child: OBText(
         text,
