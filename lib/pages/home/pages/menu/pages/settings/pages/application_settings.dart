@@ -6,6 +6,7 @@ import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:Okuna/widgets/tile_group_title.dart';
 import 'package:Okuna/widgets/tiles/actions/clear_application_cache_tile.dart';
 import 'package:Okuna/widgets/tiles/actions/clear_application_preferences_tile.dart';
+import 'package:Okuna/widgets/tiles/actions/hashtags_display_setting_tile.dart';
 import 'package:Okuna/widgets/tiles/actions/link_previews_setting_tile.dart';
 import 'package:Okuna/widgets/tiles/actions/videos_autoplay_setting_tile.dart';
 import 'package:Okuna/widgets/tiles/actions/videos_sound_setting_tile.dart';
@@ -41,6 +42,14 @@ class OBApplicationSettingsPage extends StatelessWidget {
               ),
             ),
             OBLinkPreviewsSettingTile(),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: OBTileGroupTitle(
+                title:
+                    _localizationService.application_settings__hashtags_display,
+              ),
+            ),
+            OBHashtagsDisplaySettingTile()
           ],
         ),
       ),

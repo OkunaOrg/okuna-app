@@ -14,6 +14,7 @@ import 'package:Okuna/pages/home/bottom_sheets/community_type_picker.dart';
 import 'package:Okuna/pages/home/bottom_sheets/confirm_action.dart';
 import 'package:Okuna/pages/home/bottom_sheets/connection_circles_picker.dart';
 import 'package:Okuna/pages/home/bottom_sheets/hashtag_actions.dart';
+import 'package:Okuna/pages/home/bottom_sheets/hashtags_display_setting_picker.dart';
 import 'package:Okuna/pages/home/bottom_sheets/image_picker.dart';
 import 'package:Okuna/pages/home/bottom_sheets/link_previews_setting_picker.dart';
 import 'package:Okuna/pages/home/bottom_sheets/post_comment_more_actions.dart';
@@ -102,6 +103,18 @@ class BottomSheetService {
         });
   }
 
+  Future<void> showHashtagsDisplaySettingPicker(
+      {@required BuildContext context,
+      ValueChanged<HashtagsDisplaySetting> onChanged,
+      HashtagsDisplaySetting initialValue}) {
+    return _showModalBottomSheetApp(
+        context: context,
+        builder: (BuildContext context) {
+          return OBHashtagsDisplaySettingPickerBottomSheet(
+              onTypeChanged: onChanged, initialValue: initialValue);
+        });
+  }
+
   Future<void> showVideosAutoPlaySettingPicker(
       {@required BuildContext context,
       ValueChanged<VideosAutoPlaySetting> onChanged,
@@ -169,7 +182,6 @@ class BottomSheetService {
       {@required BuildContext context,
       @required Hashtag hashtag,
       @required ValueChanged<Hashtag> onHashtagReported}) {
-
     return _showModalBottomSheetApp(
         context: context,
         builder: (BuildContext context) {
@@ -271,7 +283,8 @@ class BottomSheetService {
       {BuildContext context, WidgetBuilder builder}) async {
     dismissActiveBottomSheet(context: context);
     hasActiveBottomSheet = true;
-    final result = await showModalBottomSheetApp(context: context, builder: builder);
+    final result =
+        await showModalBottomSheetApp(context: context, builder: builder);
     hasActiveBottomSheet = false;
     return result;
   }

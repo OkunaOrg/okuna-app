@@ -3996,6 +3996,11 @@ class LocalizationService {
         name: 'application_settings__link_previews');
   }
 
+  String get application_settings__hashtags_display {
+    return Intl.message("Hashtags display",
+        name: 'application_settings__hashtags_display');
+  }
+
   String get application_settings__videos_autoplay {
     return Intl.message("Autoplay",
         name: 'application_settings__videos_autoplay');
@@ -4054,6 +4059,17 @@ class LocalizationService {
     return Intl.message("Disabled",
         name: 'application_settings__videos_sound_disabled');
   }
+
+  String get application_settings__hashtags_display_traditional {
+    return Intl.message("Traditional",
+        name: 'application_settings__hashtags_display_traditional');
+  }
+
+  String get application_settings__hashtags_display_disco {
+    return Intl.message("🕺 Disco",
+        name: 'application_settings__hashtags_display_disco');
+  }
+
 
   String get application_settings__comment_sort_newest_first {
     return Intl.message("Newest first",
