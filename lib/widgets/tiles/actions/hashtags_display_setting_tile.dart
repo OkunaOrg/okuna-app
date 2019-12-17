@@ -36,9 +36,9 @@ class OBHashtagsDisplaySettingTile extends StatelessWidget {
 
             return MergeSemantics(
               child: ListTile(
-                leading: OBIcon(OBIcons.sound),
+                leading: OBIcon(OBIcons.hashtag),
                   title: OBText(
-                    localizationService.application_settings__videos_sound,
+                    localizationService.application_settings__hashtags_display,
                   ),
                   subtitle: OBSecondaryText(
                       localizationService.application_settings__tap_to_change, size: OBTextSize.small,),

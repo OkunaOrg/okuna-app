@@ -3997,8 +3997,13 @@ class LocalizationService {
   }
 
   String get application_settings__hashtags_display {
-    return Intl.message("Hashtags display",
+    return Intl.message("Display",
         name: 'application_settings__hashtags_display');
+  }
+
+  String get application_settings__hashtags {
+    return Intl.message("Hashtags",
+        name: 'application_settings__hashtags');
   }
 
   String get application_settings__videos_autoplay {

@@ -46,7 +46,7 @@ class OBApplicationSettingsPage extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 10),
               child: OBTileGroupTitle(
                 title:
-                    _localizationService.application_settings__hashtags_display,
+                    _localizationService.application_settings__hashtags,
               ),
             ),
             OBHashtagsDisplaySettingTile()

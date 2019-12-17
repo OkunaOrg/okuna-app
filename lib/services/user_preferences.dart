@@ -56,6 +56,8 @@ class UserPreferencesService {
   final _videosAutoPlaySettingChangeSubject =
       BehaviorSubject<VideosAutoPlaySetting>();
 
+  HashtagsDisplaySetting currentHashtagsDisplaySetting;
+
   Stream<HashtagsDisplaySetting> get hashtagsDisplaySettingChange =>
       _hashtagsDisplaySettingChangeSubject.stream;
 
@@ -177,9 +179,10 @@ class UserPreferencesService {
   }
 
   Future setHashtagsDisplaySetting(
-      HashtagsDisplaySetting hashtagsDisplaySetting) {
-    String rawValue = hashtagsDisplaySetting.toString();
-    _hashtagsDisplaySettingChangeSubject.add(hashtagsDisplaySetting);
+      HashtagsDisplaySetting newHashtagsDisplaySetting) {
+    String rawValue = newHashtagsDisplaySetting.toString();
+    currentHashtagsDisplaySetting = newHashtagsDisplaySetting;
+    _hashtagsDisplaySettingChangeSubject.add(newHashtagsDisplaySetting);
     return _storage.set(hashtagsDisplaySettingStorageKey, rawValue);
   }
 
