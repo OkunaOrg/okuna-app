@@ -238,6 +238,7 @@ class UserService {
       _removeLoggedInUser();
       await clearCache();
       User.clearSessionCache();
+      User.clearMaxSessionCache();
       _getOrCreateCurrentDeviceCache = null;
     }
   }
@@ -249,6 +250,7 @@ class UserService {
     await clearTemporaryDirectories();
     Post.clearCache();
     User.clearNavigationCache();
+    User.clearMaxSessionCache();
     PostComment.clearCache();
     Community.clearCache();
   }
