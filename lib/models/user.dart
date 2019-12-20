@@ -52,7 +52,7 @@ class User extends UpdatableModel<User> {
 
   static final navigationUsersFactory = UserFactory(
       cache:
-          LfuCache<int, User>(storage: UpdatableModelSimpleStorage(size: 10)));
+          LfuCache<int, User>(storage: UpdatableModelSimpleStorage(size: 100)));
   static final sessionUsersFactory = UserFactory(
       cache: SimpleCache<int, User>(
           storage: UpdatableModelSimpleStorage(size: 10)));
