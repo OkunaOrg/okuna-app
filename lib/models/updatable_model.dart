@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:math';
 
 import 'package:dcache/dcache.dart';
 import 'package:meta/meta.dart';
@@ -68,6 +69,8 @@ abstract class UpdatableModelFactory<T extends UpdatableModel> {
 
 class UpdatableModelSimpleStorage<K, V extends UpdatableModel>
     implements Storage<K, V> {
+  static int MAX_INT = pow(2, 30) - 1; // (for 32 bit OS)
+
   Map<K, CacheEntry<K, V>> _internalMap;
   int _size;
 

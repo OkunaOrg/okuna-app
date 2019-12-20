@@ -52,24 +52,30 @@ class User extends UpdatableModel<User> {
 
   static final navigationUsersFactory = UserFactory(
       cache:
-          LfuCache<int, User>(storage: UpdatableModelSimpleStorage(size: 100)));
+          LfuCache<int, User>(storage: UpdatableModelSimpleStorage(size: 10)));
   static final sessionUsersFactory = UserFactory(
       cache: SimpleCache<int, User>(
           storage: UpdatableModelSimpleStorage(size: 10)));
 
+  static final maxSessionUsersFactory = UserFactory(
+    cache:
+    SimpleCache<int, User>(storage: UpdatableModelSimpleStorage(size: UpdatableModelSimpleStorage.MAX_INT))
+  );
+
   factory User.fromJson(Map<String, dynamic> json,
-      {bool storeInSessionCache = false}) {
+      {bool storeInSessionCache = false, bool storeInMaxSessionCache = false}) {
     if (json == null) return null;
 
     int userId = json['id'];
 
-    User user = navigationUsersFactory.getItemWithIdFromCache(userId) ??
-        sessionUsersFactory.getItemWithIdFromCache(userId);
+    User user = maxSessionUsersFactory.getItemWithIdFromCache(userId) ??
+    navigationUsersFactory.getItemWithIdFromCache(userId) ??
+    sessionUsersFactory.getItemWithIdFromCache(userId);
     if (user != null) {
       user.update(json);
       return user;
     }
-    return storeInSessionCache
+    return storeInMaxSessionCache ? maxSessionUsersFactory.fromJson(json) : storeInSessionCache
         ? sessionUsersFactory.fromJson(json)
         : navigationUsersFactory.fromJson(json);
   }
@@ -116,6 +122,10 @@ class User extends UpdatableModel<User> {
 
   static void clearSessionCache() {
     sessionUsersFactory.clearCache();
+  }
+
+  static void clearMaxSessionCache() {
+    maxSessionUsersFactory.clearCache();
   }
 
   User(
