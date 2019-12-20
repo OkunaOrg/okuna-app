@@ -949,7 +949,7 @@ class UserService {
     HttpieResponse response = await _authApiService.searchLinkedUsers(
         query: query, count: count, withCommunity: withCommunity.name);
     _checkResponseIsOk(response);
-    return UsersList.fromJson(json.decode(response.body));
+    return UsersList.fromJson(json.decode(response.body), storeInMaxSessionCache: true);
   }
 
   Future<UsersList> getLinkedUsers(
@@ -960,7 +960,7 @@ class UserService {
     HttpieResponse response = await _authApiService.getLinkedUsers(
         count: count, withCommunity: withCommunity?.name, maxId: maxId);
     _checkResponseIsOk(response);
-    return UsersList.fromJson(json.decode(response.body));
+    return UsersList.fromJson(json.decode(response.body), storeInMaxSessionCache: true);
   }
 
   Future<User> blockUser(User user) async {
@@ -1485,7 +1485,7 @@ class UserService {
         await _communitiesApiService.inviteUserToCommunity(
             communityName: community.name, username: user.username);
     _checkResponseIsCreated(response);
-    return User.fromJson(json.decode(response.body));
+    return User.fromJson(json.decode(response.body), storeInMaxSessionCache: true);
   }
 
   Future<void> uninviteUserFromCommunity(
@@ -1494,7 +1494,7 @@ class UserService {
         await _communitiesApiService.uninviteUserFromCommunity(
             communityName: community.name, username: user.username);
     _checkResponseIsOk(response);
-    return User.fromJson(json.decode(response.body));
+    return User.fromJson(json.decode(response.body),  storeInMaxSessionCache: true);
   }
 
   Future<CommunitiesList> getJoinedCommunities({int offset}) async {
