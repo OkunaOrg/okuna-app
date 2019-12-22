@@ -50,6 +50,16 @@ class OBUsefulLinksPage extends StatelessWidget {
                   },
                 ),
                 ListTile(
+                  leading: const OBIcon(OBIcons.roadmap),
+                  title: OBText(_localizationService.drawer__useful_links_guidelines_roadmap),
+                  subtitle: OBSecondaryText(
+                      _localizationService.drawer__useful_links_guidelines_roadmap_desc),
+                  onTap: () {
+                    urlLauncherService.launchUrl(
+                        'https://okuna.io/roadmap');
+                  },
+                ),
+                ListTile(
                   leading: const OBIcon(OBIcons.featureRequest),
                   title: OBText(_localizationService.drawer__useful_links_guidelines_feature_requests),
                   subtitle: OBSecondaryText(
