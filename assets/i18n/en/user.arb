@@ -984,6 +984,16 @@
     "type": "text",
     "placeholders": {}
   },
+  "block_description": "You will both dissapear from each other's social network experience, with the exception of communities which the person is a staff member of.",
+  "@block_description": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "unblock_description": "You will both be able to follow, connect or explore each other's content again.",
+  "@unblock_description": {
+    "type": "text",
+    "placeholders": {}
+  },
   "unblock_user": "Unblock user",
   "@unblock_user": {
     "type": "text",

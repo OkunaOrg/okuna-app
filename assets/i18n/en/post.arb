@@ -339,11 +339,6 @@
     "type": "text",
     "placeholders": {}
   },
-  "community_not_found": "This community does not exist",
-  "@community_not_found": {
-    "type": "text",
-    "placeholders": {}
-  },
   "comments_view_all_comments": "View all {commentsCount} comments",
   "@comments_view_all_comments": {
     "type": "text",
