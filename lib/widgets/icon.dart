@@ -260,6 +260,7 @@ class OBIcons {
   static const sound = OBIconData(nativeIcon: Icons.volume_up);
   static const linkPreviews = OBIconData(nativeIcon: Icons.library_books);
   static const nativeInfo = OBIconData(nativeIcon: Icons.info);
+  static const hashtag = OBIconData(nativeIcon: Icons.label);
   static const success = OBIconData(filename: 'success-icon.png');
   static const error = OBIconData(filename: 'error-icon.png');
   static const warning = OBIconData(filename: 'warning-icon.png');

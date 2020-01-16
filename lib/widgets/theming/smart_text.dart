@@ -337,17 +337,15 @@ class OBSmartText extends StatelessWidget {
               textSpan = WidgetSpan(
                   baseline: TextBaseline.alphabetic,
                   alignment: ui.PlaceholderAlignment.baseline,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 3),
-                    child: OBHashtag(
-                      hashtag: hashtag,
-                      rawHashtagName: rawHashtagName,
-                      onPressed: (Hashtag hashtag) {
-                        if (onHashtagTapped != null) onHashtagTapped(
-                            hashtag: hashtag, rawHashtagName: rawHashtagName);
-                      },
-                      textStyle: linkStyle,
-                    ),
+                  child: OBHashtag(
+                    discoDisplayMargin: const EdgeInsets.symmetric(vertical: 3),
+                    hashtag: hashtag,
+                    rawHashtagName: rawHashtagName,
+                    onPressed: (Hashtag hashtag) {
+                      if (onHashtagTapped != null) onHashtagTapped(
+                          hashtag: hashtag, rawHashtagName: rawHashtagName);
+                    },
+                    textStyle: linkStyle,
                   ));
             } else {
               textSpan = LinkTextSpan(

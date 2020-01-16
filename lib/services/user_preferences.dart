@@ -17,6 +17,7 @@ class UserPreferencesService {
   static const videosAutoPlaySettingStorageKey = 'videosAutoPlaySetting';
   static const linkPreviewsSettingStorageKey = 'linkPreviewsSetting';
   static const videosSoundSettingStorageKey = 'videoSoundSetting';
+  static const hashtagsDisplaySettingStorageKey = 'hashtagsSetting';
 
   ConnectivityResult _currentConnectivity;
   StreamSubscription _connectivityChangeSubscription;
@@ -55,6 +56,14 @@ class UserPreferencesService {
   final _videosAutoPlaySettingChangeSubject =
       BehaviorSubject<VideosAutoPlaySetting>();
 
+  HashtagsDisplaySetting currentHashtagsDisplaySetting;
+
+  Stream<HashtagsDisplaySetting> get hashtagsDisplaySettingChange =>
+      _hashtagsDisplaySettingChangeSubject.stream;
+
+  final _hashtagsDisplaySettingChangeSubject =
+      BehaviorSubject<HashtagsDisplaySetting>();
+
   void setStorageService(StorageService storageService) {
     _storage = storageService.getSystemPreferencesStorage(
         namespace: 'userPreferences');
@@ -67,6 +76,9 @@ class UserPreferencesService {
 
     _connectivityChangeSubscription =
         _connectivityService.onConnectivityChange(_onConnectivityChange);
+
+    HashtagsDisplaySetting hashtagsDisplaySetting = await getHashtagsDisplaySetting();
+    _hashtagsDisplaySettingChangeSubject.add(hashtagsDisplaySetting);
   }
 
   void _onConnectivityChange(ConnectivityResult newConnectivity) {
@@ -88,6 +100,8 @@ class UserPreferencesService {
     _videosSoundSettingChangeSubject.close();
     _videosAutoPlaySettingChangeSubject.close();
     _videosAutoPlayEnabledChangeSubject.close();
+    _hashtagsDisplaySettingChangeSubject.close();
+
   }
 
   bool getLinkPreviewsAreEnabled() {
@@ -165,6 +179,30 @@ class UserPreferencesService {
           _localizationService.application_settings__videos_sound_disabled,
       VideosSoundSetting.enabled:
           _localizationService.application_settings__videos_sound_enabled
+    };
+  }
+
+  Future setHashtagsDisplaySetting(
+      HashtagsDisplaySetting newHashtagsDisplaySetting) {
+    String rawValue = newHashtagsDisplaySetting.toString();
+    currentHashtagsDisplaySetting = newHashtagsDisplaySetting;
+    _hashtagsDisplaySettingChangeSubject.add(newHashtagsDisplaySetting);
+    return _storage.set(hashtagsDisplaySettingStorageKey, rawValue);
+  }
+
+  Future<HashtagsDisplaySetting> getHashtagsDisplaySetting() async {
+    String rawValue = await _storage.get(hashtagsDisplaySettingStorageKey,
+        defaultValue: HashtagsDisplaySetting.traditional.toString());
+    return HashtagsDisplaySetting.parse(rawValue);
+  }
+
+  Map<HashtagsDisplaySetting, String>
+      getHashtagsDisplaySettingLocalizationMap() {
+    return {
+      HashtagsDisplaySetting.traditional: _localizationService
+          .application_settings__hashtags_display_traditional,
+      HashtagsDisplaySetting.disco:
+          _localizationService.application_settings__hashtags_display_disco
     };
   }
 
@@ -326,5 +364,39 @@ class LinkPreviewsSetting {
     }
 
     return autoPlaySetting;
+  }
+}
+
+class HashtagsDisplaySetting {
+  final String code;
+
+  const HashtagsDisplaySetting._internal(this.code);
+
+  toString() => code;
+
+  static const traditional = const HashtagsDisplaySetting._internal('t');
+  static const disco = const HashtagsDisplaySetting._internal('d');
+
+  static const _values = const <HashtagsDisplaySetting>[traditional, disco];
+
+  static values() => _values;
+
+  static HashtagsDisplaySetting parse(String string) {
+    if (string == null) return null;
+
+    HashtagsDisplaySetting setting;
+    for (var type in _values) {
+      if (string == type.code) {
+        setting = type;
+        break;
+      }
+    }
+
+    if (setting == null) {
+      // Don't throw as we might introduce new notifications on the API which might not be yet in code
+      print('Unsupported hashtags display setting');
+    }
+
+    return setting;
   }
 }
