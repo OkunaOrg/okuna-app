@@ -7,9 +7,9 @@ class UsersList {
     this.users,
   });
 
-  factory UsersList.fromJson(List<dynamic> parsedJson) {
+  factory UsersList.fromJson(List<dynamic> parsedJson, {storeInMaxSessionCache = false}) {
     List<User> users =
-        parsedJson.map((userJson) => User.fromJson(userJson)).toList();
+        parsedJson.map((userJson) => User.fromJson(userJson, storeInMaxSessionCache: storeInMaxSessionCache)).toList();
 
     return new UsersList(
       users: users,
