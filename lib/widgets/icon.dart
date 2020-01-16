@@ -238,6 +238,7 @@ class OBIcons {
   static const guide = OBIconData(nativeIcon: Icons.book);
   static const slackChannel = OBIconData(nativeIcon: Icons.tag_faces);
   static const dashboard = OBIconData(nativeIcon: Icons.dashboard);
+  static const roadmap = OBIconData(nativeIcon: Icons.assignment);
   static const themes = OBIconData(nativeIcon: Icons.format_paint);
   static const invite = OBIconData(nativeIcon: Icons.card_giftcard);
   static const disableComments = OBIconData(nativeIcon: Icons.chat_bubble);

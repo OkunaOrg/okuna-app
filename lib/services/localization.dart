@@ -754,6 +754,16 @@ class LocalizationService {
         name: 'drawer__useful_links_guidelines_github_desc');
   }
 
+  String get drawer__useful_links_guidelines_roadmap {
+    return Intl.message("The Okuna roadmap",
+        name: 'drawer__useful_links_guidelines_roadmap');
+  }
+
+  String get drawer__useful_links_guidelines_roadmap_desc {
+    return Intl.message("Take a look at what we're planning to do in the future",
+        name: 'drawer__useful_links_guidelines_roadmap_desc');
+  }
+
   String get drawer__useful_links_guidelines_feature_requests {
     return Intl.message("Feature requests",
         name: 'drawer__useful_links_guidelines_feature_requests');
