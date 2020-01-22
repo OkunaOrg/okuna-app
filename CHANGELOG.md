@@ -46,5 +46,11 @@ The change log for the Okuna app.
 
 - We've built okuna-cli! A tool to get you a development API up and running on a single command. Try it out!
 
+
+## Release 0.0.63
+
+#### Features
+- Add hint text that private communities cannot be made public
+
 #### Happy testing 🎉!
 
