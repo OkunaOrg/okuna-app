@@ -9,6 +9,16 @@
     "type": "text",
     "placeholders": {}
   },
+  "hashtags_display": "Display",
+  "@hashtags_display": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "hashtags": "Hashtags",
+  "@hashtags": {
+    "type": "text",
+    "placeholders": {}
+  },
   "videos_autoplay": "Autoplay",
   "@videos_autoplay": {
     "type": "text",
@@ -66,6 +76,16 @@
   },
   "videos_sound_disabled": "Disabled",
   "@videos_sound_disabled": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "hashtags_display_traditional": "Traditional",
+  "@hashtags_display_traditional": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "hashtags_display_disco": "🕺 Disco",
+  "@hashtags_display_disco": {
     "type": "text",
     "placeholders": {}
   },
