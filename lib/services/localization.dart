@@ -1437,6 +1437,11 @@ class LocalizationService {
         name: 'community__save_community_name_label_type_hint_text');
   }
 
+  String get community__community_type_private_community_hint_text {
+    return Intl.message("Note: Private communities cannot be later changed to Public",
+        name: 'community__community_type_private_community_hint_text');
+  }
+
   String get community__save_community_name_member_invites {
     return Intl.message("Member invites",
         name: 'community__save_community_name_member_invites');
