@@ -6,6 +6,12 @@ The change log for the Okuna app.
 
 - [Release 0.0.59](#release-0.0.59)
 - [Release 0.0.61](#release-0.0.61)
+- [Release 0.0.63](#release-0.0.63)
+
+## Release 0.0.63
+
+#### Features
+- Add hint text that private communities cannot be made public
 
 ## Release 0.0.61
 
@@ -45,12 +51,6 @@ The change log for the Okuna app.
 #### For contributors
 
 - We've built okuna-cli! A tool to get you a development API up and running on a single command. Try it out!
-
-
-## Release 0.0.63
-
-#### Features
-- Add hint text that private communities cannot be made public
 
 #### Happy testing 🎉!
 
