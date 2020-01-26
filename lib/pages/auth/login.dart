@@ -17,7 +17,7 @@ class OBAuthLoginPage extends StatefulWidget {
 
 class OBAuthLoginPageState extends State<OBAuthLoginPage> {
   final _formKey = GlobalKey<FormState>();
-  final _passwordFocusNode = FocusNode();
+  FocusNode _passwordFocusNode;
 
   bool _isSubmitted;
   bool _passwordIsVisible;
@@ -35,6 +35,8 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
   void initState() {
     super.initState();
 
+    _passwordFocusNode = FocusNode();
+
     _loginInProgress = false;
     _isSubmitted = false;
     _passwordIsVisible = false;
@@ -48,6 +50,7 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
     super.dispose();
     _usernameController.removeListener(_validateForm);
     _passwordController.removeListener(_validateForm);
+    _passwordFocusNode.dispose();
   }
 
   @override
