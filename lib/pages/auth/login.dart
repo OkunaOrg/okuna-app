@@ -17,6 +17,7 @@ class OBAuthLoginPage extends StatefulWidget {
 
 class OBAuthLoginPageState extends State<OBAuthLoginPage> {
   final _formKey = GlobalKey<FormState>();
+  final _passwordFocusNode = FocusNode();
 
   bool _isSubmitted;
   bool _passwordIsVisible;
@@ -263,12 +264,16 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
                                 errorMaxLines: 3
                             ),
                             autocorrect: false,
+                            textInputAction: TextInputAction.next,
+                            onFieldSubmitted: (v) => FocusScope.of(context)
+                                .requestFocus(_passwordFocusNode),
                           ),
                           const SizedBox(
                             height: 20.0,
                           ),
                           TextFormField(
                             controller: _passwordController,
+                            focusNode: _passwordFocusNode,
                             obscureText: !_passwordIsVisible,
                             validator: _validatePassword,
                             decoration: InputDecoration(
