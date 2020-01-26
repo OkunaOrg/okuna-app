@@ -210,6 +210,7 @@ class OBAuthSetNewPasswordPageState extends State<OBAuthSetNewPasswordPage> {
                   },
                 ),
                 controller: _passwordController,
+                onFieldSubmitted: (v) => onPressedNextStep(),
               )
           ),
         ),

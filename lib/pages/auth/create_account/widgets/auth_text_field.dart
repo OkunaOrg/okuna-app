@@ -44,6 +44,8 @@ class OBAuthTextField extends StatelessWidget {
 
   final EdgeInsetsGeometry contentPadding;
 
+  final ValueChanged<String> onFieldSubmitted;
+
   OBAuthTextField({
     Key key,
     this.controller,
@@ -66,7 +68,8 @@ class OBAuthTextField extends StatelessWidget {
     this.enabled,
     this.keyboardAppearance,
     this.fontSize = 18.0,
-    this.contentPadding = const EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0)
+    this.contentPadding = const EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0),
+    this.onFieldSubmitted,
   });
 
   @override
@@ -101,6 +104,7 @@ class OBAuthTextField extends StatelessWidget {
         errorMaxLines: 2
       ),
       autofocus: autofocus,
+      onFieldSubmitted: onFieldSubmitted,
     );
   }
 }
