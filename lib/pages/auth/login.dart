@@ -123,13 +123,15 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
       minWidth: double.infinity,
       size: OBButtonSize.large,
       child: Text(buttonText, style: TextStyle(fontSize: 18.0)),
-      onPressed: () async {
-        _isSubmitted = true;
-        if (_validateForm()) {
-          await _login(context);
-        }
-      },
+      onPressed: _submitForm,
     );
+  }
+
+  Future<void> _submitForm() async {
+    _isSubmitted = true;
+    if (_validateForm()) {
+      await _login(context);
+    }
   }
 
   Future<void> _login(BuildContext context) async {
@@ -290,6 +292,7 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
                               border: OutlineInputBorder(),
                             ),
                             autocorrect: false,
+                            onFieldSubmitted: (v) => _submitForm(),
                           ),
                           const SizedBox(
                             height: 20.0,
