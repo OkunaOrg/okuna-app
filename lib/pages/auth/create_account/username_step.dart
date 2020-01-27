@@ -201,6 +201,7 @@ class OBAuthUsernameStepPageState extends State<OBAuthUsernameStepPage> {
                   }
                 },
                 controller: _usernameController,
+                onFieldSubmitted: (v) => onPressedNextStep(context),
               )
           ),
         ),

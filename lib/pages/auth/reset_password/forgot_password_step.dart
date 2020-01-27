@@ -114,13 +114,15 @@ class OBAuthForgotPasswordPageState extends State<OBAuthForgotPasswordPage> {
       minWidth: double.infinity,
       size: OBButtonSize.large,
       child: Text(buttonText, style: TextStyle(fontSize: 18.0)),
-      onPressed: () async {
-        _isSubmitted = true;
-        if (_validateForm()) {
-          await _requestPasswordReset(context);
-        }
-      },
+      onPressed: _submitForm,
     );
+  }
+
+  Future<void> _submitForm() async {
+    _isSubmitted = true;
+    if (_validateForm()) {
+      await _requestPasswordReset(context);
+    }
   }
 
   Future<void> _requestPasswordReset(BuildContext context) async {
@@ -228,6 +230,7 @@ class OBAuthForgotPasswordPageState extends State<OBAuthForgotPasswordPage> {
                               errorMaxLines: 3
                             ),
                             autocorrect: false,
+                            onFieldSubmitted: (v) => _submitForm(),
                           ),
                         ],
                       )),

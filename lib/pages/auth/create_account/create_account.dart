@@ -220,6 +220,7 @@ class OBAuthCreateAccountPageState extends State<OBAuthCreateAccountPage> {
                   return null;
                 },
                 controller: _linkController,
+                onFieldSubmitted: (v) => onPressedNextStep(context),
               )),
         ),
       ]),

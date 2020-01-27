@@ -186,6 +186,7 @@ class OBAuthPasswordStepPageState extends State<OBAuthPasswordStepPage> {
                   },
                 ),
                 controller: _passwordController,
+                onFieldSubmitted: (v) => onPressedNextStep(),
               )),
         ),
       ]),
