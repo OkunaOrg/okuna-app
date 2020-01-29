@@ -77,6 +77,15 @@ class OBCommunityTypeField extends StatelessWidget {
                 bottomSheetService.showCommunityTypePicker(
                     initialType: value, context: context, onChanged: onChanged);
               }),
+          value == CommunityType.private ? Padding(
+            padding: EdgeInsetsDirectional.only(start: 18.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                OBText(localizationService.community__community_type_private_community_hint_text)
+              ],
+            ),
+          ): const SizedBox(),
           OBDivider()
         ],
       ),

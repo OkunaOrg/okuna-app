@@ -618,6 +618,11 @@
     "type": "text",
     "placeholders": {}
   },
+  "community_type_private_community_hint_text": "Note: Private communities cannot be later changed to Public",
+  "@community_type_private_community_hint_text": {
+    "type": "text",
+    "placeholders": {}
+  },
   "save_community_name_member_invites": "Member invites",
   "@save_community_name_member_invites": {
     "type": "text",
