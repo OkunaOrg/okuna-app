@@ -460,6 +460,10 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
   }
 
   void _setPostImageFile(File image) {
+    if (!mounted) {
+      return;
+    }
+
     setState(() {
       this._postImageFile = image;
       _hasImage = true;
@@ -486,6 +490,10 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
   }
 
   void _setPostVideoFile(File video) {
+    if (!mounted) {
+      return;
+    }
+
     setState(() {
       this._postVideoFile = video;
       _hasVideo = true;
