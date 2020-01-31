@@ -81,7 +81,7 @@ class OBExcludeCommunityTileState extends State<OBExcludeCommunityTile> {
     if (_excludeCommunityOperation != null) return;
     _setRequestInProgress(true);
     try {
-      _excludeCommunityOperation = CancelableOperation.fromFuture(_userService.excludePostCommunityFromTopPosts(widget.post.community));
+      _excludeCommunityOperation = CancelableOperation.fromFuture(_userService.excludeCommunityFromTopPosts(widget.post.community));
       String message = await _excludeCommunityOperation.value;
       if (widget.onExcludedPostCommunity != null) widget.onExcludedPostCommunity();
       widget.post.updateIsFromExcludedCommunity(true);
@@ -98,7 +98,7 @@ class OBExcludeCommunityTileState extends State<OBExcludeCommunityTile> {
     if (_undoExcludeCommunityOperation != null) return;
     _setRequestInProgress(true);
     try {
-      _undoExcludeCommunityOperation = CancelableOperation.fromFuture(_userService.undoExcludePostCommunityFromTopPosts(widget.post.community));
+      _undoExcludeCommunityOperation = CancelableOperation.fromFuture(_userService.undoExcludeCommunityFromTopPosts(widget.post.community));
       String message = await _undoExcludeCommunityOperation.value;
       if (widget.onUndoExcludedPostCommunity != null) widget.onUndoExcludedPostCommunity();
       _toastService.success(message: message, context: context);

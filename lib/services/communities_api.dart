@@ -46,12 +46,6 @@ class CommunitiesApiService {
       'api/communities/{communityName}/favorite/';
   static const ENABLE_NEW_POST_NOTIFICATIONS_FOR_COMMUNITY_PATH =
       'api/communities/{communityName}/notifications/subscribe/new-post/';
-  static const EXCLUDE_COMMUNITY_PATH =
-      'api/communities/{communityName}/top-posts/exclude/';
-  static const GET_EXCLUDED_COMMUNITIES_PATH =
-      'api/communities/top-posts/exclusions/';
-  static const SEARCH_EXCLUDED_COMMUNITIES_PATH =
-      'api/communities/top-posts/exclusions/search/';
   static const GET_FAVORITE_COMMUNITIES_PATH = 'api/communities/favorites/';
   static const SEARCH_FAVORITE_COMMUNITIES_PATH =
       'api/communities/favorites/search/';
@@ -621,37 +615,6 @@ class CommunitiesApiService {
         appendAuthorizationToken: true);
   }
 
-  Future<HttpieResponse> getExcludedCommunities(
-      {bool authenticatedRequest = true, int offset, int count}) {
-    return _httpService.get('$apiURL$GET_EXCLUDED_COMMUNITIES_PATH',
-        appendAuthorizationToken: authenticatedRequest,
-        queryParameters: {'offset': offset, 'count': count});
-  }
-
-  Future<HttpieResponse> searchExcludedCommunities(
-      {@required String query, int count}) {
-    Map<String, dynamic> queryParams = {'query': query};
-
-    if (count != null) queryParams['count'] = count;
-
-    return _httpService.get('$apiURL$SEARCH_EXCLUDED_COMMUNITIES_PATH',
-        queryParameters: queryParams, appendAuthorizationToken: true);
-  }
-
-  Future<HttpieResponse> excludeCommunityFromTopPosts(
-      {@required String communityName}) {
-    String path = _makeExcludeCommunityPath(communityName);
-    return _httpService.putJSON(_makeApiUrl(path),
-        appendAuthorizationToken: true);
-  }
-
-  Future<HttpieResponse> undoExcludeCommunityFromTopPosts(
-      {@required String communityName}) {
-    String path = _makeExcludeCommunityPath(communityName);
-    return _httpService.delete(_makeApiUrl(path),
-        appendAuthorizationToken: true);
-  }
-
   Future<HttpieResponse> getAdministratedCommunities(
       {bool authenticatedRequest = true, int offset}) {
     return _httpService.get('$apiURL$GET_ADMINISTRATED_COMMUNITIES_PATH',
@@ -825,11 +788,6 @@ class CommunitiesApiService {
     return _stringTemplateService.parse(
         ENABLE_NEW_POST_NOTIFICATIONS_FOR_COMMUNITY_PATH,
         {'communityName': communityName});
-  }
-
-  String _makeExcludeCommunityPath(String communityName) {
-    return _stringTemplateService
-        .parse(EXCLUDE_COMMUNITY_PATH, {'communityName': communityName});
   }
 
   String _makeJoinCommunityPath(String communityName) {

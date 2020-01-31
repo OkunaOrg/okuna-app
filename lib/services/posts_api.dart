@@ -12,6 +12,18 @@ class PostsApiService {
 
   static const GET_POSTS_PATH = 'api/posts/';
   static const GET_TOP_POSTS_PATH = 'api/posts/top/';
+  static const EXCLUDED_TOP_POSTS_COMMUNITIES_PATH =
+      'api/posts/excluded-communities/';
+  static const EXCLUDED_TOP_POSTS_COMMUNITY_PATH =
+      'api/posts/excluded-communities/{communityName}/';
+  static const EXCLUDED_TOP_POSTS_COMMUNITIES_SEARCH_PATH =
+      'api/posts/excluded-communities/search/';
+  static const EXCLUDED_PROFILE_POSTS_COMMUNITIES_PATH =
+      'api/posts/excluded-communities/';
+  static const EXCLUDED_PROFILE_POSTS_COMMUNITY_PATH =
+      'api/posts/excluded-communities/{communityName}/';
+  static const EXCLUDED_PROFILE_POSTS_COMMUNITIES_SEARCH_PATH =
+      'api/posts/excluded-communities/search/';
   static const GET_TRENDING_POSTS_PATH = 'api/posts/trending/new/';
   static const CREATE_POST_PATH = 'api/posts/';
   static const POST_MEDIA_PATH = 'api/posts/{postUuid}/media/';
@@ -83,7 +95,11 @@ class PostsApiService {
   }
 
   Future<HttpieResponse> getTopPosts(
-      {int maxId, int minId, int count, bool excludeJoinedCommunities, bool authenticatedRequest = true}) {
+      {int maxId,
+      int minId,
+      int count,
+      bool excludeJoinedCommunities,
+      bool authenticatedRequest = true}) {
     Map<String, dynamic> queryParams = {};
     if (count != null) queryParams['count'] = count;
 
@@ -91,7 +107,8 @@ class PostsApiService {
 
     if (minId != null) queryParams['min_id'] = minId;
 
-    if (excludeJoinedCommunities != null) queryParams['exclude_joined_communities'] = excludeJoinedCommunities;
+    if (excludeJoinedCommunities != null)
+      queryParams['exclude_joined_communities'] = excludeJoinedCommunities;
 
     return _httpService.get('$apiURL$GET_TOP_POSTS_PATH',
         queryParameters: queryParams,
@@ -270,8 +287,7 @@ class PostsApiService {
   Future<HttpieResponse> getPostComment(
       {@required String postUuid, @required int postCommentId}) {
     String path = _makeGetCommentPostPath(postUuid, postCommentId);
-    return _httpService.get(_makeApiUrl(path),
-        appendAuthorizationToken: true);
+    return _httpService.get(_makeApiUrl(path), appendAuthorizationToken: true);
   }
 
   Future<HttpieResponse> replyPostComment(
@@ -525,6 +541,79 @@ class PostsApiService {
 
     return _httpService.post(_makeApiUrl(path),
         body: body, appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> getTopPostsExcludedCommunities(
+      {bool authenticatedRequest = true, int offset, int count}) {
+    return _httpService.get('$apiURL$EXCLUDED_TOP_POSTS_COMMUNITIES_PATH',
+        appendAuthorizationToken: authenticatedRequest,
+        queryParameters: {'offset': offset, 'count': count});
+  }
+
+  Future<HttpieResponse> searchTopPostsExcludedCommunities(
+      {@required String query, int count}) {
+    Map<String, dynamic> queryParams = {'query': query};
+
+    if (count != null) queryParams['count'] = count;
+
+    return _httpService.get('$apiURL$EXCLUDED_TOP_POSTS_COMMUNITIES_PATH',
+        queryParameters: queryParams, appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> excludeCommunityFromTopPosts(
+      {@required String communityName}) {
+    return _httpService.putJSON('$apiURL$EXCLUDED_TOP_POSTS_COMMUNITIES_PATH',
+        body: {'community_name': communityName},
+        appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> undoExcludeCommunityFromTopPosts(
+      {@required String communityName}) {
+    String path = _makeExcludedCommunityFromTopPostsPath(communityName);
+    return _httpService.delete(_makeApiUrl(path),
+        appendAuthorizationToken: true);
+  }
+
+  String _makeExcludedCommunityFromTopPostsPath(String communityName) {
+    return _stringTemplateService.parse(
+        EXCLUDED_TOP_POSTS_COMMUNITY_PATH, {'communityName': communityName});
+  }
+
+  Future<HttpieResponse> getProfilePostsExcludedCommunities(
+      {bool authenticatedRequest = true, int offset, int count}) {
+    return _httpService.get('$apiURL$EXCLUDED_PROFILE_POSTS_COMMUNITIES_PATH',
+        appendAuthorizationToken: authenticatedRequest,
+        queryParameters: {'offset': offset, 'count': count});
+  }
+
+  Future<HttpieResponse> searchProfilePostsExcludedCommunities(
+      {@required String query, int count}) {
+    Map<String, dynamic> queryParams = {'query': query};
+
+    if (count != null) queryParams['count'] = count;
+
+    return _httpService.get('$apiURL$EXCLUDED_PROFILE_POSTS_COMMUNITIES_PATH',
+        queryParameters: queryParams, appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> excludeCommunityFromProfilePosts(
+      {@required String communityName}) {
+    return _httpService.putJSON(
+        '$apiURL$EXCLUDED_PROFILE_POSTS_COMMUNITIES_PATH',
+        body: {'community_name': communityName},
+        appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> undoExcludeCommunityFromProfilePosts(
+      {@required String communityName}) {
+    String path = _makeExcludedCommunityFromProfilePostsPath(communityName);
+    return _httpService.delete(_makeApiUrl(path),
+        appendAuthorizationToken: true);
+  }
+
+  String _makeExcludedCommunityFromProfilePostsPath(String communityName) {
+    return _stringTemplateService.parse(EXCLUDED_PROFILE_POSTS_COMMUNITY_PATH,
+        {'communityName': communityName});
   }
 
   String _makePostPath(String postUuid) {
