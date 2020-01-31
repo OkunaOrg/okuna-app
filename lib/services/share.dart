@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:async/async.dart';
 import 'package:Okuna/plugins/share/share.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/toast.dart';
@@ -20,7 +21,9 @@ class ShareService {
 
   StreamSubscription _shareReceiveSubscription;
   List<Share> _shareQueue;
-  List<Future<bool> Function({String text, File image, File video})> _subscribers;
+  List<Future<dynamic> Function({String text, File image, File video})> _subscribers;
+
+  CancelableOperation _activeShareOperation;
 
   BuildContext _context;
 
@@ -58,9 +61,14 @@ class ShareService {
 
   /// Subscribe to share events.
   ///
-  /// [onShare] should return [true] if it consumes the share. If [false] is
-  /// returned, the next subscriber will be sent the share as well!
-  void subscribe(Future<bool> Function({String text, File image, File video}) onShare) {
+  /// [onShare] should return [true] if it consumes the share immediately,
+  /// a [CancelableOperation] if some amount of work has to be done first (like
+  /// gif to video conversion in OBSavePostModal), or [false] if the subscriber
+  /// did _not_ consume the share (the share will be passed on to the next subscriber).
+  ///
+  /// If a [CancelableOperation] is returned, it _must_ handle cancellation
+  /// properly.
+  void subscribe(Future<dynamic> Function({String text, File image, File video}) onShare) {
     _subscribers.add(onShare);
 
     if (_subscribers.length == 1) {
@@ -68,7 +76,7 @@ class ShareService {
     }
   }
 
-  void unsubscribe(Future<bool> Function({String text, File image, File video}) subscriber) {
+  void unsubscribe(Future<dynamic> Function({String text, File image, File video}) subscriber) {
     _subscribers.remove(subscriber);
   }
 
@@ -97,6 +105,11 @@ class ShareService {
     String text;
     File image;
     File video;
+
+    if (_activeShareOperation != null) {
+      _activeShareOperation.cancel();
+    }
+
     if (share.error != null) {
       _toastService.error(
           message: _localizationService.trans(share.error), context: _context);
@@ -138,7 +151,15 @@ class ShareService {
     }
 
     for (var sub in _subscribers.reversed) {
-      if (await sub(text: text, image: image, video: video)) {
+      var subResult = await sub(text: text, image: image, video: video);
+
+      // Stop event propagation if we have a sub-result that is either true or
+      // a CancelableOperation.
+      if (subResult is CancelableOperation) {
+        _activeShareOperation = subResult;
+        return true;
+      }
+      else if (subResult is bool && subResult) {
         return true;
       }
     }

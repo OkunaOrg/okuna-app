@@ -100,7 +100,6 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
 
   bool _saveInProgress;
   CancelableOperation _saveOperation;
-  CancelableOperation _gifSharedOperation;
 
   @override
   void initState() {
@@ -529,12 +528,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
     _addPostItemWidget(postImageWidget);
   }
 
-  Future<bool> _onShare({String text, File image, File video}) async {
-    if (_gifSharedOperation != null) {
-      _gifSharedOperation.cancel();
-      _gifSharedOperation = null;
-    }
-
+  Future<dynamic> _onShare({String text, File image, File video}) async {
     if (image != null || video != null) {
       if (_hasImage) {
         _removePostImageFile();
@@ -557,12 +551,19 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
     if (video != null) {
       final isGif = await _mediaService.isGif(video);
       if (isGif) {
-        _gifSharedOperation = CancelableOperation.fromFuture(
+        var operation = CancelableOperation.fromFuture(
             _mediaService.convertGifToVideo(video));
-        video = await _gifSharedOperation.value;
-      }
 
-      _setPostVideoFile(video);
+        operation.then((value) {
+          if (!operation.isCanceled && value != null) {
+            _setPostVideoFile(value);
+          }
+        });
+
+        return operation;
+      } else {
+        _setPostVideoFile(video);
+      }
     }
 
     return true;
