@@ -1,18 +1,23 @@
+import 'dart:async';
 import 'dart:io';
+
 import 'package:Okuna/plugins/image_converter/image_converter.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/utils_service.dart';
+import 'package:Okuna/services/validation.dart';
+import 'package:async/async.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_ffmpeg/flutter_ffmpeg.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:meta/meta.dart';
-import 'package:Okuna/services/validation.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
-import 'package:flutter_ffmpeg/flutter_ffmpeg.dart';
+
 import 'bottom_sheet.dart';
+
 export 'package:image_picker/image_picker.dart';
 
 class MediaService {
@@ -202,26 +207,39 @@ class MediaService {
     return file;
   }
 
-  Future<File> convertGifToVideo(File gif) async {
-    File resultFile;
-
+  CancelableOperation<File> convertGifToVideo(File gif) {
     final FlutterFFmpeg _flutterFFmpeg = new FlutterFFmpeg();
 
+    // Set a cancel flag which we can use if we need to cancel before the ffmpeg
+    // process is started (can happen for two gif shares with a short time between,
+    // since we have to wait for _getTempPath() before we can start ffmpeg.
+    var isCancelled = false;
+    var ffmpegFuture =
+        _convertGifToVideo(_flutterFFmpeg, gif, () => isCancelled);
+    return CancelableOperation.fromFuture(ffmpegFuture, onCancel: () {
+      isCancelled = true;
+      _flutterFFmpeg.cancel();
+    });
+  }
+
+  Future<File> _convertGifToVideo(
+      FlutterFFmpeg flutterFFmpeg, File gif, bool Function() doCancel) async {
     String resultFileName = _uuid.v4() + '.mp4';
     final path = await _getTempPath();
     final String sourceFilePath = gif.path;
     final String resultFilePath = '$path/$resultFileName';
 
-    int exitCode = await _flutterFFmpeg.execute(
-        '-f gif -i $sourceFilePath -pix_fmt yuv420p -c:v libx264 -movflags +faststart -filter:v crop=\'floor(in_w/2)*2:floor(in_h/2)*2\' $resultFilePath');
-
-    if (exitCode == 0) {
-      resultFile = File(resultFilePath);
-    } else {
-      throw (Exception('Gif couldn\'t be converted to video'));
+    var exitCode;
+    if (!doCancel()) {
+      exitCode = await flutterFFmpeg.execute(
+          '-f gif -i $sourceFilePath -pix_fmt yuv420p -c:v libx264 -movflags +faststart -filter:v crop=\'floor(in_w/2)*2:floor(in_h/2)*2\' $resultFilePath');
     }
 
-    return resultFile;
+    if (exitCode == 0) {
+      return File(resultFilePath);
+    } else {
+      throw 'Gif couldn\'t be converted to video';
+    }
   }
 
   void clearThumbnailForFile(File videoFile) {
