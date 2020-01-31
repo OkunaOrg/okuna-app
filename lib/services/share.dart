@@ -20,15 +20,14 @@ class ShareService {
   LocalizationService _localizationService;
 
   StreamSubscription _shareReceiveSubscription;
-  List<Share> _shareQueue;
   List<Future<dynamic> Function({String text, File image, File video})> _subscribers;
 
+  Share _queuedShare;
   CancelableOperation _activeShareOperation;
 
   BuildContext _context;
 
   ShareService() {
-    _shareQueue = [];
     _subscribers = [];
 
     if (Platform.isAndroid) {
@@ -81,21 +80,16 @@ class ShareService {
   }
 
   Future<void> _emptyQueue() async {
-    var consumed = <Share>[];
-    for (Share share in _shareQueue) {
-      if (await _onShare(share)) {
-        consumed.add(share);
-      }
-    }
-
-    consumed.forEach((e) => _shareQueue.remove(e));
+    var share = _queuedShare;
+    _queuedShare = null;
+    await _onShare(share);
   }
 
   void _onReceiveShare(dynamic shared) async {
     var share = Share.fromReceived(shared);
 
     if (_subscribers.isEmpty) {
-      _shareQueue.add(share);
+      _queuedShare = share;
     } else {
       await _onShare(share);
     }
