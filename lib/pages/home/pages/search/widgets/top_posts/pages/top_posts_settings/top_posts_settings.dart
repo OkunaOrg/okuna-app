@@ -1,4 +1,4 @@
-import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/explore_settings/widgets/exclude_joined_communities_tile.dart';
+import 'package:Okuna/pages/home/pages/search/widgets/top_posts/pages/top_posts_settings/pages/top_posts_excluded_communities/widgets/exclude_joined_communities_tile.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/navigation_service.dart';
 import 'package:Okuna/widgets/icon.dart';
