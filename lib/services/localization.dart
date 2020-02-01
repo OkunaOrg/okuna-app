@@ -2570,13 +2570,29 @@ class LocalizationService {
   }
 
   String get user__edit_profile_community_posts {
-    return Intl.message("Community posts",
+    return Intl.message("Communities",
         name: 'user__edit_profile_community_posts');
+  }
+
+  String get user__edit_profile_community_posts_descr {
+    return Intl.message("Display in profile",
+        name: 'user__edit_profile_community_posts_descr');
   }
 
   String get user__edit_profile_title {
     return Intl.message("Edit profile", name: 'user__edit_profile_title');
   }
+
+  String get user__profile_posts_excluded_communities {
+    return Intl.message("Excluded communities",
+        name: 'user__profile_posts_excluded_communities');
+  }
+
+  String get user__profile_posts_excluded_communities_desc {
+    return Intl.message("Manage communities excluded from your profile",
+        name: 'user__profile_posts_excluded_communities_desc');
+  }
+
 
   String get user__edit_profile_save_text {
     return Intl.message("Save", name: 'user__edit_profile_save_text');

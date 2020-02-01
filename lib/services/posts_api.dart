@@ -13,17 +13,17 @@ class PostsApiService {
   static const GET_POSTS_PATH = 'api/posts/';
   static const GET_TOP_POSTS_PATH = 'api/posts/top/';
   static const EXCLUDED_TOP_POSTS_COMMUNITIES_PATH =
-      'api/posts/excluded-communities/';
+      'api/posts/top/excluded-communities/';
   static const EXCLUDED_TOP_POSTS_COMMUNITY_PATH =
-      'api/posts/excluded-communities/{communityName}/';
+      'api/posts/top/excluded-communities/{communityName}/';
   static const EXCLUDED_TOP_POSTS_COMMUNITIES_SEARCH_PATH =
-      'api/posts/excluded-communities/search/';
+      'api/posts/top/excluded-communities/search/';
   static const EXCLUDED_PROFILE_POSTS_COMMUNITIES_PATH =
-      'api/posts/excluded-communities/';
+      'api/posts/profile/excluded-communities/';
   static const EXCLUDED_PROFILE_POSTS_COMMUNITY_PATH =
-      'api/posts/excluded-communities/{communityName}/';
+      'api/posts/profile/excluded-communities/{communityName}/';
   static const EXCLUDED_PROFILE_POSTS_COMMUNITIES_SEARCH_PATH =
-      'api/posts/excluded-communities/search/';
+      'api/posts/profile/excluded-communities/search/';
   static const GET_TRENDING_POSTS_PATH = 'api/posts/trending/new/';
   static const CREATE_POST_PATH = 'api/posts/';
   static const POST_MEDIA_PATH = 'api/posts/{postUuid}/media/';

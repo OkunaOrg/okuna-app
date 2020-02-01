@@ -11,9 +11,19 @@ class OBToggleField extends StatelessWidget {
   final String title;
   final Widget subtitle;
   final bool hasDivider;
+  final TextStyle titleStyle;
 
-  const OBToggleField({Key key, @required this.value, this.onChanged, this.onTap, this.leading, @required this.title, this.subtitle, this.hasDivider=true}) : super(key: key);
-
+  const OBToggleField(
+      {Key key,
+      @required this.value,
+      this.onChanged,
+      this.onTap,
+      this.leading,
+      @required this.title,
+      this.subtitle,
+      this.hasDivider = true,
+      this.titleStyle})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +35,7 @@ class OBToggleField extends StatelessWidget {
               leading: leading,
               title: OBText(
                 title,
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: titleStyle ?? TextStyle(fontWeight: FontWeight.bold),
               ),
               subtitle: subtitle,
               trailing: CupertinoSwitch(
