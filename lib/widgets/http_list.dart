@@ -296,17 +296,13 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
                         controller: _listScrollController,
                         physics: widget.physics,
                         padding: widget.padding,
-                        itemCount: _list.length +
-                            _prependedItems.length +
-                            _listSelection.length,
+                        itemCount: _list.length + _prependedItems.length,
                         itemBuilder: _buildListItem)
                     : ListView.builder(
                         controller: _listScrollController,
                         physics: widget.physics,
                         padding: widget.padding,
-                        itemCount: _list.length +
-                            _prependedItems.length +
-                            _listSelection.length,
+                        itemCount: _list.length + _prependedItems.length,
                         itemBuilder: _buildListItem),
                 onLoadMore: _loadMoreListItems),
         onRefresh: _refreshList);
@@ -351,50 +347,11 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
 
     itemsIndex = index - _prependedItems.length;
 
-    if (_listSelection.isNotEmpty && itemsIndex < _listSelection.length) {
-      Widget selectedListItemTile =
-          widget.selectedListItemBuilder(context, _list[itemsIndex]);
-
-      List<Widget> columnItems = [];
-      T listItem = _list[itemsIndex];
-
-      if (itemsIndex == 0) {
-        // First selected item, add title
-        String title = 'Selected' + _makeSelectedItemsCount();
-
-        columnItems.add(
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 5),
-            child: OBTileGroupTitle(
-              title: title,
-            ),
-          ),
-        );
-      }
-
-      columnItems
-          .add(_wrapSelectableListItemWidget(listItem, selectedListItemTile));
-
-      if (itemsIndex == _listSelection.length - 1) {
-        columnItems.add(const SizedBox(
-          height: 20,
-        ));
-      }
-      return Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: columnItems);
-    }
-
-    itemsIndex = index - _listSelection.length;
-
     T listItem = _list[itemsIndex];
 
     Widget listItemWidget = widget.listItemBuilder(context, listItem);
 
     if (widget.isSelectable) {
-      if (_listSelection.contains(listItem)) return const SizedBox();
-
       listItemWidget = _wrapSelectableListItemWidget(listItem, listItemWidget);
     }
 
