@@ -15,15 +15,15 @@ import 'package:Okuna/widgets/tiles/community_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class OBExcludeCommunitiesFromProfilePostsPage extends StatefulWidget {
+class OBExcludeCommunitiesFromProfilePostsModal extends StatefulWidget {
   @override
-  State<OBExcludeCommunitiesFromProfilePostsPage> createState() {
+  State<OBExcludeCommunitiesFromProfilePostsModal> createState() {
     return OBProfilePostsExcludedCommunitiesState();
   }
 }
 
 class OBProfilePostsExcludedCommunitiesState
-    extends State<OBExcludeCommunitiesFromProfilePostsPage> {
+    extends State<OBExcludeCommunitiesFromProfilePostsModal> {
   UserService _userService;
   NavigationService _navigationService;
   LocalizationService _localizationService;
@@ -56,10 +56,12 @@ class OBProfilePostsExcludedCommunitiesState
       ),
       child: OBPrimaryColorContainer(
         child: OBHttpList<Community>(
+          isSelectable: true,
           padding: EdgeInsets.symmetric(horizontal: 20.0),
           controller: _httpListController,
           listItemBuilder: _buildCommunityListItem,
           searchResultListItemBuilder: _buildCommunityListItem,
+          selectedListItemBuilder: _buildCommunityListItem,
           listRefresher: _refreshJoinedCommunities,
           listOnScrollLoader: _loadMoreJoinedCommunities,
           listSearcher: _searchCommunities,
@@ -76,25 +78,8 @@ class OBProfilePostsExcludedCommunitiesState
       child: OBCommunityTile(
         community,
         size: OBCommunityTileSize.small,
-        onCommunityTilePressed: _onCommunityListItemPressed,
-        onCommunityTileDeleted: _onCommunityListItemDeleted,
       ),
     );
-  }
-
-  void _onCommunityListItemPressed(Community community) {
-    _navigationService.navigateToCommunity(
-        community: community, context: context);
-  }
-
-  void _onCommunityListItemDeleted(Community excludedCommunity) async {
-    try {
-      await _userService
-          .undoExcludeCommunityFromProfilePosts(excludedCommunity);
-      _httpListController.removeListItem(excludedCommunity);
-    } catch (error) {
-      _onError(error);
-    }
   }
 
   void _onError(error) async {

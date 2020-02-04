@@ -30,6 +30,7 @@ import 'package:Okuna/pages/home/pages/moderated_objects/pages/widgets/moderated
 import 'package:Okuna/pages/home/pages/moderated_objects/pages/widgets/moderated_object_description/modals/moderated_object_update_description.dart';
 import 'package:Okuna/pages/home/pages/moderated_objects/pages/widgets/moderated_object_status/modals/moderated_object_update_status.dart';
 import 'package:Okuna/pages/home/pages/profile/pages/edit_profile/modals/edit_profile.dart';
+import 'package:Okuna/pages/home/pages/profile/pages/edit_profile/pages/profile_posts_excluded_communities/modals/exclude_community_from_profile_posts.dart';
 import 'package:Okuna/pages/home/pages/timeline/timeline.dart';
 import 'package:Okuna/widgets/new_post_data_uploader.dart';
 import 'package:flutter/cupertino.dart';
@@ -409,5 +410,17 @@ class ModalService {
             moderatedObject: moderatedObject,
           );
         }));
+  }
+
+  Future<ModeratedObjectStatus> openExcludeCommunitiesFromProfilePosts(
+      {@required BuildContext context}) async {
+    return Navigator.of(context, rootNavigator: true)
+        .push(CupertinoPageRoute<ModeratedObjectStatus>(
+            fullscreenDialog: true,
+            builder: (BuildContext context) {
+              return Material(
+                child: OBExcludeCommunitiesFromProfilePostsModal(),
+              );
+            }));
   }
 }

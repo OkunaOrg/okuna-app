@@ -70,6 +70,7 @@ class OBProfilePostsExcludedCommunitiesState
           controller: _httpListController,
           listItemBuilder: _buildExcludedCommunityListItem,
           searchResultListItemBuilder: _buildExcludedCommunityListItem,
+          selectedListItemBuilder: _buildExcludedCommunityListItem,
           listRefresher: _refreshExcludedCommunities,
           listOnScrollLoader: _loadMoreExcludedCommunities,
           listSearcher: _searchExcludedCommunities,
@@ -111,8 +112,7 @@ class OBProfilePostsExcludedCommunitiesState
   }
 
   void _onWantsToExcludeCommunityFromProfilePosts() {
-    _navigationService.navigateToExcludeCommunitiesFromProfilePosts(
-        context: context);
+    _modalService.openExcludeCommunitiesFromProfilePosts(context: context);
   }
 
   void _onError(error) async {

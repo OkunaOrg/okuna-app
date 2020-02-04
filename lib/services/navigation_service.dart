@@ -52,7 +52,6 @@ import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/account_setting
 import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/application_settings.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/developer_settings.dart';
 import 'package:Okuna/pages/home/pages/profile/pages/edit_profile/manage_profile.dart';
-import 'package:Okuna/pages/home/pages/profile/pages/edit_profile/pages/profile_posts_excluded_communities/pages/exclude_community_from_profile_posts.dart';
 import 'package:Okuna/pages/home/pages/profile/pages/edit_profile/pages/profile_posts_excluded_communities/profile_posts_excluded_communities.dart';
 import 'package:Okuna/pages/home/pages/search/widgets/top_posts/pages/top_posts_settings/pages/top_posts_excluded_communities.dart';
 import 'package:Okuna/pages/home/pages/search/widgets/top_posts/pages/top_posts_settings/top_posts_settings.dart';
@@ -1003,19 +1002,6 @@ class NavigationService {
           slidableKey: Key('profilePostsExcludedCommunitiesPageRoute'),
           builder: (BuildContext context) {
             return OBProfilePostsExcludedCommunitiesPage();
-          }),
-    );
-  }
-
-  Future<void> navigateToExcludeCommunitiesFromProfilePosts({
-    @required BuildContext context,
-  }) {
-    return Navigator.push(
-      context,
-      OBSlideRightRoute<dynamic>(
-          slidableKey: Key('excludeCommunitiesFromProfilePostsPage'),
-          builder: (BuildContext context) {
-            return OBExcludeCommunitiesFromProfilePostsPage();
           }),
     );
   }
