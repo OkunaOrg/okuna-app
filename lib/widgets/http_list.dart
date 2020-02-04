@@ -33,9 +33,9 @@ class OBHttpList<T> extends StatefulWidget {
   final ScrollPhysics physics;
   final List<Widget> prependedItems;
   final OBHttpListSecondaryRefresher secondaryRefresher;
-  final OBHttpListSelectionChangedListener onSelectionChanged;
-  final OBHttpListSelectionChangedListener onSelectionSubmitted;
-  final OBHttpListSelectionSubmitter selectionSubmitter;
+  final OBHttpListSelectionChangedListener<T> onSelectionChanged;
+  final OBHttpListSelectionChangedListener<T> onSelectionSubmitted;
+  final OBHttpListSelectionSubmitter<T> selectionSubmitter;
   final bool hasSearchBar;
   final bool isSelectable;
 

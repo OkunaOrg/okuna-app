@@ -50,7 +50,7 @@ class OBProfilePostsExcludedCommunitiesState
       _needsBootstrap = false;
     }
 
-    return OBCupertinoPageScaffold(
+    return CupertinoPageScaffold(
       navigationBar: OBThemedNavigationBar(
         title: _localizationService.user__profile_posts_exclude_communities,
       ),
@@ -65,6 +65,8 @@ class OBProfilePostsExcludedCommunitiesState
           listRefresher: _refreshJoinedCommunities,
           listOnScrollLoader: _loadMoreJoinedCommunities,
           listSearcher: _searchCommunities,
+          selectionSubmitter: _excludeCommunities,
+          onSelectionSubmitted: _onCommunitiesWereExcluded,
           resourceSingularName: _localizationService.community__community,
           resourcePluralName: _localizationService.community__communities,
         ),
@@ -82,18 +84,15 @@ class OBProfilePostsExcludedCommunitiesState
     );
   }
 
-  void _onError(error) async {
-    if (error is HttpieConnectionRefusedError) {
-      _toastService.error(
-          message: error.toHumanReadableMessage(), context: context);
-    } else if (error is HttpieRequestError) {
-      String errorMessage = await error.toHumanReadableMessage();
-      _toastService.error(message: errorMessage, context: context);
-    } else {
-      _toastService.error(
-          message: _localizationService.error__unknown_error, context: context);
-      throw error;
-    }
+  Future<void> _excludeCommunities(List<Community> communities) {
+    return Future.wait(communities
+        .map((community) =>
+            _userService.excludeCommunityFromProfilePosts(community))
+        .toList());
+  }
+
+  void _onCommunitiesWereExcluded(List<Community> communities) {
+    print('Communities were excluded');
   }
 
   Future<List<Community>> _refreshJoinedCommunities() async {
