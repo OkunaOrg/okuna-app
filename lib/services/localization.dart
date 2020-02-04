@@ -760,7 +760,8 @@ class LocalizationService {
   }
 
   String get drawer__useful_links_guidelines_roadmap_desc {
-    return Intl.message("Take a look at what we're planning to do in the future",
+    return Intl.message(
+        "Take a look at what we're planning to do in the future",
         name: 'drawer__useful_links_guidelines_roadmap_desc');
   }
 
@@ -1438,7 +1439,8 @@ class LocalizationService {
   }
 
   String get community__community_type_private_community_hint_text {
-    return Intl.message("Note: Private communities cannot be later changed to Public",
+    return Intl.message(
+        "Note: Private communities cannot be later changed to Public",
         name: 'community__community_type_private_community_hint_text');
   }
 
@@ -2564,9 +2566,28 @@ class LocalizationService {
     return Intl.message("Bio", name: 'user__edit_profile_bio');
   }
 
-  String get user__edit_profile_followers_count {
+
+
+  String get user__manage_profile_followers_count_toggle {
     return Intl.message("Followers count",
-        name: 'user__edit_profile_followers_count');
+        name: 'user__manage_profile_followers_count_toggle');
+  }
+
+  String get user__manage_profile_followers_count_toggle__descr {
+    return Intl.message(
+        "Display the number of people that follow you, on your profile.",
+        name: 'user__manage_profile_followers_count_toggle__descr');
+  }
+
+  String get user__manage_profile_community_posts_toggle {
+    return Intl.message("Community posts",
+        name: 'user__manage_profile_community_posts_toggle');
+  }
+
+  String get user__manage_profile_community_posts_toggle__descr {
+    return Intl.message(
+        "Display posts you share with public communities, on your profile.",
+        name: 'user__manage_profile_community_posts_toggle__descr');
   }
 
   String get user__edit_profile_community_posts {
@@ -2579,8 +2600,21 @@ class LocalizationService {
         name: 'user__edit_profile_community_posts_descr');
   }
 
-  String get user__edit_profile_title {
-    return Intl.message("Edit profile", name: 'user__edit_profile_title');
+  String get user__manage {
+    return Intl.message("Manage", name: 'user__manage');
+  }
+
+  String get user__manage_profile_title {
+    return Intl.message("Manage profile", name: 'user__manage_profile_title');
+  }
+
+  String get user__manage_profile_details_title {
+    return Intl.message("Details", name: 'user__manage_profile_details_title');
+  }
+
+  String get user__manage_profile_details_title_desc {
+    return Intl.message("Change your username, name, url, location, avatar or cover photo.",
+        name: 'user__manage_profile_details_title_desc');
   }
 
   String get user__profile_posts_excluded_communities {
@@ -2588,11 +2622,16 @@ class LocalizationService {
         name: 'user__profile_posts_excluded_communities');
   }
 
-  String get user__profile_posts_excluded_communities_desc {
-    return Intl.message("Manage communities excluded from your profile",
-        name: 'user__profile_posts_excluded_communities_desc');
+  String get user__profile_posts_exclude_communities {
+    return Intl.message("Exclude communities",
+        name: 'user__profile_posts_exclude_communities');
   }
 
+  String get user__profile_posts_excluded_communities_desc {
+    return Intl.message(
+        "See, add and remove excluded communities from your profile.",
+        name: 'user__profile_posts_excluded_communities_desc');
+  }
 
   String get user__edit_profile_save_text {
     return Intl.message("Save", name: 'user__edit_profile_save_text');
@@ -4033,8 +4072,7 @@ class LocalizationService {
   }
 
   String get application_settings__hashtags {
-    return Intl.message("Hashtags",
-        name: 'application_settings__hashtags');
+    return Intl.message("Hashtags", name: 'application_settings__hashtags');
   }
 
   String get application_settings__videos_autoplay {
@@ -4105,7 +4143,6 @@ class LocalizationService {
     return Intl.message("🕺 Disco",
         name: 'application_settings__hashtags_display_disco');
   }
-
 
   String get application_settings__comment_sort_newest_first {
     return Intl.message("Newest first",

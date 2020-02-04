@@ -3,9 +3,12 @@ import 'dart:async';
 import 'package:Okuna/models/communities_list.dart';
 import 'package:Okuna/models/community.dart';
 import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/modal_service.dart';
 import 'package:Okuna/services/navigation_service.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/widgets/http_list.dart';
+import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/icon_button.dart';
 import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Okuna/widgets/page_scaffold.dart';
 import 'package:Okuna/provider.dart';
@@ -26,6 +29,7 @@ class OBProfilePostsExcludedCommunitiesState
     extends State<OBProfilePostsExcludedCommunitiesPage> {
   UserService _userService;
   NavigationService _navigationService;
+  ModalService _modalService;
   LocalizationService _localizationService;
   ToastService _toastService;
 
@@ -47,12 +51,18 @@ class OBProfilePostsExcludedCommunitiesState
       _navigationService = provider.navigationService;
       _localizationService = provider.localizationService;
       _toastService = provider.toastService;
+      _modalService = provider.modalService;
       _needsBootstrap = false;
     }
 
     return OBCupertinoPageScaffold(
       navigationBar: OBThemedNavigationBar(
         title: _localizationService.user__profile_posts_excluded_communities,
+        trailing: OBIconButton(
+          OBIcons.add,
+          themeColor: OBIconThemeColor.primaryAccent,
+          onPressed: _onWantsToExcludeCommunityFromProfilePosts,
+        ),
       ),
       child: OBPrimaryColorContainer(
         child: OBHttpList<Community>(
@@ -98,6 +108,11 @@ class OBProfilePostsExcludedCommunitiesState
     } catch (error) {
       _onError(error);
     }
+  }
+
+  void _onWantsToExcludeCommunityFromProfilePosts() {
+    _navigationService.navigateToExcludeCommunitiesFromProfilePosts(
+        context: context);
   }
 
   void _onError(error) async {

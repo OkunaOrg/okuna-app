@@ -185,15 +185,21 @@ class Community extends UpdatableModel<Community> {
       'are_new_post_notifications_enabled': areNewPostNotificationsEnabled,
       'is_creator': isCreator,
       'is_reported': isReported,
-      'moderators': moderators?.users?.map((User user) => user.toJson())?.toList(),
-      'memberships': memberships?.communityMemberships?.map((CommunityMembership membership) => membership.toJson())?.toList(),
-      'administrators': administrators?.users?.map((User user) => user.toJson())?.toList(),
+      'moderators':
+          moderators?.users?.map((User user) => user.toJson())?.toList(),
+      'memberships': memberships?.communityMemberships
+          ?.map((CommunityMembership membership) => membership.toJson())
+          ?.toList(),
+      'administrators':
+          administrators?.users?.map((User user) => user.toJson())?.toList(),
       'is_favorite': isFavorite,
       'invites_enabled': invitesEnabled,
       'members_count': membersCount,
       'posts_count': postsCount,
       'pending_moderated_objects_count': pendingModeratedObjectsCount,
-      'categories': categories?.categories?.map((Category category) => category.toJson())?.toList()
+      'categories': categories?.categories
+          ?.map((Category category) => category.toJson())
+          ?.toList()
     };
   }
 
@@ -212,7 +218,8 @@ class Community extends UpdatableModel<Community> {
     }
 
     if (json.containsKey('are_new_post_notifications_enabled')) {
-      areNewPostNotificationsEnabled = json['are_new_post_notifications_enabled'];
+      areNewPostNotificationsEnabled =
+          json['are_new_post_notifications_enabled'];
     }
 
     if (json.containsKey('is_favorite')) {
@@ -345,7 +352,8 @@ class CommunityFactory extends UpdatableModelFactory<Community> {
         rules: json['rules'],
         avatar: json['avatar'],
         isInvited: json['is_invited'],
-        areNewPostNotificationsEnabled: json['are_new_post_notifications_enabled'],
+        areNewPostNotificationsEnabled:
+            json['are_new_post_notifications_enabled'],
         isCreator: json['is_creator'],
         isReported: json['is_reported'],
         isFavorite: json['is_favorite'],
@@ -401,9 +409,13 @@ class CommunityFactory extends UpdatableModelFactory<Community> {
   }
 
   String typeToString(CommunityType type) {
-    switch(type) {
-      case CommunityType.public: return 'P'; break;
-      case CommunityType.private: return 'T'; break;
+    switch (type) {
+      case CommunityType.public:
+        return 'P';
+        break;
+      case CommunityType.private:
+        return 'T';
+        break;
     }
   }
 }

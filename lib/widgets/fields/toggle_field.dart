@@ -12,6 +12,7 @@ class OBToggleField extends StatelessWidget {
   final Widget subtitle;
   final bool hasDivider;
   final TextStyle titleStyle;
+  final bool isLoading;
 
   const OBToggleField(
       {Key key,
@@ -22,30 +23,43 @@ class OBToggleField extends StatelessWidget {
       @required this.title,
       this.subtitle,
       this.hasDivider = true,
-      this.titleStyle})
+      this.titleStyle,
+      this.isLoading = false})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        MergeSemantics(
-          child: ListTile(
-              leading: leading,
-              title: OBText(
-                title,
-                style: titleStyle ?? TextStyle(fontWeight: FontWeight.bold),
-              ),
-              subtitle: subtitle,
-              trailing: CupertinoSwitch(
-                value: value,
-                onChanged: onChanged,
-              ),
-              onTap: onTap),
-        ),
-        hasDivider ? OBDivider() : const SizedBox()
-      ],
+    Widget tile = IgnorePointer(
+      ignoring: this.isLoading,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          MergeSemantics(
+            child: ListTile(
+                leading: leading,
+                title: OBText(
+                  title,
+                  style: titleStyle ?? TextStyle(fontWeight: FontWeight.bold),
+                ),
+                subtitle: subtitle,
+                trailing: CupertinoSwitch(
+                  value: value,
+                  onChanged: onChanged,
+                ),
+                onTap: onTap),
+          ),
+          hasDivider ? OBDivider() : const SizedBox()
+        ],
+      ),
     );
+
+    if (isLoading) {
+      tile = Opacity(
+        opacity: 0.5,
+        child: tile,
+      );
+    }
+
+    return tile;
   }
 }

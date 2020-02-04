@@ -5,7 +5,6 @@ import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/httpie.dart';
 import 'package:Okuna/services/media.dart';
 import 'package:Okuna/services/localization.dart';
-import 'package:Okuna/services/navigation_service.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/user.dart';
 import 'package:Okuna/services/validation.dart';
@@ -13,29 +12,27 @@ import 'package:Okuna/widgets/avatars/avatar.dart';
 import 'package:Okuna/widgets/buttons/button.dart';
 import 'package:Okuna/widgets/cover.dart';
 import 'package:Okuna/widgets/fields/text_form_field.dart';
-import 'package:Okuna/widgets/fields/toggle_field.dart';
 import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Okuna/widgets/theming/primary_color_container.dart';
-import 'package:Okuna/widgets/theming/text.dart';
 import 'package:Okuna/widgets/tile_group_title.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class OBEditUserProfileModal extends StatefulWidget {
+class OBEditProfileModal extends StatefulWidget {
   final User user;
   final VoidCallback onUserProfileUpdated;
 
-  const OBEditUserProfileModal(this.user, {Key key, this.onUserProfileUpdated})
+  const OBEditProfileModal(this.user, {Key key, this.onUserProfileUpdated})
       : super(key: key);
 
   @override
-  OBEditUserProfileModalState createState() {
-    return OBEditUserProfileModalState();
+  OBEditProfileModalState createState() {
+    return OBEditProfileModalState();
   }
 }
 
-class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
+class OBEditProfileModalState extends State<OBEditProfileModal> {
   static const double inputIconsSize = 16;
   static EdgeInsetsGeometry inputContentPadding =
       EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0);
@@ -45,7 +42,6 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
   MediaService _imagePickerService;
   ValidationService _validationService;
   LocalizationService _localizationService;
-  NavigationService _navigationService;
 
   bool _requestInProgress;
   bool _formWasSubmitted;
@@ -62,8 +58,6 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
   String _coverUrl;
   File _avatarFile;
   File _coverFile;
-  bool _followersCountVisible;
-  bool _communityPostsVisible;
 
   @override
   void initState() {
@@ -72,8 +66,6 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
     _requestInProgress = false;
     _formWasSubmitted = false;
 
-    _followersCountVisible = widget.user.getProfileFollowersCountVisible();
-    _communityPostsVisible = widget.user.getProfileCommunityPostsVisible();
     _usernameController = TextEditingController(text: widget.user.username);
     _nameController = TextEditingController(text: widget.user.getProfileName());
     _urlController = TextEditingController(text: widget.user.getProfileUrl());
@@ -98,7 +90,6 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
     _imagePickerService = openbookProvider.mediaService;
     _validationService = openbookProvider.validationService;
     _localizationService = openbookProvider.localizationService;
-    _navigationService = openbookProvider.navigationService;
 
     return Scaffold(
         appBar: _buildNavigationBar(),
@@ -212,64 +203,6 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                             ),
                             textInputAction: TextInputAction.newline,
                           ),
-                          OBToggleField(
-                            value: _followersCountVisible,
-                            title: _localizationService
-                                .user__edit_profile_followers_count,
-                            leading: const OBIcon(OBIcons.followers),
-                            onChanged: (bool value) {
-                              setState(() {
-                                _followersCountVisible = value;
-                              });
-                            },
-                            onTap: () {
-                              setState(() {
-                                _followersCountVisible =
-                                    !_followersCountVisible;
-                              });
-                            },
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: OBTileGroupTitle(
-                              title: _localizationService
-                                  .user__edit_profile_community_posts,
-                            ),
-                          ),
-                          OBToggleField(
-                            hasDivider: false,
-                            value: _communityPostsVisible,
-                            title: _localizationService
-                                .user__edit_profile_community_posts_descr,
-                            titleStyle:
-                                TextStyle(fontWeight: FontWeight.normal),
-                            leading: const OBIcon(OBIcons.communities),
-                            onChanged: (bool value) {
-                              setState(() {
-                                _communityPostsVisible = value;
-                              });
-                            },
-                            onTap: () {
-                              setState(() {
-                                _communityPostsVisible =
-                                    !_communityPostsVisible;
-                              });
-                            },
-                          ),
-                          _communityPostsVisible
-                              ? ListTile(
-                                  leading: OBIcon(OBIcons.excludePostCommunity),
-                                  title: new OBText(
-                                    _localizationService
-                                        .user__profile_posts_excluded_communities,
-                                  ),
-                                  onTap: () async {
-                                    _navigationService
-                                        .navigateToProfilePostsExcludedCommunities(
-                                            context: context);
-                                  },
-                                )
-                              : const SizedBox(),
                           const SizedBox(
                             height: 20,
                           ),
@@ -292,7 +225,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
           Navigator.pop(context);
         },
       ),
-      title: _localizationService.user__edit_profile_title,
+      title: _localizationService.user__manage_profile_title,
       trailing: OBButton(
         isDisabled: !newPostButtonIsEnabled,
         isLoading: _requestInProgress,
@@ -473,8 +406,6 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
         name: _nameController.text,
         username: _usernameController.text,
         url: _urlController.text,
-        followersCountVisible: _followersCountVisible,
-        communityPostsVisible: _communityPostsVisible,
         bio: _bioController.text,
         location: _locationController.text,
       );

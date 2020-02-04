@@ -3,10 +3,10 @@ import 'package:Okuna/pages/home/pages/profile/widgets/profile_card/widgets/prof
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/modal_service.dart';
+import 'package:Okuna/services/navigation_service.dart';
 import 'package:Okuna/widgets/buttons/actions/block_button.dart';
 import 'package:Okuna/widgets/buttons/button.dart';
 import 'package:Okuna/widgets/buttons/actions/follow_button.dart';
-import 'package:Okuna/widgets/icon.dart';
 import 'package:flutter/material.dart';
 
 class OBProfileInlineActions extends StatelessWidget {
@@ -20,8 +20,7 @@ class OBProfileInlineActions extends StatelessWidget {
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
     var userService = openbookProvider.userService;
-    var modalService = openbookProvider.modalService;
-    var bottomSheetService = openbookProvider.bottomSheetService;
+    var navigationService = openbookProvider.navigationService;
     LocalizationService localizationService =
         openbookProvider.localizationService;
 
@@ -38,7 +37,8 @@ class OBProfileInlineActions extends StatelessWidget {
             // The margin compensates for the height of the (missing) OBProfileActionMore
             // Fixes cut-off Edit profile button, and level out layout distances
             padding: EdgeInsets.only(top: 6.5, bottom: 6.5),
-            child: _buildEditButton(modalService, localizationService, context),
+            child: _buildEditButton(
+                navigationService, localizationService, context),
           ));
         } else {
           bool isBlocked = user.isBlocked ?? false;
@@ -65,15 +65,15 @@ class OBProfileInlineActions extends StatelessWidget {
     );
   }
 
-  _buildEditButton(ModalService modalService,
+  _buildEditButton(NavigationService navigationService,
       LocalizationService localizationService, context) {
     return OBButton(
         child: Text(
-          localizationService.user__edit_profile_title,
+          localizationService.user__manage,
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         onPressed: () {
-          modalService.openEditUserProfile(
+          navigationService.navigateToEditProfile(
               user: user,
               context: context,
               onUserProfileUpdated: onUserProfileUpdated);
