@@ -96,8 +96,8 @@ class OBProfilePostsExcludedCommunitiesState
   }
 
   Future<List<Community>> _refreshJoinedCommunities() async {
-    CommunitiesList joinedCommunities =
-        await _userService.getJoinedCommunities();
+    CommunitiesList joinedCommunities = await _userService.getJoinedCommunities(
+        excludedFromProfilePosts: false);
     return joinedCommunities.communities;
   }
 
@@ -114,7 +114,8 @@ class OBProfilePostsExcludedCommunitiesState
   }
 
   Future<List<Community>> _searchCommunities(String query) async {
-    CommunitiesList results = await _userService.getCommunitiesWithQuery(query);
+    CommunitiesList results = await _userService
+        .searchCommunitiesWithQuery(query, excludedFromProfilePosts: false);
 
     return results.communities;
   }

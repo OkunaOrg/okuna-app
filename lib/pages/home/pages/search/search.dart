@@ -357,7 +357,7 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
     _setCommunitySearchRequestInProgress(true);
 
     _getCommunitiesWithQuerySubscription =
-        _userService.getCommunitiesWithQuery(query).asStream().listen(
+        _userService.searchCommunitiesWithQuery(query).asStream().listen(
             (CommunitiesList communitiesList) {
               _setCommunitySearchResults(communitiesList.communities);
             },

@@ -196,9 +196,14 @@ class CommunitiesApiService {
         appendAuthorizationToken: authenticatedRequest);
   }
 
-  Future<HttpieResponse> getCommunitiesWithQuery(
-      {bool authenticatedRequest = true, @required String query}) {
+  Future<HttpieResponse> searchCommunitiesWithQuery(
+      {bool authenticatedRequest = true,
+      @required String query,
+      bool excludedFromProfilePosts}) {
     Map<String, dynamic> queryParams = {'query': query};
+
+    if (excludedFromProfilePosts != null)
+      queryParams['excluded_from_profile_posts'] = excludedFromProfilePosts;
 
     return _httpService.get('$apiURL$SEARCH_COMMUNITIES_PATH',
         queryParameters: queryParams,
@@ -416,10 +421,17 @@ class CommunitiesApiService {
   }
 
   Future<HttpieResponse> getJoinedCommunities(
-      {bool authenticatedRequest = true, int offset}) {
+      {bool authenticatedRequest = true,
+      int offset,
+      bool excludedFromProfilePosts}) {
+    Map<String, dynamic> queryParams = {'offset': offset};
+
+    if (excludedFromProfilePosts != null)
+      queryParams['excluded_from_profile_posts'] = excludedFromProfilePosts;
+
     return _httpService.get('$apiURL$GET_JOINED_COMMUNITIES_PATH',
         appendAuthorizationToken: authenticatedRequest,
-        queryParameters: {'offset': offset});
+        queryParameters: queryParams);
   }
 
   Future<HttpieResponse> searchJoinedCommunities({

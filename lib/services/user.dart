@@ -1341,9 +1341,11 @@ class UserService {
     return PostsList.fromJson(json.decode(response.body));
   }
 
-  Future<CommunitiesList> getCommunitiesWithQuery(String query) async {
+  Future<CommunitiesList> searchCommunitiesWithQuery(String query,
+      {bool excludedFromProfilePosts}) async {
     HttpieResponse response =
-        await _communitiesApiService.getCommunitiesWithQuery(query: query);
+        await _communitiesApiService.searchCommunitiesWithQuery(
+            query: query, excludedFromProfilePosts: excludedFromProfilePosts);
     _checkResponseIsOk(response);
     return CommunitiesList.fromJson(json.decode(response.body));
   }
@@ -1534,9 +1536,10 @@ class UserService {
         storeInMaxSessionCache: true);
   }
 
-  Future<CommunitiesList> getJoinedCommunities({int offset}) async {
-    HttpieResponse response =
-        await _communitiesApiService.getJoinedCommunities(offset: offset);
+  Future<CommunitiesList> getJoinedCommunities(
+      {int offset, bool excludedFromProfilePosts}) async {
+    HttpieResponse response = await _communitiesApiService.getJoinedCommunities(
+        offset: offset, excludedFromProfilePosts: excludedFromProfilePosts);
 
     _checkResponseIsOk(response);
 
