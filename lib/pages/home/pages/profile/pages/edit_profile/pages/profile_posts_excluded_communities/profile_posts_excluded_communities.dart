@@ -141,10 +141,9 @@ class OBProfilePostsExcludedCommunitiesState
   Future<List<Community>> _loadMoreExcludedCommunities(
       List<Community> excludedCommunitiesList) async {
     var lastExcludedCommunity = excludedCommunitiesList.last;
-    var lastExcludedCommunityId = lastExcludedCommunity.id;
     var moreExcludedCommunities =
         (await _userService.getProfilePostsExcludedCommunities(
-      offset: lastExcludedCommunityId,
+      offset: excludedCommunitiesList.length,
       count: 10,
     ))
             .communities;
