@@ -32,8 +32,8 @@ class OBProfilePostsExcludedCommunitiesState
   ModalService _modalService;
   LocalizationService _localizationService;
   ToastService _toastService;
-
   OBHttpListController _httpListController;
+
   bool _needsBootstrap;
 
   @override
@@ -111,8 +111,11 @@ class OBProfilePostsExcludedCommunitiesState
     }
   }
 
-  void _onWantsToExcludeCommunityFromProfilePosts() {
-    _modalService.openExcludeCommunitiesFromProfilePosts(context: context);
+  void _onWantsToExcludeCommunityFromProfilePosts() async {
+    List<Community> excludedCommunities = await _modalService
+        .openExcludeCommunitiesFromProfilePosts(context: context);
+    if (excludedCommunities != null && excludedCommunities.isNotEmpty)
+      _httpListController.refresh(shouldScrollToTop: true);
   }
 
   void _onError(error) async {

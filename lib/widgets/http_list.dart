@@ -204,7 +204,8 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
               Expanded(
                 child: OBButton(
                     size: OBButtonSize.large,
-                    child: Text('Clear all'),
+                    child: Text(
+                        _localizationService.user_search__selection_clear_all),
                     type: OBButtonType.highlight,
                     onPressed: _onClearSelection,
                     isDisabled: _listSelection.isEmpty),
@@ -215,9 +216,12 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
               Expanded(
                 child: OBButton(
                   size: OBButtonSize.large,
-                  child: Text('Submit' + _makeSelectedItemsCount()),
+                  child: Text(
+                      _localizationService.user_search__selection_submit +
+                          _makeSelectedItemsCount()),
                   type: OBButtonType.primary,
                   isLoading: _selectionSubmissionInProgress,
+                  isDisabled: _selectionSubmissionInProgress,
                   onPressed: _onSubmitSelection,
                 ),
               )

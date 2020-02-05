@@ -1709,8 +1709,16 @@ class LocalizationService {
         args: [searchQuery], name: 'user_search__no_users_for');
   }
 
+  String get user_search__selection_submit {
+    return Intl.message("Submit", name: 'user_search__selection_submit');
+  }
+
   String get post__open_post {
     return Intl.message("Open post", name: 'post__open_post');
+  }
+
+  String get user_search__selection_clear_all {
+    return Intl.message("Clear all", name: 'user_search__selection_clear_all');
   }
 
   String get post__close_post {
@@ -2566,8 +2574,6 @@ class LocalizationService {
     return Intl.message("Bio", name: 'user__edit_profile_bio');
   }
 
-
-
   String get user__manage_profile_followers_count_toggle {
     return Intl.message("Followers count",
         name: 'user__manage_profile_followers_count_toggle');
@@ -2613,7 +2619,8 @@ class LocalizationService {
   }
 
   String get user__manage_profile_details_title_desc {
-    return Intl.message("Change your username, name, url, location, avatar or cover photo.",
+    return Intl.message(
+        "Change your username, name, url, location, avatar or cover photo.",
         name: 'user__manage_profile_details_title_desc');
   }
 

@@ -412,10 +412,10 @@ class ModalService {
         }));
   }
 
-  Future<ModeratedObjectStatus> openExcludeCommunitiesFromProfilePosts(
+  Future<List<Community>> openExcludeCommunitiesFromProfilePosts(
       {@required BuildContext context}) async {
     return Navigator.of(context, rootNavigator: true)
-        .push(CupertinoPageRoute<ModeratedObjectStatus>(
+        .push(CupertinoPageRoute<List<Community>>(
             fullscreenDialog: true,
             builder: (BuildContext context) {
               return Material(
