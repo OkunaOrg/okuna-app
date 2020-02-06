@@ -94,7 +94,7 @@ class OBTopPostsState extends State<OBTopPosts>
         controller: _obPostsStreamController,
         onScrollCallback: widget.onScrollCallback,
         refreshIndicatorDisplacement: 110.0,
-        isTopPostsStream: true,
+        displayContext: OBPostDisplayContext.topPosts,
         initialPosts: _currentPosts,
         refreshOnCreate: _currentPosts == null,
         postBuilder: _topPostBuilder,
@@ -175,7 +175,7 @@ class OBTopPostsState extends State<OBTopPosts>
       onCommunityExcluded: _onCommunityExcluded,
       onUndoCommunityExcluded: _onUndoCommunityExcluded,
       inViewId: postIdentifier,
-      isTopPost: true,
+      displayContext: OBPostDisplayContext.topPosts,
     );
   }
 

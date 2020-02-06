@@ -6,6 +6,7 @@ import 'package:Okuna/provider.dart';
 import 'package:Okuna/widgets/avatars/avatar.dart';
 import 'package:Okuna/widgets/avatars/community_avatar.dart';
 import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/post/post.dart';
 import 'package:Okuna/widgets/post/widgets/post_header/widgets/community_post_header/widgets/community_post_creator_identifier.dart';
 import 'package:Okuna/widgets/theming/text.dart';
 import 'package:Okuna/widgets/theming/secondary_text.dart';
@@ -17,7 +18,7 @@ class OBCommunityPostHeader extends StatelessWidget {
   final OnPostDeleted onPostDeleted;
   final ValueChanged<Post> onPostReported;
   final bool hasActions;
-  final bool isTopPost;
+  final OBPostDisplayContext displayContext;
   final Function onCommunityExcluded;
   final Function onUndoCommunityExcluded;
 
@@ -28,7 +29,7 @@ class OBCommunityPostHeader extends StatelessWidget {
       this.hasActions = true,
       this.onCommunityExcluded,
       this.onUndoCommunityExcluded,
-      this.isTopPost = false
+      this.displayContext = OBPostDisplayContext.timelinePosts
       })
       : super(key: key);
 
@@ -60,7 +61,7 @@ class OBCommunityPostHeader extends StatelessWidget {
                       bottomSheetService.showPostActions(
                           context: context,
                           post: _post,
-                          isTopPost: isTopPost,
+                          displayContext: displayContext,
                           onCommunityExcluded: onCommunityExcluded,
                           onUndoCommunityExcluded: onUndoCommunityExcluded,
                           onPostDeleted: onPostDeleted,

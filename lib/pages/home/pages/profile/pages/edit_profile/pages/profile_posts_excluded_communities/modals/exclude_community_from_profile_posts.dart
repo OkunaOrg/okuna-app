@@ -96,7 +96,6 @@ class OBProfilePostsExcludedCommunitiesState
 
   Future<List<Community>> _loadMoreJoinedCommunities(
       List<Community> joinedCommunitiesList) async {
-    var lastJoinedCommunity = joinedCommunitiesList.last;
     var moreJoinedCommunities = (await _userService.getJoinedCommunities(
       offset: joinedCommunitiesList.length,
     ))

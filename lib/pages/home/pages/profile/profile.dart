@@ -1,3 +1,4 @@
+import 'package:Okuna/models/community.dart';
 import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/user.dart';
 import 'package:Okuna/pages/home/pages/profile/widgets/profile_card/profile_card.dart';
@@ -6,6 +7,7 @@ import 'package:Okuna/pages/home/pages/profile/widgets/profile_nav_bar.dart';
 import 'package:Okuna/pages/home/pages/profile/widgets/profile_posts_stream_status_indicator.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/user.dart';
+import 'package:Okuna/widgets/post/post.dart';
 import 'package:Okuna/widgets/posts_stream/posts_stream.dart';
 import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
@@ -33,6 +35,8 @@ class OBProfilePageState extends State<OBProfilePage> {
   OBPostsStreamController _obPostsStreamController;
   bool _profileCommunityPostsVisible;
 
+  List<Community> _recentlyExcludedCommunities;
+
   @override
   void initState() {
     super.initState();
@@ -42,6 +46,7 @@ class OBProfilePageState extends State<OBProfilePage> {
     if (widget.controller != null) widget.controller.attach(this);
     _profileCommunityPostsVisible =
         widget.user.getProfileCommunityPostsVisible();
+    _recentlyExcludedCommunities = [];
   }
 
   @override
@@ -70,9 +75,11 @@ class OBProfilePageState extends State<OBProfilePage> {
                       ),
                     ],
                     controller: _obPostsStreamController,
+                    postBuilder: _buildPostsStreamPost,
                     secondaryRefresher: _refreshUser,
                     refresher: _refreshPosts,
                     onScrollLoader: _loadMorePosts,
+                    onPostsRefreshed: _onPostsRefreshed,
                     statusIndicatorBuilder: _buildPostsStreamStatusIndicator),
               )
             ],
@@ -86,11 +93,26 @@ class OBProfilePageState extends State<OBProfilePage> {
       List<Widget> streamPrependedItems,
       Function streamRefresher}) {
     return OBProfilePostsStreamStatusIndicator(
-      user: widget.user,
-      streamRefresher: streamRefresher,
-      streamPrependedItems: streamPrependedItems,
-        streamStatus: streamStatus
-    );
+        user: widget.user,
+        streamRefresher: streamRefresher,
+        streamPrependedItems: streamPrependedItems,
+        streamStatus: streamStatus);
+  }
+
+  Widget _buildPostsStreamPost({
+    BuildContext context,
+    Post post,
+    String postIdentifier,
+    ValueChanged<Post> onPostDeleted,
+  }) {
+    return _recentlyExcludedCommunities.contains(post)
+        ? const SizedBox()
+        : OBPost(
+            post,
+            key: Key(postIdentifier),
+            onPostDeleted: onPostDeleted,
+            inViewId: postIdentifier,
+          );
   }
 
   void _onUserProfileUpdated() {
@@ -122,9 +144,25 @@ class OBProfilePageState extends State<OBProfilePage> {
         .posts;
   }
 
+  void _onPostsRefreshed(List<Post> posts) {
+    _clearRecentlyExcludedCommunity();
+  }
+
   void _setUser(User user) {
     setState(() {
       _user = user;
+    });
+  }
+
+  void _clearRecentlyExcludedCommunity() {
+    setState(() {
+      _recentlyExcludedCommunities = [];
+    });
+  }
+
+  void _addRecentlyExcludedCommunity(Community community) {
+    setState(() {
+      _recentlyExcludedCommunities.add(community);
     });
   }
 }

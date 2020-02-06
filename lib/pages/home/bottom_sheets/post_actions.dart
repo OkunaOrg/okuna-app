@@ -9,6 +9,7 @@ import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/user.dart';
 import 'package:Okuna/services/httpie.dart';
 import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/post/post.dart';
 import 'package:Okuna/widgets/theming/text.dart';
 import 'package:Okuna/widgets/tiles/actions/close_post_tile.dart';
 import 'package:Okuna/widgets/tiles/actions/disable_comments_post_tile.dart';
@@ -22,19 +23,19 @@ class OBPostActionsBottomSheet extends StatefulWidget {
   final Post post;
   final ValueChanged<Post> onPostReported;
   final OnPostDeleted onPostDeleted;
-  final bool isTopPost;
   final Function onCommunityExcluded;
   final Function onUndoCommunityExcluded;
+  final OBPostDisplayContext displayContext;
 
-  const OBPostActionsBottomSheet({
-    Key key,
-    @required this.post,
-    @required this.onPostReported,
-    @required this.onPostDeleted,
-    this.onCommunityExcluded,
-    this.onUndoCommunityExcluded,
-    this.isTopPost = false,
-  }) : super(key: key);
+  const OBPostActionsBottomSheet(
+      {Key key,
+      @required this.post,
+      @required this.onPostReported,
+      @required this.onPostDeleted,
+      this.onCommunityExcluded,
+      this.onUndoCommunityExcluded,
+      this.displayContext = OBPostDisplayContext.timelinePosts})
+      : super(key: key);
 
   @override
   OBPostActionsBottomSheetState createState() {
@@ -67,7 +68,7 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
           Post post = snapshot.data;
           List<Widget> postActions = [];
 
-          if (widget.isTopPost) {
+          if (widget.displayContext == OBPostDisplayContext.topPosts) {
             postActions.add(OBExcludeCommunityTile(
               post: post,
               onExcludedPostCommunity: () {

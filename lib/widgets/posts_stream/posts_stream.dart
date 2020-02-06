@@ -30,7 +30,7 @@ class OBPostsStream extends StatefulWidget {
   final bool refreshOnCreate;
   final OBPostsStreamSecondaryRefresher secondaryRefresher;
   final OBPostsStreamStatusIndicatorBuilder statusIndicatorBuilder;
-  final bool isTopPostsStream;
+  final OBPostDisplayContext displayContext;
   final OBPostsStreamPostBuilder postBuilder;
   final Function(ScrollPosition) onScrollCallback;
   final double refreshIndicatorDisplacement;
@@ -50,10 +50,11 @@ class OBPostsStream extends StatefulWidget {
     this.refreshOnCreate = true,
     this.refreshIndicatorDisplacement = 40.0,
     this.secondaryRefresher,
-    this.isTopPostsStream = false,
     this.postBuilder,
     this.statusIndicatorBuilder,
-    this.onScrollLoadMoreLimit, this.onScrollLoadMoreLimitLoadMoreText,
+    this.onScrollLoadMoreLimit,
+    this.onScrollLoadMoreLimitLoadMoreText,
+    this.displayContext = OBPostDisplayContext.timelinePosts,
   }) : super(key: key);
 
   @override
@@ -127,7 +128,8 @@ class OBPostsStreamState extends State<OBPostsStream>
         _refresh();
       });
     }
-    if (widget.isTopPostsStream && _posts.isNotEmpty) {
+    // Pretty darn ugly.... How can we do better?
+    if (widget.displayContext == OBPostDisplayContext.topPosts && _posts.isNotEmpty) {
       Future.delayed(Duration(milliseconds: 0), () {
         _scrollToBottom();
       });
@@ -249,7 +251,7 @@ class OBPostsStreamState extends State<OBPostsStream>
       key: Key(postIdentifier),
       onPostDeleted: onPostDeleted,
       inViewId: postIdentifier,
-      isTopPost: widget.isTopPostsStream,
+      displayContext: widget.displayContext,
     );
   }
 
@@ -404,12 +406,13 @@ class OBPostsStreamState extends State<OBPostsStream>
       List<dynamic> results = await Future.wait(refreshFutures);
       List<Post> posts = results[0];
 
-      if (!_onScrollLoadMoreLimitRemoved && widget.onScrollLoadMoreLimit != null &&
+      if (!_onScrollLoadMoreLimitRemoved &&
+          widget.onScrollLoadMoreLimit != null &&
           posts.length > widget.onScrollLoadMoreLimit) {
         // Slice the posts to be within the limit
         posts = posts.sublist(0, widget.onScrollLoadMoreLimit - 1);
         _setStatus(OBPostsStreamStatus.onScrollLoadMoreLimitReached);
-      }else if (posts.length == 0) {
+      } else if (posts.length == 0) {
         _setStatus(OBPostsStreamStatus.empty);
       } else {
         _setStatus(OBPostsStreamStatus.idle);
@@ -438,8 +441,9 @@ class OBPostsStreamState extends State<OBPostsStream>
         _status == OBPostsStreamStatus.onScrollLoadMoreLimitReached ||
         _posts.isEmpty) return null;
 
-    if (!_onScrollLoadMoreLimitRemoved && (widget.onScrollLoadMoreLimit != null &&
-        _posts.length >= widget.onScrollLoadMoreLimit)) {
+    if (!_onScrollLoadMoreLimitRemoved &&
+        (widget.onScrollLoadMoreLimit != null &&
+            _posts.length >= widget.onScrollLoadMoreLimit)) {
       debugLog('Load more limit reached');
       _setStatus(OBPostsStreamStatus.onScrollLoadMoreLimitReached);
       return;
@@ -455,14 +459,15 @@ class OBPostsStreamState extends State<OBPostsStream>
 
       List<Post> morePosts = await _loadMoreOperation.value;
 
-      if (!_onScrollLoadMoreLimitRemoved && widget.onScrollLoadMoreLimit != null &&
+      if (!_onScrollLoadMoreLimitRemoved &&
+          widget.onScrollLoadMoreLimit != null &&
           _posts.length + morePosts.length > widget.onScrollLoadMoreLimit) {
         // Slice the posts to be within the limit
-        if(morePosts.length == 0) return;
+        if (morePosts.length == 0) return;
         morePosts =
             morePosts.sublist(0, widget.onScrollLoadMoreLimit - _posts.length);
         _setStatus(OBPostsStreamStatus.onScrollLoadMoreLimitReached);
-      }else if (morePosts.length == 0) {
+      } else if (morePosts.length == 0) {
         _setStatus(OBPostsStreamStatus.noMoreToLoad);
       } else {
         _setStatus(OBPostsStreamStatus.idle);
