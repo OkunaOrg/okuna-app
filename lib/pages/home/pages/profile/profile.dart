@@ -78,6 +78,8 @@ class OBProfilePageState extends State<OBProfilePage> {
                       OBProfileCard(
                         _user,
                         onUserProfileUpdated: _onUserProfileUpdated,
+                        onExcludedCommunitiesAdded: _onExcludedCommunitiesAdded,
+                        onExcludedCommunityRemoved: _onExcludedCommunityRemoved,
                       ),
                     ],
                     controller: _obPostsStreamController,
@@ -126,8 +128,6 @@ class OBProfilePageState extends State<OBProfilePage> {
   }
 
   void _onPostCommunityExcludedFromProfilePosts(Community community) {
-    print('Excluded');
-    print(community.name);
     _addRecentlyExcludedCommunity(community);
   }
 
@@ -136,6 +136,16 @@ class OBProfilePageState extends State<OBProfilePage> {
         _user.getProfileCommunityPostsVisible()) {
       _refreshPosts();
     }
+  }
+
+  void _onExcludedCommunitiesAdded(List<Community> excludedCommunities) {
+    excludedCommunities.forEach((excludedCommunity) {
+      _addRecentlyExcludedCommunity(excludedCommunity);
+    });
+  }
+
+  void _onExcludedCommunityRemoved(Community excludedCommunity) {
+    _obPostsStreamController.refresh();
   }
 
   void scrollToTop() {

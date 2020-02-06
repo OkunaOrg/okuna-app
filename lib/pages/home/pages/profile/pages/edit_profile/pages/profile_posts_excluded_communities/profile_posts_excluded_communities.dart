@@ -19,6 +19,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class OBProfilePostsExcludedCommunitiesPage extends StatefulWidget {
+  final ValueChanged<Community> onExcludedCommunityRemoved;
+  final ValueChanged<List<Community>> onExcludedCommunitiesAdded;
+
+  const OBProfilePostsExcludedCommunitiesPage(
+      {Key key,
+      this.onExcludedCommunityRemoved,
+      this.onExcludedCommunitiesAdded})
+      : super(key: key);
+
   @override
   State<OBProfilePostsExcludedCommunitiesPage> createState() {
     return OBProfilePostsExcludedCommunitiesState();
@@ -86,6 +95,7 @@ class OBProfilePostsExcludedCommunitiesState
   Widget _buildExcludedCommunityListItem(
       BuildContext context, Community community) {
     return Padding(
+      key: Key(community.id.toString()),
       padding: EdgeInsets.symmetric(vertical: 10.0),
       child: OBCommunityTile(
         community,
@@ -106,6 +116,8 @@ class OBProfilePostsExcludedCommunitiesState
       await _userService
           .undoExcludeCommunityFromProfilePosts(excludedCommunity);
       _httpListController.removeListItem(excludedCommunity);
+      if (widget.onExcludedCommunityRemoved != null)
+        widget.onExcludedCommunityRemoved(excludedCommunity);
     } catch (error) {
       _onError(error);
     }
@@ -114,8 +126,13 @@ class OBProfilePostsExcludedCommunitiesState
   void _onWantsToExcludeCommunityFromProfilePosts() async {
     List<Community> excludedCommunities = await _modalService
         .openExcludeCommunitiesFromProfilePosts(context: context);
-    if (excludedCommunities != null && excludedCommunities.isNotEmpty)
-      _httpListController.refresh(shouldScrollToTop: true);
+    if (excludedCommunities != null && excludedCommunities.isNotEmpty) {
+      if (widget.onExcludedCommunitiesAdded != null)
+        widget.onExcludedCommunitiesAdded(excludedCommunities);
+
+      excludedCommunities.forEach((excludedCommunity) => _httpListController
+          .insertListItem(excludedCommunity, shouldScrollToTop: true));
+    }
   }
 
   void _onError(error) async {
@@ -140,7 +157,6 @@ class OBProfilePostsExcludedCommunitiesState
 
   Future<List<Community>> _loadMoreExcludedCommunities(
       List<Community> excludedCommunitiesList) async {
-    var lastExcludedCommunity = excludedCommunitiesList.last;
     var moreExcludedCommunities =
         (await _userService.getProfilePostsExcludedCommunities(
       offset: excludedCommunitiesList.length,

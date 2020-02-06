@@ -1,4 +1,5 @@
 import 'package:Okuna/models/badge.dart';
+import 'package:Okuna/models/community.dart';
 import 'package:Okuna/models/theme.dart';
 import 'package:Okuna/models/user.dart';
 import 'package:Okuna/pages/home/pages/profile/widgets/profile_card/widgets/profile_actions/profile_inline_actions.dart';
@@ -19,9 +20,16 @@ import 'package:flutter/material.dart';
 class OBProfileCard extends StatelessWidget {
   final User user;
   final VoidCallback onUserProfileUpdated;
+  final ValueChanged<Community> onExcludedCommunityRemoved;
+  final ValueChanged<List<Community>> onExcludedCommunitiesAdded;
 
-  const OBProfileCard(this.user, {Key key, this.onUserProfileUpdated}) : super(key: key);
-
+  const OBProfileCard(
+    this.user, {
+    Key key,
+    this.onUserProfileUpdated,
+    this.onExcludedCommunityRemoved,
+    this.onExcludedCommunitiesAdded,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +52,13 @@ class OBProfileCard extends StatelessWidget {
                     height: (OBAvatar.AVATAR_SIZE_EXTRA_LARGE * 0.2),
                     width: OBAvatar.AVATAR_SIZE_EXTRA_LARGE,
                   ),
-                  Expanded(child: OBProfileInlineActions(user, onUserProfileUpdated: onUserProfileUpdated,)),
+                  Expanded(
+                      child: OBProfileInlineActions(user,
+                          onUserProfileUpdated: onUserProfileUpdated,
+                          onExcludedCommunityRemoved:
+                              onExcludedCommunityRemoved,
+                          onExcludedCommunitiesAdded:
+                              onExcludedCommunitiesAdded)),
                 ],
               ),
               Column(

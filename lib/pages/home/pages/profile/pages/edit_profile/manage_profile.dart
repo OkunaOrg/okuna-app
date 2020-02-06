@@ -1,10 +1,8 @@
+import 'package:Okuna/models/community.dart';
 import 'package:Okuna/models/user.dart';
 import 'package:Okuna/provider.dart';
-import 'package:Okuna/services/httpie.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/navigation_service.dart';
-import 'package:Okuna/services/toast.dart';
-import 'package:Okuna/services/user.dart';
 import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Okuna/widgets/theming/fading_highlighted_box.dart';
@@ -18,8 +16,14 @@ import 'package:flutter/material.dart';
 class OBManageProfilePage extends StatefulWidget {
   final User user;
   final VoidCallback onUserProfileUpdated;
+  final ValueChanged<Community> onExcludedCommunityRemoved;
+  final ValueChanged<List<Community>> onExcludedCommunitiesAdded;
 
-  const OBManageProfilePage(this.user, {Key key, this.onUserProfileUpdated})
+  const OBManageProfilePage(this.user,
+      {Key key,
+      this.onUserProfileUpdated,
+      this.onExcludedCommunityRemoved,
+      this.onExcludedCommunitiesAdded})
       : super(key: key);
 
   @override
@@ -127,7 +131,9 @@ class OBManageProfilePageState extends State<OBManageProfilePage> {
       ),
       onTap: () async {
         _navigationService.navigateToProfilePostsExcludedCommunities(
-            context: context);
+            context: context,
+            onExcludedCommunityRemoved: widget.onExcludedCommunityRemoved,
+            onExcludedCommunitiesAdded: widget.onExcludedCommunitiesAdded);
       },
     );
 

@@ -1,3 +1,4 @@
+import 'package:Okuna/models/community.dart';
 import 'package:Okuna/models/user.dart';
 import 'package:Okuna/pages/home/pages/profile/widgets/profile_card/widgets/profile_actions/widgets/profile_inline_action_more_button.dart';
 import 'package:Okuna/provider.dart';
@@ -11,9 +12,13 @@ import 'package:flutter/material.dart';
 class OBProfileInlineActions extends StatelessWidget {
   final User user;
   final VoidCallback onUserProfileUpdated;
+  final ValueChanged<Community> onExcludedCommunityRemoved;
+  final ValueChanged<List<Community>> onExcludedCommunitiesAdded;
 
   const OBProfileInlineActions(this.user,
-      {@required this.onUserProfileUpdated});
+      {@required this.onUserProfileUpdated,
+      this.onExcludedCommunityRemoved,
+      this.onExcludedCommunitiesAdded});
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +41,7 @@ class OBProfileInlineActions extends StatelessWidget {
             // The margin compensates for the height of the (missing) OBProfileActionMore
             // Fixes cut-off Edit profile button, and level out layout distances
             padding: EdgeInsets.only(top: 6.5, bottom: 6.5),
-            child: _buildEditButton(
+            child: _buildManageButton(
                 navigationService, localizationService, context),
           ));
         } else {
@@ -64,7 +69,7 @@ class OBProfileInlineActions extends StatelessWidget {
     );
   }
 
-  _buildEditButton(NavigationService navigationService,
+  _buildManageButton(NavigationService navigationService,
       LocalizationService localizationService, context) {
     return OBButton(
         child: Text(
@@ -72,10 +77,12 @@ class OBProfileInlineActions extends StatelessWidget {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         onPressed: () {
-          navigationService.navigateToEditProfile(
+          navigationService.navigateToManageProfile(
               user: user,
               context: context,
-              onUserProfileUpdated: onUserProfileUpdated);
+              onUserProfileUpdated: onUserProfileUpdated,
+              onExcludedCommunitiesAdded: onExcludedCommunitiesAdded,
+              onExcludedCommunityRemoved: onExcludedCommunityRemoved);
         });
   }
 }

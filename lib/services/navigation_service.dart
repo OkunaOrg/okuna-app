@@ -993,23 +993,30 @@ class NavigationService {
     );
   }
 
-  Future<void> navigateToProfilePostsExcludedCommunities({
-    @required BuildContext context,
-  }) {
+  Future<void> navigateToProfilePostsExcludedCommunities(
+      {@required BuildContext context,
+      ValueChanged<Community> onExcludedCommunityRemoved,
+      ValueChanged<List<Community>> onExcludedCommunitiesAdded}) {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
           slidableKey: Key('profilePostsExcludedCommunitiesPageRoute'),
           builder: (BuildContext context) {
-            return OBProfilePostsExcludedCommunitiesPage();
+            return OBProfilePostsExcludedCommunitiesPage(
+              onExcludedCommunitiesAdded: onExcludedCommunitiesAdded,
+              onExcludedCommunityRemoved: onExcludedCommunityRemoved,
+            );
           }),
     );
   }
 
-  Future<void> navigateToEditProfile(
-      {@required User user,
-      @required BuildContext context,
-      VoidCallback onUserProfileUpdated}) async {
+  Future<void> navigateToManageProfile({
+    @required User user,
+    @required BuildContext context,
+    VoidCallback onUserProfileUpdated,
+    ValueChanged<Community> onExcludedCommunityRemoved,
+    ValueChanged<List<Community>> onExcludedCommunitiesAdded,
+  }) async {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
@@ -1018,6 +1025,8 @@ class NavigationService {
             return OBManageProfilePage(
               user,
               onUserProfileUpdated: onUserProfileUpdated,
+              onExcludedCommunitiesAdded: onExcludedCommunitiesAdded,
+              onExcludedCommunityRemoved: onExcludedCommunityRemoved,
             );
           }),
     );

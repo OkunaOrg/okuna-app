@@ -114,10 +114,11 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
         widget.prependedItems != null ? widget.prependedItems.toList() : [];
   }
 
-  void insertListItem(T listItem, {bool shouldScrollToTop = true}) {
+  void insertListItem(T listItem,
+      {bool shouldScrollToTop = true, bool shouldRefresh = false}) {
     this._list.insert(0, listItem);
     this._setList(this._list.toList());
-    if (shouldScrollToTop) scrollToTop();
+    if (shouldScrollToTop) scrollToTop(shouldRefresh: shouldRefresh);
   }
 
   void removeListItem(T listItem) {
@@ -127,9 +128,9 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
     });
   }
 
-  void scrollToTop() {
+  void scrollToTop({bool shouldRefresh = true}) {
     if (_listScrollController.hasClients) {
-      if (_listScrollController.offset == 0) {
+      if (_listScrollController.offset == 0 && shouldRefresh) {
         _listRefreshIndicatorKey.currentState.show();
       }
 
@@ -622,9 +623,14 @@ class OBHttpListController<T> {
     _state = state;
   }
 
-  void insertListItem(T listItem, {bool shouldScrollToTop = true}) {
-    if (!_isAttached() || !_state.mounted) return;
-    _state.insertListItem(listItem, shouldScrollToTop: shouldScrollToTop);
+  void insertListItem(T listItem,
+      {bool shouldScrollToTop = true, bool shouldRefresh = false}) {
+    if (!_isAttached() || !_state.mounted) {
+      debugPrint('Tried to insertListItem in unattached OBHttpList');
+      return;
+    }
+    _state.insertListItem(listItem,
+        shouldScrollToTop: shouldScrollToTop, shouldRefresh: shouldRefresh);
   }
 
   void removeListItem(T listItem) {
