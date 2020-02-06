@@ -159,6 +159,7 @@ class OBTopPostsState extends State<OBTopPosts>
   Widget _topPostBuilder(
       {BuildContext context,
       Post post,
+      OBPostDisplayContext displayContext,
       String postIdentifier,
       ValueChanged<Post> onPostDeleted}) {
     if (_excludedCommunities.contains(post.community.id)) {
@@ -171,11 +172,11 @@ class OBTopPostsState extends State<OBTopPosts>
       post,
       key: Key(postIdentifier),
       onPostDeleted: onPostDeleted,
+      displayContext: displayContext,
       onPostIsInView: onPostIsInView,
       onCommunityExcluded: _onCommunityExcluded,
       onUndoCommunityExcluded: _onUndoCommunityExcluded,
       inViewId: postIdentifier,
-      displayContext: OBPostDisplayContext.topPosts,
     );
   }
 

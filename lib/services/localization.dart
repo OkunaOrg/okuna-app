@@ -870,12 +870,12 @@ class LocalizationService {
   }
 
   String get community__excluded_community {
-    return Intl.message("excluded community",
+    return Intl.message("hidden community",
         name: 'community__excluded_community');
   }
 
   String get community__excluded_communities {
-    return Intl.message("excluded communities",
+    return Intl.message("hidden communities",
         name: 'community__excluded_communities');
   }
 
@@ -1626,12 +1626,12 @@ class LocalizationService {
   }
 
   String get community__top_posts_excluded_communities {
-    return Intl.message("Excluded communities",
+    return Intl.message("Hidden communities",
         name: 'community__top_posts_excluded_communities');
   }
 
   String get community__top_posts_excluded_communities_desc {
-    return Intl.message("Manage communities excluded from the explore timeline",
+    return Intl.message("Manage communities hidden from the explore timeline",
         name: 'community__top_posts_excluded_communities_desc');
   }
 
@@ -2641,7 +2641,7 @@ class LocalizationService {
   }
 
   String get user__profile_posts_excluded_communities {
-    return Intl.message("Excluded communities",
+    return Intl.message("Hidden communities",
         name: 'user__profile_posts_excluded_communities');
   }
 
@@ -2652,7 +2652,7 @@ class LocalizationService {
 
   String get user__profile_posts_excluded_communities_desc {
     return Intl.message(
-        "See, add and remove excluded communities from your profile.",
+        "See, add and remove hidden communities from your profile.",
         name: 'user__profile_posts_excluded_communities_desc');
   }
 
