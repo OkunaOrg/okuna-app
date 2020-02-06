@@ -19,17 +19,22 @@ class OBCommunityPostHeader extends StatelessWidget {
   final ValueChanged<Post> onPostReported;
   final bool hasActions;
   final OBPostDisplayContext displayContext;
+
+  // What are we using these 2 for?
   final Function onCommunityExcluded;
   final Function onUndoCommunityExcluded;
 
+  final ValueChanged<Community> onPostCommunityExcludedFromProfilePosts;
+
   const OBCommunityPostHeader(this._post,
       {Key key,
-      @required this.onPostDeleted,
-      this.onPostReported,
-      this.hasActions = true,
-      this.onCommunityExcluded,
-      this.onUndoCommunityExcluded,
-      this.displayContext = OBPostDisplayContext.timelinePosts
+        @required this.onPostDeleted,
+        this.onPostReported,
+        this.hasActions = true,
+        this.onCommunityExcluded,
+        this.onUndoCommunityExcluded,
+        this.displayContext = OBPostDisplayContext
+            .timelinePosts, this.onPostCommunityExcludedFromProfilePosts
       })
       : super(key: key);
 
@@ -56,17 +61,18 @@ class OBCommunityPostHeader extends StatelessWidget {
             ),
             trailing: hasActions
                 ? IconButton(
-                    icon: const OBIcon(OBIcons.moreVertical),
-                    onPressed: () {
-                      bottomSheetService.showPostActions(
-                          context: context,
-                          post: _post,
-                          displayContext: displayContext,
-                          onCommunityExcluded: onCommunityExcluded,
-                          onUndoCommunityExcluded: onUndoCommunityExcluded,
-                          onPostDeleted: onPostDeleted,
-                          onPostReported: onPostReported);
-                    })
+                icon: const OBIcon(OBIcons.moreVertical),
+                onPressed: () {
+                  bottomSheetService.showPostActions(
+                      context: context,
+                      post: _post,
+                      displayContext: displayContext,
+                      onCommunityExcluded: onCommunityExcluded,
+                      onUndoCommunityExcluded: onUndoCommunityExcluded,
+                      onPostCommunityExcludedFromProfilePosts: onPostCommunityExcludedFromProfilePosts,
+                      onPostDeleted: onPostDeleted,
+                      onPostReported: onPostReported);
+                })
                 : null,
             title: GestureDetector(
               onTap: () {

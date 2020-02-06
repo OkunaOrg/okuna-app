@@ -1,3 +1,4 @@
+import 'package:Okuna/models/community.dart';
 import 'package:Okuna/models/post.dart';
 import 'package:Okuna/widgets/post/widgets/post-actions/post_actions.dart';
 import 'package:Okuna/widgets/post/widgets/post-body/post_body.dart';
@@ -18,6 +19,7 @@ class OBPost extends StatelessWidget {
   final String inViewId;
   final Function onCommunityExcluded;
   final Function onUndoCommunityExcluded;
+  final ValueChanged<Community> onPostCommunityExcludedFromProfilePosts;
   final OBPostDisplayContext displayContext;
 
   const OBPost(this.post,
@@ -28,7 +30,8 @@ class OBPost extends StatelessWidget {
       this.onUndoCommunityExcluded,
       this.onTextExpandedChange,
       this.inViewId,
-      this.displayContext = OBPostDisplayContext.timelinePosts})
+      this.displayContext = OBPostDisplayContext.timelinePosts,
+      this.onPostCommunityExcludedFromProfilePosts})
       : super(key: key);
 
   @override
@@ -51,6 +54,8 @@ class OBPost extends StatelessWidget {
           displayContext: displayContext,
           onCommunityExcluded: onCommunityExcluded,
           onUndoCommunityExcluded: onUndoCommunityExcluded,
+          onPostCommunityExcludedFromProfilePosts:
+              onPostCommunityExcludedFromProfilePosts,
         ),
         OBPostBody(post,
             onTextExpandedChange: onTextExpandedChange, inViewId: inViewId),

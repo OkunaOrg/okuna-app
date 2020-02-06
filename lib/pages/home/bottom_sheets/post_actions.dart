@@ -1,3 +1,4 @@
+import 'package:Okuna/models/community.dart';
 import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/user.dart';
 import 'package:Okuna/pages/home/bottom_sheets/rounded_bottom_sheet.dart';
@@ -27,6 +28,7 @@ class OBPostActionsBottomSheet extends StatefulWidget {
   final Function onCommunityExcluded;
   final Function onUndoCommunityExcluded;
   final OBPostDisplayContext displayContext;
+  final ValueChanged<Community> onPostCommunityExcludedFromProfilePosts;
 
   const OBPostActionsBottomSheet(
       {Key key,
@@ -35,7 +37,8 @@ class OBPostActionsBottomSheet extends StatefulWidget {
       @required this.onPostDeleted,
       this.onCommunityExcluded,
       this.onUndoCommunityExcluded,
-      this.displayContext = OBPostDisplayContext.timelinePosts})
+      this.displayContext = OBPostDisplayContext.timelinePosts,
+      this.onPostCommunityExcludedFromProfilePosts})
       : super(key: key);
 
   @override
@@ -87,7 +90,10 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
             ));
           } else if (widget.displayContext ==
               OBPostDisplayContext.ownProfilePosts) {
-            postActions.add(OBExcludeCommunityFromProfilePostsTile(post: post));
+            postActions.add(OBExcludeCommunityFromProfilePostsTile(
+                post: post,
+                onPostCommunityExcludedFromProfilePosts:
+                    widget.onPostCommunityExcludedFromProfilePosts));
           }
 
           postActions.add(OBMutePostTile(

@@ -1,3 +1,4 @@
+import 'package:Okuna/models/community.dart';
 import 'package:Okuna/models/post.dart';
 import 'package:Okuna/pages/home/bottom_sheets/post_actions.dart';
 import 'package:Okuna/widgets/post/post.dart';
@@ -13,6 +14,7 @@ class OBPostHeader extends StatelessWidget {
   final OBPostDisplayContext displayContext;
   final Function onCommunityExcluded;
   final Function onUndoCommunityExcluded;
+  final ValueChanged<Community> onPostCommunityExcludedFromProfilePosts;
 
   const OBPostHeader({
     Key key,
@@ -23,6 +25,7 @@ class OBPostHeader extends StatelessWidget {
     this.onUndoCommunityExcluded,
     this.hasActions = true,
     this.displayContext = OBPostDisplayContext.timelinePosts,
+    this.onPostCommunityExcludedFromProfilePosts,
   }) : super(key: key);
 
   @override
@@ -34,6 +37,8 @@ class OBPostHeader extends StatelessWidget {
             hasActions: hasActions,
             onCommunityExcluded: onCommunityExcluded,
             onUndoCommunityExcluded: onUndoCommunityExcluded,
+            onPostCommunityExcludedFromProfilePosts:
+                onPostCommunityExcludedFromProfilePosts,
             displayContext: displayContext)
         : OBUserPostHeader(post,
             onPostDeleted: onPostDeleted,

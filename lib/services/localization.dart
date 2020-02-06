@@ -2177,11 +2177,6 @@ class LocalizationService {
         name: 'post__exclude_community_from_profile_posts');
   }
 
-  String get post__undo_exclude_community_from_profile_posts {
-    return Intl.message("Show this community on my profile",
-        name: 'post__undo_exclude_community_from_profile_posts');
-  }
-
   String get post__exclude_community_from_profile_posts_success {
     return Intl.message("Community hidden",
         name: 'post__exclude_community_from_profile_posts_success');
@@ -2189,7 +2184,7 @@ class LocalizationService {
 
   String get post__exclude_community_from_profile_posts_confirmation {
     return Intl.message(
-        "You can later undo this setting in Profile -> Manage -> Hidden communities",
+        "This will hide all posts from this community from your profile.",
         name: 'post__exclude_community_from_profile_posts_confirmation');
   }
 

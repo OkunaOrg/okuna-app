@@ -162,6 +162,7 @@ class BottomSheetService {
       @required OBPostDisplayContext displayContext,
       @required OnPostDeleted onPostDeleted,
       @required ValueChanged<Post> onPostReported,
+      ValueChanged<Community> onPostCommunityExcludedFromProfilePosts,
       Function onCommunityExcluded,
       Function onUndoCommunityExcluded,
       List<FollowsList> initialPickedFollowsLists}) {
@@ -173,6 +174,7 @@ class BottomSheetService {
             displayContext: displayContext,
             onCommunityExcluded: onCommunityExcluded,
             onUndoCommunityExcluded: onUndoCommunityExcluded,
+            onPostCommunityExcludedFromProfilePosts: onPostCommunityExcludedFromProfilePosts,
             onPostDeleted: onPostDeleted,
             onPostReported: onPostReported,
           );
@@ -256,6 +258,7 @@ class BottomSheetService {
     @required BuildContext context,
     String title,
     String subtitle,
+    String description,
     String confirmText,
     String cancelText,
     @required ActionCompleter actionCompleter,
@@ -266,6 +269,7 @@ class BottomSheetService {
           return OBConfirmActionBottomSheet(
             title: title,
             subtitle: subtitle,
+            description: description,
             confirmText: confirmText,
             cancelText: cancelText,
             actionCompleter: actionCompleter,

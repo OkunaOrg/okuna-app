@@ -56,7 +56,9 @@ class OBProfilePageState extends State<OBProfilePage> {
       var openbookProvider = OpenbookProvider.of(context);
       _userService = openbookProvider.userService;
       bool isLoggedInUserProfile = _userService.isLoggedInUser(widget.user);
-      _postsDisplayContext = isLoggedInUserProfile ? OBPostDisplayContext.ownProfilePosts : OBPostDisplayContext.foreignProfilePosts;
+      _postsDisplayContext = isLoggedInUserProfile
+          ? OBPostDisplayContext.ownProfilePosts
+          : OBPostDisplayContext.foreignProfilePosts;
       _needsBootstrap = false;
     }
 
@@ -110,7 +112,7 @@ class OBProfilePageState extends State<OBProfilePage> {
     OBPostDisplayContext displayContext,
     ValueChanged<Post> onPostDeleted,
   }) {
-    return _recentlyExcludedCommunities.contains(post)
+    return _recentlyExcludedCommunities.contains(post.community)
         ? const SizedBox()
         : OBPost(
             post,
@@ -118,7 +120,15 @@ class OBProfilePageState extends State<OBProfilePage> {
             onPostDeleted: onPostDeleted,
             displayContext: displayContext,
             inViewId: postIdentifier,
+            onPostCommunityExcludedFromProfilePosts:
+                _onPostCommunityExcludedFromProfilePosts,
           );
+  }
+
+  void _onPostCommunityExcludedFromProfilePosts(Community community) {
+    print('Excluded');
+    print(community.name);
+    _addRecentlyExcludedCommunity(community);
   }
 
   void _onUserProfileUpdated() {
