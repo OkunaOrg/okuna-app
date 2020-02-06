@@ -54,7 +54,8 @@ class Post extends UpdatableModel<Post> {
   bool isReported;
 
   // stored only in the app
-  bool isFromExcludedCommunity = false;
+  bool isExcludedFromTopPosts = false;
+  bool isExcludedFromProfilePosts = false;
 
   static final factory = PostFactory();
 
@@ -225,8 +226,13 @@ class Post extends UpdatableModel<Post> {
     notifyUpdate();
   }
 
-  void updateIsFromExcludedCommunity(bool isExcluded) {
-    isFromExcludedCommunity = isExcluded;
+  void updateIsExcludedFromTopPosts(bool isExcluded) {
+    isExcludedFromTopPosts = isExcluded;
+    notifyUpdate();
+  }
+
+  void updateIsExcludedFromProfilePosts(bool isExcluded) {
+    isExcludedFromProfilePosts = isExcluded;
     notifyUpdate();
   }
 

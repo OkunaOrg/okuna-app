@@ -129,7 +129,8 @@ class OBPostsStreamState extends State<OBPostsStream>
       });
     }
     // Pretty darn ugly.... How can we do better?
-    if (widget.displayContext == OBPostDisplayContext.topPosts && _posts.isNotEmpty) {
+    if (widget.displayContext == OBPostDisplayContext.topPosts &&
+        _posts.isNotEmpty) {
       Future.delayed(Duration(milliseconds: 0), () {
         _scrollToBottom();
       });
@@ -236,6 +237,7 @@ class OBPostsStreamState extends State<OBPostsStream>
           context: context,
           post: post,
           postIdentifier: postIdentifier,
+          displayContext: widget.displayContext,
           onPostDeleted: _onPostDeleted);
     }).toList();
   }
@@ -243,6 +245,7 @@ class OBPostsStreamState extends State<OBPostsStream>
   Widget _defaultStreamPostBuilder({
     BuildContext context,
     Post post,
+    OBPostDisplayContext displayContext,
     String postIdentifier,
     ValueChanged<Post> onPostDeleted,
   }) {
@@ -251,7 +254,7 @@ class OBPostsStreamState extends State<OBPostsStream>
       key: Key(postIdentifier),
       onPostDeleted: onPostDeleted,
       inViewId: postIdentifier,
-      displayContext: widget.displayContext,
+      displayContext: displayContext,
     );
   }
 
@@ -596,5 +599,6 @@ typedef OBPostsStreamStatusIndicatorBuilder = Widget Function(
 typedef Widget OBPostsStreamPostBuilder(
     {BuildContext context,
     Post post,
+    OBPostDisplayContext displayContext,
     String postIdentifier,
     ValueChanged<Post> onPostDeleted});

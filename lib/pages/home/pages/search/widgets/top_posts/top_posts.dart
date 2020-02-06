@@ -162,9 +162,9 @@ class OBTopPostsState extends State<OBTopPosts>
       String postIdentifier,
       ValueChanged<Post> onPostDeleted}) {
     if (_excludedCommunities.contains(post.community.id)) {
-      post.updateIsFromExcludedCommunity(true);
+      post.updateIsExcludedFromTopPosts(true);
     } else {
-      post.updateIsFromExcludedCommunity(false);
+      post.updateIsExcludedFromTopPosts(false);
     }
 
     return OBPost(
@@ -211,7 +211,7 @@ class OBTopPostsState extends State<OBTopPosts>
     _excludedCommunities.add(community.id);
     _currentPosts.forEach((post) {
       if (post.community.id == community.id) {
-        post.updateIsFromExcludedCommunity(true);
+        post.updateIsExcludedFromTopPosts(true);
       }
     });
   }
@@ -220,7 +220,7 @@ class OBTopPostsState extends State<OBTopPosts>
     _excludedCommunities.remove(community.id);
     _currentPosts.forEach((post) {
       if (post.community.id == community.id) {
-        post.updateIsFromExcludedCommunity(false);
+        post.updateIsExcludedFromTopPosts(false);
       }
     });
   }

@@ -13,7 +13,8 @@ import 'package:Okuna/widgets/post/post.dart';
 import 'package:Okuna/widgets/theming/text.dart';
 import 'package:Okuna/widgets/tiles/actions/close_post_tile.dart';
 import 'package:Okuna/widgets/tiles/actions/disable_comments_post_tile.dart';
-import 'package:Okuna/widgets/tiles/actions/exclude_community_tile.dart';
+import 'package:Okuna/widgets/tiles/actions/exclude_community_from_profile_posts_tile.dart';
+import 'package:Okuna/widgets/tiles/actions/exclude_community_from_top_posts_tile.dart';
 import 'package:Okuna/widgets/tiles/actions/mute_post_tile.dart';
 import 'package:Okuna/widgets/tiles/actions/report_post_tile.dart';
 import 'package:flutter/cupertino.dart';
@@ -69,7 +70,7 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
           List<Widget> postActions = [];
 
           if (widget.displayContext == OBPostDisplayContext.topPosts) {
-            postActions.add(OBExcludeCommunityTile(
+            postActions.add(OBExcludeCommunityFromTopPostsTile(
               post: post,
               onExcludedPostCommunity: () {
                 if (widget.onCommunityExcluded != null) {
@@ -84,6 +85,9 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
                 _dismiss();
               },
             ));
+          } else if (widget.displayContext ==
+              OBPostDisplayContext.ownProfilePosts) {
+            postActions.add(OBExcludeCommunityFromProfilePostsTile(post: post));
           }
 
           postActions.add(OBMutePostTile(

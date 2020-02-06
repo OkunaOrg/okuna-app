@@ -34,6 +34,7 @@ class OBProfilePageState extends State<OBProfilePage> {
   UserService _userService;
   OBPostsStreamController _obPostsStreamController;
   bool _profileCommunityPostsVisible;
+  OBPostDisplayContext _postsDisplayContext;
 
   List<Community> _recentlyExcludedCommunities;
 
@@ -54,6 +55,8 @@ class OBProfilePageState extends State<OBProfilePage> {
     if (_needsBootstrap) {
       var openbookProvider = OpenbookProvider.of(context);
       _userService = openbookProvider.userService;
+      bool isLoggedInUserProfile = _userService.isLoggedInUser(widget.user);
+      _postsDisplayContext = isLoggedInUserProfile ? OBPostDisplayContext.ownProfilePosts : OBPostDisplayContext.foreignProfilePosts;
       _needsBootstrap = false;
     }
 
@@ -67,6 +70,7 @@ class OBProfilePageState extends State<OBProfilePage> {
               Expanded(
                 child: OBPostsStream(
                     streamIdentifier: 'profile_${widget.user.username}',
+                    displayContext: _postsDisplayContext,
                     prependedItems: <Widget>[
                       OBProfileCover(_user),
                       OBProfileCard(
@@ -103,6 +107,7 @@ class OBProfilePageState extends State<OBProfilePage> {
     BuildContext context,
     Post post,
     String postIdentifier,
+    OBPostDisplayContext displayContext,
     ValueChanged<Post> onPostDeleted,
   }) {
     return _recentlyExcludedCommunities.contains(post)
@@ -111,6 +116,7 @@ class OBProfilePageState extends State<OBProfilePage> {
             post,
             key: Key(postIdentifier),
             onPostDeleted: onPostDeleted,
+            displayContext: displayContext,
             inViewId: postIdentifier,
           );
   }

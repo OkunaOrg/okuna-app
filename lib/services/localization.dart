@@ -2172,6 +2172,27 @@ class LocalizationService {
         name: 'post__undo_exclude_post_community');
   }
 
+  String get post__exclude_community_from_profile_posts {
+    return Intl.message("Hide this community from my profile",
+        name: 'post__exclude_community_from_profile_posts');
+  }
+
+  String get post__undo_exclude_community_from_profile_posts {
+    return Intl.message("Show this community on my profile",
+        name: 'post__undo_exclude_community_from_profile_posts');
+  }
+
+  String get post__exclude_community_from_profile_posts_success {
+    return Intl.message("Community hidden",
+        name: 'post__exclude_community_from_profile_posts_success');
+  }
+
+  String get post__exclude_community_from_profile_posts_confirmation {
+    return Intl.message(
+        "You can later undo this setting in Profile -> Manage -> Hidden communities",
+        name: 'post__exclude_community_from_profile_posts_confirmation');
+  }
+
   String get post__comments_enabled_message {
     return Intl.message("Comments enabled for post",
         name: 'post__comments_enabled_message');

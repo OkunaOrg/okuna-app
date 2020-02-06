@@ -2,7 +2,6 @@ import 'package:Okuna/models/user.dart';
 import 'package:Okuna/pages/home/pages/profile/widgets/profile_card/widgets/profile_actions/widgets/profile_inline_action_more_button.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/localization.dart';
-import 'package:Okuna/services/modal_service.dart';
 import 'package:Okuna/services/navigation_service.dart';
 import 'package:Okuna/widgets/buttons/actions/block_button.dart';
 import 'package:Okuna/widgets/buttons/button.dart';
