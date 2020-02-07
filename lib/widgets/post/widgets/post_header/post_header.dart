@@ -30,7 +30,8 @@ class OBPostHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return post.isCommunityPost() && displayContext != OBPostDisplayContext.communityPosts
+    return post.isCommunityPost() &&
+            displayContext != OBPostDisplayContext.communityPosts
         ? OBCommunityPostHeader(post,
             onPostDeleted: onPostDeleted,
             onPostReported: onPostReported,
@@ -43,6 +44,7 @@ class OBPostHeader extends StatelessWidget {
         : OBUserPostHeader(post,
             onPostDeleted: onPostDeleted,
             onPostReported: onPostReported,
+            displayContext: displayContext,
             hasActions: hasActions);
   }
 }
