@@ -29,11 +29,10 @@ class OBPostCreatorIdentifier extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot<OBTheme> snapshot) {
           OBTheme theme = snapshot.data;
 
-          Color secondaryTextColor =
+          Color primaryTextColor =
               themeValueParserService.parseColor(theme.secondaryTextColor);
 
-          String commenterUsername = post.creator.username;
-          String commenterName = post.creator.getProfileName();
+          String name = post.creator.getProfileName();
 
           return GestureDetector(
             onTap: onUsernamePressed,
@@ -45,14 +44,11 @@ class OBPostCreatorIdentifier extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       text: TextSpan(
                           style: TextStyle(
-                              color: secondaryTextColor, fontSize: 14),
+                               fontSize: 14),
                           children: [
                             TextSpan(
-                                text: '$commenterName',
+                                text: '$name',
                                 style: TextStyle(fontWeight: FontWeight.bold)),
-                            TextSpan(
-                                text: ' @$commenterUsername',
-                                style: TextStyle(fontSize: 12)),
                           ]),
                     ),
                   ),

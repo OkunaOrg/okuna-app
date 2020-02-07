@@ -6,7 +6,7 @@ import 'package:Okuna/provider.dart';
 import 'package:Okuna/widgets/avatars/avatar.dart';
 import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/post/post.dart';
-import 'package:Okuna/widgets/post/widgets/post_header/widgets/user_post_header/widgets/post_creator_identifier.dart';
+import 'package:Okuna/widgets/post/widgets/post_header/widgets/user_post_header/widgets/post_creator_name.dart';
 import 'package:Okuna/widgets/theming/text.dart';
 import 'package:Okuna/widgets/theming/secondary_text.dart';
 import 'package:Okuna/widgets/user_badge.dart';
@@ -74,14 +74,35 @@ class OBUserPostHeader extends StatelessWidget {
                       onPostReported: onPostReported);
                 })
             : null,
-        title: OBText(
-          _post.creator.getProfileName(),
-          style: TextStyle(fontWeight: FontWeight.bold),
-          overflow: TextOverflow.ellipsis,
+        title: Row(
+          children: <Widget>[
+            Flexible(
+              child: OBText(
+                _post.creator.getProfileName(),
+                style: TextStyle(fontWeight: FontWeight.bold),
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            const SizedBox(
+              width: 3,
+            ),
+            _buildBadge()
+          ],
         ),
         subtitle: OBSecondaryText(
           subtitle,
           style: TextStyle(fontSize: 12.0),
         ));
+  }
+
+  Widget _buildBadge() {
+    User postCommenter = _post.creator;
+
+    if (postCommenter.hasProfileBadges())
+      return OBUserBadge(
+          badge: _post.creator.getDisplayedProfileBadge(),
+          size: OBUserBadgeSize.small);
+
+    return const SizedBox();
   }
 }
