@@ -15,6 +15,7 @@ import 'package:Okuna/services/user.dart';
 import 'package:Okuna/widgets/alerts/alert.dart';
 import 'package:Okuna/widgets/buttons/community_new_post_button.dart';
 import 'package:Okuna/widgets/new_post_data_uploader.dart';
+import 'package:Okuna/widgets/post/post.dart';
 import 'package:Okuna/widgets/posts_stream/posts_stream.dart';
 import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:Okuna/widgets/theming/text.dart';
@@ -140,6 +141,7 @@ class OBCommunityPageState extends State<OBCommunityPage>
         refresher: _refreshCommunityPosts,
         controller: _obPostsStreamController,
         prependedItems: prependedItems,
+        displayContext: OBPostDisplayContext.communityPosts,
         streamIdentifier: 'community_' + widget.community.name,
         secondaryRefresher: _refreshCommunity,
         statusIndicatorBuilder: _buildPostsStreamStatusIndicator,
