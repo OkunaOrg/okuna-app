@@ -1,6 +1,7 @@
 import 'package:Okuna/models/community.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/theme_value_parser.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -28,7 +29,7 @@ class OBCommunityNavBar extends StatelessWidget
           return CupertinoNavigationBar(
             border: null,
             actionsForegroundColor: actionsColor,
-            middle: Text(
+            middle: OBText(
               'c/' + community.name,
               style: TextStyle(color: actionsColor, fontWeight: FontWeight.bold),
             ),
