@@ -23,6 +23,7 @@ class OBPostsStream extends StatefulWidget {
   final List<Widget> prependedItems;
   final OBPostsStreamRefresher refresher;
   final OBPostsStreamOnScrollLoader onScrollLoader;
+  final ScrollController scrollController;
   final OBPostsStreamController controller;
   final List<Post> initialPosts;
   final String streamIdentifier;
@@ -55,6 +56,7 @@ class OBPostsStream extends StatefulWidget {
     this.onScrollLoadMoreLimit,
     this.onScrollLoadMoreLimitLoadMoreText,
     this.displayContext = OBPostDisplayContext.timelinePosts,
+    this.scrollController,
   }) : super(key: key);
 
   @override
@@ -98,7 +100,7 @@ class OBPostsStreamState extends State<OBPostsStream>
     _needsBootstrap = true;
     _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
     _status = OBPostsStreamStatus.idle;
-    _streamScrollController = ScrollController();
+    _streamScrollController = widget.scrollController ?? ScrollController();
     _streamScrollController.addListener(_onScroll);
     _streamUniqueIdentifier =
         '${widget.streamIdentifier}_${rng.nextInt(1000).toString()}';

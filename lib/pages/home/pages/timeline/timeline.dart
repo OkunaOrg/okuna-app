@@ -24,6 +24,7 @@ import 'package:Okuna/widgets/posts_stream/posts_stream.dart';
 import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 class OBTimelinePage extends StatefulWidget {
   final OBTimelinePageController controller;
@@ -40,6 +41,7 @@ class OBTimelinePage extends StatefulWidget {
 
 class OBTimelinePageState extends State<OBTimelinePage> {
   OBPostsStreamController _timelinePostsStreamController;
+  ScrollController _timelinePostsStreamScrollController;
   ModalService _modalService;
   UserService _userService;
   LocalizationService _localizationService;
@@ -55,17 +57,50 @@ class OBTimelinePageState extends State<OBTimelinePage> {
 
   bool _needsBootstrap;
   bool _loggedInUserBootstrapped;
+  bool _createPostButtonIsVisible;
 
   @override
   void initState() {
     super.initState();
     _timelinePostsStreamController = OBPostsStreamController();
+    _timelinePostsStreamScrollController = ScrollController();
     widget.controller.attach(context: context, state: this);
     _needsBootstrap = true;
+    _createPostButtonIsVisible = true;
     _loggedInUserBootstrapped = false;
     _filteredCircles = [];
     _filteredFollowsLists = [];
     _newPostsData = [];
+
+    _timelinePostsStreamScrollController.addListener(() {
+      if (_timelinePostsStreamScrollController.position.userScrollDirection ==
+          ScrollDirection.reverse) {
+        if (_createPostButtonIsVisible == true) {
+          /* only set when the previous state is false
+             * Less widget rebuilds
+             */
+          print(
+              "**** ${_createPostButtonIsVisible} up"); //Move IO away from setState
+          setState(() {
+            _createPostButtonIsVisible = false;
+          });
+        }
+      } else {
+        if (_timelinePostsStreamScrollController.position.userScrollDirection ==
+            ScrollDirection.forward) {
+          if (_createPostButtonIsVisible == false) {
+            /* only set when the previous state is false
+               * Less widget rebuilds
+               */
+            print(
+                "**** ${_createPostButtonIsVisible} down"); //Move IO away from setState
+            setState(() {
+              _createPostButtonIsVisible = true;
+            });
+          }
+        }
+      }
+    });
   }
 
   @override
@@ -94,20 +129,22 @@ class OBTimelinePageState extends State<OBTimelinePage> {
     }
 
     return OBCupertinoPageScaffold(
-      backgroundColor: _themeValueParserService.parseColor(_themeService.getActiveTheme().primaryColor),
+        backgroundColor: _themeValueParserService
+            .parseColor(_themeService.getActiveTheme().primaryColor),
         navigationBar: OBThemedNavigationBar(
             title: 'Home', trailing: _buildFiltersButton()),
         child: Stack(
           children: <Widget>[
             _loggedInUserBootstrapped
                 ? OBPostsStream(
-              controller: _timelinePostsStreamController,
-              prependedItems: _buildPostsStreamPrependedItems(),
-              streamIdentifier: 'timeline',
-              onScrollLoader: _postsStreamOnScrollLoader,
-              refresher: _postsStreamRefresher,
-              initialPosts: _initialPosts,
-            )
+                    controller: _timelinePostsStreamController,
+                    scrollController: _timelinePostsStreamScrollController,
+                    prependedItems: _buildPostsStreamPrependedItems(),
+                    streamIdentifier: 'timeline',
+                    onScrollLoader: _postsStreamOnScrollLoader,
+                    refresher: _postsStreamRefresher,
+                    initialPosts: _initialPosts,
+                  )
                 : const SizedBox(),
             Positioned(
                 bottom: 20.0,
@@ -115,11 +152,13 @@ class OBTimelinePageState extends State<OBTimelinePage> {
                 child: Semantics(
                     button: true,
                     label: _localizationService.post__create_new_post_label,
-                    child: OBFloatingActionButton(
-                        type: OBButtonType.primary,
-                        onPressed: _onCreatePost,
-                        child: const OBIcon(OBIcons.createPost,
-                            size: OBIconSize.large, color: Colors.white))))
+                    child: Visibility(
+                        visible: _createPostButtonIsVisible,
+                        child: OBFloatingActionButton(
+                            type: OBButtonType.primary,
+                            onPressed: _onCreatePost,
+                            child: const OBIcon(OBIcons.createPost,
+                                size: OBIconSize.large, color: Colors.white)))))
           ],
         ));
   }
