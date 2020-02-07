@@ -124,7 +124,7 @@ class OBCommunityPostHeader extends StatelessWidget {
           child: Row(
             children: <Widget>[
               Expanded(
-                child: OBText(
+                child: OBSecondaryText(
                   'c/' + community.name + ' · $created',
                   style: TextStyle(fontSize: 12),
                   overflow: TextOverflow.ellipsis,
