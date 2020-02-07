@@ -817,18 +817,34 @@ class UserService {
     return Post.fromJson(json.decode(response.body));
   }
 
-  Future<String> excludePostCommunityFromTopPosts(Community community) async {
-    HttpieResponse response = await _communitiesApiService
+  Future<String> excludeCommunityFromTopPosts(Community community) async {
+    HttpieResponse response = await _postsApiService
         .excludeCommunityFromTopPosts(communityName: community.name);
     _checkResponseIsAccepted(response);
 
     return (json.decode(response.body))['message'];
   }
 
-  Future<String> undoExcludePostCommunityFromTopPosts(
-      Community community) async {
-    HttpieResponse response = await _communitiesApiService
+  Future<String> undoExcludeCommunityFromTopPosts(Community community) async {
+    HttpieResponse response = await _postsApiService
         .undoExcludeCommunityFromTopPosts(communityName: community.name);
+    _checkResponseIsAccepted(response);
+
+    return (json.decode(response.body))['message'];
+  }
+
+  Future<String> excludeCommunityFromProfilePosts(Community community) async {
+    HttpieResponse response = await _postsApiService
+        .excludeCommunityFromProfilePosts(communityName: community.name);
+    _checkResponseIsAccepted(response);
+
+    return (json.decode(response.body))['message'];
+  }
+
+  Future<String> undoExcludeCommunityFromProfilePosts(
+      Community community) async {
+    HttpieResponse response = await _postsApiService
+        .undoExcludeCommunityFromProfilePosts(communityName: community.name);
     _checkResponseIsAccepted(response);
 
     return (json.decode(response.body))['message'];
@@ -930,8 +946,7 @@ class UserService {
     return User.fromJson(json.decode(response.body));
   }
 
-  Future<int> countPostsForUser(User user,
-      {int maxId, int count}) async {
+  Future<int> countPostsForUser(User user, {int maxId, int count}) async {
     HttpieResponse response =
         await _authApiService.getPostsCountForUserWithName(user.username);
     _checkResponseIsOk(response);
@@ -951,7 +966,8 @@ class UserService {
     HttpieResponse response = await _authApiService.searchLinkedUsers(
         query: query, count: count, withCommunity: withCommunity.name);
     _checkResponseIsOk(response);
-    return UsersList.fromJson(json.decode(response.body), storeInMaxSessionCache: true);
+    return UsersList.fromJson(json.decode(response.body),
+        storeInMaxSessionCache: true);
   }
 
   Future<UsersList> getLinkedUsers(
@@ -962,7 +978,8 @@ class UserService {
     HttpieResponse response = await _authApiService.getLinkedUsers(
         count: count, withCommunity: withCommunity?.name, maxId: maxId);
     _checkResponseIsOk(response);
-    return UsersList.fromJson(json.decode(response.body), storeInMaxSessionCache: true);
+    return UsersList.fromJson(json.decode(response.body),
+        storeInMaxSessionCache: true);
   }
 
   Future<User> blockUser(User user) async {
@@ -1008,18 +1025,34 @@ class UserService {
     return UsersList.fromJson(json.decode(response.body));
   }
 
-  Future<CommunitiesList> searchExcludedCommunities(
+  Future<CommunitiesList> searchTopPostsExcludedCommunities(
       {@required String query, int count}) async {
-    HttpieResponse response = await _communitiesApiService
-        .searchExcludedCommunities(query: query, count: count);
+    HttpieResponse response = await _postsApiService
+        .searchTopPostsExcludedCommunities(query: query, count: count);
     _checkResponseIsOk(response);
     return CommunitiesList.fromJson(json.decode(response.body));
   }
 
-  Future<CommunitiesList> getExcludedCommunities(
+  Future<CommunitiesList> getTopPostsExcludedCommunities(
       {int offset, int count}) async {
-    HttpieResponse response = await _communitiesApiService
-        .getExcludedCommunities(count: count, offset: offset);
+    HttpieResponse response = await _postsApiService
+        .getTopPostsExcludedCommunities(count: count, offset: offset);
+    _checkResponseIsOk(response);
+    return CommunitiesList.fromJson(json.decode(response.body));
+  }
+
+  Future<CommunitiesList> searchProfilePostsExcludedCommunities(
+      {@required String query, int count}) async {
+    HttpieResponse response = await _postsApiService
+        .searchProfilePostsExcludedCommunities(query: query, count: count);
+    _checkResponseIsOk(response);
+    return CommunitiesList.fromJson(json.decode(response.body));
+  }
+
+  Future<CommunitiesList> getProfilePostsExcludedCommunities(
+      {int offset, int count}) async {
+    HttpieResponse response = await _postsApiService
+        .getProfilePostsExcludedCommunities(count: count, offset: offset);
     _checkResponseIsOk(response);
     return CommunitiesList.fromJson(json.decode(response.body));
   }
@@ -1308,9 +1341,11 @@ class UserService {
     return PostsList.fromJson(json.decode(response.body));
   }
 
-  Future<CommunitiesList> getCommunitiesWithQuery(String query) async {
+  Future<CommunitiesList> searchCommunitiesWithQuery(String query,
+      {bool excludedFromProfilePosts}) async {
     HttpieResponse response =
-        await _communitiesApiService.getCommunitiesWithQuery(query: query);
+        await _communitiesApiService.searchCommunitiesWithQuery(
+            query: query, excludedFromProfilePosts: excludedFromProfilePosts);
     _checkResponseIsOk(response);
     return CommunitiesList.fromJson(json.decode(response.body));
   }
@@ -1487,7 +1522,8 @@ class UserService {
         await _communitiesApiService.inviteUserToCommunity(
             communityName: community.name, username: user.username);
     _checkResponseIsCreated(response);
-    return User.fromJson(json.decode(response.body), storeInMaxSessionCache: true);
+    return User.fromJson(json.decode(response.body),
+        storeInMaxSessionCache: true);
   }
 
   Future<void> uninviteUserFromCommunity(
@@ -1496,12 +1532,14 @@ class UserService {
         await _communitiesApiService.uninviteUserFromCommunity(
             communityName: community.name, username: user.username);
     _checkResponseIsOk(response);
-    return User.fromJson(json.decode(response.body),  storeInMaxSessionCache: true);
+    return User.fromJson(json.decode(response.body),
+        storeInMaxSessionCache: true);
   }
 
-  Future<CommunitiesList> getJoinedCommunities({int offset}) async {
-    HttpieResponse response =
-        await _communitiesApiService.getJoinedCommunities(offset: offset);
+  Future<CommunitiesList> getJoinedCommunities(
+      {int offset, bool excludedFromProfilePosts}) async {
+    HttpieResponse response = await _communitiesApiService.getJoinedCommunities(
+        offset: offset, excludedFromProfilePosts: excludedFromProfilePosts);
 
     _checkResponseIsOk(response);
 

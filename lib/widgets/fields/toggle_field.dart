@@ -11,31 +11,55 @@ class OBToggleField extends StatelessWidget {
   final String title;
   final Widget subtitle;
   final bool hasDivider;
+  final TextStyle titleStyle;
+  final bool isLoading;
 
-  const OBToggleField({Key key, @required this.value, this.onChanged, this.onTap, this.leading, @required this.title, this.subtitle, this.hasDivider=true}) : super(key: key);
-
+  const OBToggleField(
+      {Key key,
+      @required this.value,
+      this.onChanged,
+      this.onTap,
+      this.leading,
+      @required this.title,
+      this.subtitle,
+      this.hasDivider = true,
+      this.titleStyle,
+      this.isLoading = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        MergeSemantics(
-          child: ListTile(
-              leading: leading,
-              title: OBText(
-                title,
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              subtitle: subtitle,
-              trailing: CupertinoSwitch(
-                value: value,
-                onChanged: onChanged,
-              ),
-              onTap: onTap),
-        ),
-        hasDivider ? OBDivider() : const SizedBox()
-      ],
+    Widget tile = IgnorePointer(
+      ignoring: this.isLoading,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          MergeSemantics(
+            child: ListTile(
+                leading: leading,
+                title: OBText(
+                  title,
+                  style: titleStyle ?? TextStyle(fontWeight: FontWeight.bold),
+                ),
+                subtitle: subtitle,
+                trailing: CupertinoSwitch(
+                  value: value,
+                  onChanged: onChanged,
+                ),
+                onTap: onTap),
+          ),
+          hasDivider ? OBDivider() : const SizedBox()
+        ],
+      ),
     );
+
+    if (isLoading) {
+      tile = Opacity(
+        opacity: 0.5,
+        child: tile,
+      );
+    }
+
+    return tile;
   }
 }

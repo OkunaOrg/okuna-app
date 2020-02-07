@@ -24,7 +24,7 @@ class PoppablePageController {
     return Navigator.canPop(_context);
   }
 
-  bool pop() {
-    return Navigator.pop(_context);
+  void pop() {
+    Navigator.pop(_context);
   }
 }

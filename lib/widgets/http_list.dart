@@ -10,12 +10,17 @@ import 'package:Okuna/widgets/load_more.dart';
 import 'package:Okuna/widgets/progress_indicator.dart';
 import 'package:Okuna/widgets/search_bar.dart';
 import 'package:Okuna/widgets/theming/text.dart';
+import 'package:Okuna/widgets/tile_group_title.dart';
 import 'package:async/async.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'buttons/button.dart';
+import 'checkbox.dart';
+
 class OBHttpList<T> extends StatefulWidget {
   final OBHttpListItemBuilder<T> listItemBuilder;
+  final OBHttpListItemBuilder<T> selectedListItemBuilder;
   final OBHttpListItemBuilder<T> searchResultListItemBuilder;
   final OBHttpListSearcher<T> listSearcher;
   final OBHttpListRefresher<T> listRefresher;
@@ -28,7 +33,11 @@ class OBHttpList<T> extends StatefulWidget {
   final ScrollPhysics physics;
   final List<Widget> prependedItems;
   final OBHttpListSecondaryRefresher secondaryRefresher;
+  final OBHttpListSelectionChangedListener<T> onSelectionChanged;
+  final OBHttpListSelectionChangedListener<T> onSelectionSubmitted;
+  final OBHttpListSelectionSubmitter<T> selectionSubmitter;
   final bool hasSearchBar;
+  final bool isSelectable;
 
   const OBHttpList(
       {Key key,
@@ -45,7 +54,12 @@ class OBHttpList<T> extends StatefulWidget {
       this.separatorBuilder,
       this.prependedItems,
       this.hasSearchBar = true,
-      this.secondaryRefresher})
+      this.secondaryRefresher,
+      this.isSelectable = false,
+      this.onSelectionChanged,
+      this.onSelectionSubmitted,
+      this.selectionSubmitter,
+      this.selectedListItemBuilder})
       : super(key: key);
 
   @override
@@ -63,6 +77,7 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
   ScrollController _listScrollController;
   List<T> _list = [];
   List<T> _listSearchResults = [];
+  List<T> _listSelection = [];
   List<Widget> _prependedItems;
 
   bool _hasSearch;
@@ -70,12 +85,14 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
   bool _needsBootstrap;
   bool _refreshInProgress;
   bool _searchRequestInProgress;
+  bool _selectionSubmissionInProgress;
   bool _loadingFinished;
   bool _wasBootstrapped;
 
   CancelableOperation _searchOperation;
   CancelableOperation _refreshOperation;
   CancelableOperation _loadMoreOperation;
+  CancelableOperation _submitSelectionOperation;
 
   ScrollPhysics noItemsPhysics = const AlwaysScrollableScrollPhysics();
 
@@ -89,6 +106,7 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
     _refreshInProgress = false;
     _wasBootstrapped = false;
     _searchRequestInProgress = false;
+    _selectionSubmissionInProgress = false;
     _hasSearch = false;
     _list = [];
     _searchQuery = '';
@@ -96,10 +114,11 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
         widget.prependedItems != null ? widget.prependedItems.toList() : [];
   }
 
-  void insertListItem(T listItem, {bool shouldScrollToTop = true}) {
+  void insertListItem(T listItem,
+      {bool shouldScrollToTop = true, bool shouldRefresh = false}) {
     this._list.insert(0, listItem);
     this._setList(this._list.toList());
-    if (shouldScrollToTop) scrollToTop();
+    if (shouldScrollToTop) scrollToTop(shouldRefresh: shouldRefresh);
   }
 
   void removeListItem(T listItem) {
@@ -109,9 +128,9 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
     });
   }
 
-  void scrollToTop() {
+  void scrollToTop({bool shouldRefresh = true}) {
     if (_listScrollController.hasClients) {
-      if (_listScrollController.offset == 0) {
+      if (_listScrollController.offset == 0 && shouldRefresh) {
         _listRefreshIndicatorKey.currentState.show();
       }
 
@@ -128,6 +147,7 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
     if (_searchOperation != null) _searchOperation.cancel();
     if (_loadMoreOperation != null) _loadMoreOperation.cancel();
     if (_refreshOperation != null) _refreshOperation.cancel();
+    _submitSelectionOperation?.cancel();
   }
 
   @override
@@ -151,12 +171,65 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
       )));
     }
 
-    columnItems.add(
-        Expanded(child: _hasSearch ? _buildSearchResultsList() : _buildList()));
+    Widget listItems = _hasSearch ? _buildSearchResultsList() : _buildList();
+
+    if (widget.isSelectable) {
+      listItems = IgnorePointer(
+        ignoring: _selectionSubmissionInProgress,
+        child: listItems,
+      );
+    }
+
+    columnItems.add(Expanded(
+      child: listItems,
+    ));
+
+    if (widget.isSelectable) {
+      columnItems.add(_buildSelectionActionButtons());
+    }
 
     return Column(
       children: columnItems,
       mainAxisSize: MainAxisSize.max,
+    );
+  }
+
+  Widget _buildSelectionActionButtons() {
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: OBButton(
+                    size: OBButtonSize.large,
+                    child: Text(
+                        _localizationService.user_search__selection_clear_all),
+                    type: OBButtonType.highlight,
+                    onPressed: _onClearSelection,
+                    isDisabled: _listSelection.isEmpty),
+              ),
+              const SizedBox(
+                width: 20,
+              ),
+              Expanded(
+                child: OBButton(
+                  size: OBButtonSize.large,
+                  child: Text(
+                      _localizationService.user_search__selection_submit +
+                          _makeSelectedItemsCount()),
+                  type: OBButtonType.primary,
+                  isLoading: _selectionSubmissionInProgress,
+                  isDisabled: _selectionSubmissionInProgress,
+                  onPressed: _onSubmitSelection,
+                ),
+              )
+            ],
+          )
+        ],
+      ),
     );
   }
 
@@ -209,7 +282,8 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
 
     T listItem = _listSearchResults[index];
 
-    return widget.searchResultListItemBuilder(context, listItem);
+    return _wrapSelectableListItemWidget(
+        listItem, widget.searchResultListItemBuilder(context, listItem));
   }
 
   Widget _buildList() {
@@ -270,13 +344,49 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
   }
 
   Widget _buildListItem(BuildContext context, int index) {
+    int itemsIndex = index;
+
     if (_prependedItems.isNotEmpty && index < _prependedItems.length) {
       return _prependedItems[index];
     }
 
-    T listItem = _list[index - _prependedItems.length];
+    itemsIndex = index - _prependedItems.length;
 
-    return widget.listItemBuilder(context, listItem);
+    T listItem = _list[itemsIndex];
+
+    Widget listItemWidget = widget.listItemBuilder(context, listItem);
+
+    if (widget.isSelectable) {
+      listItemWidget = _wrapSelectableListItemWidget(listItem, listItemWidget);
+    }
+
+    return listItemWidget;
+  }
+
+  String _makeSelectedItemsCount() {
+    if (_listSelection.isEmpty) return '';
+
+    return ' (${_listSelection.length})';
+  }
+
+  Widget _wrapSelectableListItemWidget(T listItem, Widget listItemWidget) {
+    return SizedBox(
+        child: GestureDetector(
+      onTap: () => _onWantsToToggleSelection(listItem),
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            child: listItemWidget,
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 20),
+            child: OBCheckbox(
+              value: _listSelection.contains(listItem),
+            ),
+          )
+        ],
+      ),
+    ));
   }
 
   void _bootstrap() async {
@@ -381,6 +491,38 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
     }
   }
 
+  void _onClearSelection() {
+    _clearSelection();
+  }
+
+  void _onSubmitSelection() async {
+    if (_submitSelectionOperation != null) _submitSelectionOperation.cancel();
+
+    _setSelectionSubmissionInProgress(true);
+
+    try {
+      _submitSelectionOperation = CancelableOperation.fromFuture(
+          widget.selectionSubmitter(_listSelection));
+      widget.onSelectionSubmitted(_listSelection);
+    } catch (error) {
+      _onError(error);
+    } finally {
+      _setSelectionSubmissionInProgress(false);
+      _submitSelectionOperation = null;
+    }
+  }
+
+  void _onWantsToToggleSelection(T listItem) {
+    if (_listSelection.contains(listItem)) {
+      _unselectItem(listItem);
+    } else {
+      _selectItem(listItem);
+    }
+
+    if (widget.onSelectionChanged != null)
+      widget.onSelectionChanged(_listSelection.toList());
+  }
+
   void _resetListSearchResults() {
     _setListSearchResults(_list.toList());
   }
@@ -434,6 +576,30 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
     });
   }
 
+  void _selectItem(T item) {
+    setState(() {
+      _listSelection.add(item);
+    });
+  }
+
+  void _unselectItem(T item) {
+    setState(() {
+      _listSelection.remove(item);
+    });
+  }
+
+  void _clearSelection() {
+    setState(() {
+      _listSelection = [];
+    });
+  }
+
+  void _setSelectionSubmissionInProgress(bool selectionSubmissionInProgress) {
+    setState(() {
+      _selectionSubmissionInProgress = selectionSubmissionInProgress;
+    });
+  }
+
   void _onError(error) async {
     if (error is HttpieConnectionRefusedError) {
       _toastService.error(
@@ -457,9 +623,14 @@ class OBHttpListController<T> {
     _state = state;
   }
 
-  void insertListItem(T listItem, {bool shouldScrollToTop = true}) {
-    if (!_isAttached() || !_state.mounted) return;
-    _state.insertListItem(listItem, shouldScrollToTop: shouldScrollToTop);
+  void insertListItem(T listItem,
+      {bool shouldScrollToTop = true, bool shouldRefresh = false}) {
+    if (!_isAttached() || !_state.mounted) {
+      debugPrint('Tried to insertListItem in unattached OBHttpList');
+      return;
+    }
+    _state.insertListItem(listItem,
+        shouldScrollToTop: shouldScrollToTop, shouldRefresh: shouldRefresh);
   }
 
   void removeListItem(T listItem) {
@@ -507,6 +678,9 @@ typedef Future<List<T>> OBHttpListSearcher<T>(String searchQuery);
 typedef Future<List<T>> OBHttpListRefresher<T>();
 typedef Future OBHttpListSecondaryRefresher<T>();
 typedef Future<List<T>> OBHttpListOnScrollLoader<T>(List<T> currentList);
+typedef void OBHttpListSelectionChangedListener<T>(List<T> selectionItems);
+typedef void OBHttpListSelectionSubmittedListener<T>(List<T> selectionItems);
+typedef Future OBHttpListSelectionSubmitter<T>(List<T> selectionItems);
 
 class OBHttpListLoadMoreDelegate extends LoadMoreDelegate {
   final LocalizationService localizationService;

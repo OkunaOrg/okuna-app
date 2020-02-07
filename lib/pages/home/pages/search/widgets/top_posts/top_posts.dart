@@ -94,7 +94,7 @@ class OBTopPostsState extends State<OBTopPosts>
         controller: _obPostsStreamController,
         onScrollCallback: widget.onScrollCallback,
         refreshIndicatorDisplacement: 110.0,
-        isTopPostsStream: true,
+        displayContext: OBPostDisplayContext.topPosts,
         initialPosts: _currentPosts,
         refreshOnCreate: _currentPosts == null,
         postBuilder: _topPostBuilder,
@@ -159,23 +159,24 @@ class OBTopPostsState extends State<OBTopPosts>
   Widget _topPostBuilder(
       {BuildContext context,
       Post post,
+      OBPostDisplayContext displayContext,
       String postIdentifier,
       ValueChanged<Post> onPostDeleted}) {
     if (_excludedCommunities.contains(post.community.id)) {
-      post.updateIsFromExcludedCommunity(true);
+      post.updateIsExcludedFromTopPosts(true);
     } else {
-      post.updateIsFromExcludedCommunity(false);
+      post.updateIsExcludedFromTopPosts(false);
     }
 
     return OBPost(
       post,
       key: Key(postIdentifier),
       onPostDeleted: onPostDeleted,
+      displayContext: displayContext,
       onPostIsInView: onPostIsInView,
       onCommunityExcluded: _onCommunityExcluded,
       onUndoCommunityExcluded: _onUndoCommunityExcluded,
       inViewId: postIdentifier,
-      isTopPost: true,
     );
   }
 
@@ -211,7 +212,7 @@ class OBTopPostsState extends State<OBTopPosts>
     _excludedCommunities.add(community.id);
     _currentPosts.forEach((post) {
       if (post.community.id == community.id) {
-        post.updateIsFromExcludedCommunity(true);
+        post.updateIsExcludedFromTopPosts(true);
       }
     });
   }
@@ -220,7 +221,7 @@ class OBTopPostsState extends State<OBTopPosts>
     _excludedCommunities.remove(community.id);
     _currentPosts.forEach((post) {
       if (post.community.id == community.id) {
-        post.updateIsFromExcludedCommunity(false);
+        post.updateIsExcludedFromTopPosts(false);
       }
     });
   }

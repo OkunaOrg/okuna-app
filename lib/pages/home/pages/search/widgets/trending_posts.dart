@@ -125,12 +125,14 @@ class OBTrendingPostsState extends State<OBTrendingPosts>
   Widget _trendingPostBuilder(
       {BuildContext context,
       Post post,
+      OBPostDisplayContext displayContext,
       String postIdentifier,
       ValueChanged<Post> onPostDeleted}) {
     return OBPost(
       post,
       key: Key(postIdentifier),
       onPostDeleted: onPostDeleted,
+      displayContext: displayContext,
       inViewId: postIdentifier,
     );
   }

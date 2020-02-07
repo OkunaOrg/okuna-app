@@ -27,6 +27,7 @@ import 'package:Okuna/pages/home/bottom_sheets/react_to_post_comment.dart';
 import 'package:Okuna/pages/home/bottom_sheets/videos_autoplay_setting_picker.dart';
 import 'package:Okuna/pages/home/bottom_sheets/videos_sound_setting_picker.dart';
 import 'package:Okuna/services/user_preferences.dart';
+import 'package:Okuna/widgets/post/post.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:meta/meta.dart';
@@ -158,9 +159,10 @@ class BottomSheetService {
   Future<void> showPostActions(
       {@required BuildContext context,
       @required Post post,
+      @required OBPostDisplayContext displayContext,
       @required OnPostDeleted onPostDeleted,
       @required ValueChanged<Post> onPostReported,
-      bool isTopPost = false,
+      ValueChanged<Community> onPostCommunityExcludedFromProfilePosts,
       Function onCommunityExcluded,
       Function onUndoCommunityExcluded,
       List<FollowsList> initialPickedFollowsLists}) {
@@ -169,9 +171,10 @@ class BottomSheetService {
         builder: (BuildContext context) {
           return OBPostActionsBottomSheet(
             post: post,
-            isTopPost: isTopPost,
+            displayContext: displayContext,
             onCommunityExcluded: onCommunityExcluded,
             onUndoCommunityExcluded: onUndoCommunityExcluded,
+            onPostCommunityExcludedFromProfilePosts: onPostCommunityExcludedFromProfilePosts,
             onPostDeleted: onPostDeleted,
             onPostReported: onPostReported,
           );
@@ -255,6 +258,7 @@ class BottomSheetService {
     @required BuildContext context,
     String title,
     String subtitle,
+    String description,
     String confirmText,
     String cancelText,
     @required ActionCompleter actionCompleter,
@@ -265,6 +269,7 @@ class BottomSheetService {
           return OBConfirmActionBottomSheet(
             title: title,
             subtitle: subtitle,
+            description: description,
             confirmText: confirmText,
             cancelText: cancelText,
             actionCompleter: actionCompleter,

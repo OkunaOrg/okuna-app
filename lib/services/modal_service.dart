@@ -16,7 +16,6 @@ import 'package:Okuna/pages/home/modals/post_comment/post_comment_reply_expanded
 import 'package:Okuna/pages/home/modals/post_comment/post_commenter_expanded.dart';
 import 'package:Okuna/pages/home/modals/save_post/create_post.dart';
 import 'package:Okuna/pages/home/pages/community/pages/manage_community/pages/community_administrators/modals/add_community_administrator/add_community_administrator.dart';
-import 'package:Okuna/pages/home/modals/edit_user_profile/edit_user_profile.dart';
 import 'package:Okuna/pages/home/modals/save_community.dart';
 import 'package:Okuna/pages/home/modals/save_connections_circle.dart';
 import 'package:Okuna/pages/home/modals/save_follows_list/save_follows_list.dart';
@@ -30,6 +29,8 @@ import 'package:Okuna/pages/home/pages/moderated_objects/moderated_objects.dart'
 import 'package:Okuna/pages/home/pages/moderated_objects/pages/widgets/moderated_object_category/modals/moderated_object_update_category.dart';
 import 'package:Okuna/pages/home/pages/moderated_objects/pages/widgets/moderated_object_description/modals/moderated_object_update_description.dart';
 import 'package:Okuna/pages/home/pages/moderated_objects/pages/widgets/moderated_object_status/modals/moderated_object_update_status.dart';
+import 'package:Okuna/pages/home/pages/profile/pages/edit_profile/modals/edit_profile.dart';
+import 'package:Okuna/pages/home/pages/profile/pages/edit_profile/pages/profile_posts_excluded_communities/modals/exclude_community_from_profile_posts.dart';
 import 'package:Okuna/pages/home/pages/timeline/timeline.dart';
 import 'package:Okuna/widgets/new_post_data_uploader.dart';
 import 'package:flutter/cupertino.dart';
@@ -123,7 +124,7 @@ class ModalService {
     return replyComment;
   }
 
-  Future<void> openEditUserProfile(
+  Future<void> openEditProfile(
       {@required User user,
       @required BuildContext context,
       VoidCallback onUserProfileUpdated}) async {
@@ -131,7 +132,7 @@ class ModalService {
         .push(CupertinoPageRoute<PostReaction>(
             fullscreenDialog: true,
             builder: (BuildContext context) => Material(
-                  child: OBEditUserProfileModal(user,
+                  child: OBEditProfileModal(user,
                       onUserProfileUpdated: onUserProfileUpdated),
                 )));
   }
@@ -409,5 +410,17 @@ class ModalService {
             moderatedObject: moderatedObject,
           );
         }));
+  }
+
+  Future<List<Community>> openExcludeCommunitiesFromProfilePosts(
+      {@required BuildContext context}) async {
+    return Navigator.of(context, rootNavigator: true)
+        .push(CupertinoPageRoute<List<Community>>(
+            fullscreenDialog: true,
+            builder: (BuildContext context) {
+              return Material(
+                child: OBExcludeCommunitiesFromProfilePostsModal(),
+              );
+            }));
   }
 }

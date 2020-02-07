@@ -1,3 +1,4 @@
+import 'package:Okuna/models/community.dart';
 import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/user.dart';
 import 'package:Okuna/pages/home/bottom_sheets/rounded_bottom_sheet.dart';
@@ -9,10 +10,12 @@ import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/user.dart';
 import 'package:Okuna/services/httpie.dart';
 import 'package:Okuna/widgets/icon.dart';
+import 'package:Okuna/widgets/post/post.dart';
 import 'package:Okuna/widgets/theming/text.dart';
 import 'package:Okuna/widgets/tiles/actions/close_post_tile.dart';
 import 'package:Okuna/widgets/tiles/actions/disable_comments_post_tile.dart';
-import 'package:Okuna/widgets/tiles/actions/exclude_community_tile.dart';
+import 'package:Okuna/widgets/tiles/actions/exclude_community_from_profile_posts_tile.dart';
+import 'package:Okuna/widgets/tiles/actions/exclude_community_from_top_posts_tile.dart';
 import 'package:Okuna/widgets/tiles/actions/mute_post_tile.dart';
 import 'package:Okuna/widgets/tiles/actions/report_post_tile.dart';
 import 'package:flutter/cupertino.dart';
@@ -22,19 +25,21 @@ class OBPostActionsBottomSheet extends StatefulWidget {
   final Post post;
   final ValueChanged<Post> onPostReported;
   final OnPostDeleted onPostDeleted;
-  final bool isTopPost;
   final Function onCommunityExcluded;
   final Function onUndoCommunityExcluded;
+  final OBPostDisplayContext displayContext;
+  final ValueChanged<Community> onPostCommunityExcludedFromProfilePosts;
 
-  const OBPostActionsBottomSheet({
-    Key key,
-    @required this.post,
-    @required this.onPostReported,
-    @required this.onPostDeleted,
-    this.onCommunityExcluded,
-    this.onUndoCommunityExcluded,
-    this.isTopPost = false,
-  }) : super(key: key);
+  const OBPostActionsBottomSheet(
+      {Key key,
+      @required this.post,
+      @required this.onPostReported,
+      @required this.onPostDeleted,
+      this.onCommunityExcluded,
+      this.onUndoCommunityExcluded,
+      this.displayContext = OBPostDisplayContext.timelinePosts,
+      this.onPostCommunityExcludedFromProfilePosts})
+      : super(key: key);
 
   @override
   OBPostActionsBottomSheetState createState() {
@@ -67,8 +72,8 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
           Post post = snapshot.data;
           List<Widget> postActions = [];
 
-          if (widget.isTopPost) {
-            postActions.add(OBExcludeCommunityTile(
+          if (widget.displayContext == OBPostDisplayContext.topPosts) {
+            postActions.add(OBExcludeCommunityFromTopPostsTile(
               post: post,
               onExcludedPostCommunity: () {
                 if (widget.onCommunityExcluded != null) {
@@ -83,6 +88,12 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
                 _dismiss();
               },
             ));
+          } else if (widget.displayContext ==
+              OBPostDisplayContext.ownProfilePosts) {
+            postActions.add(OBExcludeCommunityFromProfilePostsTile(
+                post: post,
+                onPostCommunityExcludedFromProfilePosts:
+                    widget.onPostCommunityExcludedFromProfilePosts));
           }
 
           postActions.add(OBMutePostTile(
