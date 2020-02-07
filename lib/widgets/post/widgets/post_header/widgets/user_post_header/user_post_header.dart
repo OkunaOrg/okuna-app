@@ -44,7 +44,13 @@ class OBUserPostHeader extends StatelessWidget {
       subtitle =
           '$subtitle · ${utilsService.timeAgo(_post.created, localizationService)}';
 
+    Function navigateToUserProfile = () {
+      navigationService.navigateToUserProfile(
+          user: _post.creator, context: context);
+    };
+
     return ListTile(
+        onTap: navigateToUserProfile,
         leading: StreamBuilder(
             stream: _post.creator.updateSubject,
             initialData: _post.creator,
@@ -54,10 +60,6 @@ class OBUserPostHeader extends StatelessWidget {
               if (!postCreator.hasProfileAvatar()) return const SizedBox();
 
               return OBAvatar(
-                onPressed: () {
-                  navigationService.navigateToUserProfile(
-                      user: postCreator, context: context);
-                },
                 size: OBAvatarSize.medium,
                 avatarUrl: postCreator.getProfileAvatar(),
               );
