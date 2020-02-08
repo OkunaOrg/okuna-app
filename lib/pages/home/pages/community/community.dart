@@ -22,6 +22,7 @@ import 'package:Okuna/widgets/theming/text.dart';
 import 'package:async/async.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 class OBCommunityPage extends StatefulWidget {
   final Community community;
@@ -38,6 +39,7 @@ class OBCommunityPageState extends State<OBCommunityPage>
     with TickerProviderStateMixin {
   Community _community;
   OBPostsStreamController _obPostsStreamController;
+  ScrollController _obPostsStreamScrollController;
   UserService _userService;
   LocalizationService _localizationService;
 
@@ -47,13 +49,44 @@ class OBCommunityPageState extends State<OBCommunityPage>
 
   List<OBNewPostData> _newPostsData;
 
+  double _hideFloatingButtonTolerance = 10;
+  AnimationController _hideFloatingButtonAnimation;
+  double _previousScrollPixels;
+
   @override
   void initState() {
     super.initState();
+    _obPostsStreamScrollController = ScrollController();
     _obPostsStreamController = OBPostsStreamController();
     _needsBootstrap = true;
     _community = widget.community;
     _newPostsData = [];
+
+    _hideFloatingButtonAnimation =
+        AnimationController(vsync: this, duration: kThemeAnimationDuration);
+    _previousScrollPixels = 0;
+    _hideFloatingButtonAnimation.forward();
+
+
+    _obPostsStreamScrollController.addListener(() {
+      double newScrollPixelPosition =
+          _obPostsStreamScrollController.position.pixels;
+      double scrollPixelDifference =
+          _previousScrollPixels - newScrollPixelPosition;
+
+      if (_obPostsStreamScrollController.position.userScrollDirection ==
+          ScrollDirection.reverse) {
+        if (scrollPixelDifference * -1 > _hideFloatingButtonTolerance) {
+          _hideFloatingButtonAnimation.reverse();
+        }
+      } else {
+        if (scrollPixelDifference > _hideFloatingButtonTolerance) {
+          _hideFloatingButtonAnimation.forward();
+        }
+      }
+
+      _previousScrollPixels = newScrollPixelPosition;
+    });
   }
 
   void _onWantsToUploadNewPostData(OBNewPostData newPostData) {
@@ -62,6 +95,7 @@ class OBCommunityPageState extends State<OBCommunityPage>
 
   @override
   void dispose() {
+    _hideFloatingButtonAnimation.dispose();
     super.dispose();
     if (_refreshCommunityOperation != null) _refreshCommunityOperation.cancel();
   }
@@ -137,6 +171,7 @@ class OBCommunityPageState extends State<OBCommunityPage>
 
     List<Widget> stackItems = [
       OBPostsStream(
+        scrollController: _obPostsStreamScrollController,
         onScrollLoader: _loadMoreCommunityPosts,
         refresher: _refreshCommunityPosts,
         controller: _obPostsStreamController,
@@ -156,9 +191,12 @@ class OBCommunityPageState extends State<OBCommunityPage>
       stackItems.add(Positioned(
           bottom: 20.0,
           right: 20.0,
-          child: OBCommunityNewPostButton(
-            community: _community,
-            onWantsToUploadNewPostData: _onWantsToUploadNewPostData,
+          child: ScaleTransition(
+            scale: _hideFloatingButtonAnimation,
+            child: OBCommunityNewPostButton(
+              community: _community,
+              onWantsToUploadNewPostData: _onWantsToUploadNewPostData,
+            ),
           )));
     }
 

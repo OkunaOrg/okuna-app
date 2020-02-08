@@ -21,9 +21,9 @@ import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Okuna/widgets/page_scaffold.dart';
 import 'package:Okuna/widgets/new_post_data_uploader.dart';
 import 'package:Okuna/widgets/posts_stream/posts_stream.dart';
-import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 class OBTimelinePage extends StatefulWidget {
   final OBTimelinePageController controller;
@@ -38,8 +38,10 @@ class OBTimelinePage extends StatefulWidget {
   }
 }
 
-class OBTimelinePageState extends State<OBTimelinePage> {
+class OBTimelinePageState extends State<OBTimelinePage>
+    with TickerProviderStateMixin {
   OBPostsStreamController _timelinePostsStreamController;
+  ScrollController _timelinePostsStreamScrollController;
   ModalService _modalService;
   UserService _userService;
   LocalizationService _localizationService;
@@ -56,20 +58,51 @@ class OBTimelinePageState extends State<OBTimelinePage> {
   bool _needsBootstrap;
   bool _loggedInUserBootstrapped;
 
+  double _hideFloatingButtonTolerance = 10;
+  AnimationController _hideFloatingButtonAnimation;
+  double _previousScrollPixels;
+
   @override
   void initState() {
     super.initState();
     _timelinePostsStreamController = OBPostsStreamController();
+    _timelinePostsStreamScrollController = ScrollController();
     widget.controller.attach(context: context, state: this);
     _needsBootstrap = true;
     _loggedInUserBootstrapped = false;
     _filteredCircles = [];
     _filteredFollowsLists = [];
     _newPostsData = [];
+    _hideFloatingButtonAnimation =
+        AnimationController(vsync: this, duration: kThemeAnimationDuration);
+    _hideFloatingButtonAnimation.forward();
+
+    _previousScrollPixels = 0;
+
+    _timelinePostsStreamScrollController.addListener(() {
+      double newScrollPixelPosition =
+          _timelinePostsStreamScrollController.position.pixels;
+      double scrollPixelDifference =
+          _previousScrollPixels - newScrollPixelPosition;
+
+      if (_timelinePostsStreamScrollController.position.userScrollDirection ==
+          ScrollDirection.reverse) {
+        if (scrollPixelDifference * -1 > _hideFloatingButtonTolerance) {
+          _hideFloatingButtonAnimation.reverse();
+        }
+      } else {
+        if (scrollPixelDifference > _hideFloatingButtonTolerance) {
+          _hideFloatingButtonAnimation.forward();
+        }
+      }
+
+      _previousScrollPixels = newScrollPixelPosition;
+    });
   }
 
   @override
   void dispose() {
+    _hideFloatingButtonAnimation.dispose();
     super.dispose();
     _loggedInUserChangeSubscription.cancel();
   }
@@ -94,20 +127,22 @@ class OBTimelinePageState extends State<OBTimelinePage> {
     }
 
     return OBCupertinoPageScaffold(
-      backgroundColor: _themeValueParserService.parseColor(_themeService.getActiveTheme().primaryColor),
+        backgroundColor: _themeValueParserService
+            .parseColor(_themeService.getActiveTheme().primaryColor),
         navigationBar: OBThemedNavigationBar(
             title: 'Home', trailing: _buildFiltersButton()),
         child: Stack(
           children: <Widget>[
             _loggedInUserBootstrapped
                 ? OBPostsStream(
-              controller: _timelinePostsStreamController,
-              prependedItems: _buildPostsStreamPrependedItems(),
-              streamIdentifier: 'timeline',
-              onScrollLoader: _postsStreamOnScrollLoader,
-              refresher: _postsStreamRefresher,
-              initialPosts: _initialPosts,
-            )
+                    controller: _timelinePostsStreamController,
+                    scrollController: _timelinePostsStreamScrollController,
+                    prependedItems: _buildPostsStreamPrependedItems(),
+                    streamIdentifier: 'timeline',
+                    onScrollLoader: _postsStreamOnScrollLoader,
+                    refresher: _postsStreamRefresher,
+                    initialPosts: _initialPosts,
+                  )
                 : const SizedBox(),
             Positioned(
                 bottom: 20.0,
@@ -115,11 +150,13 @@ class OBTimelinePageState extends State<OBTimelinePage> {
                 child: Semantics(
                     button: true,
                     label: _localizationService.post__create_new_post_label,
-                    child: OBFloatingActionButton(
-                        type: OBButtonType.primary,
-                        onPressed: _onCreatePost,
-                        child: const OBIcon(OBIcons.createPost,
-                            size: OBIconSize.large, color: Colors.white))))
+                    child: ScaleTransition(
+                        scale: _hideFloatingButtonAnimation,
+                        child: OBFloatingActionButton(
+                            type: OBButtonType.primary,
+                            onPressed: _onCreatePost,
+                            child: const OBIcon(OBIcons.createPost,
+                                size: OBIconSize.large, color: Colors.white)))))
           ],
         ));
   }
