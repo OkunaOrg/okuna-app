@@ -64,6 +64,8 @@ class OBCommunityPageState extends State<OBCommunityPage>
     _hideFloatingButtonAnimation =
         AnimationController(vsync: this, duration: kThemeAnimationDuration);
     _previousScrollPixels = 0;
+    _hideFloatingButtonAnimation.forward();
+
 
     _obPostsStreamScrollController.addListener(() {
       double newScrollPixelPosition =

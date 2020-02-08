@@ -75,6 +75,8 @@ class OBTimelinePageState extends State<OBTimelinePage>
     _newPostsData = [];
     _hideFloatingButtonAnimation =
         AnimationController(vsync: this, duration: kThemeAnimationDuration);
+    _hideFloatingButtonAnimation.forward();
+
     _previousScrollPixels = 0;
 
     _timelinePostsStreamScrollController.addListener(() {
