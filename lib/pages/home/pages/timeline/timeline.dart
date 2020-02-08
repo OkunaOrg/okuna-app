@@ -48,9 +48,6 @@ class OBTimelinePageState extends State<OBTimelinePage>
   ThemeService _themeService;
   ThemeValueParserService _themeValueParserService;
 
-  double _hideCreatePostButtonTolerance = 10;
-  AnimationController _hideCreatePostButtonAnimation;
-
   List<Post> _initialPosts;
   List<OBNewPostData> _newPostsData;
   List<Circle> _filteredCircles;
@@ -61,6 +58,8 @@ class OBTimelinePageState extends State<OBTimelinePage>
   bool _needsBootstrap;
   bool _loggedInUserBootstrapped;
 
+  double _hideFloatingButtonTolerance = 10;
+  AnimationController _hideFloatingButtonAnimation;
   double _previousScrollPixels;
 
   @override
@@ -74,7 +73,7 @@ class OBTimelinePageState extends State<OBTimelinePage>
     _filteredCircles = [];
     _filteredFollowsLists = [];
     _newPostsData = [];
-    _hideCreatePostButtonAnimation =
+    _hideFloatingButtonAnimation =
         AnimationController(vsync: this, duration: kThemeAnimationDuration);
     _previousScrollPixels = 0;
 
@@ -86,12 +85,12 @@ class OBTimelinePageState extends State<OBTimelinePage>
 
       if (_timelinePostsStreamScrollController.position.userScrollDirection ==
           ScrollDirection.reverse) {
-        if (scrollPixelDifference * -1 > _hideCreatePostButtonTolerance) {
-          _hideCreatePostButtonAnimation.reverse();
+        if (scrollPixelDifference * -1 > _hideFloatingButtonTolerance) {
+          _hideFloatingButtonAnimation.reverse();
         }
       } else {
-        if (scrollPixelDifference > _hideCreatePostButtonTolerance) {
-          _hideCreatePostButtonAnimation.forward();
+        if (scrollPixelDifference > _hideFloatingButtonTolerance) {
+          _hideFloatingButtonAnimation.forward();
         }
       }
 
@@ -101,7 +100,7 @@ class OBTimelinePageState extends State<OBTimelinePage>
 
   @override
   void dispose() {
-    _hideCreatePostButtonAnimation.dispose();
+    _hideFloatingButtonAnimation.dispose();
     super.dispose();
     _loggedInUserChangeSubscription.cancel();
   }
@@ -150,7 +149,7 @@ class OBTimelinePageState extends State<OBTimelinePage>
                     button: true,
                     label: _localizationService.post__create_new_post_label,
                     child: ScaleTransition(
-                        scale: _hideCreatePostButtonAnimation,
+                        scale: _hideFloatingButtonAnimation,
                         child: OBFloatingActionButton(
                             type: OBButtonType.primary,
                             onPressed: _onCreatePost,
