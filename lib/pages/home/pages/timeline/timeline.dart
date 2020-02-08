@@ -21,7 +21,6 @@ import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Okuna/widgets/page_scaffold.dart';
 import 'package:Okuna/widgets/new_post_data_uploader.dart';
 import 'package:Okuna/widgets/posts_stream/posts_stream.dart';
-import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -39,7 +38,8 @@ class OBTimelinePage extends StatefulWidget {
   }
 }
 
-class OBTimelinePageState extends State<OBTimelinePage> {
+class OBTimelinePageState extends State<OBTimelinePage>
+    with TickerProviderStateMixin {
   OBPostsStreamController _timelinePostsStreamController;
   ScrollController _timelinePostsStreamScrollController;
   ModalService _modalService;
@@ -47,6 +47,9 @@ class OBTimelinePageState extends State<OBTimelinePage> {
   LocalizationService _localizationService;
   ThemeService _themeService;
   ThemeValueParserService _themeValueParserService;
+
+  double _hideCreatePostButtonTolerance = 10;
+  AnimationController _hideCreatePostButtonAnimation;
 
   List<Post> _initialPosts;
   List<OBNewPostData> _newPostsData;
@@ -57,7 +60,8 @@ class OBTimelinePageState extends State<OBTimelinePage> {
 
   bool _needsBootstrap;
   bool _loggedInUserBootstrapped;
-  bool _createPostButtonIsVisible;
+
+  double _previousScrollPixels;
 
   @override
   void initState() {
@@ -66,45 +70,38 @@ class OBTimelinePageState extends State<OBTimelinePage> {
     _timelinePostsStreamScrollController = ScrollController();
     widget.controller.attach(context: context, state: this);
     _needsBootstrap = true;
-    _createPostButtonIsVisible = true;
     _loggedInUserBootstrapped = false;
     _filteredCircles = [];
     _filteredFollowsLists = [];
     _newPostsData = [];
+    _hideCreatePostButtonAnimation =
+        AnimationController(vsync: this, duration: kThemeAnimationDuration);
+    _previousScrollPixels = 0;
 
     _timelinePostsStreamScrollController.addListener(() {
+      double newScrollPixelPosition =
+          _timelinePostsStreamScrollController.position.pixels;
+      double scrollPixelDifference =
+          _previousScrollPixels - newScrollPixelPosition;
+
       if (_timelinePostsStreamScrollController.position.userScrollDirection ==
           ScrollDirection.reverse) {
-        if (_createPostButtonIsVisible == true) {
-          /* only set when the previous state is false
-             * Less widget rebuilds
-             */
-          print(
-              "**** ${_createPostButtonIsVisible} up"); //Move IO away from setState
-          setState(() {
-            _createPostButtonIsVisible = false;
-          });
+        if (scrollPixelDifference * -1 > _hideCreatePostButtonTolerance) {
+          _hideCreatePostButtonAnimation.reverse();
         }
       } else {
-        if (_timelinePostsStreamScrollController.position.userScrollDirection ==
-            ScrollDirection.forward) {
-          if (_createPostButtonIsVisible == false) {
-            /* only set when the previous state is false
-               * Less widget rebuilds
-               */
-            print(
-                "**** ${_createPostButtonIsVisible} down"); //Move IO away from setState
-            setState(() {
-              _createPostButtonIsVisible = true;
-            });
-          }
+        if (scrollPixelDifference > _hideCreatePostButtonTolerance) {
+          _hideCreatePostButtonAnimation.forward();
         }
       }
+
+      _previousScrollPixels = newScrollPixelPosition;
     });
   }
 
   @override
   void dispose() {
+    _hideCreatePostButtonAnimation.dispose();
     super.dispose();
     _loggedInUserChangeSubscription.cancel();
   }
@@ -152,8 +149,8 @@ class OBTimelinePageState extends State<OBTimelinePage> {
                 child: Semantics(
                     button: true,
                     label: _localizationService.post__create_new_post_label,
-                    child: Visibility(
-                        visible: _createPostButtonIsVisible,
+                    child: ScaleTransition(
+                        scale: _hideCreatePostButtonAnimation,
                         child: OBFloatingActionButton(
                             type: OBButtonType.primary,
                             onPressed: _onCreatePost,
