@@ -18,9 +18,6 @@ class OBAboutPage extends StatefulWidget {
 // TODO The get_version plugin does not work for iOS.
 
 class OBAboutPageState extends State<OBAboutPage> {
-  String _appName = 'Okuna';
-  String _appVersion = '0.0.55';
-  String _platformVersion = '';
 
   @override
   void initState() {
@@ -53,7 +50,7 @@ class OBAboutPageState extends State<OBAboutPage> {
             ListTile(
               leading: OBIcon(OBIcons.nativeInfo),
               title: OBText(
-                'Okuna v0.0.61'
+                'Okuna v0.0.63'
               ),
             ),
           ],
