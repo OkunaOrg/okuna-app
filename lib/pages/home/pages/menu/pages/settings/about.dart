@@ -30,8 +30,6 @@ class OBAboutPageState extends State<OBAboutPage> {
 
     if (!mounted) return;
     setState(() {
-      _appName = pi.appName;
-      _appVersion = pi.version;
     });
   }
 
