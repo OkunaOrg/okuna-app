@@ -282,8 +282,12 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
 
     T listItem = _listSearchResults[index];
 
-    return _wrapSelectableListItemWidget(
-        listItem, widget.searchResultListItemBuilder(context, listItem));
+    Widget listItemWidget =
+        widget.searchResultListItemBuilder(context, listItem);
+
+    if (!widget.isSelectable) return listItemWidget;
+
+    return _wrapSelectableListItemWidget(listItem, listItemWidget);
   }
 
   Widget _buildList() {
