@@ -106,10 +106,10 @@ class OBExcludeCommunityFromTopPostsTileState
     try {
       _undoExcludeCommunityOperation = CancelableOperation.fromFuture(
           _userService.undoExcludeCommunityFromTopPosts(widget.post.community));
-      String message = await _undoExcludeCommunityOperation.value;
+      await _undoExcludeCommunityOperation.value;
       if (widget.onUndoExcludedPostCommunity != null)
         widget.onUndoExcludedPostCommunity();
-      _toastService.success(message: message, context: context);
+      _toastService.success(message: _localizationService.post__exclude_community_from_profile_posts_success, context: context);
       widget.post.updateIsExcludedFromTopPosts(false);
     } catch (e) {
       _onError(e);

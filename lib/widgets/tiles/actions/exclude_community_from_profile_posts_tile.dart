@@ -58,7 +58,7 @@ class OBExcludeCommunityFromProfilePostsTileState
 
           widget.onPostCommunityExcludedFromProfilePosts(widget.post.community);
           _toastService.success(
-              message: _localizationService.post__actions_deleted,
+              message: _localizationService.post__exclude_community_from_profile_posts_success,
               context: context);
         });
   }
