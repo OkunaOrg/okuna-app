@@ -29,12 +29,12 @@
     "type": "text",
     "placeholders": {}
   },
-  "excluded_community": "excluded community",
+  "excluded_community": "hidden community",
   "@excluded_community": {
     "type": "text",
     "placeholders": {}
   },
-  "excluded_communities": "excluded communities",
+  "excluded_communities": "hidden communities",
   "@excluded_communities": {
     "type": "text",
     "placeholders": {}
@@ -814,12 +814,12 @@
       "maxLength": {}
     }
   },
-  "top_posts_excluded_communities": "Excluded communities",
+  "top_posts_excluded_communities": "Hidden communities",
   "@top_posts_excluded_communities": {
     "type": "text",
     "placeholders": {}
   },
-  "top_posts_excluded_communities_desc": "Manage communities excluded from the explore timeline",
+  "top_posts_excluded_communities_desc": "Manage communities hidden from the explore timeline",
   "@top_posts_excluded_communities_desc": {
     "type": "text",
     "placeholders": {}

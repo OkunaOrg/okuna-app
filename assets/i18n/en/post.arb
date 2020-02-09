@@ -508,6 +508,21 @@
     "type": "text",
     "placeholders": {}
   },
+  "exclude_community_from_profile_posts": "Hide this community from my profile",
+  "@exclude_community_from_profile_posts": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "exclude_community_from_profile_posts_success": "Community hidden",
+  "@exclude_community_from_profile_posts_success": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "exclude_community_from_profile_posts_confirmation": "This will hide all posts from this community from your profile.",
+  "@exclude_community_from_profile_posts_confirmation": {
+    "type": "text",
+    "placeholders": {}
+  },
   "comments_enabled_message": "Comments enabled for post",
   "@comments_enabled_message": {
     "type": "text",
