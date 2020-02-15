@@ -1,5 +1,7 @@
 import 'package:Okuna/models/categories_list.dart';
 import 'package:Okuna/models/category.dart';
+import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/widgets/category_badge.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/user.dart';
@@ -26,6 +28,8 @@ class OBCategoriesPicker extends StatefulWidget {
 
 class OBCategoriesPickerState extends State<OBCategoriesPicker> {
   UserService _userService;
+  ToastService _toastService;
+  LocalizationService _localizationService;
 
   bool _needsBootstrap;
 
@@ -47,6 +51,8 @@ class OBCategoriesPickerState extends State<OBCategoriesPicker> {
     if (_needsBootstrap) {
       var openbookProvider = OpenbookProvider.of(context);
       _userService = openbookProvider.userService;
+      _toastService = openbookProvider.toastService;
+      _localizationService = openbookProvider.localizationService;
       _bootstrap();
       _needsBootstrap = false;
     }
@@ -56,6 +62,19 @@ class OBCategoriesPickerState extends State<OBCategoriesPicker> {
         spacing: 10,
         runSpacing: 10,
         children: _categories.map(_buildCategory).toList());
+  }
+
+  void _bootstrap() async {
+    _refreshCategories();
+  }
+
+  void _refreshCategories() async {
+    try {
+      CategoriesList categoriesList = await _userService.getCategories();
+      _setCategories(categoriesList.categories);
+    } catch (error) {
+      _onError(error);
+    }
   }
 
   Widget _buildCategory(Category category) {
@@ -99,8 +118,17 @@ class OBCategoriesPickerState extends State<OBCategoriesPicker> {
     });
   }
 
-  void _bootstrap() async {
-    CategoriesList categoriesList = await _userService.getCategories();
-    _setCategories(categoriesList.categories);
+  void _onError(error) async {
+    if (error is HttpieConnectionRefusedError) {
+      _toastService.error(
+          message: error.toHumanReadableMessage(), context: context);
+    } else if (error is HttpieRequestError) {
+      String errorMessage = await error.toHumanReadableMessage();
+      _toastService.error(message: errorMessage, context: context);
+    } else {
+      _toastService.error(
+          message: _localizationService.error__unknown_error, context: context);
+      throw error;
+    }
   }
 }
