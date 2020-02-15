@@ -5,6 +5,7 @@ import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/widgets/category_badge.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/user.dart';
+import 'package:Okuna/widgets/tiles/retry_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -30,8 +31,10 @@ class OBCategoriesPickerState extends State<OBCategoriesPicker> {
   UserService _userService;
   ToastService _toastService;
   LocalizationService _localizationService;
+  bool _hasError;
 
   bool _needsBootstrap;
+  bool _requestInProgress;
 
   List<Category> _categories;
   List<Category> _pickedCategories;
@@ -44,6 +47,8 @@ class OBCategoriesPickerState extends State<OBCategoriesPicker> {
         ? []
         : widget.initialCategories.toList();
     _needsBootstrap = true;
+    _requestInProgress = true;
+    _hasError = true;
   }
 
   @override
@@ -57,11 +62,16 @@ class OBCategoriesPickerState extends State<OBCategoriesPicker> {
       _needsBootstrap = false;
     }
 
-    return Wrap(
-        alignment: WrapAlignment.start,
-        spacing: 10,
-        runSpacing: 10,
-        children: _categories.map(_buildCategory).toList());
+    return _hasError
+        ? OBRetryTile(
+            isLoading: _requestInProgress,
+            onWantsToRetry: _onWantsToRetry,
+          )
+        : Wrap(
+            alignment: WrapAlignment.start,
+            spacing: 10,
+            runSpacing: 10,
+            children: _categories.map(_buildCategory).toList());
   }
 
   void _bootstrap() async {
@@ -69,12 +79,21 @@ class OBCategoriesPickerState extends State<OBCategoriesPicker> {
   }
 
   void _refreshCategories() async {
+    _setRequestInProgress(true);
     try {
       CategoriesList categoriesList = await _userService.getCategories();
+      _setHasError(false);
       _setCategories(categoriesList.categories);
     } catch (error) {
+      _setHasError(true);
       _onError(error);
+    } finally{
+      _setRequestInProgress(false);
     }
+  }
+
+  void _onWantsToRetry() {
+    _refreshCategories();
   }
 
   Widget _buildCategory(Category category) {
@@ -115,6 +134,18 @@ class OBCategoriesPickerState extends State<OBCategoriesPicker> {
   void _setCategories(List<Category> categories) {
     setState(() {
       _categories = categories;
+    });
+  }
+
+  void _setHasError(bool hasError) {
+    setState(() {
+      _hasError = hasError;
+    });
+  }
+
+  void _setRequestInProgress(bool requestInProgress) {
+    setState(() {
+      _requestInProgress = requestInProgress;
     });
   }
 
