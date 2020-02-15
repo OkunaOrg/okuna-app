@@ -141,6 +141,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.4.1+4"
+  exif:
+    dependency: "direct main"
+    description:
+      name: exif
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.2"
   expandable:
     dependency: "direct main"
     description:

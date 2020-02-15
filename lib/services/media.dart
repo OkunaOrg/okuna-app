@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:Okuna/plugins/image_converter/image_converter.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/utils_service.dart';
+import 'package:exif/exif.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_exif_rotation/flutter_exif_rotation.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
@@ -55,6 +56,8 @@ class MediaService {
         await _bottomSheetService.showImagePicker(context: context);
 
     if (pickedImage == null) return null;
+
+    pickedImage = await fixExifRotation(pickedImage);
     final tempPath = await _getTempPath();
 
     final String processedImageUuid = _uuid.v4();
@@ -125,15 +128,22 @@ class MediaService {
 
   Future<File> processImage(File image) async {
     // This is supposed to solve the rotated images bug from flutter
-    // https://github.com/flutter/flutter/issues/35334
-    File rotatedImage =
-        await FlutterExifRotation.rotateAndSaveImage(path: image.path);
-
-    // Copy because rotated image always uses the path
-    File imageCopy = await copyMediaFile(rotatedImage, deleteOriginal: true);
-
-    return imageCopy;
+    // https://github.com/flower189/CameraBug/blob/image-orientation/lib/main.dart
+    return image;
   }
+
+  Future<File> fixExifRotation(File image) async {
+    List<int> imageBytes = await image.readAsBytes();
+
+    List<int> result = await FlutterImageCompress.compressWithList(imageBytes,
+        quality: 100, rotate: 0);
+
+    await image.writeAsBytes(result);
+
+    return image;
+  }
+
+
 
   Future<File> copyMediaFile(File mediaFile, {deleteOriginal: true}) async {
     final String processedImageUuid = _uuid.v4();
