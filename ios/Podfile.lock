@@ -7,43 +7,46 @@ PODS:
   - file_picker (0.0.1):
     - Flutter
   - Flutter (1.0.0)
-  - flutter_ffmpeg/full-gpl-lts (0.2.7):
+  - flutter_exif_rotation (0.0.1):
     - Flutter
-    - mobile-ffmpeg-full-gpl (= 4.2.2.LTS)
+  - flutter_ffmpeg/full-gpl-lts (0.2.10):
+    - Flutter
+    - mobile-ffmpeg-full-gpl (= 4.3.1.LTS)
   - flutter_image_compress (0.0.1):
     - Flutter
     - Mantle
+    - SDWebImageWebPCoder
   - flutter_secure_storage (3.3.1):
     - Flutter
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
-  - image_cropper (0.0.1):
+  - image_cropper (0.0.2):
     - Flutter
-    - TOCropViewController (~> 2.5.1)
+    - TOCropViewController (~> 2.5.2)
   - image_picker (0.0.1):
     - Flutter
-  - Intercom (5.5.2)
-  - "intercom_flutter (2.0.5+2)":
+  - Intercom (6.0.1)
+  - intercom_flutter (2.1.0):
     - Flutter
-    - Intercom (~> 5.5.1)
-  - libwebp (1.0.3):
-    - libwebp/demux (= 1.0.3)
-    - libwebp/mux (= 1.0.3)
-    - libwebp/webp (= 1.0.3)
-  - libwebp/demux (1.0.3):
+    - Intercom (~> 6.0.1)
+  - libwebp (1.1.0):
+    - libwebp/demux (= 1.1.0)
+    - libwebp/mux (= 1.1.0)
+    - libwebp/webp (= 1.1.0)
+  - libwebp/demux (1.1.0):
     - libwebp/webp
-  - libwebp/mux (1.0.3):
+  - libwebp/mux (1.1.0):
     - libwebp/demux
-  - libwebp/webp (1.0.3)
-  - Mantle (2.1.0):
-    - Mantle/extobjc (= 2.1.0)
-  - Mantle/extobjc (2.1.0)
-  - mobile-ffmpeg-full-gpl (4.2.2.LTS)
-  - OneSignal (2.11.2)
-  - onesignal_flutter (2.2.0):
+  - libwebp/webp (1.1.0)
+  - Mantle (2.1.1):
+    - Mantle/extobjc (= 2.1.1)
+  - Mantle/extobjc (2.1.1)
+  - mobile-ffmpeg-full-gpl (4.3.1.LTS)
+  - OneSignal (2.12.6)
+  - onesignal_flutter (2.3.3):
     - Flutter
-    - OneSignal (= 2.11.2)
+    - OneSignal (= 2.12.6)
   - package_info (0.0.1):
     - Flutter
   - path_provider (0.0.1):
@@ -51,9 +54,17 @@ PODS:
   - Reachability (3.2)
   - screen (0.0.1):
     - Flutter
+  - SDWebImage/Core (5.5.2)
+  - SDWebImageWebPCoder (0.5.0):
+    - libwebp (~> 1.0)
+    - SDWebImage/Core (~> 5.5)
   - share (0.5.2):
     - Flutter
   - shared_preferences (0.0.1):
+    - Flutter
+  - shared_preferences_macos (0.0.1):
+    - Flutter
+  - shared_preferences_web (0.0.1):
     - Flutter
   - sqflite (0.0.1):
     - Flutter
@@ -78,6 +89,7 @@ DEPENDENCIES:
   - device_info (from `.symlinks/plugins/device_info/ios`)
   - file_picker (from `.symlinks/plugins/file_picker/ios`)
   - Flutter (from `Flutter`)
+  - flutter_exif_rotation (from `.symlinks/plugins/flutter_exif_rotation/ios`)
   - flutter_ffmpeg/full-gpl-lts (from `.symlinks/plugins/flutter_ffmpeg/ios`)
   - flutter_image_compress (from `.symlinks/plugins/flutter_image_compress/ios`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
@@ -91,6 +103,8 @@ DEPENDENCIES:
   - screen (from `.symlinks/plugins/screen/ios`)
   - share (from `.symlinks/plugins/share/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
+  - shared_preferences_macos (from `.symlinks/plugins/shared_preferences_macos/ios`)
+  - shared_preferences_web (from `.symlinks/plugins/shared_preferences_web/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
   - uni_links (from `.symlinks/plugins/uni_links/ios`)
   - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
@@ -107,6 +121,8 @@ SPEC REPOS:
     - mobile-ffmpeg-full-gpl
     - OneSignal
     - Reachability
+    - SDWebImage
+    - SDWebImageWebPCoder
     - TOCropViewController
     - VIMediaCache
 
@@ -119,6 +135,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/file_picker/ios"
   Flutter:
     :path: Flutter
+  flutter_exif_rotation:
+    :path: ".symlinks/plugins/flutter_exif_rotation/ios"
   flutter_ffmpeg:
     :path: ".symlinks/plugins/flutter_ffmpeg/ios"
   flutter_image_compress:
@@ -143,6 +161,10 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/share/ios"
   shared_preferences:
     :path: ".symlinks/plugins/shared_preferences/ios"
+  shared_preferences_macos:
+    :path: ".symlinks/plugins/shared_preferences_macos/ios"
+  shared_preferences_web:
+    :path: ".symlinks/plugins/shared_preferences_web/ios"
   sqflite:
     :path: ".symlinks/plugins/sqflite/ios"
   uni_links:
@@ -157,37 +179,42 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/wakelock/ios"
 
 SPEC CHECKSUMS:
-  connectivity: c72716e202a1225ec4810740d5cb56b8ae3bf4cc
-  device_info: 3ebad48f726348f69abd802f3334a8d1ed795fbd
+  connectivity: 6e94255659cc86dcbef1d452ad3e0491bb1b3e75
+  device_info: cbf09d2ec12aa7110e0b09fabe54b5bd6c8efe74
   file_picker: 408623be2125b79a4539cf703be3d4b3abe5e245
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  flutter_ffmpeg: 05ee218287a2b55a13df8f7970aab1a52094083e
-  flutter_image_compress: f69d0e0e078ce52b4810695593bc861ee319ae7d
+  flutter_exif_rotation: 85a029bc8f10235c50736be688519f4037a87f13
+  flutter_ffmpeg: cf0a6941ef67e88248c998cc3e34f8acb0b4e454
+  flutter_image_compress: 082f8daaf6c1b0c9fe798251c750ef0ecd98d7ae
   flutter_secure_storage: 7953c38a04c3fdbb00571bcd87d8e3b5ceb9daec
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
-  image_cropper: 966bf742cd9cee8d78010ec5c67dd9e7826e6b19
+  image_cropper: 3c16d7651730ffe85897f5a1c4e2547e6b54989a
   image_picker: e3eacd46b94694dde7cf2705955cece853aa1a8f
-  Intercom: 1151a15e5e7931d8e401671a4357239d44325159
-  intercom_flutter: bfadb1c7e3d0af65b91cef2a53a29f5a9abc32c1
-  libwebp: 057912d6d0abfb6357d8bb05c0ea470301f5d61e
-  Mantle: 2fa750afa478cd625a94230fbf1c13462f29395b
-  mobile-ffmpeg-full-gpl: efbd28ed385c931e90421f4f3a78a2349c3c76d0
-  OneSignal: 4e3e68bb6c29975286a2fa910cb49132bc6e20bb
-  onesignal_flutter: 5a6041629e3f93a61cf7ae8193c3d1702f2ef78d
-  package_info: 78cabb3c322943c55d39676f4a5bfc748c01d055
+  Intercom: f63e30d10c658b4f5817f5693e5ee2fa070b5803
+  intercom_flutter: 3c324ba9a75060f15c5bfb7854a9bb0a3524cb65
+  libwebp: 946cb3063cea9236285f7e9a8505d806d30e07f3
+  Mantle: 35238ae6f2e2b2d474fa7b67fee82a59fea71915
+  mobile-ffmpeg-full-gpl: b1e8e1540852bd911768774f1c11e8fc76102dc3
+  OneSignal: a6df91542d1cf133b9dd19d89f2b533d8f2d3163
+  onesignal_flutter: 0db2f05befedb1ef79399b571bff4c9ba5410f6a
+  package_info: 48b108e75b8802c2d5e126f208ef540561c98aef
   path_provider: fb74bd0465e96b594bb3b5088ee4a4e7bb1f2a9d
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   screen: abd91ca7bf3426e1cc3646d27e9b2358d6bf07b0
-  share: 7d22fe8baedfe93aefd864bf0b73f29711fbb0a3
-  shared_preferences: 1feebfa37bb57264736e16865e7ffae7fc99b523
-  sqflite: ff1d9da63c06588cc8d1faf7256d741f16989d5a
+  SDWebImage: 4d5c027c935438f341ed33dbac53ff9f479922ca
+  SDWebImageWebPCoder: e7ae855f058e3dcae99696920b6a5d134e9dcddf
+  share: bae0a282aab4483288913fc4dc0b935d4b491f2e
+  shared_preferences: 430726339841afefe5142b9c1f50cb6bd7793e01
+  shared_preferences_macos: f3f29b71ccbb56bf40c9dd6396c9acf15e214087
+  shared_preferences_web: 141cce0c3ed1a1c5bf2a0e44f52d31eeb66e5ea9
+  sqflite: 4001a31ff81d210346b500c55b17f4d6c7589dd0
   TOCropViewController: e9da34f484aedd4e5d5a8ab230ba217cfe16c729
   uni_links: d97da20c7701486ba192624d99bffaaffcfc298a
   url_launcher: 0067ddb8f10d36786672aa0722a21717dba3a298
   video_player: fd8b6188941ec5a530d6ab0830a34f78faa0452e
   video_thumbnail: c4e2a3c539e247d4de13cd545344fd2d26ffafd1
   VIMediaCache: aa650f82cb114c68a343beb4e67416cf5eb2f3a2
-  wakelock: da5012e206ec8978df58d8642e4cdd4fe506185f
+  wakelock: bd3dcc6a8bcf53a1c0309780ff192dcee67c6ccb
 
 PODFILE CHECKSUM: 19fc3c8c5b57454c416c7e16986dc7dd8aa66d48
 

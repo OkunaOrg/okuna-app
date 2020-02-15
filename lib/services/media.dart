@@ -3,6 +3,7 @@ import 'package:Okuna/plugins/image_converter/image_converter.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/utils_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_exif_rotation/flutter_exif_rotation.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:meta/meta.dart';
@@ -125,12 +126,28 @@ class MediaService {
   Future<File> processImage(File image) async {
     // This is supposed to solve the rotated images bug from flutter
     // https://github.com/flutter/flutter/issues/35334
-    final imageBytes = await image.readAsBytes();
-    await image.delete();
-    final compressedImageBytes =
-        await FlutterImageCompress.compressWithList(imageBytes);
-    await image.writeAsBytes(compressedImageBytes);
-    return image;
+    File rotatedImage =
+        await FlutterExifRotation.rotateAndSaveImage(path: image.path);
+
+    // Copy because rotated image always uses the path
+    File imageCopy = await copyMediaFile(rotatedImage, deleteOriginal: true);
+
+    return imageCopy;
+  }
+
+  Future<File> copyMediaFile(File mediaFile, {deleteOriginal: true}) async {
+    final String processedImageUuid = _uuid.v4();
+    String imageExtension = basename(mediaFile.path);
+
+    final tempPath = await _getTempPath();
+
+    // The image picker gives us the real image, lets copy it into a temp path
+    File fileCopy =
+        mediaFile.copySync('$tempPath/$processedImageUuid$imageExtension');
+
+    if (deleteOriginal) await mediaFile.delete();
+
+    return fileCopy;
   }
 
   Future<String> _getTempPath() async {
