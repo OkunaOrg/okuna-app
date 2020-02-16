@@ -128,7 +128,7 @@ class MediaService {
     return image;
   }
 
-  Future<File> fixExifRotation(File image, {deleteOriginal: true}) async {
+  Future<File> fixExifRotation(File image, {deleteOriginal: false}) async {
     List<int> imageBytes = await image.readAsBytes();
 
     List<int> result = await FlutterImageCompress.compressWithList(imageBytes,
