@@ -116,7 +116,8 @@ class CommunitiesApiService {
 
     return _httpService.get('$apiURL$GET_TRENDING_COMMUNITIES_PATH',
         queryParameters: queryParams,
-        appendAuthorizationToken: authenticatedRequest);
+        appendAuthorizationToken: authenticatedRequest,
+        headers: {'Accept': 'application/json; version=2.0'});
   }
 
   Future<HttpieResponse> getSuggestedCommunities(
