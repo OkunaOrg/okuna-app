@@ -42,6 +42,8 @@ class PostsApiService {
       'api/posts/{postUuid}/comments/{postCommentId}/replies/';
   static const MUTE_POST_PATH = 'api/posts/{postUuid}/notifications/mute/';
   static const UNMUTE_POST_PATH = 'api/posts/{postUuid}/notifications/unmute/';
+  static const POST_NOTIFICATIONS_SUBSCRIPTION_PATH =
+      'api/posts/{postUuid}/notifications/subscribe/';
   static const REPORT_POST_PATH = 'api/posts/{postUuid}/report/';
   static const PREVIEW_POST_DATA_PATH = 'api/posts/{postUuid}/link-preview/';
   static const TRANSLATE_POST_PATH = 'api/posts/{postUuid}/translate/';
@@ -436,6 +438,46 @@ class PostsApiService {
     return _httpService.post(_makeApiUrl(path), appendAuthorizationToken: true);
   }
 
+  Future<HttpieResponse> createPostNotificationsSubscription(
+      {@required String postUuid,
+      bool commentNotifications,
+      bool reactionNotifications,
+      bool replyNotifications}) {
+    Map<String, dynamic> body = {};
+    if (commentNotifications != null) {
+      body['comment_notifications'] = commentNotifications;
+    }
+    if (reactionNotifications != null) {
+      body['reaction_notifications'] = reactionNotifications;
+    }
+    if (replyNotifications != null) {
+      body['reply_notifications'] = replyNotifications;
+    }
+    String path = _makePostNotificationsSubscriptionPath(postUuid);
+    return _httpService.putJSON(_makeApiUrl(path),
+        body: body, appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> updatePostNotificationsSubscription(
+      {@required String postUuid,
+      bool commentNotifications,
+      bool reactionNotifications,
+      bool replyNotifications}) {
+    Map<String, dynamic> body = {};
+    if (commentNotifications != null) {
+      body['comment_notifications'] = commentNotifications;
+    }
+    if (reactionNotifications != null) {
+      body['reaction_notifications'] = reactionNotifications;
+    }
+    if (replyNotifications != null) {
+      body['reply_notifications'] = replyNotifications;
+    }
+    String path = _makePostNotificationsSubscriptionPath(postUuid);
+    return _httpService.patchJSON(_makeApiUrl(path),
+        body: body, appendAuthorizationToken: true);
+  }
+
   Future<HttpieResponse> disableCommentsForPostWithUuidPost(String postUuid) {
     String path = _makeDisableCommentsForPostPath(postUuid);
     return _httpService.post(_makeApiUrl(path), appendAuthorizationToken: true);
@@ -627,6 +669,11 @@ class PostsApiService {
   String _makeUnmutePostPath(String postUuid) {
     return _stringTemplateService
         .parse(UNMUTE_POST_PATH, {'postUuid': postUuid});
+  }
+
+  String _makePostNotificationsSubscriptionPath(String postUuid) {
+    return _stringTemplateService
+        .parse(POST_NOTIFICATIONS_SUBSCRIPTION_PATH, {'postUuid': postUuid});
   }
 
   String _makeMutePostCommentPath({
