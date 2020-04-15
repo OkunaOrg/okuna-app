@@ -7,11 +7,14 @@ import 'package:Okuna/models/moderation/moderated_object.dart';
 import 'package:Okuna/models/moderation/moderation_category.dart';
 import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/post_comment.dart';
+import 'package:Okuna/models/post_notifications_subscription.dart';
 import 'package:Okuna/models/post_reaction.dart';
 import 'package:Okuna/models/user.dart';
 import 'package:Okuna/models/user_invite.dart';
 import 'package:Okuna/pages/home/modals/accept_guidelines/accept_guidelines.dart';
 import 'package:Okuna/pages/home/modals/invite_to_community.dart';
+import 'package:Okuna/pages/home/modals/manage_notifications/manage_post_notifications.dart';
+import 'package:Okuna/pages/home/modals/manage_notifications/widgets/manage_notifications.dart';
 import 'package:Okuna/pages/home/modals/post_comment/post_comment_reply_expanded.dart';
 import 'package:Okuna/pages/home/modals/post_comment/post_commenter_expanded.dart';
 import 'package:Okuna/pages/home/modals/save_post/create_post.dart';
@@ -305,6 +308,23 @@ class ModalService {
               return Material(
                 child: OBTimelineFiltersModal(
                   timelinePageController: timelineController,
+                ),
+              );
+            }));
+  }
+
+  Future<void> openManagePostNotifications(
+      {Post post,
+      OnNotificationSettingsSave onNotificationSettingsSave,
+      @required BuildContext context}) {
+    return Navigator.of(context, rootNavigator: true)
+        .push(CupertinoPageRoute<Circle>(
+            fullscreenDialog: true,
+            builder: (BuildContext context) {
+              return Material(
+                child: OBManagePostNotificationsModal(
+                  onNotificationSettingsSave: onNotificationSettingsSave,
+                  post: post,
                 ),
               );
             }));

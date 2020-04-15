@@ -2188,6 +2188,92 @@ class LocalizationService {
         name: 'post__exclude_community_from_profile_posts_confirmation');
   }
 
+  String get post__manage_post_notifications {
+    return Intl.message("Manage post notifications",
+        name: 'post__manage_post_notifications');
+  }
+
+  String get post__post_notifications_title_text {
+    return Intl.message("Post notifications",
+        name: 'post__post_notifications_title_text');
+  }
+
+  String get post__subscribe_post_notifications {
+    return Intl.message("Subscribe to post notifications",
+        name: 'post__subscribe_post_notifications');
+  }
+
+  String get post__save_post_notifications_text {
+    return Intl.message("Save", name: 'post__save_post_notifications_text');
+  }
+
+  String get post__mute_post_notifications_text {
+    return Intl.message("Mute post",
+        name: 'post__mute_post_notifications_text');
+  }
+
+  String get post__unmute_post_notifications_text {
+    return Intl.message("Unmute post",
+        name: 'post__unmute_post_notifications_text');
+  }
+
+  String get post__manage_notifications_comments_title {
+    return Intl.message("Comments",
+        name: 'post__manage_notifications_comments_title');
+  }
+
+  String get post__manage_notifications_comments_desc {
+    return Intl.message("Get notifications when someone comments on this post",
+        name: 'post__manage_notifications_comments_desc');
+  }
+
+  String get post__manage_notifications_comment_reactions_title {
+    return Intl.message("Comment Reactions",
+        name: 'post__manage_notifications_comment_reactions_title');
+  }
+
+  String get post__manage_notifications_comment_reactions_desc {
+    return Intl.message(
+        "Get notifications when someone reacts to your comments",
+        name: 'post__manage_notifications_comment_reactions_desc');
+  }
+
+  String get post__manage_notifications_reactions_title {
+    return Intl.message("Reactions",
+        name: 'post__manage_notifications_reactions_title');
+  }
+
+  String get post__manage_notifications_reactions_desc {
+    return Intl.message("Get notifications when someone reacts to your post",
+        name: 'post__manage_notifications_reactions_desc');
+  }
+
+  String get post__manage_notifications_replies_title {
+    return Intl.message("Replies",
+        name: 'post__manage_notifications_replies_title');
+  }
+
+  String get post__manage_notifications_replies_desc {
+    return Intl.message(
+        "Get notifications when someone replies to comments on this post",
+        name: 'post__manage_notifications_reactions_desc');
+  }
+
+  String get post__manage_notifications_successfully_saved {
+    return Intl.message("Notification settings saved",
+        name: 'post__manage_notifications_successfully_saved');
+  }
+
+  String get post__manage_notifications_successfully_muted {
+    return Intl.message("Notifications muted",
+        name: 'post__manage_notifications_successfully_muted');
+  }
+
+  String get post__manage_notifications_successfully_unmuted {
+    return Intl.message("Notifications unmuted",
+        name: 'post__manage_notifications_successfully_unmuted');
+  }
+
   String get post__comments_enabled_message {
     return Intl.message("Comments enabled for post",
         name: 'post__comments_enabled_message');
@@ -3457,6 +3543,16 @@ class LocalizationService {
   String get notifications__mute_post_turn_off_post_notifications {
     return Intl.message("Turn off post notifications",
         name: 'notifications__mute_post_turn_off_post_notifications');
+  }
+
+  String get notifications__enable_comment_post_notifications {
+    return Intl.message("Enable new comment notifications",
+        name: 'notifications__enable_comment_post_notifications');
+  }
+
+  String get notifications__disable_comment_post_notifications {
+    return Intl.message("Disable new comment notifications",
+        name: 'notifications__disable_comment_post_notifications');
   }
 
   String get notifications__mute_post_turn_on_post_comment_notifications {

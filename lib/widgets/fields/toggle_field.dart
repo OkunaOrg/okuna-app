@@ -13,6 +13,7 @@ class OBToggleField extends StatelessWidget {
   final bool hasDivider;
   final TextStyle titleStyle;
   final bool isLoading;
+  final bool isDisabled;
 
   const OBToggleField(
       {Key key,
@@ -24,6 +25,7 @@ class OBToggleField extends StatelessWidget {
       this.subtitle,
       this.hasDivider = true,
       this.titleStyle,
+      this.isDisabled = false,
       this.isLoading = false})
       : super(key: key);
 
@@ -44,16 +46,20 @@ class OBToggleField extends StatelessWidget {
                 subtitle: subtitle,
                 trailing: CupertinoSwitch(
                   value: value,
-                  onChanged: onChanged,
+                  onChanged: (bool newValue) {
+                    if (!isDisabled) onChanged(newValue);
+                  },
                 ),
-                onTap: onTap),
+                onTap: () {
+                  if (!isDisabled) onTap();
+                }),
           ),
           hasDivider ? OBDivider() : const SizedBox()
         ],
       ),
     );
 
-    if (isLoading) {
+    if (isLoading || isDisabled) {
       tile = Opacity(
         opacity: 0.5,
         child: tile,

@@ -410,6 +410,17 @@ class User extends UpdatableModel<User> {
     notifyUpdate();
   }
 
+  bool canEnablePostSubscriptionNotifications(Post post) {
+    User loggedInUser = this;
+    bool _canDisableOrEnablePostSubscriptionComments = true;
+
+    if (post.getCreatorId() == loggedInUser.id) {
+      _canDisableOrEnablePostSubscriptionComments = false;
+    }
+
+    return _canDisableOrEnablePostSubscriptionComments;
+  }
+
   bool canDisableOrEnableCommentsForPost(Post post) {
     User loggedInUser = this;
     bool _canDisableOrEnableComments = false;
