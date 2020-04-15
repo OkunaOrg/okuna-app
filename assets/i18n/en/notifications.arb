@@ -144,6 +144,16 @@
     "type": "text",
     "placeholders": {}
   },
+  "enable_comment_post_notifications": "Enable new comment notifications",
+  "@enable_comment_post_notifications": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "disable_comment_post_notifications": "Disable new comment notifications",
+  "@disable_comment_post_notifications": {
+    "type": "text",
+    "placeholders": {}
+  },
   "mute_post_turn_on_post_comment_notifications": "Turn on post comment notifications",
   "@mute_post_turn_on_post_comment_notifications": {
     "type": "text",
