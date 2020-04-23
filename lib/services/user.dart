@@ -854,6 +854,36 @@ class UserService {
     return Post.fromJson(json.decode(response.body));
   }
 
+  Future<Post> createPostCommentNotificationsSubscription(
+      {@required Post post,
+      @required PostComment postComment,
+      bool reactionNotifications,
+      bool replyNotifications}) async {
+    HttpieResponse response =
+        await _postsApiService.createPostCommentNotificationsSubscription(
+            postUuid: post.uuid,
+            postCommentId: postComment.id,
+            reactionNotifications: reactionNotifications,
+            replyNotifications: replyNotifications);
+    _checkResponseIsCreated(response);
+    return Post.fromJson(json.decode(response.body));
+  }
+
+  Future<Post> updatePostCommentNotificationsSubscription(
+      {@required Post post,
+      @required PostComment postComment,
+      bool reactionNotifications,
+      bool replyNotifications}) async {
+    HttpieResponse response =
+        await _postsApiService.updatePostCommentNotificationsSubscription(
+            postUuid: post.uuid,
+            postCommentId: postComment.id,
+            reactionNotifications: reactionNotifications,
+            replyNotifications: replyNotifications);
+    _checkResponseIsOk(response);
+    return Post.fromJson(json.decode(response.body));
+  }
+
   Future<String> excludeCommunityFromTopPosts(Community community) async {
     HttpieResponse response = await _postsApiService
         .excludeCommunityFromTopPosts(communityName: community.name);

@@ -44,6 +44,8 @@ class PostsApiService {
   static const UNMUTE_POST_PATH = 'api/posts/{postUuid}/notifications/unmute/';
   static const POST_NOTIFICATIONS_SUBSCRIPTION_PATH =
       'api/posts/{postUuid}/notifications/subscribe/';
+  static const POST_COMMENT_NOTIFICATIONS_SUBSCRIPTION_PATH =
+      'api/posts/{postUuid}/comments/{postCommentId}/notifications/subscribe/';
   static const REPORT_POST_PATH = 'api/posts/{postUuid}/report/';
   static const PREVIEW_POST_DATA_PATH = 'api/posts/{postUuid}/link-preview/';
   static const TRANSLATE_POST_PATH = 'api/posts/{postUuid}/translate/';
@@ -440,19 +442,14 @@ class PostsApiService {
 
   Future<HttpieResponse> createPostNotificationsSubscription(
       {@required String postUuid,
-      bool commentNotifications,
-      bool reactionNotifications,
-      bool replyNotifications}) {
+      bool commentNotifications = false,
+      bool reactionNotifications = false,
+      bool replyNotifications = false}) {
     Map<String, dynamic> body = {};
-    if (commentNotifications != null) {
-      body['comment_notifications'] = commentNotifications;
-    }
-    if (reactionNotifications != null) {
-      body['reaction_notifications'] = reactionNotifications;
-    }
-    if (replyNotifications != null) {
-      body['reply_notifications'] = replyNotifications;
-    }
+
+    body['comment_notifications'] = commentNotifications ?? false;
+    body['reaction_notifications'] = reactionNotifications ?? false;
+    body['reply_notifications'] = replyNotifications ?? false;
     String path = _makePostNotificationsSubscriptionPath(postUuid);
     return _httpService.putJSON(_makeApiUrl(path),
         body: body, appendAuthorizationToken: true);
@@ -474,6 +471,38 @@ class PostsApiService {
       body['reply_notifications'] = replyNotifications;
     }
     String path = _makePostNotificationsSubscriptionPath(postUuid);
+    return _httpService.patchJSON(_makeApiUrl(path),
+        body: body, appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> createPostCommentNotificationsSubscription(
+      {@required String postUuid,
+      @required int postCommentId,
+      bool reactionNotifications = false,
+      bool replyNotifications = false}) {
+    Map<String, dynamic> body = {};
+    body['reaction_notifications'] = reactionNotifications ?? false;
+    body['reply_notifications'] = replyNotifications ?? false;
+    String path = _makePostCommentNotificationsSubscriptionPath(
+        postUuid: postUuid, postCommentId: postCommentId);
+    return _httpService.putJSON(_makeApiUrl(path),
+        body: body, appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> updatePostCommentNotificationsSubscription(
+      {@required String postUuid,
+      @required int postCommentId,
+      bool reactionNotifications,
+      bool replyNotifications}) {
+    Map<String, dynamic> body = {};
+    if (reactionNotifications != null) {
+      body['reaction_notifications'] = reactionNotifications;
+    }
+    if (replyNotifications != null) {
+      body['reply_notifications'] = replyNotifications;
+    }
+    String path = _makePostCommentNotificationsSubscriptionPath(
+        postUuid: postUuid, postCommentId: postCommentId);
     return _httpService.patchJSON(_makeApiUrl(path),
         body: body, appendAuthorizationToken: true);
   }
@@ -674,6 +703,15 @@ class PostsApiService {
   String _makePostNotificationsSubscriptionPath(String postUuid) {
     return _stringTemplateService
         .parse(POST_NOTIFICATIONS_SUBSCRIPTION_PATH, {'postUuid': postUuid});
+  }
+
+  String _makePostCommentNotificationsSubscriptionPath({
+    @required int postCommentId,
+    @required String postUuid,
+  }) {
+    return _stringTemplateService.parse(
+        POST_COMMENT_NOTIFICATIONS_SUBSCRIPTION_PATH,
+        {'postUuid': postUuid, 'postCommentId': postCommentId});
   }
 
   String _makeMutePostCommentPath({

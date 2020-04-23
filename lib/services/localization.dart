@@ -2193,9 +2193,9 @@ class LocalizationService {
         name: 'post__manage_post_notifications');
   }
 
-  String get post__post_notifications_title_text {
-    return Intl.message("Post notifications",
-        name: 'post__post_notifications_title_text');
+  String get post__manage_post_comment_notifications {
+    return Intl.message("Manage comment notifications",
+        name: 'post__manage_post_comment_notifications');
   }
 
   String get post__subscribe_post_notifications {
@@ -2203,8 +2203,9 @@ class LocalizationService {
         name: 'post__subscribe_post_notifications');
   }
 
-  String get post__save_post_notifications_text {
-    return Intl.message("Save", name: 'post__save_post_notifications_text');
+  String get post__subscribe_post_comment_notifications {
+    return Intl.message("Subscribe to comment notifications",
+        name: 'post__subscribe_post_comment_notifications');
   }
 
   String get post__mute_post_notifications_text {
@@ -2215,6 +2216,16 @@ class LocalizationService {
   String get post__unmute_post_notifications_text {
     return Intl.message("Unmute post",
         name: 'post__unmute_post_notifications_text');
+  }
+
+  String get post__mute_post_comment_notifications_text {
+    return Intl.message("Mute comment",
+        name: 'post__mute_post_comment_notifications_text');
+  }
+
+  String get post__unmute_post_comment_notifications_text {
+    return Intl.message("Unmute comment",
+        name: 'post__unmute_post_comment_notifications_text');
   }
 
   String get post__manage_notifications_comments_title {
@@ -2248,6 +2259,11 @@ class LocalizationService {
         name: 'post__manage_notifications_reactions_desc');
   }
 
+  String get post__manage_notifications_reactions_post_comment_desc {
+    return Intl.message("Get notifications when someone reacts to your comment",
+        name: 'post__manage_notifications_reactions_post_comment_desc');
+  }
+
   String get post__manage_notifications_replies_title {
     return Intl.message("Replies",
         name: 'post__manage_notifications_replies_title');
@@ -2257,6 +2273,12 @@ class LocalizationService {
     return Intl.message(
         "Get notifications when someone replies to comments on this post",
         name: 'post__manage_notifications_reactions_desc');
+  }
+
+  String get post__manage_notifications_replies_post_comment_desc {
+    return Intl.message(
+        "Get notifications when someone replies to this comment",
+        name: 'post__manage_notifications_replies_post_comment_desc');
   }
 
   String get post__manage_notifications_successfully_saved {
@@ -3500,6 +3522,17 @@ class LocalizationService {
   String get notifications__post_reaction_desc {
     return Intl.message("Be notified when someone reacts to one of your posts",
         name: 'notifications__post_reaction_desc');
+  }
+
+  String get notifications__post_notifications_title {
+    return Intl.message("Post notifications",
+        name: 'notifications__post_notifications_title');
+  }
+
+  String get notifications__post_notifications_desc {
+    return Intl.message(
+        "Be notified of all post related notifications - comments, replies, reactions and user mentions",
+        name: 'notifications__post_notifications_desc');
   }
 
   String get notifications__community_invite_title {

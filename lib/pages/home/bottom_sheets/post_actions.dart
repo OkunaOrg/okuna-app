@@ -13,11 +13,9 @@ import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/post/post.dart';
 import 'package:Okuna/widgets/theming/text.dart';
 import 'package:Okuna/widgets/tiles/actions/close_post_tile.dart';
-import 'package:Okuna/widgets/tiles/actions/disable_comments_post_tile.dart';
 import 'package:Okuna/widgets/tiles/actions/exclude_community_from_profile_posts_tile.dart';
 import 'package:Okuna/widgets/tiles/actions/exclude_community_from_top_posts_tile.dart';
 import 'package:Okuna/widgets/tiles/actions/manage_post_notifications_tile.dart';
-import 'package:Okuna/widgets/tiles/actions/mute_post_tile.dart';
 import 'package:Okuna/widgets/tiles/actions/report_post_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -97,25 +95,10 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
                     widget.onPostCommunityExcludedFromProfilePosts));
           }
 
-//          postActions.add(OBMutePostTile(
-//            post: post,
-//            onMutedPost: _dismiss,
-//            onUnmutedPost: _dismiss,
-//          ));
-
           postActions.add(OBManagePostNotificationsTile(
             post: post,
-            onOpenManagePostNotificationsModal: _dismiss,
             onNotificationSettingsSave: _dismiss,
           ));
-
-//          if (loggedInUser.canDisableOrEnableCommentsForPost(post)) {
-//            postActions.add(OBDisableCommentsPostTile(
-//              post: post,
-//              onDisableComments: _dismiss,
-//              onEnableComments: _dismiss,
-//            ));
-//          }
 
           if (loggedInUser.canCloseOrOpenPost(post)) {
             postActions.add(OBClosePostTile(

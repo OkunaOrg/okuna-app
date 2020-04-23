@@ -1,6 +1,6 @@
 import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/post_notifications_subscription.dart';
-import 'package:Okuna/pages/home/modals/manage_notifications/widgets/manage_notifications.dart';
+import 'package:Okuna/pages/home/bottom_sheets/manage_notifications/widgets/manage_notifications.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/toast.dart';
@@ -9,22 +9,24 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:async/async.dart';
 
-class OBManagePostNotificationsModal extends StatefulWidget {
+import '../rounded_bottom_sheet.dart';
+
+class OBManagePostNotificationsBottomSheet extends StatefulWidget {
   final Post post;
   final OnNotificationSettingsSave onNotificationSettingsSave;
 
-  OBManagePostNotificationsModal(
+  OBManagePostNotificationsBottomSheet(
       {Key key, this.onNotificationSettingsSave, this.post})
       : super(key: key);
 
   @override
-  OBManagePostNotificationsModalState createState() {
-    return OBManagePostNotificationsModalState();
+  OBManagePostNotificationsBottomSheetState createState() {
+    return OBManagePostNotificationsBottomSheetState();
   }
 }
 
-class OBManagePostNotificationsModalState
-    extends State<OBManagePostNotificationsModal> {
+class OBManagePostNotificationsBottomSheetState
+    extends State<OBManagePostNotificationsBottomSheet> {
   UserService _userService;
   LocalizationService _localizationService;
   ToastService _toastService;
@@ -45,20 +47,23 @@ class OBManagePostNotificationsModalState
     _localizationService = openbookProvider.localizationService;
     _toastService = openbookProvider.toastService;
 
-    return OBManageNotifications(
-        notificationSettings: _getNotificationSettingsList(),
-        onWantsToSaveSettings: _onWantsToSaveSettings,
-        isMuted: widget.post.isMuted,
-        onWantsToToggleMute: _onWantsToToggleMute,
-        onDismissModal: _onDismiss);
+    return OBRoundedBottomSheet(
+        child: OBManageNotifications(
+            notificationSettings: _getNotificationSettingsList(),
+            onWantsToSaveSettings: _onWantsToSaveSettings,
+            isMuted: widget.post.isMuted,
+            mutePostLabelText:
+                _localizationService.post__mute_post_notifications_text,
+            unmutePostLabelText:
+                _localizationService.post__unmute_post_notifications_text,
+            onWantsToToggleMute: _onWantsToToggleMute));
   }
 
-  void _onDismiss() {
+  @override
+  void dispose() {
+    super.dispose();
     if (_saveOperation != null) _saveOperation.cancel();
     if (_muteOperation != null) _muteOperation.cancel();
-    if (widget.onNotificationSettingsSave != null) {
-      widget.onNotificationSettingsSave();
-    }
   }
 
   List<NotificationSetting> _getNotificationSettingsList() {
@@ -99,21 +104,21 @@ class OBManagePostNotificationsModalState
 
   void _onWantsToToggleMute() async {
     try {
-      if (!widget.post.isMuted) {
-        _muteOperation =
-            CancelableOperation.fromFuture(_userService.mutePost(widget.post));
-        await _muteOperation.value;
-        _toastService.success(
-            message: _localizationService
-                .post__manage_notifications_successfully_muted,
-            context: context);
-      } else {
+      if (widget.post.isMuted) {
         _muteOperation = CancelableOperation.fromFuture(
             _userService.unmutePost(widget.post));
         await _muteOperation.value;
         _toastService.success(
             message: _localizationService
                 .post__manage_notifications_successfully_unmuted,
+            context: context);
+      } else {
+        _muteOperation =
+            CancelableOperation.fromFuture(_userService.mutePost(widget.post));
+        await _muteOperation.value;
+        _toastService.success(
+            message: _localizationService
+                .post__manage_notifications_successfully_muted,
             context: context);
       }
     } catch (error) {
@@ -133,16 +138,11 @@ class OBManagePostNotificationsModalState
             _updateUserPostNotificationsSubscription(notificationSettingsMap));
         await _saveOperation.value;
       }
-      _toastService.success(
-          message: _localizationService
-              .post__manage_notifications_successfully_saved,
-          context: context);
     } catch (error) {
       _onError(error);
     }
     if (widget.onNotificationSettingsSave != null)
       widget.onNotificationSettingsSave();
-    Navigator.pop(context);
   }
 
   void _onError(error) async {
@@ -197,7 +197,7 @@ class PostNotificationSetting extends NotificationSetting {
   static const COMMENT_NOTIFICATIONS = 'commentNotifications';
   static const REPLY_NOTIFICATIONS = 'replyNotifications';
   static const REACTION_NOTIFICATIONS = 'reactionNotifications';
-  List<String> _types = [
+  List<String> _notificationTypes = [
     COMMENT_NOTIFICATIONS,
     REPLY_NOTIFICATIONS,
     REACTION_NOTIFICATIONS
@@ -209,7 +209,7 @@ class PostNotificationSetting extends NotificationSetting {
       this.isDisabled,
       this.localizedTitle,
       this.localizedDesc}) {
-    if (!_types.contains(this.key))
+    if (!_notificationTypes.contains(this.key))
       throw PostNotificationSettingKeyError(this.key);
   }
 }

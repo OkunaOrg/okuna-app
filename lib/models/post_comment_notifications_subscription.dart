@@ -1,24 +1,23 @@
 import 'package:Okuna/models/updatable_model.dart';
 import 'package:dcache/dcache.dart';
 
-class PostNotificationsSubscription
-    extends UpdatableModel<PostNotificationsSubscription> {
+class PostCommentNotificationsSubscription
+    extends UpdatableModel<PostCommentNotificationsSubscription> {
   final int id;
-  final int postId;
-  bool commentNotifications;
+  final int postCommentId;
   bool reactionNotifications;
   bool replyNotifications;
 
-  PostNotificationsSubscription(
+  PostCommentNotificationsSubscription(
       {this.id,
-      this.postId,
-      this.commentNotifications,
+      this.postCommentId,
       this.reactionNotifications,
       this.replyNotifications});
 
-  static final factory = PostNotificationsSubscriptionFactory();
+  static final factory = PostCommentNotificationsSubscriptionFactory();
 
-  factory PostNotificationsSubscription.fromJSON(Map<String, dynamic> json) {
+  factory PostCommentNotificationsSubscription.fromJSON(
+      Map<String, dynamic> json) {
     if (json == null) return null;
     return factory.fromJson(json);
   }
@@ -26,8 +25,7 @@ class PostNotificationsSubscription
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'post': postId,
-      'comment_notifications': commentNotifications,
+      'post_comment': postCommentId,
       'reaction_notifications': reactionNotifications,
       'reply_notifications': replyNotifications,
     };
@@ -35,7 +33,6 @@ class PostNotificationsSubscription
 
   Map<String, dynamic> getSettingsObject() {
     return {
-      'commentNotifications': this.commentNotifications,
       'replyNotifications': this.replyNotifications,
       'reactionNotifications': this.reactionNotifications
     };
@@ -43,9 +40,6 @@ class PostNotificationsSubscription
 
   @override
   void updateFromJson(Map json) {
-    if (json.containsKey('comment_notifications')) {
-      commentNotifications = json['comment_notifications'];
-    }
     if (json.containsKey('reaction_notifications')) {
       reactionNotifications = json['reaction_notifications'];
     }
@@ -55,18 +49,17 @@ class PostNotificationsSubscription
   }
 }
 
-class PostNotificationsSubscriptionFactory
-    extends UpdatableModelFactory<PostNotificationsSubscription> {
+class PostCommentNotificationsSubscriptionFactory
+    extends UpdatableModelFactory<PostCommentNotificationsSubscription> {
   @override
-  SimpleCache<int, PostNotificationsSubscription> cache =
+  SimpleCache<int, PostCommentNotificationsSubscription> cache =
       SimpleCache(storage: UpdatableModelSimpleStorage(size: 20));
 
   @override
-  PostNotificationsSubscription makeFromJson(Map json) {
-    return PostNotificationsSubscription(
+  PostCommentNotificationsSubscription makeFromJson(Map json) {
+    return PostCommentNotificationsSubscription(
         id: json['id'],
-        postId: json['post'],
-        commentNotifications: json['comment_notifications'],
+        postCommentId: json['post_comment'],
         reactionNotifications: json['reaction_notifications'],
         replyNotifications: json['reply_notifications']);
   }

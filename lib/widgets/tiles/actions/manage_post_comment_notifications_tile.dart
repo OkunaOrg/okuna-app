@@ -1,4 +1,5 @@
 import 'package:Okuna/models/post.dart';
+import 'package:Okuna/models/post_comment.dart';
 import 'package:Okuna/pages/home/bottom_sheets/manage_notifications/manage_post_notifications.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/bottom_sheet.dart';
@@ -7,32 +8,32 @@ import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
-class OBManagePostNotificationsTile extends StatefulWidget {
+class OBManagePostCommentNotificationsTile extends StatefulWidget {
   final Post post;
+  final PostComment postComment;
   final OnNotificationSettingsSave onNotificationSettingsSave;
 
-  const OBManagePostNotificationsTile({
+  const OBManagePostCommentNotificationsTile({
     Key key,
     @required this.post,
+    @required this.postComment,
     this.onNotificationSettingsSave,
   }) : super(key: key);
 
   @override
-  OBManagePostNotificationsTileState createState() {
-    return OBManagePostNotificationsTileState();
+  OBManagePostCommentNotificationsTileState createState() {
+    return OBManagePostCommentNotificationsTileState();
   }
 }
 
-class OBManagePostNotificationsTileState
-    extends State<OBManagePostNotificationsTile> {
+class OBManagePostCommentNotificationsTileState
+    extends State<OBManagePostCommentNotificationsTile> {
   BottomSheetService _bottomSheetService;
   LocalizationService _localizationService;
-  bool _requestInProgress;
 
   @override
   void initState() {
     super.initState();
-    _requestInProgress = false;
   }
 
   @override
@@ -42,26 +43,28 @@ class OBManagePostNotificationsTileState
     _localizationService = openbookProvider.localizationService;
 
     return StreamBuilder(
-      stream: widget.post.updateSubject,
-      initialData: widget.post,
-      builder: (BuildContext context, AsyncSnapshot<Post> snapshot) {
-        var post = snapshot.data;
+      stream: widget.postComment.updateSubject,
+      initialData: widget.postComment,
+      builder: (BuildContext context, AsyncSnapshot<PostComment> snapshot) {
+        var postComment = snapshot.data;
 
         return ListTile(
           leading: OBIcon(OBIcons.notifications),
-          title: OBText(post.postNotificationsSubscription != null
-              ? _localizationService.post__manage_post_notifications
-              : _localizationService.post__subscribe_post_notifications),
-          onTap: _navigateToManagePost,
+          title: OBText(postComment.postCommentNotificationsSubscription != null
+              ? _localizationService.post__manage_post_comment_notifications
+              : _localizationService
+                  .post__subscribe_post_comment_notifications),
+          onTap: _navigateToManagePostComment,
         );
       },
     );
   }
 
-  void _navigateToManagePost() {
-    _bottomSheetService.showManagePostNotifications(
+  void _navigateToManagePostComment() {
+    _bottomSheetService.showManagePostCommentNotifications(
         context: context,
         post: widget.post,
+        postComment: widget.postComment,
         onNotificationSettingsSave: () {
           if (widget.onNotificationSettingsSave != null)
             widget.onNotificationSettingsSave();
