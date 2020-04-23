@@ -2020,12 +2020,7 @@ class UserService {
 
   Future<UserNotificationsSettings>
       updateAuthenticatedUserNotificationsSettings({
-    bool postCommentNotifications,
-    bool postCommentReplyNotifications,
-    bool postCommentReactionNotifications,
-    bool postCommentUserMentionNotifications,
-    bool postUserMentionNotifications,
-    bool postReactionNotifications,
+    bool postNotifications,
     bool followNotifications,
     bool connectionRequestNotifications,
     bool connectionConfirmedNotifications,
@@ -2035,13 +2030,7 @@ class UserService {
   }) async {
     HttpieResponse response =
         await _authApiService.updateAuthenticatedUserNotificationsSettings(
-            postCommentNotifications: postCommentNotifications,
-            postCommentReplyNotifications: postCommentReplyNotifications,
-            postCommentUserMentionNotifications:
-                postCommentUserMentionNotifications,
-            postUserMentionNotifications: postUserMentionNotifications,
-            postCommentReactionNotifications: postCommentReactionNotifications,
-            postReactionNotifications: postReactionNotifications,
+            postNotifications: postNotifications,
             followNotifications: followNotifications,
             connectionConfirmedNotifications: connectionConfirmedNotifications,
             communityInviteNotifications: communityInviteNotifications,
