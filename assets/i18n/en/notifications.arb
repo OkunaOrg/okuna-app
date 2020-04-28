@@ -44,63 +44,13 @@
     "type": "text",
     "placeholders": {}
   },
-  "comment_title": "Post comment",
-  "@comment_title": {
+  "post_notifications_title": "Post notifications",
+  "@post_notifications_title": {
     "type": "text",
     "placeholders": {}
   },
-  "comment_desc": "Be notified when someone comments on one of your posts or one you also commented",
-  "@comment_desc": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "comment_reply_title": "Post comment reply",
-  "@comment_reply_title": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "comment_reply_desc": "Be notified when someone replies to one of your comments or one you also replied to",
-  "@comment_reply_desc": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "comment_user_mention_title": "Post comment mention",
-  "@comment_user_mention_title": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "comment_user_mention_desc": "Be notified when someone mentions you on one of their comments",
-  "@comment_user_mention_desc": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "post_user_mention_title": "Post mention",
-  "@post_user_mention_title": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "post_user_mention_desc": "Be notified when someone mentions you on one of their posts",
-  "@post_user_mention_desc": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "comment_reaction_title": "Post comment reaction",
-  "@comment_reaction_title": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "comment_reaction_desc": "Be notified when someone reacts to one of your post commments",
-  "@comment_reaction_desc": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "post_reaction_title": "Post reaction",
-  "@post_reaction_title": {
-    "type": "text",
-    "placeholders": {}
-  },
-  "post_reaction_desc": "Be notified when someone reacts to one of your posts",
-  "@post_reaction_desc": {
+  "post_notifications_desc": "Be notified of all post related notifications - comments, replies, reactions and user mentions",
+  "@post_notifications_desc": {
     "type": "text",
     "placeholders": {}
   },

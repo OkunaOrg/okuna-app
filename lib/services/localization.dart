@@ -2272,7 +2272,7 @@ class LocalizationService {
   String get post__manage_notifications_replies_desc {
     return Intl.message(
         "Get notifications when someone replies to comments on this post",
-        name: 'post__manage_notifications_reactions_desc');
+        name: 'post__manage_notifications_replies_desc');
   }
 
   String get post__manage_notifications_replies_post_comment_desc {
@@ -3458,70 +3458,6 @@ class LocalizationService {
   String get notifications__connection_desc {
     return Intl.message("Be notified when someone wants to connect with you",
         name: 'notifications__connection_desc');
-  }
-
-  String get notifications__comment_title {
-    return Intl.message("Post comment", name: 'notifications__comment_title');
-  }
-
-  String get notifications__comment_desc {
-    return Intl.message(
-        "Be notified when someone comments on one of your posts or one you also commented",
-        name: 'notifications__comment_desc');
-  }
-
-  String get notifications__comment_reply_title {
-    return Intl.message("Post comment reply",
-        name: 'notifications__comment_reply_title');
-  }
-
-  String get notifications__comment_reply_desc {
-    return Intl.message(
-        "Be notified when someone replies to one of your comments or one you also replied to",
-        name: 'notifications__comment_reply_desc');
-  }
-
-  String get notifications__comment_user_mention_title {
-    return Intl.message("Post comment mention",
-        name: 'notifications__comment_user_mention_title');
-  }
-
-  String get notifications__comment_user_mention_desc {
-    return Intl.message(
-        "Be notified when someone mentions you on one of their comments",
-        name: 'notifications__comment_user_mention_desc');
-  }
-
-  String get notifications__post_user_mention_title {
-    return Intl.message("Post mention",
-        name: 'notifications__post_user_mention_title');
-  }
-
-  String get notifications__post_user_mention_desc {
-    return Intl.message(
-        "Be notified when someone mentions you on one of their posts",
-        name: 'notifications__post_user_mention_desc');
-  }
-
-  String get notifications__comment_reaction_title {
-    return Intl.message("Post comment reaction",
-        name: 'notifications__comment_reaction_title');
-  }
-
-  String get notifications__comment_reaction_desc {
-    return Intl.message(
-        "Be notified when someone reacts to one of your post commments",
-        name: 'notifications__comment_reaction_desc');
-  }
-
-  String get notifications__post_reaction_title {
-    return Intl.message("Post reaction",
-        name: 'notifications__post_reaction_title');
-  }
-
-  String get notifications__post_reaction_desc {
-    return Intl.message("Be notified when someone reacts to one of your posts",
-        name: 'notifications__post_reaction_desc');
   }
 
   String get notifications__post_notifications_title {
