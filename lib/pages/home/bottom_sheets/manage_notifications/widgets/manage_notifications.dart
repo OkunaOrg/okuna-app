@@ -58,7 +58,7 @@ class OBManageNotificationsState extends State<OBManageNotifications> {
     });
   }
 
-  void _toggleLocalStateIsMuted() {
+  void _toggleMute() {
     setState(() {
       _isMuted = !_isMuted;
     });
@@ -75,8 +75,10 @@ class OBManageNotificationsState extends State<OBManageNotifications> {
                 isDisabled: notificationSetting.isDisabled,
                 title: notificationSetting.localizedTitle,
                 subtitle: OBText(notificationSetting.localizedDesc),
-                onChanged: (bool newValue) =>
-                    notificationSetting.value = newValue,
+                onChanged: (bool newValue) {
+                  _toggleNotificationSetting(notificationSetting);
+                  _onWantsToSaveSettings();
+                },
                 onTap: () {
                   _toggleNotificationSetting(notificationSetting);
                   _onWantsToSaveSettings();
@@ -130,7 +132,7 @@ class OBManageNotificationsState extends State<OBManageNotifications> {
   void _onWantsToToggleMute() async {
     try {
       widget.onWantsToToggleMute();
-      _toggleLocalStateIsMuted();
+      _toggleMute();
     } catch (error) {
       print('Manage Notifications Error while toggling mute');
     }
