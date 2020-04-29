@@ -36,6 +36,7 @@ class OBChangeEmailModalState extends State<OBChangeEmailModal> {
   bool _changedEmailTaken = false;
   bool _formValid = true;
   TextEditingController _emailController = TextEditingController();
+  TextEditingController _currentEmailController;
   CancelableOperation _requestOperation;
 
   @override
@@ -61,6 +62,9 @@ class OBChangeEmailModalState extends State<OBChangeEmailModal> {
     _toastService = openbookProvider.toastService;
     _userService = openbookProvider.userService;
     _localizationService = openbookProvider.localizationService;
+    
+    String currentUserEmail = _userService.getLoggedInUser().getEmail();
+    _currentEmailController = TextEditingController(text: currentUserEmail);
 
     return OBCupertinoPageScaffold(
         navigationBar: _buildNavigationBar(),
@@ -72,6 +76,15 @@ class OBChangeEmailModalState extends State<OBChangeEmailModal> {
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
+                    OBTextFormField(
+                      size: OBTextFormFieldSize.large,
+                      autofocus: false,
+                      readOnly: true,
+                      controller: _currentEmailController,
+                      decoration: InputDecoration(
+                        labelText:_localizationService.user__change_email_current_email_text,
+                      ),
+                    ),
                     OBTextFormField(
                       size: OBTextFormFieldSize.large,
                       autofocus: true,
