@@ -26,6 +26,7 @@ import 'package:flutter/material.dart';
 class OBPostCommentReplyExpandedModal extends StatefulWidget {
   final Post post;
   final PostComment postComment;
+  final PostComment postCommentReply;
   final Function(PostComment) onReplyAdded;
   final Function(PostComment) onReplyDeleted;
 
@@ -33,6 +34,7 @@ class OBPostCommentReplyExpandedModal extends StatefulWidget {
       {Key key,
       this.post,
       this.postComment,
+      this.postCommentReply,
       this.onReplyAdded,
       this.onReplyDeleted})
       : super(key: key);
@@ -81,15 +83,20 @@ class OBPostCommentReplyExpandedModalState
   @override
   void bootstrap() {
     super.bootstrap();
+    String defaultControllerText = widget.postCommentReply != null
+        ? '@${widget.postCommentReply.commenter.username} '
+        : null;
 
     _textController = DraftTextEditingController.comment(widget.post.id,
         commentId: widget.postComment != null ? widget.postComment.id : null,
+        text: defaultControllerText,
         draftService: _draftService);
     _textController.addListener(_onPostCommentTextChanged);
     setAutocompleteTextController(_textController);
 
     String hintText =
         _localizationService.post__comment_reply_expanded_reply_hint_text;
+
     _postCommentItemsWidgets = [
       OBCreatePostText(controller: _textController, hintText: hintText)
     ];
@@ -195,7 +202,7 @@ class OBPostCommentReplyExpandedModalState
         children: <Widget>[
           OBPostComment(
             post: widget.post,
-            postComment: widget.postComment,
+            postComment: widget.postCommentReply ?? widget.postComment,
             showActions: false,
             showReactions: false,
             showReplies: false,
