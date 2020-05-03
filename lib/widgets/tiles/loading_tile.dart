@@ -1,5 +1,7 @@
-import 'package:Okuna/widgets/progress_indicator.dart';
 import 'package:flutter/material.dart';
+
+// TODO Refactor this into a tile that takes an async action, which can then
+// optionally retry
 
 class OBLoadingTile extends StatelessWidget {
   final bool isLoading;

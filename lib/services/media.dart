@@ -54,6 +54,8 @@ class MediaService {
         await _bottomSheetService.showImagePicker(context: context);
 
     if (pickedImage == null) return null;
+
+    pickedImage = await fixExifRotation(pickedImage);
     final tempPath = await _getTempPath();
 
     final String processedImageUuid = _uuid.v4();
@@ -123,14 +125,44 @@ class MediaService {
   }
 
   Future<File> processImage(File image) async {
-    // This is supposed to solve the rotated images bug from flutter
-    // https://github.com/flutter/flutter/issues/35334
-    final imageBytes = await image.readAsBytes();
-    await image.delete();
-    final compressedImageBytes =
-        await FlutterImageCompress.compressWithList(imageBytes);
-    await image.writeAsBytes(compressedImageBytes);
     return image;
+  }
+
+  Future<File> fixExifRotation(File image, {deleteOriginal: false}) async {
+    List<int> imageBytes = await image.readAsBytes();
+
+    List<int> result = await FlutterImageCompress.compressWithList(imageBytes,
+        quality: 100, rotate: 0);
+
+    final String processedImageUuid = _uuid.v4();
+    String imageExtension = basename(image.path);
+
+    final tempPath = await _getTempPath();
+
+    File fixedImage = File('$tempPath/$processedImageUuid$imageExtension');
+
+    await fixedImage.writeAsBytes(result);
+
+    if(deleteOriginal) await image.delete();
+
+    return fixedImage;
+  }
+
+
+
+  Future<File> copyMediaFile(File mediaFile, {deleteOriginal: true}) async {
+    final String processedImageUuid = _uuid.v4();
+    String imageExtension = basename(mediaFile.path);
+
+    final tempPath = await _getTempPath();
+
+    // The image picker gives us the real image, lets copy it into a temp path
+    File fileCopy =
+        mediaFile.copySync('$tempPath/$processedImageUuid$imageExtension');
+
+    if (deleteOriginal) await mediaFile.delete();
+
+    return fileCopy;
   }
 
   Future<String> _getTempPath() async {

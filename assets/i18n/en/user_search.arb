@@ -84,5 +84,15 @@
     "placeholders": {
       "searchQuery": {}
     }
+  },
+  "selection_submit": "Submit",
+  "@selection_submit": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "selection_clear_all": "Clear all",
+  "@selection_clear_all": {
+    "type": "text",
+    "placeholders": {}
   }
 }
