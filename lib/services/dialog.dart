@@ -39,7 +39,7 @@ class DialogService {
             pickerColor: initialColor,
             onColorChanged: onColorChanged,
             pickerAreaHeightPercent: 0.8,
-            showLabel: true,
+            showLabel: false,
           ),
         ),
         context: context);
