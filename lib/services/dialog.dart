@@ -38,8 +38,8 @@ class DialogService {
             enableAlpha: enableAlpha,
             pickerColor: initialColor,
             onColorChanged: onColorChanged,
-            enableLabel: false,
             pickerAreaHeightPercent: 0.8,
+            showLabel: true,
           ),
         ),
         context: context);

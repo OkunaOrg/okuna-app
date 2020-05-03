@@ -300,16 +300,7 @@ Future<Null> main() async {
         app = MyApp();
         runApp(app);
       },
-      HttpieOverrides(),
-      onError: (error, stackTrace) async {
-        if (isOnDesktop) {
-          DesktopErrorReporting.reportError(error, stackTrace);
-          return;
-        }
-        SentryClient sentryClient =
-            app.openbookProviderKey.currentState.sentryClient;
-        await _reportError(error, stackTrace, sentryClient);
-      });
+      HttpieOverrides());
 }
 
 /// Reports [error] along with its [stackTrace] to Sentry.io.
