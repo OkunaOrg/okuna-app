@@ -12,27 +12,26 @@ import 'package:Okuna/widgets/avatars/avatar.dart';
 import 'package:Okuna/widgets/buttons/button.dart';
 import 'package:Okuna/widgets/cover.dart';
 import 'package:Okuna/widgets/fields/text_form_field.dart';
-import 'package:Okuna/widgets/fields/toggle_field.dart';
 import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class OBEditUserProfileModal extends StatefulWidget {
+class OBEditProfileModal extends StatefulWidget {
   final User user;
   final VoidCallback onUserProfileUpdated;
 
-  const OBEditUserProfileModal(this.user, {Key key, this.onUserProfileUpdated})
+  const OBEditProfileModal(this.user, {Key key, this.onUserProfileUpdated})
       : super(key: key);
 
   @override
-  OBEditUserProfileModalState createState() {
-    return OBEditUserProfileModalState();
+  OBEditProfileModalState createState() {
+    return OBEditProfileModalState();
   }
 }
 
-class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
+class OBEditProfileModalState extends State<OBEditProfileModal> {
   static const double inputIconsSize = 16;
   static EdgeInsetsGeometry inputContentPadding =
       EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0);
@@ -58,8 +57,6 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
   String _coverUrl;
   File _avatarFile;
   File _coverFile;
-  bool _followersCountVisible;
-  bool _communityPostsVisible;
 
   @override
   void initState() {
@@ -68,8 +65,6 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
     _requestInProgress = false;
     _formWasSubmitted = false;
 
-    _followersCountVisible = widget.user.getProfileFollowersCountVisible();
-    _communityPostsVisible = widget.user.getProfileCommunityPostsVisible();
     _usernameController = TextEditingController(text: widget.user.username);
     _nameController = TextEditingController(text: widget.user.getProfileName());
     _urlController = TextEditingController(text: widget.user.getProfileUrl());
@@ -132,6 +127,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 20.0),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           OBTextFormField(
                             controller: _usernameController,
@@ -206,41 +202,6 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                             ),
                             textInputAction: TextInputAction.newline,
                           ),
-                          OBToggleField(
-                            value: _followersCountVisible,
-                            title: _localizationService
-                                .user__edit_profile_followers_count,
-                            leading: const OBIcon(OBIcons.followers),
-                            onChanged: (bool value) {
-                              setState(() {
-                                _followersCountVisible = value;
-                              });
-                            },
-                            onTap: () {
-                              setState(() {
-                                _followersCountVisible =
-                                    !_followersCountVisible;
-                              });
-                            },
-                          ),
-                          OBToggleField(
-                            hasDivider: false,
-                            value: _communityPostsVisible,
-                            title: _localizationService
-                                .user__edit_profile_community_posts,
-                            leading: const OBIcon(OBIcons.communities),
-                            onChanged: (bool value) {
-                              setState(() {
-                                _communityPostsVisible = value;
-                              });
-                            },
-                            onTap: () {
-                              setState(() {
-                                _communityPostsVisible =
-                                    !_communityPostsVisible;
-                              });
-                            },
-                          ),
                           const SizedBox(
                             height: 20,
                           ),
@@ -263,7 +224,7 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
           Navigator.pop(context);
         },
       ),
-      title: _localizationService.user__edit_profile_title,
+      title: _localizationService.user__manage_profile_title,
       trailing: OBButton(
         isDisabled: !newPostButtonIsEnabled,
         isLoading: _requestInProgress,
@@ -356,8 +317,8 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
                   new Text(_localizationService.user__edit_profile_pick_image),
               onTap: () async {
                 try {
-                  var image =
-                      await _imagePickerService.pickImage(imageType: imageType, context: context);
+                  var image = await _imagePickerService.pickImage(
+                      imageType: imageType, context: context);
 
                   _onUserImageSelected(image: image, imageType: imageType);
                 } on FileTooLargeException catch (e) {
@@ -444,8 +405,6 @@ class OBEditUserProfileModalState extends State<OBEditUserProfileModal> {
         name: _nameController.text,
         username: _usernameController.text,
         url: _urlController.text,
-        followersCountVisible: _followersCountVisible,
-        communityPostsVisible: _communityPostsVisible,
         bio: _bioController.text,
         location: _locationController.text,
       );

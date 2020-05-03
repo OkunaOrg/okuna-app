@@ -40,6 +40,12 @@ class OBInviteToCommunityModalState extends State<OBInviteToCommunityModal> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    User.clearMaxSessionCache();
+  }
+
+  @override
   Widget build(BuildContext context) {
     if (_needsBootstrap) {
       var provider = OpenbookProvider.of(context);

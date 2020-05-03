@@ -1,10 +1,10 @@
+import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/explore_timeline_preferences.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/widgets/fields/toggle_field.dart';
 import 'package:Okuna/widgets/theming/secondary_text.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../../../../../../provider.dart';
 
 class OBExcludeJoinedCommunitiesTile extends StatelessWidget {
 

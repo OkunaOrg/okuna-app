@@ -183,6 +183,16 @@
     "type": "text",
     "placeholders": {}
   },
+  "useful_links_guidelines_roadmap": "The Okuna roadmap",
+  "@useful_links_guidelines_roadmap": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "useful_links_guidelines_roadmap_desc": "Take a look at what we're planning to do in the future",
+  "@useful_links_guidelines_roadmap_desc": {
+    "type": "text",
+    "placeholders": {}
+  },
   "useful_links_guidelines_feature_requests": "Feature requests",
   "@useful_links_guidelines_feature_requests": {
     "type": "text",

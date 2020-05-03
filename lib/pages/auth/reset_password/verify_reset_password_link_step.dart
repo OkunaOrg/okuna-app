@@ -187,6 +187,7 @@ class OBAuthVerifyPasswordPageState extends State<OBAuthVerifyPasswordPage> {
                   }
                 },
                 controller: _linkController,
+                onFieldSubmitted: (v) => onPressedNextStep(context),
               )
           ),
         ),

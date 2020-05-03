@@ -10,12 +10,12 @@ import 'package:Okuna/widgets/tiles/loading_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:async/async.dart';
 
-class OBExcludeCommunityTile extends StatefulWidget {
+class OBExcludeCommunityFromTopPostsTile extends StatefulWidget {
   final Post post;
   final VoidCallback onExcludedPostCommunity;
   final VoidCallback onUndoExcludedPostCommunity;
 
-  const OBExcludeCommunityTile({
+  const OBExcludeCommunityFromTopPostsTile({
     Key key,
     @required this.post,
     this.onExcludedPostCommunity,
@@ -23,12 +23,13 @@ class OBExcludeCommunityTile extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  OBExcludeCommunityTileState createState() {
-    return OBExcludeCommunityTileState();
+  OBExcludeCommunityFromTopPostsTileState createState() {
+    return OBExcludeCommunityFromTopPostsTileState();
   }
 }
 
-class OBExcludeCommunityTileState extends State<OBExcludeCommunityTile> {
+class OBExcludeCommunityFromTopPostsTileState
+    extends State<OBExcludeCommunityFromTopPostsTile> {
   UserService _userService;
   ToastService _toastService;
   LocalizationService _localizationService;
@@ -56,11 +57,13 @@ class OBExcludeCommunityTileState extends State<OBExcludeCommunityTile> {
       builder: (BuildContext context, AsyncSnapshot<Post> snapshot) {
         var post = snapshot.data;
 
-        bool isExcluded = post.isFromExcludedCommunity;
+        bool isExcluded = post.isExcludedFromTopPosts;
 
         return OBLoadingTile(
           isLoading: _requestInProgress,
-          leading: OBIcon(isExcluded ? OBIcons.undoExcludePostCommunity : OBIcons.excludePostCommunity),
+          leading: OBIcon(isExcluded
+              ? OBIcons.undoExcludePostCommunity
+              : OBIcons.excludePostCommunity),
           title: OBText(isExcluded
               ? _localizationService.post__undo_exclude_post_community
               : _localizationService.post__exclude_post_community),
@@ -74,17 +77,20 @@ class OBExcludeCommunityTileState extends State<OBExcludeCommunityTile> {
   void dispose() {
     super.dispose();
     if (_excludeCommunityOperation != null) _excludeCommunityOperation.cancel();
-    if (_undoExcludeCommunityOperation != null) _undoExcludeCommunityOperation.cancel();
+    if (_undoExcludeCommunityOperation != null)
+      _undoExcludeCommunityOperation.cancel();
   }
 
   void _excludePostCommunity() async {
     if (_excludeCommunityOperation != null) return;
     _setRequestInProgress(true);
     try {
-      _excludeCommunityOperation = CancelableOperation.fromFuture(_userService.excludePostCommunityFromTopPosts(widget.post.community));
+      _excludeCommunityOperation = CancelableOperation.fromFuture(
+          _userService.excludeCommunityFromTopPosts(widget.post.community));
       String message = await _excludeCommunityOperation.value;
-      if (widget.onExcludedPostCommunity != null) widget.onExcludedPostCommunity();
-      widget.post.updateIsFromExcludedCommunity(true);
+      if (widget.onExcludedPostCommunity != null)
+        widget.onExcludedPostCommunity();
+      widget.post.updateIsExcludedFromTopPosts(true);
       _toastService.success(message: message, context: context);
     } catch (e) {
       _onError(e);
@@ -98,11 +104,13 @@ class OBExcludeCommunityTileState extends State<OBExcludeCommunityTile> {
     if (_undoExcludeCommunityOperation != null) return;
     _setRequestInProgress(true);
     try {
-      _undoExcludeCommunityOperation = CancelableOperation.fromFuture(_userService.undoExcludePostCommunityFromTopPosts(widget.post.community));
-      String message = await _undoExcludeCommunityOperation.value;
-      if (widget.onUndoExcludedPostCommunity != null) widget.onUndoExcludedPostCommunity();
-      _toastService.success(message: message, context: context);
-      widget.post.updateIsFromExcludedCommunity(false);
+      _undoExcludeCommunityOperation = CancelableOperation.fromFuture(
+          _userService.undoExcludeCommunityFromTopPosts(widget.post.community));
+      await _undoExcludeCommunityOperation.value;
+      if (widget.onUndoExcludedPostCommunity != null)
+        widget.onUndoExcludedPostCommunity();
+      _toastService.success(message: _localizationService.post__exclude_community_from_profile_posts_success, context: context);
+      widget.post.updateIsExcludedFromTopPosts(false);
     } catch (e) {
       _onError(e);
     } finally {
@@ -119,7 +127,8 @@ class OBExcludeCommunityTileState extends State<OBExcludeCommunityTile> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: _localizationService.error__unknown_error, context: context);
+      _toastService.error(
+          message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

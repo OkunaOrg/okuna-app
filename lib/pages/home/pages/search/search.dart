@@ -7,7 +7,7 @@ import 'package:Okuna/models/theme.dart';
 import 'package:Okuna/models/user.dart';
 import 'package:Okuna/models/users_list.dart';
 import 'package:Okuna/pages/home/lib/poppable_page_controller.dart';
-import 'package:Okuna/pages/home/pages/search/widgets/top_posts.dart';
+import 'package:Okuna/pages/home/pages/search/widgets/top_posts/top_posts.dart';
 import 'package:Okuna/pages/home/pages/search/widgets/trending_posts.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/navigation_service.dart';
@@ -357,7 +357,7 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
     _setCommunitySearchRequestInProgress(true);
 
     _getCommunitiesWithQuerySubscription =
-        _userService.getCommunitiesWithQuery(query).asStream().listen(
+        _userService.searchCommunitiesWithQuery(query).asStream().listen(
             (CommunitiesList communitiesList) {
               _setCommunitySearchResults(communitiesList.communities);
             },

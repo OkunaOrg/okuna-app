@@ -221,7 +221,7 @@ class OBContextualCommunitySearchBoxState
 
     try {
       _searchParticipantsOperation = CancelableOperation.fromFuture(
-          _userService.getCommunitiesWithQuery(searchQuery));
+          _userService.searchCommunitiesWithQuery(searchQuery));
       CommunitiesList searchResults = await _searchParticipantsOperation.value;
       _setSearchResults(searchResults.communities);
     } catch (error) {

@@ -203,6 +203,7 @@ class OBAuthEmailStepPageState extends State<OBAuthEmailStepPage> {
                   }
                 },
                 controller: _emailController,
+                onFieldSubmitted: (v) => onPressedNextStep(context),
               )
           ),
         ),

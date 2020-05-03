@@ -17,6 +17,7 @@ class OBAuthLoginPage extends StatefulWidget {
 
 class OBAuthLoginPageState extends State<OBAuthLoginPage> {
   final _formKey = GlobalKey<FormState>();
+  FocusNode _passwordFocusNode;
 
   bool _isSubmitted;
   bool _passwordIsVisible;
@@ -34,6 +35,8 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
   void initState() {
     super.initState();
 
+    _passwordFocusNode = FocusNode();
+
     _loginInProgress = false;
     _isSubmitted = false;
     _passwordIsVisible = false;
@@ -47,6 +50,7 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
     super.dispose();
     _usernameController.removeListener(_validateForm);
     _passwordController.removeListener(_validateForm);
+    _passwordFocusNode.dispose();
   }
 
   @override
@@ -122,13 +126,15 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
       minWidth: double.infinity,
       size: OBButtonSize.large,
       child: Text(buttonText, style: TextStyle(fontSize: 18.0)),
-      onPressed: () async {
-        _isSubmitted = true;
-        if (_validateForm()) {
-          await _login(context);
-        }
-      },
+      onPressed: _submitForm,
     );
+  }
+
+  Future<void> _submitForm() async {
+    _isSubmitted = true;
+    if (_validateForm()) {
+      await _login(context);
+    }
   }
 
   Future<void> _login(BuildContext context) async {
@@ -263,12 +269,16 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
                                 errorMaxLines: 3
                             ),
                             autocorrect: false,
+                            textInputAction: TextInputAction.next,
+                            onFieldSubmitted: (v) => FocusScope.of(context)
+                                .requestFocus(_passwordFocusNode),
                           ),
                           const SizedBox(
                             height: 20.0,
                           ),
                           TextFormField(
                             controller: _passwordController,
+                            focusNode: _passwordFocusNode,
                             obscureText: !_passwordIsVisible,
                             validator: _validatePassword,
                             decoration: InputDecoration(
@@ -285,6 +295,7 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
                               border: OutlineInputBorder(),
                             ),
                             autocorrect: false,
+                            onFieldSubmitted: (v) => _submitForm(),
                           ),
                           const SizedBox(
                             height: 20.0,

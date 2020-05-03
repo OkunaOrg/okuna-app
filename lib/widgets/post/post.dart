@@ -1,3 +1,4 @@
+import 'package:Okuna/models/community.dart';
 import 'package:Okuna/models/post.dart';
 import 'package:Okuna/widgets/post/widgets/post-actions/post_actions.dart';
 import 'package:Okuna/widgets/post/widgets/post-body/post_body.dart';
@@ -10,33 +11,34 @@ import 'package:Okuna/widgets/theming/post_divider.dart';
 import 'package:flutter/material.dart';
 import 'package:inview_notifier_list/inview_notifier_list.dart';
 
-
 class OBPost extends StatelessWidget {
   final Post post;
   final ValueChanged<Post> onPostDeleted;
   final ValueChanged<Post> onPostIsInView;
   final OnTextExpandedChange onTextExpandedChange;
   final String inViewId;
-  final bool isTopPost;
   final Function onCommunityExcluded;
   final Function onUndoCommunityExcluded;
+  final ValueChanged<Community> onPostCommunityExcludedFromProfilePosts;
+  final OBPostDisplayContext displayContext;
 
   const OBPost(this.post,
       {Key key,
-        @required this.onPostDeleted,
-        this.onPostIsInView,
-        this.onCommunityExcluded,
-        this.onUndoCommunityExcluded,
-        this.onTextExpandedChange,
-        this.inViewId,
-        this.isTopPost = false})
+      @required this.onPostDeleted,
+      this.onPostIsInView,
+      this.onCommunityExcluded,
+      this.onUndoCommunityExcluded,
+      this.onTextExpandedChange,
+      this.inViewId,
+      this.displayContext = OBPostDisplayContext.timelinePosts,
+      this.onPostCommunityExcludedFromProfilePosts})
       : super(key: key);
-
 
   @override
   Widget build(BuildContext context) {
     String postInViewId;
-    if (this.isTopPost) postInViewId = inViewId + '_' + post.id.toString();
+    if (this.displayContext == OBPostDisplayContext.topPosts)
+      postInViewId = inViewId + '_' + post.id.toString();
 
     _bootstrap(context, postInViewId);
 
@@ -49,13 +51,14 @@ class OBPost extends StatelessWidget {
           post: post,
           onPostDeleted: onPostDeleted,
           onPostReported: onPostDeleted,
-          isTopPost: isTopPost,
+          displayContext: displayContext,
           onCommunityExcluded: onCommunityExcluded,
           onUndoCommunityExcluded: onUndoCommunityExcluded,
+          onPostCommunityExcludedFromProfilePosts:
+              onPostCommunityExcludedFromProfilePosts,
         ),
         OBPostBody(post,
-            onTextExpandedChange: onTextExpandedChange,
-            inViewId: inViewId),
+            onTextExpandedChange: onTextExpandedChange, inViewId: inViewId),
         OBPostReactions(post),
         OBPostCircles(post),
         OBPostComments(
@@ -78,8 +81,9 @@ class OBPost extends StatelessWidget {
       _inViewState = InViewNotifierList.of(context);
       _inViewState.addContext(context: context, id: postInViewId);
 
-      if (isTopPost) {
-        _inViewState.addListener(() =>_onInViewStateChanged(_inViewState, postInViewId));
+      if (this.displayContext == OBPostDisplayContext.topPosts) {
+        _inViewState.addListener(
+            () => _onInViewStateChanged(_inViewState, postInViewId));
       }
     }
   }
@@ -90,4 +94,12 @@ class OBPost extends StatelessWidget {
       if (onPostIsInView != null) onPostIsInView(post);
     }
   }
+}
+
+enum OBPostDisplayContext {
+  timelinePosts,
+  topPosts,
+  communityPosts,
+  foreignProfilePosts,
+  ownProfilePosts
 }

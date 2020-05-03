@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 class OBConfirmActionBottomSheet extends StatefulWidget {
   final String title;
   final String subtitle;
+  final String description;
   final String confirmText;
   final String cancelText;
   final ActionCompleter actionCompleter;
@@ -22,7 +23,8 @@ class OBConfirmActionBottomSheet extends StatefulWidget {
       @required this.actionCompleter,
       this.confirmText,
       this.cancelText,
-      this.subtitle});
+      this.subtitle,
+      this.description});
 
   @override
   State<StatefulWidget> createState() {
@@ -89,6 +91,18 @@ class OBConfirmActionBottomSheetState
       ]);
     }
 
+    if (widget.description != null) {
+      columnItems.addAll([
+        const SizedBox(
+          height: 10,
+        ),
+        OBText(
+          widget.description,
+          size: OBTextSize.medium,
+          textAlign: TextAlign.left,
+        ),
+      ]);
+    }
     columnItems.addAll([
       const SizedBox(
         height: 20,
@@ -154,7 +168,8 @@ class OBConfirmActionBottomSheetState
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: _localizationService.error__unknown_error, context: context);
+      _toastService.error(
+          message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

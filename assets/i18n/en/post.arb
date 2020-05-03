@@ -339,11 +339,6 @@
     "type": "text",
     "placeholders": {}
   },
-  "community_not_found": "This community does not exist",
-  "@community_not_found": {
-    "type": "text",
-    "placeholders": {}
-  },
   "comments_view_all_comments": "View all {commentsCount} comments",
   "@comments_view_all_comments": {
     "type": "text",
@@ -510,6 +505,21 @@
   },
   "undo_exclude_post_community": "Show posts from this community",
   "@undo_exclude_post_community": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "exclude_community_from_profile_posts": "Hide this community from my profile",
+  "@exclude_community_from_profile_posts": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "exclude_community_from_profile_posts_success": "Community hidden",
+  "@exclude_community_from_profile_posts_success": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "exclude_community_from_profile_posts_confirmation": "This will hide all posts from this community from your profile.",
+  "@exclude_community_from_profile_posts_confirmation": {
     "type": "text",
     "placeholders": {}
   },

@@ -88,7 +88,7 @@ class OBTopPostsExcludedCommunitiesState extends State<OBTopPostsExcludedCommuni
 
   void _onExcludedCommunityListItemDeleted(Community excludedCommunity) async {
     try {
-      await _userService.undoExcludePostCommunityFromTopPosts(excludedCommunity);
+      await _userService.undoExcludeCommunityFromTopPosts(excludedCommunity);
       _httpListController.removeListItem(excludedCommunity);
     } catch (error) {
       _onError(error);
@@ -109,14 +109,14 @@ class OBTopPostsExcludedCommunitiesState extends State<OBTopPostsExcludedCommuni
   }
 
   Future<List<Community>> _refreshExcludedCommunities() async {
-    CommunitiesList excludedCommunities = await _userService.getExcludedCommunities();
+    CommunitiesList excludedCommunities = await _userService.getTopPostsExcludedCommunities();
     return excludedCommunities.communities;
   }
 
   Future<List<Community>> _loadMoreExcludedCommunities(List<Community> excludedCommunitiesList) async {
     var lastExcludedCommunity = excludedCommunitiesList.last;
     var lastExcludedCommunityId = lastExcludedCommunity.id;
-    var moreExcludedCommunities = (await _userService.getExcludedCommunities(
+    var moreExcludedCommunities = (await _userService.getTopPostsExcludedCommunities(
       offset: lastExcludedCommunityId,
       count: 10,
     )).communities;
@@ -125,7 +125,7 @@ class OBTopPostsExcludedCommunitiesState extends State<OBTopPostsExcludedCommuni
   }
 
   Future<List<Community>> _searchExcludedCommunities(String query) async {
-    CommunitiesList results = await _userService.searchExcludedCommunities(query: query);
+    CommunitiesList results = await _userService.searchTopPostsExcludedCommunities(query: query);
 
     return results.communities;
   }

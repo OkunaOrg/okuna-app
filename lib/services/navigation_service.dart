@@ -51,8 +51,10 @@ import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/account_setting
 import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/account_settings/pages/user_language_settings/user_language_settings.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/application_settings.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/developer_settings.dart';
-import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/explore_settings/explore_settings.dart';
-import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/explore_settings/widgets/top_posts_excluded_communities.dart';
+import 'package:Okuna/pages/home/pages/profile/pages/edit_profile/manage_profile.dart';
+import 'package:Okuna/pages/home/pages/profile/pages/edit_profile/pages/profile_posts_excluded_communities/profile_posts_excluded_communities.dart';
+import 'package:Okuna/pages/home/pages/search/widgets/top_posts/pages/top_posts_settings/pages/top_posts_excluded_communities.dart';
+import 'package:Okuna/pages/home/pages/search/widgets/top_posts/pages/top_posts_settings/top_posts_settings.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/settings/settings.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/useful_links.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/user_invites/pages/user_invite_detail.dart';
@@ -987,6 +989,45 @@ class NavigationService {
           builder: (BuildContext context) {
             return OBHashtagPage(
                 hashtag: hashtag, rawHashtagName: rawHashtagName);
+          }),
+    );
+  }
+
+  Future<void> navigateToProfilePostsExcludedCommunities(
+      {@required BuildContext context,
+      ValueChanged<Community> onExcludedCommunityRemoved,
+      ValueChanged<List<Community>> onExcludedCommunitiesAdded}) {
+    return Navigator.push(
+      context,
+      OBSlideRightRoute<dynamic>(
+          slidableKey: Key('profilePostsExcludedCommunitiesPageRoute'),
+          builder: (BuildContext context) {
+            return OBProfilePostsExcludedCommunitiesPage(
+              onExcludedCommunitiesAdded: onExcludedCommunitiesAdded,
+              onExcludedCommunityRemoved: onExcludedCommunityRemoved,
+            );
+          }),
+    );
+  }
+
+  Future<void> navigateToManageProfile({
+    @required User user,
+    @required BuildContext context,
+    VoidCallback onUserProfileUpdated,
+    ValueChanged<Community> onExcludedCommunityRemoved,
+    ValueChanged<List<Community>> onExcludedCommunitiesAdded,
+  }) async {
+    return Navigator.push(
+      context,
+      OBSlideRightRoute<dynamic>(
+          slidableKey: Key('excludeCommunitiesFromProfilePostsPage'),
+          builder: (BuildContext context) {
+            return OBManageProfilePage(
+              user,
+              onUserProfileUpdated: onUserProfileUpdated,
+              onExcludedCommunitiesAdded: onExcludedCommunitiesAdded,
+              onExcludedCommunityRemoved: onExcludedCommunityRemoved,
+            );
           }),
     );
   }

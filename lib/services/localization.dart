@@ -754,6 +754,17 @@ class LocalizationService {
         name: 'drawer__useful_links_guidelines_github_desc');
   }
 
+  String get drawer__useful_links_guidelines_roadmap {
+    return Intl.message("The Okuna roadmap",
+        name: 'drawer__useful_links_guidelines_roadmap');
+  }
+
+  String get drawer__useful_links_guidelines_roadmap_desc {
+    return Intl.message(
+        "Take a look at what we're planning to do in the future",
+        name: 'drawer__useful_links_guidelines_roadmap_desc');
+  }
+
   String get drawer__useful_links_guidelines_feature_requests {
     return Intl.message("Feature requests",
         name: 'drawer__useful_links_guidelines_feature_requests');
@@ -859,12 +870,12 @@ class LocalizationService {
   }
 
   String get community__excluded_community {
-    return Intl.message("excluded community",
+    return Intl.message("hidden community",
         name: 'community__excluded_community');
   }
 
   String get community__excluded_communities {
-    return Intl.message("excluded communities",
+    return Intl.message("hidden communities",
         name: 'community__excluded_communities');
   }
 
@@ -1427,6 +1438,12 @@ class LocalizationService {
         name: 'community__save_community_name_label_type_hint_text');
   }
 
+  String get community__community_type_private_community_hint_text {
+    return Intl.message(
+        "Note: Private communities cannot be later changed to Public",
+        name: 'community__community_type_private_community_hint_text');
+  }
+
   String get community__save_community_name_member_invites {
     return Intl.message("Member invites",
         name: 'community__save_community_name_member_invites');
@@ -1609,12 +1626,12 @@ class LocalizationService {
   }
 
   String get community__top_posts_excluded_communities {
-    return Intl.message("Excluded communities",
+    return Intl.message("Hidden communities",
         name: 'community__top_posts_excluded_communities');
   }
 
   String get community__top_posts_excluded_communities_desc {
-    return Intl.message("Manage communities excluded from the explore timeline",
+    return Intl.message("Manage communities hidden from the explore timeline",
         name: 'community__top_posts_excluded_communities_desc');
   }
 
@@ -1692,8 +1709,16 @@ class LocalizationService {
         args: [searchQuery], name: 'user_search__no_users_for');
   }
 
+  String get user_search__selection_submit {
+    return Intl.message("Submit", name: 'user_search__selection_submit');
+  }
+
   String get post__open_post {
     return Intl.message("Open post", name: 'post__open_post');
+  }
+
+  String get user_search__selection_clear_all {
+    return Intl.message("Clear all", name: 'user_search__selection_clear_all');
   }
 
   String get post__close_post {
@@ -2147,6 +2172,22 @@ class LocalizationService {
         name: 'post__undo_exclude_post_community');
   }
 
+  String get post__exclude_community_from_profile_posts {
+    return Intl.message("Hide this community from my profile",
+        name: 'post__exclude_community_from_profile_posts');
+  }
+
+  String get post__exclude_community_from_profile_posts_success {
+    return Intl.message("Community hidden",
+        name: 'post__exclude_community_from_profile_posts_success');
+  }
+
+  String get post__exclude_community_from_profile_posts_confirmation {
+    return Intl.message(
+        "This will hide all posts from this community from your profile.",
+        name: 'post__exclude_community_from_profile_posts_confirmation');
+  }
+
   String get post__comments_enabled_message {
     return Intl.message("Comments enabled for post",
         name: 'post__comments_enabled_message');
@@ -2549,18 +2590,70 @@ class LocalizationService {
     return Intl.message("Bio", name: 'user__edit_profile_bio');
   }
 
-  String get user__edit_profile_followers_count {
+  String get user__manage_profile_followers_count_toggle {
     return Intl.message("Followers count",
-        name: 'user__edit_profile_followers_count');
+        name: 'user__manage_profile_followers_count_toggle');
+  }
+
+  String get user__manage_profile_followers_count_toggle__descr {
+    return Intl.message(
+        "Display the number of people that follow you, on your profile.",
+        name: 'user__manage_profile_followers_count_toggle__descr');
+  }
+
+  String get user__manage_profile_community_posts_toggle {
+    return Intl.message("Community posts",
+        name: 'user__manage_profile_community_posts_toggle');
+  }
+
+  String get user__manage_profile_community_posts_toggle__descr {
+    return Intl.message(
+        "Display posts you share with public communities, on your profile.",
+        name: 'user__manage_profile_community_posts_toggle__descr');
   }
 
   String get user__edit_profile_community_posts {
-    return Intl.message("Community posts",
+    return Intl.message("Communities",
         name: 'user__edit_profile_community_posts');
   }
 
-  String get user__edit_profile_title {
-    return Intl.message("Edit profile", name: 'user__edit_profile_title');
+  String get user__edit_profile_community_posts_descr {
+    return Intl.message("Display in profile",
+        name: 'user__edit_profile_community_posts_descr');
+  }
+
+  String get user__manage {
+    return Intl.message("Manage", name: 'user__manage');
+  }
+
+  String get user__manage_profile_title {
+    return Intl.message("Manage profile", name: 'user__manage_profile_title');
+  }
+
+  String get user__manage_profile_details_title {
+    return Intl.message("Details", name: 'user__manage_profile_details_title');
+  }
+
+  String get user__manage_profile_details_title_desc {
+    return Intl.message(
+        "Change your username, name, url, location, avatar or cover photo.",
+        name: 'user__manage_profile_details_title_desc');
+  }
+
+  String get user__profile_posts_excluded_communities {
+    return Intl.message("Hidden communities",
+        name: 'user__profile_posts_excluded_communities');
+  }
+
+  String get user__profile_posts_exclude_communities {
+    return Intl.message("Exclude communities",
+        name: 'user__profile_posts_exclude_communities');
+  }
+
+  String get user__profile_posts_excluded_communities_desc {
+    return Intl.message(
+        "See, add and remove hidden communities from your profile.",
+        name: 'user__profile_posts_excluded_communities_desc');
   }
 
   String get user__edit_profile_save_text {
@@ -3996,6 +4089,15 @@ class LocalizationService {
         name: 'application_settings__link_previews');
   }
 
+  String get application_settings__hashtags_display {
+    return Intl.message("Display",
+        name: 'application_settings__hashtags_display');
+  }
+
+  String get application_settings__hashtags {
+    return Intl.message("Hashtags", name: 'application_settings__hashtags');
+  }
+
   String get application_settings__videos_autoplay {
     return Intl.message("Autoplay",
         name: 'application_settings__videos_autoplay');
@@ -4053,6 +4155,16 @@ class LocalizationService {
   String get application_settings__videos_sound_disabled {
     return Intl.message("Disabled",
         name: 'application_settings__videos_sound_disabled');
+  }
+
+  String get application_settings__hashtags_display_traditional {
+    return Intl.message("Traditional",
+        name: 'application_settings__hashtags_display_traditional');
+  }
+
+  String get application_settings__hashtags_display_disco {
+    return Intl.message("🕺 Disco",
+        name: 'application_settings__hashtags_display_disco');
   }
 
   String get application_settings__comment_sort_newest_first {

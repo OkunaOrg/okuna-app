@@ -298,18 +298,68 @@
     "type": "text",
     "placeholders": {}
   },
-  "edit_profile_followers_count": "Followers count",
-  "@edit_profile_followers_count": {
+  "manage_profile_followers_count_toggle": "Followers count",
+  "@manage_profile_followers_count_toggle": {
     "type": "text",
     "placeholders": {}
   },
-  "edit_profile_community_posts": "Community posts",
+  "manage_profile_followers_count_toggle__descr": "Display the number of people that follow you, on your profile.",
+  "@manage_profile_followers_count_toggle__descr": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "manage_profile_community_posts_toggle": "Community posts",
+  "@manage_profile_community_posts_toggle": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "manage_profile_community_posts_toggle__descr": "Display posts you share with public communities, on your profile.",
+  "@manage_profile_community_posts_toggle__descr": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "edit_profile_community_posts": "Communities",
   "@edit_profile_community_posts": {
     "type": "text",
     "placeholders": {}
   },
-  "edit_profile_title": "Edit profile",
-  "@edit_profile_title": {
+  "edit_profile_community_posts_descr": "Display in profile",
+  "@edit_profile_community_posts_descr": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "manage": "Manage",
+  "@manage": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "manage_profile_title": "Manage profile",
+  "@manage_profile_title": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "manage_profile_details_title": "Details",
+  "@manage_profile_details_title": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "manage_profile_details_title_desc": "Change your username, name, url, location, avatar or cover photo.",
+  "@manage_profile_details_title_desc": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "profile_posts_excluded_communities": "Hidden communities",
+  "@profile_posts_excluded_communities": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "profile_posts_exclude_communities": "Exclude communities",
+  "@profile_posts_exclude_communities": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "profile_posts_excluded_communities_desc": "See, add and remove hidden communities from your profile.",
+  "@profile_posts_excluded_communities_desc": {
     "type": "text",
     "placeholders": {}
   },
@@ -981,6 +1031,16 @@
   },
   "block_user": "Block user",
   "@block_user": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "block_description": "You will both dissapear from each other's social network experience, with the exception of communities which the person is a staff member of.",
+  "@block_description": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "unblock_description": "You will both be able to follow, connect or explore each other's content again.",
+  "@unblock_description": {
     "type": "text",
     "placeholders": {}
   },

@@ -4,8 +4,14 @@ The change log for the Okuna app.
 
 ## Table of contents
 
-- [Release 0.0.59](#release-0.0.59)
+- [Release 0.0.63](#release-0.0.63)
 - [Release 0.0.61](#release-0.0.61)
+- [Release 0.0.59](#release-0.0.59)
+
+## Release 0.0.63
+
+#### Features
+- Add hint text that private communities cannot be made public
 
 ## Release 0.0.61
 
