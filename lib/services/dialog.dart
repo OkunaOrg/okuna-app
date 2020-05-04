@@ -35,11 +35,12 @@ class DialogService {
     return showAlert(
         content: SingleChildScrollView(
           child: ColorPicker(
-              enableAlpha: enableAlpha,
-              pickerColor: initialColor,
-              onColorChanged: onColorChanged,
-              pickerAreaHeightPercent: 0.8,
-              showLabel: false),
+            enableAlpha: enableAlpha,
+            pickerColor: initialColor,
+            onColorChanged: onColorChanged,
+            pickerAreaHeightPercent: 0.8,
+            showLabel: false,
+          ),
         ),
         context: context);
   }

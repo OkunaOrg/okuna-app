@@ -2,10 +2,45 @@ PODS:
   - connectivity (0.0.1):
     - Flutter
     - Reachability
+  - connectivity_macos (0.0.1):
+    - Flutter
   - device_info (0.0.1):
     - Flutter
+  - DKImagePickerController/Core (4.2.2):
+    - DKImagePickerController/ImageDataManager
+    - DKImagePickerController/Resource
+  - DKImagePickerController/ImageDataManager (4.2.2)
+  - DKImagePickerController/PhotoGallery (4.2.2):
+    - DKImagePickerController/Core
+    - DKPhotoGallery
+  - DKImagePickerController/Resource (4.2.2)
+  - DKPhotoGallery (0.0.14):
+    - DKPhotoGallery/Core (= 0.0.14)
+    - DKPhotoGallery/Model (= 0.0.14)
+    - DKPhotoGallery/Preview (= 0.0.14)
+    - DKPhotoGallery/Resource (= 0.0.14)
+    - SDWebImage
+    - SDWebImageFLPlugin
+  - DKPhotoGallery/Core (0.0.14):
+    - DKPhotoGallery/Model
+    - DKPhotoGallery/Preview
+    - SDWebImage
+    - SDWebImageFLPlugin
+  - DKPhotoGallery/Model (0.0.14):
+    - SDWebImage
+    - SDWebImageFLPlugin
+  - DKPhotoGallery/Preview (0.0.14):
+    - DKPhotoGallery/Model
+    - DKPhotoGallery/Resource
+    - SDWebImage
+    - SDWebImageFLPlugin
+  - DKPhotoGallery/Resource (0.0.14):
+    - SDWebImage
+    - SDWebImageFLPlugin
   - file_picker (0.0.1):
+    - DKImagePickerController/PhotoGallery
     - Flutter
+  - FLAnimatedImage (1.0.12)
   - Flutter (1.0.0)
   - flutter_ffmpeg/full-gpl-lts (0.2.10):
     - Flutter
@@ -14,6 +49,8 @@ PODS:
     - Flutter
     - Mantle
     - SDWebImageWebPCoder
+  - flutter_plugin_android_lifecycle (0.0.1):
+    - Flutter
   - flutter_secure_storage (3.3.1):
     - Flutter
   - FMDB (2.7.5):
@@ -24,8 +61,8 @@ PODS:
     - TOCropViewController (~> 2.5.2)
   - image_picker (0.0.1):
     - Flutter
-  - Intercom (6.0.1)
-  - intercom_flutter (2.1.0):
+  - Intercom (6.0.2)
+  - intercom_flutter (2.1.1):
     - Flutter
     - Intercom (~> 6.0.1)
   - libwebp (1.1.0):
@@ -41,22 +78,29 @@ PODS:
     - Mantle/extobjc (= 2.1.1)
   - Mantle/extobjc (2.1.1)
   - mobile-ffmpeg-full-gpl (4.3.1.LTS)
-  - OneSignal (2.12.6)
-  - onesignal_flutter (2.3.3):
+  - OneSignal (2.13.1)
+  - onesignal_flutter (2.4.1):
     - Flutter
-    - OneSignal (= 2.12.6)
+    - OneSignal (= 2.13.1)
   - package_info (0.0.1):
     - Flutter
   - path_provider (0.0.1):
     - Flutter
+  - path_provider_macos (0.0.1):
+    - Flutter
   - Reachability (3.2)
   - screen (0.0.1):
     - Flutter
-  - SDWebImage/Core (5.5.2)
-  - SDWebImageWebPCoder (0.5.0):
+  - SDWebImage (5.7.3):
+    - SDWebImage/Core (= 5.7.3)
+  - SDWebImage/Core (5.7.3)
+  - SDWebImageFLPlugin (0.4.0):
+    - FLAnimatedImage (>= 1.0.11)
+    - SDWebImage/Core (~> 5.6)
+  - SDWebImageWebPCoder (0.6.1):
     - libwebp (~> 1.0)
-    - SDWebImage/Core (~> 5.5)
-  - share (0.5.2):
+    - SDWebImage/Core (~> 5.7)
+  - share (0.0.1):
     - Flutter
   - shared_preferences (0.0.1):
     - Flutter
@@ -84,11 +128,13 @@ PODS:
 
 DEPENDENCIES:
   - connectivity (from `.symlinks/plugins/connectivity/ios`)
+  - connectivity_macos (from `.symlinks/plugins/connectivity_macos/ios`)
   - device_info (from `.symlinks/plugins/device_info/ios`)
   - file_picker (from `.symlinks/plugins/file_picker/ios`)
   - Flutter (from `Flutter`)
   - flutter_ffmpeg/full-gpl-lts (from `.symlinks/plugins/flutter_ffmpeg/ios`)
   - flutter_image_compress (from `.symlinks/plugins/flutter_image_compress/ios`)
+  - flutter_plugin_android_lifecycle (from `.symlinks/plugins/flutter_plugin_android_lifecycle/ios`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - image_cropper (from `.symlinks/plugins/image_cropper/ios`)
   - image_picker (from `.symlinks/plugins/image_picker/ios`)
@@ -97,6 +143,7 @@ DEPENDENCIES:
   - onesignal_flutter (from `.symlinks/plugins/onesignal_flutter/ios`)
   - package_info (from `.symlinks/plugins/package_info/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
+  - path_provider_macos (from `.symlinks/plugins/path_provider_macos/ios`)
   - screen (from `.symlinks/plugins/screen/ios`)
   - share (from `.symlinks/plugins/share/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
@@ -111,6 +158,9 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - DKImagePickerController
+    - DKPhotoGallery
+    - FLAnimatedImage
     - FMDB
     - Intercom
     - libwebp
@@ -119,6 +169,7 @@ SPEC REPOS:
     - OneSignal
     - Reachability
     - SDWebImage
+    - SDWebImageFLPlugin
     - SDWebImageWebPCoder
     - TOCropViewController
     - VIMediaCache
@@ -126,6 +177,8 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   connectivity:
     :path: ".symlinks/plugins/connectivity/ios"
+  connectivity_macos:
+    :path: ".symlinks/plugins/connectivity_macos/ios"
   device_info:
     :path: ".symlinks/plugins/device_info/ios"
   file_picker:
@@ -136,6 +189,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_ffmpeg/ios"
   flutter_image_compress:
     :path: ".symlinks/plugins/flutter_image_compress/ios"
+  flutter_plugin_android_lifecycle:
+    :path: ".symlinks/plugins/flutter_plugin_android_lifecycle/ios"
   flutter_secure_storage:
     :path: ".symlinks/plugins/flutter_secure_storage/ios"
   image_cropper:
@@ -150,6 +205,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/package_info/ios"
   path_provider:
     :path: ".symlinks/plugins/path_provider/ios"
+  path_provider_macos:
+    :path: ".symlinks/plugins/path_provider_macos/ios"
   screen:
     :path: ".symlinks/plugins/screen/ios"
   share:
@@ -175,30 +232,37 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   connectivity: 6e94255659cc86dcbef1d452ad3e0491bb1b3e75
-  device_info: cbf09d2ec12aa7110e0b09fabe54b5bd6c8efe74
-  file_picker: 408623be2125b79a4539cf703be3d4b3abe5e245
+  connectivity_macos: e2e9731b6b22dda39eb1b128f6969d574460e191
+  device_info: d7d233b645a32c40dfdc212de5cf646ca482f175
+  DKImagePickerController: 4a3e7948a848c4348e600b3fe5ce41478835fa10
+  DKPhotoGallery: 0290d32343574f06eaa4c26f8f2f8a1035e916be
+  file_picker: 3e6c3790de664ccf9b882732d9db5eaf6b8d4eb1
+  FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   flutter_ffmpeg: cf0a6941ef67e88248c998cc3e34f8acb0b4e454
   flutter_image_compress: 082f8daaf6c1b0c9fe798251c750ef0ecd98d7ae
+  flutter_plugin_android_lifecycle: dc0b544e129eebb77a6bfb1239d4d1c673a60a35
   flutter_secure_storage: 7953c38a04c3fdbb00571bcd87d8e3b5ceb9daec
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   image_cropper: 3c16d7651730ffe85897f5a1c4e2547e6b54989a
   image_picker: e3eacd46b94694dde7cf2705955cece853aa1a8f
-  Intercom: f63e30d10c658b4f5817f5693e5ee2fa070b5803
-  intercom_flutter: 3c324ba9a75060f15c5bfb7854a9bb0a3524cb65
+  Intercom: 523417d82ed1a8c635cc7f97b266eb8bd0bd9d85
+  intercom_flutter: 45b06d70365ccae12227cbceeca36c6a23457f54
   libwebp: 946cb3063cea9236285f7e9a8505d806d30e07f3
   Mantle: 35238ae6f2e2b2d474fa7b67fee82a59fea71915
   mobile-ffmpeg-full-gpl: b1e8e1540852bd911768774f1c11e8fc76102dc3
-  OneSignal: a6df91542d1cf133b9dd19d89f2b533d8f2d3163
-  onesignal_flutter: 0db2f05befedb1ef79399b571bff4c9ba5410f6a
-  package_info: 48b108e75b8802c2d5e126f208ef540561c98aef
-  path_provider: fb74bd0465e96b594bb3b5088ee4a4e7bb1f2a9d
+  OneSignal: fa98eaa90372bb367b6a4a1c1622ffb9832c7600
+  onesignal_flutter: fc5794fdcfdbd3f17426cb63c78281a3f51c85ff
+  package_info: 873975fc26034f0b863a300ad47e7f1ac6c7ec62
+  path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
+  path_provider_macos: f760a3c5b04357c380e2fddb6f9db6f3015897e0
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   screen: abd91ca7bf3426e1cc3646d27e9b2358d6bf07b0
-  SDWebImage: 4d5c027c935438f341ed33dbac53ff9f479922ca
-  SDWebImageWebPCoder: e7ae855f058e3dcae99696920b6a5d134e9dcddf
-  share: bae0a282aab4483288913fc4dc0b935d4b491f2e
-  shared_preferences: 430726339841afefe5142b9c1f50cb6bd7793e01
+  SDWebImage: 97351f6582ceca541ea294ba66a1fcb342a331c2
+  SDWebImageFLPlugin: 6c2295fb1242d44467c6c87dc5db6b0a13228fd8
+  SDWebImageWebPCoder: d0dac55073088d24b2ac1b191a71a8f8d0adac21
+  share: 0b2c3e82132f5888bccca3351c504d0003b3b410
+  shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
   shared_preferences_macos: f3f29b71ccbb56bf40c9dd6396c9acf15e214087
   shared_preferences_web: 141cce0c3ed1a1c5bf2a0e44f52d31eeb66e5ea9
   sqflite: 4001a31ff81d210346b500c55b17f4d6c7589dd0
@@ -208,8 +272,8 @@ SPEC CHECKSUMS:
   video_player: fd8b6188941ec5a530d6ab0830a34f78faa0452e
   video_thumbnail: c4e2a3c539e247d4de13cd545344fd2d26ffafd1
   VIMediaCache: aa650f82cb114c68a343beb4e67416cf5eb2f3a2
-  wakelock: bd3dcc6a8bcf53a1c0309780ff192dcee67c6ccb
+  wakelock: 0d4a70faf8950410735e3f61fb15d517c8a6efc4
 
 PODFILE CHECKSUM: 19fc3c8c5b57454c416c7e16986dc7dd8aa66d48
 
-COCOAPODS: 1.8.3
+COCOAPODS: 1.9.1

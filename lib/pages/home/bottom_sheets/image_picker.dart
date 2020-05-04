@@ -28,7 +28,7 @@ class OBImagePickerBottomSheet extends StatelessWidget {
           bool permissionGranted = await provider.permissionService
               .requestStoragePermissions(context: context);
           if (permissionGranted) {
-            File file = await FilePicker.getFile(type: FileType.IMAGE);
+            File file = await FilePicker.getFile(type: FileType.image);
             Navigator.pop(context, file);
           }
         },
