@@ -2,6 +2,7 @@ import 'package:Okuna/models/hashtag.dart';
 import 'package:Okuna/models/hashtags_list.dart';
 import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/post_comment_list.dart';
+import 'package:Okuna/models/post_comment_notifications_subscription.dart';
 import 'package:Okuna/models/post_comment_reaction.dart';
 import 'package:Okuna/models/reactions_emoji_count.dart';
 import 'package:Okuna/models/reactions_emoji_count_list.dart';
@@ -27,6 +28,7 @@ class PostComment extends UpdatableModel<PostComment> {
   PostCommentReaction reaction;
   HashtagsList hashtagsList;
   Map<String, Hashtag> hashtagsMap;
+  PostCommentNotificationsSubscription postCommentNotificationsSubscription;
 
   Post post;
   bool isEdited;
@@ -81,7 +83,8 @@ class PostComment extends UpdatableModel<PostComment> {
       this.replies,
       this.repliesCount,
       this.reactionsEmojiCounts,
-      this.reaction}) {
+      this.reaction,
+      this.postCommentNotificationsSubscription}) {
     _updateHashtagsMap();
   }
 
@@ -114,7 +117,9 @@ class PostComment extends UpdatableModel<PostComment> {
       'reactions_emoji_counts': reactionsEmojiCounts.counts
           .map((ReactionsEmojiCount reaction) => reaction.toJson())
           ?.toList(),
-      'reaction': reaction.toJson()
+      'reaction': reaction.toJson(),
+      'post_comment_notifications_subscription':
+          postCommentNotificationsSubscription.toJson()
     };
   }
 
@@ -177,6 +182,12 @@ class PostComment extends UpdatableModel<PostComment> {
     if (json.containsKey('hashtags')) {
       hashtagsList = factory.parseHashtagsList(json['hashtags']);
       _updateHashtagsMap();
+    }
+
+    if (json.containsKey('post_comment_notifications_subscription')) {
+      postCommentNotificationsSubscription =
+          factory.parsePostCommentNotificationsSubscription(
+              json['post_comment_notifications_subscription']);
     }
   }
 
@@ -331,7 +342,10 @@ class PostCommentFactory extends UpdatableModelFactory<PostComment> {
         reaction: parseReaction(json['reaction']),
         hashtagsList: parseHashtagsList(json['hashtags']),
         reactionsEmojiCounts:
-            parseReactionsEmojiCounts(json['reactions_emoji_counts']));
+            parseReactionsEmojiCounts(json['reactions_emoji_counts']),
+        postCommentNotificationsSubscription:
+            parsePostCommentNotificationsSubscription(
+                json['post_comment_notifications_subscription']));
   }
 
   Post parsePost(Map post) {
@@ -377,6 +391,14 @@ class PostCommentFactory extends UpdatableModelFactory<PostComment> {
   HashtagsList parseHashtagsList(List hashtagsList) {
     if (hashtagsList == null) return null;
     return HashtagsList.fromJson(hashtagsList);
+  }
+
+  PostCommentNotificationsSubscription
+      parsePostCommentNotificationsSubscription(
+          Map postCommentNotificationsSubscriptionData) {
+    if (postCommentNotificationsSubscriptionData == null) return null;
+    return PostCommentNotificationsSubscription.fromJSON(
+        postCommentNotificationsSubscriptionData);
   }
 }
 

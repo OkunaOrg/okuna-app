@@ -106,6 +106,7 @@ class ModalService {
   Future<PostComment> openExpandedReplyCommenter(
       {@required BuildContext context,
       @required PostComment postComment,
+      PostComment postCommentReply,
       @required Post post,
       @required Function(PostComment) onReplyAdded,
       @required Function(PostComment) onReplyDeleted}) async {
@@ -117,6 +118,7 @@ class ModalService {
                 child: OBPostCommentReplyExpandedModal(
                     post: post,
                     postComment: postComment,
+                    postCommentReply: postCommentReply,
                     onReplyAdded: onReplyAdded,
                     onReplyDeleted: onReplyDeleted),
               );

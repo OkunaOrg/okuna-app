@@ -36,6 +36,7 @@ import 'package:Okuna/models/post_comment_list.dart';
 import 'package:Okuna/models/post_comment_reaction.dart';
 import 'package:Okuna/models/post_comment_reaction_list.dart';
 import 'package:Okuna/models/post_media_list.dart';
+import 'package:Okuna/models/post_notifications_subscription.dart';
 import 'package:Okuna/models/post_reaction.dart';
 import 'package:Okuna/models/post_reaction_list.dart';
 import 'package:Okuna/models/reactions_emoji_count_list.dart';
@@ -765,6 +766,9 @@ class UserService {
     HttpieResponse response =
         await _postsApiService.commentPost(postUuid: post.uuid, text: text);
     _checkResponseIsCreated(response);
+    // refresh post to get notifications subscription model
+    if (post.postNotificationsSubscription == null)
+      await getPostWithUuid(post.uuid);
     return PostComment.fromJSON(json.decode(response.body));
   }
 
@@ -793,6 +797,9 @@ class UserService {
     HttpieResponse response = await _postsApiService.replyPostComment(
         postUuid: post.uuid, postCommentId: postComment.id, text: text);
     _checkResponseIsCreated(response);
+    // refresh post to get notifications subscription model
+    if (post.postNotificationsSubscription == null)
+      await getPostWithUuid(post.uuid);
     return PostComment.fromJSON(json.decode(response.body));
   }
 
@@ -813,6 +820,66 @@ class UserService {
   Future<Post> unmutePost(Post post) async {
     HttpieResponse response =
         await _postsApiService.unmutePostWithUuid(post.uuid);
+    _checkResponseIsOk(response);
+    return Post.fromJson(json.decode(response.body));
+  }
+
+  Future<Post> createPostNotificationsSubscription(
+      {@required Post post,
+      bool commentNotifications,
+      bool reactionNotifications,
+      bool replyNotifications}) async {
+    HttpieResponse response =
+        await _postsApiService.createPostNotificationsSubscription(
+            postUuid: post.uuid,
+            commentNotifications: commentNotifications,
+            reactionNotifications: reactionNotifications,
+            replyNotifications: replyNotifications);
+    _checkResponseIsCreated(response);
+    return Post.fromJson(json.decode(response.body));
+  }
+
+  Future<Post> updatePostNotificationsSubscription(
+      {@required Post post,
+      bool commentNotifications,
+      bool reactionNotifications,
+      bool replyNotifications}) async {
+    HttpieResponse response =
+        await _postsApiService.updatePostNotificationsSubscription(
+            postUuid: post.uuid,
+            commentNotifications: commentNotifications,
+            reactionNotifications: reactionNotifications,
+            replyNotifications: replyNotifications);
+    _checkResponseIsOk(response);
+    return Post.fromJson(json.decode(response.body));
+  }
+
+  Future<Post> createPostCommentNotificationsSubscription(
+      {@required Post post,
+      @required PostComment postComment,
+      bool reactionNotifications,
+      bool replyNotifications}) async {
+    HttpieResponse response =
+        await _postsApiService.createPostCommentNotificationsSubscription(
+            postUuid: post.uuid,
+            postCommentId: postComment.id,
+            reactionNotifications: reactionNotifications,
+            replyNotifications: replyNotifications);
+    _checkResponseIsCreated(response);
+    return Post.fromJson(json.decode(response.body));
+  }
+
+  Future<Post> updatePostCommentNotificationsSubscription(
+      {@required Post post,
+      @required PostComment postComment,
+      bool reactionNotifications,
+      bool replyNotifications}) async {
+    HttpieResponse response =
+        await _postsApiService.updatePostCommentNotificationsSubscription(
+            postUuid: post.uuid,
+            postCommentId: postComment.id,
+            reactionNotifications: reactionNotifications,
+            replyNotifications: replyNotifications);
     _checkResponseIsOk(response);
     return Post.fromJson(json.decode(response.body));
   }
@@ -1953,12 +2020,7 @@ class UserService {
 
   Future<UserNotificationsSettings>
       updateAuthenticatedUserNotificationsSettings({
-    bool postCommentNotifications,
-    bool postCommentReplyNotifications,
-    bool postCommentReactionNotifications,
-    bool postCommentUserMentionNotifications,
-    bool postUserMentionNotifications,
-    bool postReactionNotifications,
+    bool postNotifications,
     bool followNotifications,
     bool connectionRequestNotifications,
     bool connectionConfirmedNotifications,
@@ -1968,13 +2030,7 @@ class UserService {
   }) async {
     HttpieResponse response =
         await _authApiService.updateAuthenticatedUserNotificationsSettings(
-            postCommentNotifications: postCommentNotifications,
-            postCommentReplyNotifications: postCommentReplyNotifications,
-            postCommentUserMentionNotifications:
-                postCommentUserMentionNotifications,
-            postUserMentionNotifications: postUserMentionNotifications,
-            postCommentReactionNotifications: postCommentReactionNotifications,
-            postReactionNotifications: postReactionNotifications,
+            postNotifications: postNotifications,
             followNotifications: followNotifications,
             connectionConfirmedNotifications: connectionConfirmedNotifications,
             communityInviteNotifications: communityInviteNotifications,

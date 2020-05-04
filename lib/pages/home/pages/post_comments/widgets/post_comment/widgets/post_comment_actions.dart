@@ -84,10 +84,7 @@ class OBPostCommentActionsState extends State<OBPostCommentActions> {
       _buildReactButton(),
     ];
 
-    if (widget.showReplyAction &&
-        _userService
-            .getLoggedInUser()
-            .canReplyPostComment(widget.postComment)) {
+    if (widget.showReplyAction) {
       actionItems.add(_buildReplyButton());
     }
 
@@ -154,7 +151,6 @@ class OBPostCommentActionsState extends State<OBPostCommentActions> {
   }
 
   Widget _buildReplyButton() {
-
     return Padding(
         padding: const EdgeInsets.only(top: 10, bottom: 10, right: 10),
         child: GestureDetector(
@@ -178,13 +174,17 @@ class OBPostCommentActionsState extends State<OBPostCommentActions> {
     PostComment comment = await _modalService.openExpandedReplyCommenter(
         context: context,
         post: widget.post,
-        postComment: widget.postComment,
+        postComment: widget.postComment.parentComment ??
+            widget.postComment, // if reply to reply use parent comment
+        postCommentReply: widget.postComment.parentComment != null
+            ? widget.postComment
+            : null,
         onReplyDeleted: widget.onReplyDeleted,
         onReplyAdded: widget.onReplyAdded);
     if (comment != null) {
       await _navigationService.navigateToPostCommentReplies(
           post: widget.post,
-          postComment: widget.postComment,
+          postComment: widget.postComment.parentComment ?? widget.postComment,
           onReplyAdded: widget.onReplyAdded,
           onReplyDeleted: widget.onReplyDeleted,
           context: context);
@@ -244,7 +244,8 @@ class OBPostCommentActionsState extends State<OBPostCommentActions> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: _localizationService.error__unknown_error, context: context);
+      _toastService.error(
+          message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

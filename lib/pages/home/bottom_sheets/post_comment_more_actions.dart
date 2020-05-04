@@ -11,6 +11,7 @@ import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/user.dart';
 import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/theming/text.dart';
+import 'package:Okuna/widgets/tiles/actions/manage_post_comment_notifications_tile.dart';
 import 'package:Okuna/widgets/tiles/actions/mute_post_comment_tile.dart';
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
@@ -81,9 +82,10 @@ class OBPostCommentMoreActionsBottomSheetState
 
   List<Widget> _buildActionTiles() {
     List<Widget> actionTiles = [
-      OBMutePostCommentTile(
-        postComment: widget.postComment,
+      OBManagePostCommentNotificationsTile(
         post: widget.post,
+        postComment: widget.postComment,
+        onNotificationSettingsSave: _dismissMoreActions,
       )
     ];
     User loggedInUser = _userService.getLoggedInUser();

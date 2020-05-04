@@ -523,6 +523,111 @@
     "type": "text",
     "placeholders": {}
   },
+  "manage_post_notifications": "Manage post notifications",
+  "@manage_post_notifications": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "manage_post_comment_notifications": "Manage comment notifications",
+  "@manage_post_comment_notifications": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "subscribe_post_notifications": "Subscribe to post notifications",
+  "@subscribe_post_notifications": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "subscribe_post_comment_notifications": "Subscribe to comment notifications",
+  "@subscribe_post_comment_notifications": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "mute_post_notifications_text": "Mute post",
+  "@mute_post_notifications_text": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "unmute_post_notifications_text": "Unmute post",
+  "@unmute_post_notifications_text": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "mute_post_comment_notifications_text": "Mute comment",
+  "@mute_post_comment_notifications_text": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "unmute_post_comment_notifications_text": "Unmute comment",
+  "@unmute_post_comment_notifications_text": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "manage_notifications_comments_title": "Comments",
+  "@manage_notifications_comments_title": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "manage_notifications_comments_desc": "Get notifications when someone comments on this post",
+  "@manage_notifications_comments_desc": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "manage_notifications_comment_reactions_title": "Comment Reactions",
+  "@manage_notifications_comment_reactions_title": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "manage_notifications_comment_reactions_desc": "Get notifications when someone reacts to your comments",
+  "@manage_notifications_comment_reactions_desc": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "manage_notifications_reactions_title": "Reactions",
+  "@manage_notifications_reactions_title": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "manage_notifications_reactions_desc": "Get notifications when someone reacts to your post",
+  "@manage_notifications_reactions_desc": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "manage_notifications_reactions_post_comment_desc": "Get notifications when someone reacts to your comment",
+  "@manage_notifications_reactions_post_comment_desc": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "manage_notifications_replies_title": "Replies",
+  "@manage_notifications_replies_title": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "manage_notifications_replies_desc": "Get notifications when someone replies to comments on this post",
+  "@manage_notifications_replies_desc": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "manage_notifications_replies_post_comment_desc": "Get notifications when someone replies to this comment",
+  "@manage_notifications_replies_post_comment_desc": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "manage_notifications_successfully_saved": "Notification settings saved",
+  "@manage_notifications_successfully_saved": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "manage_notifications_successfully_muted": "Notifications muted",
+  "@manage_notifications_successfully_muted": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "manage_notifications_successfully_unmuted": "Notifications unmuted",
+  "@manage_notifications_successfully_unmuted": {
+    "type": "text",
+    "placeholders": {}
+  },
   "comments_enabled_message": "Comments enabled for post",
   "@comments_enabled_message": {
     "type": "text",
