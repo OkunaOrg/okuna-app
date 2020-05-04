@@ -1,28 +1,29 @@
 import 'dart:io';
+
 import 'package:Okuna/models/community.dart';
 import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/post_image.dart';
 import 'package:Okuna/models/post_media.dart';
 import 'package:Okuna/models/post_video.dart';
+import 'package:Okuna/pages/home/lib/draft_editing_controller.dart';
 import 'package:Okuna/pages/home/modals/save_post/widgets/create_post_text.dart';
 import 'package:Okuna/pages/home/modals/save_post/widgets/post_community_previewer.dart';
 import 'package:Okuna/pages/home/modals/save_post/widgets/post_image_previewer.dart';
 import 'package:Okuna/pages/home/modals/save_post/widgets/post_video_previewer.dart';
 import 'package:Okuna/pages/home/modals/save_post/widgets/remaining_post_characters.dart';
-import 'package:Okuna/pages/home/lib/draft_editing_controller.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/draft.dart';
 import 'package:Okuna/services/httpie.dart';
 import 'package:Okuna/services/link_preview.dart';
-import 'package:Okuna/services/media.dart';
 import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/media.dart';
 import 'package:Okuna/services/navigation_service.dart';
 import 'package:Okuna/services/share.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/user.dart';
 import 'package:Okuna/services/validation.dart';
-import 'package:Okuna/widgets/avatars/logged_in_user_avatar.dart';
 import 'package:Okuna/widgets/avatars/avatar.dart';
+import 'package:Okuna/widgets/avatars/logged_in_user_avatar.dart';
 import 'package:Okuna/widgets/buttons/button.dart';
 import 'package:Okuna/widgets/buttons/pill_button.dart';
 import 'package:Okuna/widgets/contextual_search_boxes/contextual_search_box_state.dart';
@@ -31,12 +32,12 @@ import 'package:Okuna/widgets/link_preview.dart';
 import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Okuna/widgets/new_post_data_uploader.dart';
 import 'package:Okuna/widgets/theming/primary_color_container.dart';
+import 'package:Okuna/widgets/theming/smart_text.dart';
 import 'package:Okuna/widgets/theming/text.dart';
+import 'package:async/async.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pigment/pigment.dart';
-import 'package:Okuna/widgets/theming/smart_text.dart';
-import 'package:async/async.dart';
 
 class OBSavePostModal extends StatefulWidget {
   final Community community;
@@ -413,9 +414,9 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
             if (pickedPhoto != null) {
               bool photoIsGif = await _mediaService.isGif(pickedPhoto);
               if (photoIsGif) {
-                File gifVideo =
-                    await _mediaService.convertGifToVideo(pickedPhoto);
-                _setPostVideoFile(gifVideo);
+                _mediaService.convertGifToVideo(pickedPhoto).then(
+                    (file) => _setPostVideoFile(file),
+                    onError: (error, trace) => throw error);
               } else {
                 _setPostImageFile(pickedPhoto);
               }
@@ -459,6 +460,10 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
   }
 
   void _setPostImageFile(File image) {
+    if (!mounted) {
+      return;
+    }
+
     setState(() {
       this._postImageFile = image;
       _hasImage = true;
@@ -485,6 +490,10 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
   }
 
   void _setPostVideoFile(File video) {
+    if (!mounted) {
+      return;
+    }
+
     setState(() {
       this._postVideoFile = video;
       _hasVideo = true;
@@ -527,7 +536,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
     _addPostItemWidget(postImageWidget);
   }
 
-  Future<bool> _onShare({String text, File image, File video}) async {
+  Future<dynamic> _onShare({String text, File image, File video}) async {
     if (image != null || video != null) {
       if (_hasImage) {
         _removePostImageFile();
@@ -550,10 +559,22 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
     if (video != null) {
       final isGif = await _mediaService.isGif(video);
       if (isGif) {
-        video = await _mediaService.convertGifToVideo(video);
-      }
+        var conversionOp = _mediaService.convertGifToVideo(video);
 
-      _setPostVideoFile(video);
+        conversionOp.then((value) {
+          if (!conversionOp.isCanceled && value != null) {
+            _setPostVideoFile(value);
+          }
+        }, onError: (error, trace) {
+          if (!conversionOp.isCanceled) {
+            print(error);
+          }
+        });
+
+        return conversionOp;
+      } else {
+        _setPostVideoFile(video);
+      }
     }
 
     return true;
