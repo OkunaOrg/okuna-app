@@ -24,7 +24,7 @@ class PostsApiService {
       'api/posts/profile/excluded-communities/{communityName}/';
   static const EXCLUDED_PROFILE_POSTS_COMMUNITIES_SEARCH_PATH =
       'api/posts/profile/excluded-communities/search/';
-  static const GET_TRENDING_POSTS_PATH = 'api/posts/trending/new/';
+  static const GET_TRENDING_POSTS_PATH = 'api/posts/trending/';
   static const CREATE_POST_PATH = 'api/posts/';
   static const POST_MEDIA_PATH = 'api/posts/{postUuid}/media/';
   static const EDIT_POST_PATH = 'api/posts/{postUuid}/';
@@ -130,7 +130,8 @@ class PostsApiService {
 
     return _httpService.get('$apiURL$GET_TRENDING_POSTS_PATH',
         queryParameters: queryParams,
-        appendAuthorizationToken: authenticatedRequest);
+        appendAuthorizationToken: authenticatedRequest,
+        headers: {'Accept': 'application/json; version=2.0'});
   }
 
   Future<HttpieResponse> getTimelinePosts(

@@ -3317,6 +3317,10 @@ class LocalizationService {
     return Intl.message("Email", name: 'user__change_email_email_text');
   }
 
+  String get user__change_email_current_email_text {
+    return Intl.message("Current email", name: 'user__change_email_current_email_text');
+  }
+
   String get user__change_email_hint_text {
     return Intl.message("Enter your new email",
         name: 'user__change_email_hint_text');

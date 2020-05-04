@@ -108,6 +108,7 @@ class ShareService {
 
     if (share.image != null) {
       image = File.fromUri(Uri.parse(share.image));
+      image = await _mediaService.fixExifRotation(image);
       image = await _mediaService.processImage(image);
       if (!await _validationService.isImageAllowedSize(
           image, OBImageType.post)) {

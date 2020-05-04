@@ -27,7 +27,7 @@ class OBVideoPickerBottomSheet extends StatelessWidget {
           bool permissionGranted = await provider.permissionService
               .requestStoragePermissions(context: context);
           if (permissionGranted) {
-            File file = await FilePicker.getFile(type: FileType.VIDEO);
+            File file = await FilePicker.getFile(type: FileType.video);
             Navigator.pop(context, file);
           }
         },
