@@ -81,79 +81,6 @@ class MediaService {
         media: media, context: context, flattenGifs: flattenGifs);
   }
 
-  Future<Media> _prepareMedia(
-      {@required Media media,
-      @required BuildContext context,
-      bool flattenGifs = false,
-      OBImageType imageType = OBImageType.post}) async {
-    var mediaType = media.type;
-    Media result;
-
-    // Copy the media to a temporary location.
-    final tempPath = await _getTempPath();
-    final String mediaUuid = _uuid.v4();
-    String mediaExtension = basename(media.file.path);
-    var copiedMedia =
-        media.file.copySync('$tempPath/$mediaUuid$mediaExtension');
-
-    if (await isGif(media.file) && !flattenGifs) {
-      mediaType = FileType.video;
-
-      Completer<File> completer = Completer();
-      convertGifToVideo(copiedMedia).then((file) => completer.complete(file),
-          onError: (error, trace) {
-        print(error);
-        _toastService.error(
-            message: _localizationService.error__unknown_error,
-            context: context);
-      });
-      copiedMedia = await completer.future;
-    }
-
-    //TODO(komposten): Split into _prepareImage and _prepareVideo.
-    if (mediaType == FileType.image) {
-      copiedMedia = await fixExifRotation(copiedMedia, deleteOriginal: true);
-      String processedImageName = mediaUuid + '.jpg';
-      File processedImage = File('$tempPath/$processedImageName');
-      List<int> convertedImageData =
-          await ImageConverter.convertImage(copiedMedia.readAsBytesSync());
-      processedImage.writeAsBytesSync(convertedImageData);
-
-      // We have a new processed copy, so we can delete our first copy.
-      copiedMedia.deleteSync();
-
-      if (!await _validationService.isImageAllowedSize(
-          processedImage, imageType)) {
-        throw FileTooLargeException(
-            _validationService.getAllowedImageSize(imageType));
-      }
-
-      processedImage = await processImage(processedImage);
-
-      if (imageType == OBImageType.post) {
-        result = Media(processedImage, mediaType);
-      } else {
-        double ratioX = IMAGE_RATIOS[imageType]['x'];
-        double ratioY = IMAGE_RATIOS[imageType]['y'];
-
-        File croppedFile =
-            await cropImage(processedImage, ratioX: ratioX, ratioY: ratioY);
-
-        result = Media(croppedFile, mediaType);
-      }
-    } else if (mediaType == FileType.video) {
-      if (!await _validationService.isVideoAllowedSize(copiedMedia)) {
-        throw FileTooLargeException(_validationService.getAllowedVideoSize());
-      }
-
-      result = Media(copiedMedia, mediaType);
-    } else {
-      throw 'Unsupported media type: ${media.type}';
-    }
-
-    return result;
-  }
-
   Future<File> pickImage(
       {@required OBImageType imageType, @required BuildContext context}) async {
     File pickedImage =
@@ -183,6 +110,90 @@ class MediaService {
     );
 
     return media.file;
+  }
+
+  Future<Media> _prepareMedia(
+      {@required Media media,
+      @required BuildContext context,
+      bool flattenGifs = false,
+      OBImageType imageType = OBImageType.post}) async {
+    var mediaType = media.type;
+    Media result;
+
+    // Copy the media to a temporary location.
+    final tempPath = await _getTempPath();
+    final String mediaUuid = _uuid.v4();
+    String mediaExtension = basename(media.file.path);
+    var copiedFile = media.file.copySync('$tempPath/$mediaUuid$mediaExtension');
+
+    if (await isGif(media.file) && !flattenGifs) {
+      mediaType = FileType.video;
+
+      Completer<File> completer = Completer();
+      convertGifToVideo(copiedFile).then((file) => completer.complete(file),
+          onError: (error, trace) {
+        print(error);
+        _toastService.error(
+            message: _localizationService.error__unknown_error,
+            context: context);
+      });
+      copiedFile = await completer.future;
+    }
+
+    Media copiedMedia = Media(copiedFile, mediaType);
+    if (mediaType == FileType.image) {
+      result = await _prepareImage(copiedMedia, tempPath, mediaUuid, imageType);
+    } else if (mediaType == FileType.video) {
+      result = await _prepareVideo(copiedMedia);
+    } else {
+      throw 'Unsupported media type: ${media.type}';
+    }
+
+    return result;
+  }
+
+  Future<Media> _prepareImage(Media media, String tempPath, String mediaUuid,
+      OBImageType imageType) async {
+    var image = await fixExifRotation(media.file, deleteOriginal: true);
+    String processedImageName = mediaUuid + '.jpg';
+    File processedImage = File('$tempPath/$processedImageName');
+    List<int> convertedImageData =
+        await ImageConverter.convertImage(image.readAsBytesSync());
+    processedImage.writeAsBytesSync(convertedImageData);
+
+    // We have a new processed copy, so we can delete our first copy.
+    image.deleteSync();
+
+    if (!await _validationService.isImageAllowedSize(
+        processedImage, imageType)) {
+      throw FileTooLargeException(
+          _validationService.getAllowedImageSize(imageType));
+    }
+
+    processedImage = await processImage(processedImage);
+
+    Media result;
+    if (imageType == OBImageType.post) {
+      result = Media(processedImage, media.type);
+    } else {
+      double ratioX = IMAGE_RATIOS[imageType]['x'];
+      double ratioY = IMAGE_RATIOS[imageType]['y'];
+
+      File croppedFile =
+          await cropImage(processedImage, ratioX: ratioX, ratioY: ratioY);
+
+      result = Media(croppedFile, media.type);
+    }
+
+    return result;
+  }
+
+  Future<Media> _prepareVideo(Media media) async {
+    if (!await _validationService.isVideoAllowedSize(media.file)) {
+      throw FileTooLargeException(_validationService.getAllowedVideoSize());
+    }
+
+    return media;
   }
 
   Future<File> processImage(File image) async {
