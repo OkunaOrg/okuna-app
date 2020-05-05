@@ -1918,6 +1918,14 @@ class LocalizationService {
     return Intl.message("Next", name: 'post__create_next');
   }
 
+  String get post__create_media {
+    return Intl.message("Media", name: 'post__create_media');
+  }
+
+  String get post__create_camera {
+    return Intl.message("Camera", name: 'post__create_media');
+  }
+
   String get post__create_photo {
     return Intl.message("Photo", name: 'post__create_photo');
   }

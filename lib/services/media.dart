@@ -3,13 +3,16 @@ import 'dart:io';
 
 import 'package:Okuna/plugins/image_converter/image_converter.dart';
 import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/utils_service.dart';
 import 'package:Okuna/services/validation.dart';
 import 'package:async/async.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ffmpeg/flutter_ffmpeg.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:meta/meta.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -33,6 +36,7 @@ class MediaService {
   ValidationService _validationService;
   BottomSheetService _bottomSheetService;
   LocalizationService _localizationService;
+  ToastService _toastService;
   UtilsService _utilsService;
 
   void setLocalizationService(LocalizationService localizationService) {
@@ -51,63 +55,120 @@ class MediaService {
     _bottomSheetService = modalService;
   }
 
-  Future<File> pickImage(
-      {@required OBImageType imageType,
+  void setToastService(ToastService toastService) {
+    _toastService = toastService;
+  }
+
+  Future<Media> pickMedia(
+      {@required BuildContext context,
+      @required ImageSource source,
+      bool flattenGifs}) async {
+    Media media;
+
+    if (source == ImageSource.gallery) {
+      media = await _bottomSheetService.showMediaPicker(context: context);
+    } else if (source == ImageSource.camera) {
+      media = await _bottomSheetService.showCameraPicker(context: context);
+    } else {
+      throw 'Unsupported media source: $source';
+    }
+
+    if (media == null) {
+      return null;
+    }
+
+    return _prepareMedia(
+        media: media, context: context, flattenGifs: flattenGifs);
+  }
+
+  Future<Media> _prepareMedia(
+      {@required Media media,
       @required BuildContext context,
-      bool flattenGifs = true}) async {
+      bool flattenGifs = false,
+      OBImageType imageType = OBImageType.post}) async {
+    var mediaType = media.type;
+    Media result;
+
+    // Copy the media to a temporary location.
+    final tempPath = await _getTempPath();
+    final String mediaUuid = _uuid.v4();
+    String mediaExtension = basename(media.file.path);
+    var copiedMedia =
+        media.file.copySync('$tempPath/$mediaUuid$mediaExtension');
+
+    if (await isGif(media.file) && !flattenGifs) {
+      mediaType = FileType.video;
+
+      Completer<File> completer = Completer();
+      convertGifToVideo(copiedMedia).then((file) => completer.complete(file),
+          onError: (error, trace) {
+        print(error);
+        _toastService.error(
+            message: _localizationService.error__unknown_error,
+            context: context);
+      });
+      copiedMedia = await completer.future;
+    }
+
+    //TODO(komposten): Split into _prepareImage and _prepareVideo.
+    if (mediaType == FileType.image) {
+      copiedMedia = await fixExifRotation(copiedMedia, deleteOriginal: true);
+      String processedImageName = mediaUuid + '.jpg';
+      File processedImage = File('$tempPath/$processedImageName');
+      List<int> convertedImageData =
+          await ImageConverter.convertImage(copiedMedia.readAsBytesSync());
+      processedImage.writeAsBytesSync(convertedImageData);
+
+      // We have a new processed copy, so we can delete our first copy.
+      copiedMedia.deleteSync();
+
+      if (!await _validationService.isImageAllowedSize(
+          processedImage, imageType)) {
+        throw FileTooLargeException(
+            _validationService.getAllowedImageSize(imageType));
+      }
+
+      processedImage = await processImage(processedImage);
+
+      if (imageType == OBImageType.post) {
+        result = Media(processedImage, mediaType);
+      } else {
+        double ratioX = IMAGE_RATIOS[imageType]['x'];
+        double ratioY = IMAGE_RATIOS[imageType]['y'];
+
+        File croppedFile =
+            await cropImage(processedImage, ratioX: ratioX, ratioY: ratioY);
+
+        result = Media(croppedFile, mediaType);
+      }
+    } else if (mediaType == FileType.video) {
+      if (!await _validationService.isVideoAllowedSize(copiedMedia)) {
+        throw FileTooLargeException(_validationService.getAllowedVideoSize());
+      }
+
+      result = Media(copiedMedia, mediaType);
+    } else {
+      throw 'Unsupported media type: ${media.type}';
+    }
+
+    return result;
+  }
+
+  Future<File> pickImage(
+      {@required OBImageType imageType, @required BuildContext context}) async {
     File pickedImage =
         await _bottomSheetService.showImagePicker(context: context);
 
     if (pickedImage == null) return null;
 
-    pickedImage = await fixExifRotation(pickedImage);
-    final tempPath = await _getTempPath();
+    var media = await _prepareMedia(
+      media: Media(pickedImage, FileType.image),
+      context: context,
+      flattenGifs: true,
+      imageType: imageType,
+    );
 
-    final String processedImageUuid = _uuid.v4();
-    String imageExtension = basename(pickedImage.path);
-
-    // The image picker gives us the real image, lets copy it into a temp path
-    pickedImage =
-        pickedImage.copySync('$tempPath/$processedImageUuid$imageExtension');
-
-    File processedPickedImage;
-
-    bool pickedImageIsGif = await isGif(pickedImage);
-
-    if (!pickedImageIsGif || flattenGifs) {
-      String processedImageName = processedImageUuid + '.jpg';
-      processedPickedImage = File('$tempPath/$processedImageName');
-      List<int> convertedImageData =
-          await ImageConverter.convertImage(pickedImage.readAsBytesSync());
-      processedPickedImage.writeAsBytesSync(convertedImageData);
-    } else {
-      String processedImageName = processedImageUuid + '.gif';
-      processedPickedImage =
-          pickedImage.copySync('$tempPath/$processedImageName');
-    }
-
-    // We now have a processed one
-    pickedImage.deleteSync();
-
-    if (!await _validationService.isImageAllowedSize(
-        processedPickedImage, imageType)) {
-      throw FileTooLargeException(
-          _validationService.getAllowedImageSize(imageType));
-    }
-
-    processedPickedImage = !pickedImageIsGif || flattenGifs
-        ? await processImage(processedPickedImage)
-        : processedPickedImage;
-
-    if (imageType == OBImageType.post) return processedPickedImage;
-
-    double ratioX = IMAGE_RATIOS[imageType]['x'];
-    double ratioY = IMAGE_RATIOS[imageType]['y'];
-
-    File croppedFile =
-        await cropImage(processedPickedImage, ratioX: ratioX, ratioY: ratioY);
-
-    return croppedFile;
+    return media.file;
   }
 
   Future<File> pickVideo({@required BuildContext context}) async {
@@ -116,17 +177,12 @@ class MediaService {
 
     if (pickedVideo == null) return null;
 
-    String videoExtension = basename(pickedVideo.path);
-    String tmpImageName = _uuid.v4() + videoExtension;
-    final path = await _getTempPath();
-    final String pickedVideoCopyPath = '$path/$tmpImageName';
-    File pickedVideoCopy = pickedVideo.copySync(pickedVideoCopyPath);
+    var media = await _prepareMedia(
+      media: Media(pickedVideo, FileType.video),
+      context: context,
+    );
 
-    if (!await _validationService.isVideoAllowedSize(pickedVideoCopy)) {
-      throw FileTooLargeException(_validationService.getAllowedVideoSize());
-    }
-
-    return pickedVideoCopy;
+    return media.file;
   }
 
   Future<File> processImage(File image) async {
@@ -148,12 +204,10 @@ class MediaService {
 
     await fixedImage.writeAsBytes(result);
 
-    if(deleteOriginal) await image.delete();
+    if (deleteOriginal) await image.delete();
 
     return fixedImage;
   }
-
-
 
   Future<File> copyMediaFile(File mediaFile, {deleteOriginal: true}) async {
     final String processedImageUuid = _uuid.v4();
@@ -320,3 +374,10 @@ class FileTooLargeException implements Exception {
 }
 
 enum OBImageType { avatar, cover, post }
+
+class Media {
+  final File file;
+  final FileType type;
+
+  const Media(this.file, this.type);
+}
