@@ -60,7 +60,6 @@ class MediaService {
 
     if (pickedImage == null) return null;
 
-    pickedImage = await fixExifRotation(pickedImage);
     final tempPath = await _getTempPath();
 
     final String processedImageUuid = _uuid.v4();
@@ -75,6 +74,7 @@ class MediaService {
     bool pickedImageIsGif = await isGif(pickedImage);
 
     if (!pickedImageIsGif || flattenGifs) {
+      pickedImage = await fixExifRotation(pickedImage, deleteOriginal: true);
       String processedImageName = processedImageUuid + '.jpg';
       processedPickedImage = File('$tempPath/$processedImageName');
       List<int> convertedImageData =
@@ -148,12 +148,10 @@ class MediaService {
 
     await fixedImage.writeAsBytes(result);
 
-    if(deleteOriginal) await image.delete();
+    if (deleteOriginal) await image.delete();
 
     return fixedImage;
   }
-
-
 
   Future<File> copyMediaFile(File mediaFile, {deleteOriginal: true}) async {
     final String processedImageUuid = _uuid.v4();
@@ -264,7 +262,7 @@ class MediaService {
     var exitCode;
     if (!doCancel()) {
       exitCode = await flutterFFmpeg.execute(
-          '-f gif -i $sourceFilePath -pix_fmt yuv420p -c:v libx264 -movflags +faststart -filter:v crop=\'floor(in_w/2)*2:floor(in_h/2)*2\' $resultFilePath');
+          ' -loglevel debug -f gif -i $sourceFilePath -pix_fmt yuv420p -c:v libx264 -movflags +faststart -filter:v crop=\'floor(in_w/2)*2:floor(in_h/2)*2\' $resultFilePath');
     }
 
     if (exitCode == 0) {
