@@ -147,6 +147,19 @@ class ShareService {
         _showFileTooLargeToast(_validationService.getAllowedVideoSize());
         return;
       }
+
+      if (await _mediaService.isGif(video)) {
+        Completer<File> completer = Completer();
+        _mediaService
+            .convertGifToVideo(video)
+            .then((file) => completer.complete(file), onError: (error, trace) {
+          print(error);
+          _toastService.error(
+              message: _localizationService.error__unknown_error,
+              context: _context);
+        });
+        video = await completer.future;
+      }
     }
 
     if (share.text != null) {
