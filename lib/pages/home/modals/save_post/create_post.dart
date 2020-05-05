@@ -16,7 +16,7 @@ import 'package:Okuna/services/draft.dart';
 import 'package:Okuna/services/httpie.dart';
 import 'package:Okuna/services/link_preview.dart';
 import 'package:Okuna/services/localization.dart';
-import 'package:Okuna/services/media.dart';
+import 'package:Okuna/services/media/media.dart';
 import 'package:Okuna/services/navigation_service.dart';
 import 'package:Okuna/services/share.dart';
 import 'package:Okuna/services/toast.dart';

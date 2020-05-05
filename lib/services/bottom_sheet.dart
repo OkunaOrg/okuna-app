@@ -31,12 +31,11 @@ import 'package:Okuna/pages/home/bottom_sheets/user_actions/user_actions.dart';
 import 'package:Okuna/pages/home/bottom_sheets/video_picker.dart';
 import 'package:Okuna/pages/home/bottom_sheets/videos_autoplay_setting_picker.dart';
 import 'package:Okuna/pages/home/bottom_sheets/videos_sound_setting_picker.dart';
+import 'package:Okuna/services/media/models/media_file.dart';
 import 'package:Okuna/services/user_preferences.dart';
 import 'package:Okuna/widgets/post/post.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
-
-import 'media.dart';
 
 class BottomSheetService {
   bool hasActiveBottomSheet = false;
@@ -277,7 +276,7 @@ class BottomSheetService {
         });
   }
 
-  Future<Media> showMediaPicker({@required BuildContext context}) {
+  Future<MediaFile> showMediaPicker({@required BuildContext context}) {
     return _showModalBottomSheetApp(
         context: context,
         builder: (BuildContext context) {
@@ -285,7 +284,7 @@ class BottomSheetService {
         });
   }
 
-  Future<Media> showCameraPicker({@required BuildContext context}) {
+  Future<MediaFile> showCameraPicker({@required BuildContext context}) {
     return _showModalBottomSheetApp(
         context: context,
         builder: (BuildContext context) {

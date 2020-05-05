@@ -2,7 +2,8 @@ import 'dart:io';
 import 'package:Okuna/pages/home/bottom_sheets/rounded_bottom_sheet.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/localization.dart';
-import 'package:Okuna/services/media.dart';
+import 'package:Okuna/services/media/media.dart';
+import 'package:Okuna/services/media/models/media_file.dart';
 import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/theming/text.dart';
 import 'package:file_picker/file_picker.dart';
@@ -29,7 +30,7 @@ class OBCameraPickerBottomSheet extends StatelessWidget {
           if (permissionGranted) {
             File file = await ImagePicker.pickImage(source: ImageSource.camera);
             Navigator.pop(
-                context, file != null ? Media(file, FileType.image) : null);
+                context, file != null ? MediaFile(file, FileType.image) : null);
           }
         },
       ),
@@ -44,7 +45,7 @@ class OBCameraPickerBottomSheet extends StatelessWidget {
           if (permissionGranted) {
             File file = await ImagePicker.pickVideo(source: ImageSource.camera);
             Navigator.pop(
-                context, file != null ? Media(file, FileType.video) : null);
+                context, file != null ? MediaFile(file, FileType.video) : null);
           }
         },
       ),

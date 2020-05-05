@@ -2,7 +2,9 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:Okuna/plugins/image_converter/image_converter.dart';
+import 'package:Okuna/services/bottom_sheet.dart';
 import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/media/models/media_file.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/utils_service.dart';
 import 'package:Okuna/services/validation.dart';
@@ -18,8 +20,6 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
-
-import 'bottom_sheet.dart';
 
 export 'package:image_picker/image_picker.dart';
 
@@ -59,11 +59,11 @@ class MediaService {
     _toastService = toastService;
   }
 
-  Future<Media> pickMedia(
+  Future<MediaFile> pickMedia(
       {@required BuildContext context,
       @required ImageSource source,
       bool flattenGifs}) async {
-    Media media;
+    MediaFile media;
 
     if (source == ImageSource.gallery) {
       media = await _bottomSheetService.showMediaPicker(context: context);
@@ -89,7 +89,7 @@ class MediaService {
     if (pickedImage == null) return null;
 
     var media = await _prepareMedia(
-      media: Media(pickedImage, FileType.image),
+      media: MediaFile(pickedImage, FileType.image),
       context: context,
       flattenGifs: true,
       imageType: imageType,
@@ -105,20 +105,20 @@ class MediaService {
     if (pickedVideo == null) return null;
 
     var media = await _prepareMedia(
-      media: Media(pickedVideo, FileType.video),
+      media: MediaFile(pickedVideo, FileType.video),
       context: context,
     );
 
     return media.file;
   }
 
-  Future<Media> _prepareMedia(
-      {@required Media media,
+  Future<MediaFile> _prepareMedia(
+      {@required MediaFile media,
       @required BuildContext context,
       bool flattenGifs = false,
       OBImageType imageType = OBImageType.post}) async {
     var mediaType = media.type;
-    Media result;
+    MediaFile result;
 
     // Copy the media to a temporary location.
     final tempPath = await _getTempPath();
@@ -140,7 +140,7 @@ class MediaService {
       copiedFile = await completer.future;
     }
 
-    Media copiedMedia = Media(copiedFile, mediaType);
+    MediaFile copiedMedia = MediaFile(copiedFile, mediaType);
     if (mediaType == FileType.image) {
       result = await _prepareImage(copiedMedia, tempPath, mediaUuid, imageType);
     } else if (mediaType == FileType.video) {
@@ -152,8 +152,8 @@ class MediaService {
     return result;
   }
 
-  Future<Media> _prepareImage(Media media, String tempPath, String mediaUuid,
-      OBImageType imageType) async {
+  Future<MediaFile> _prepareImage(MediaFile media, String tempPath,
+      String mediaUuid, OBImageType imageType) async {
     var image = await fixExifRotation(media.file, deleteOriginal: true);
     String processedImageName = mediaUuid + '.jpg';
     File processedImage = File('$tempPath/$processedImageName');
@@ -172,9 +172,9 @@ class MediaService {
 
     processedImage = await processImage(processedImage);
 
-    Media result;
+    MediaFile result;
     if (imageType == OBImageType.post) {
-      result = Media(processedImage, media.type);
+      result = MediaFile(processedImage, media.type);
     } else {
       double ratioX = IMAGE_RATIOS[imageType]['x'];
       double ratioY = IMAGE_RATIOS[imageType]['y'];
@@ -182,13 +182,13 @@ class MediaService {
       File croppedFile =
           await cropImage(processedImage, ratioX: ratioX, ratioY: ratioY);
 
-      result = Media(croppedFile, media.type);
+      result = MediaFile(croppedFile, media.type);
     }
 
     return result;
   }
 
-  Future<Media> _prepareVideo(Media media) async {
+  Future<MediaFile> _prepareVideo(MediaFile media) async {
     if (!await _validationService.isVideoAllowedSize(media.file)) {
       throw FileTooLargeException(_validationService.getAllowedVideoSize());
     }
@@ -385,10 +385,3 @@ class FileTooLargeException implements Exception {
 }
 
 enum OBImageType { avatar, cover, post }
-
-class Media {
-  final File file;
-  final FileType type;
-
-  const Media(this.file, this.type);
-}

@@ -3,13 +3,12 @@ import 'dart:io';
 
 import 'package:Okuna/plugins/share/share.dart';
 import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/media/media.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/validation.dart';
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-import 'media.dart';
 
 class ShareService {
   static const _stream = const EventChannel('openbook.social/receive_share');
