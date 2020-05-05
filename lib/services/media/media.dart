@@ -59,6 +59,13 @@ class MediaService {
     _toastService = toastService;
   }
 
+  /// Opens a bottom sheet with the options to pick either an image or a video.
+  /// The media is picked from the gallery or camera (determined by [source]).
+  ///
+  /// If a GIF is picked it will be converted to a video file before being returned.
+  ///
+  /// The returned file may be either an image or a video. Use [MediaFile.type]
+  /// to determine which one it is.
   Future<MediaFile> pickMedia(
       {@required BuildContext context,
       @required ImageSource source,
@@ -81,6 +88,11 @@ class MediaService {
         media: media, context: context, flattenGifs: flattenGifs);
   }
 
+  /// Opens a bottom sheet with the option to pick an image from gallery or snap
+  /// a new one with the camera.
+  ///
+  /// The returned file should always point to an image. If a GIF is picked it will
+  /// be flattened.
   Future<File> pickImage(
       {@required OBImageType imageType, @required BuildContext context}) async {
     File pickedImage =
@@ -98,6 +110,10 @@ class MediaService {
     return media.file;
   }
 
+  /// Opens a bottom sheet with the option to pick a video from gallery or take
+  /// a new one with the camera.
+  ///
+  /// The returned file should always point to a video.
   Future<File> pickVideo({@required BuildContext context}) async {
     File pickedVideo =
         await _bottomSheetService.showVideoPicker(context: context);
