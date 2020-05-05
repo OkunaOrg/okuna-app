@@ -5,6 +5,7 @@ import 'package:Okuna/plugins/image_converter/image_converter.dart';
 import 'package:Okuna/services/bottom_sheet.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/media/models/media_file.dart';
+import 'package:Okuna/services/permissions.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/utils_service.dart';
 import 'package:Okuna/services/validation.dart';
@@ -37,6 +38,7 @@ class MediaService {
   BottomSheetService _bottomSheetService;
   LocalizationService _localizationService;
   ToastService _toastService;
+  PermissionsService _permissionsService;
   UtilsService _utilsService;
 
   void setLocalizationService(LocalizationService localizationService) {
@@ -59,6 +61,10 @@ class MediaService {
     _toastService = toastService;
   }
 
+  void setPermissionsService(PermissionsService permissionsService) {
+    _permissionsService = permissionsService;
+  }
+
   /// Opens a bottom sheet with the options to pick either an image or a video.
   /// The media is picked from the gallery or camera (determined by [source]).
   ///
@@ -73,7 +79,16 @@ class MediaService {
     MediaFile media;
 
     if (source == ImageSource.gallery) {
-      media = await _bottomSheetService.showMediaPicker(context: context);
+      bool permissionGranted =
+          await _permissionsService.requestStoragePermissions(context: context);
+      if (permissionGranted) {
+        File file = await FilePicker.getFile(type: FileType.media);
+
+        if (file != null) {
+          FileType type = await getMediaType(file);
+          media = MediaFile(file, type);
+        }
+      }
     } else if (source == ImageSource.camera) {
       media = await _bottomSheetService.showCameraPicker(context: context);
     } else {
@@ -84,8 +99,13 @@ class MediaService {
       return null;
     }
 
-    return _prepareMedia(
-        media: media, context: context, flattenGifs: flattenGifs);
+    media = await _prepareMedia(
+      media: media,
+      context: context,
+      flattenGifs: flattenGifs,
+    );
+
+    return media;
   }
 
   /// Opens a bottom sheet with the option to pick an image from gallery or snap
@@ -370,6 +390,22 @@ class MediaService {
     String mediaMimeSubtype = mediaMime.split('/')[1];
 
     return mediaMimeSubtype == 'gif';
+  }
+
+  Future<FileType> getMediaType(File file) async {
+    String mediaMime = await _utilsService.getFileMimeType(file);
+
+    String mediaMimeType = mediaMime.split('/')[0];
+
+    if (mediaMimeType == 'video') {
+      return FileType.video;
+    } else if (mediaMimeType == 'image') {
+      return FileType.image;
+    } else if (mediaMimeType == 'audio') {
+      return FileType.audio;
+    } else {
+      return null;
+    }
   }
 
   Future<File> cropImage(File image, {double ratioX, double ratioY}) async {

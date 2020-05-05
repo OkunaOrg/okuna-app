@@ -22,7 +22,6 @@ import 'package:Okuna/pages/home/bottom_sheets/image_picker.dart';
 import 'package:Okuna/pages/home/bottom_sheets/link_previews_setting_picker.dart';
 import 'package:Okuna/pages/home/bottom_sheets/manage_notifications/manage_post_comment_notifications.dart';
 import 'package:Okuna/pages/home/bottom_sheets/manage_notifications/manage_post_notifications.dart';
-import 'package:Okuna/pages/home/bottom_sheets/media_picker.dart';
 import 'package:Okuna/pages/home/bottom_sheets/post_actions.dart';
 import 'package:Okuna/pages/home/bottom_sheets/post_comment_more_actions.dart';
 import 'package:Okuna/pages/home/bottom_sheets/react_to_post.dart';
@@ -273,14 +272,6 @@ class BottomSheetService {
               onPostCommentDeleted: onPostCommentDeleted,
               post: post,
               postComment: postComment);
-        });
-  }
-
-  Future<MediaFile> showMediaPicker({@required BuildContext context}) {
-    return _showModalBottomSheetApp(
-        context: context,
-        builder: (BuildContext context) {
-          return OBMediaPickerBottomSheet();
         });
   }
 
