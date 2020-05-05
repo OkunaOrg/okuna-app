@@ -1923,7 +1923,7 @@ class LocalizationService {
   }
 
   String get post__create_camera {
-    return Intl.message("Camera", name: 'post__create_media');
+    return Intl.message("Camera", name: 'post__create_camera');
   }
 
   String get post__create_photo {
