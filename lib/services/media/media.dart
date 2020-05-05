@@ -365,7 +365,7 @@ class MediaService {
     var exitCode;
     if (!doCancel()) {
       exitCode = await flutterFFmpeg.execute(
-          '-f gif -i $sourceFilePath -pix_fmt yuv420p -c:v libx264 -movflags +faststart -filter:v crop=\'floor(in_w/2)*2:floor(in_h/2)*2\' $resultFilePath');
+          ' -loglevel debug -f gif -i $sourceFilePath -pix_fmt yuv420p -c:v libx264 -movflags +faststart -filter:v crop=\'floor(in_w/2)*2:floor(in_h/2)*2\' $resultFilePath');
     }
 
     if (exitCode == 0) {

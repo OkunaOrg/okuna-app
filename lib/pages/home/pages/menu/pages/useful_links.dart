@@ -95,7 +95,7 @@ class OBUsefulLinksPage extends StatelessWidget {
                       _localizationService.drawer__useful_links_slack_channel_desc),
                   onTap: () {
                     urlLauncherService.launchUrl(
-                        'https://join.slack.com/t/okuna/shared_invite/enQtNDI2NjI3MDM0MzA2LTYwM2E1Y2NhYWRmNTMzZjFhYWZlYmM2YTQ0MWEwYjYyMzcxMGI0MTFhNTIwYjU2ZDI1YjllYzlhOWZjZDc4ZWY');
+                        'https://join.slack.com/t/okuna/shared_invite/zt-5fzmpygy-V5nbMzmNJnEg5Hiwx4LO~w');
                   },
                 ),
                 ListTile(
