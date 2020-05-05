@@ -25,12 +25,13 @@ class ShareService {
 
   Share _queuedShare;
   bool _isProcessingShare = false;
-  CancelableOperation _activeShareOperation;
+  Map<Share, ShareOperation> _activeShares;
 
   BuildContext _context;
 
   ShareService() {
     _subscribers = [];
+    _activeShares = {};
 
     if (Platform.isAndroid) {
       if (_shareReceiveSubscription == null) {
@@ -94,11 +95,18 @@ class ShareService {
 
   Future<void> _processQueuedShare() async {
     if (_queuedShare != null) {
+      // Schedule cancellation of existing share operations. We don't cancel
+      // immediately since that can cause concurrent modification of _activeShares.
+      _activeShares
+          .forEach((key, value) => Future.delayed(Duration(), value.cancel));
+
       var share = _queuedShare;
       _queuedShare = null;
 
       _isProcessingShare = true;
-      await _onShare(share);
+      var operation = CancelableOperation.fromFuture(_onShare(share));
+      _activeShares[share] = ShareOperation(share, operation);
+      _activeShares[share].then(() => _activeShares.remove(share));
       _isProcessingShare = false;
 
       // Recurse since a new share might have came in while the last was being processed.
@@ -110,11 +118,6 @@ class ShareService {
     String text;
     File image;
     File video;
-
-    if (_activeShareOperation != null) {
-      _activeShareOperation.cancel();
-      _activeShareOperation = null;
-    }
 
     if (share.error != null) {
       _toastService.error(
@@ -158,12 +161,16 @@ class ShareService {
     }
 
     for (var sub in _subscribers.reversed) {
+      if (_activeShares[share].isCancelled) {
+        break;
+      }
+
       var subResult = await sub(text: text, image: image, video: video);
 
       // Stop event propagation if we have a sub-result that is either true or
       // a CancelableOperation.
       if (subResult is CancelableOperation) {
-        _activeShareOperation = subResult;
+        _activeShares[share].setSubOperation(subResult);
         break;
       } else if (subResult == true) {
         break;
@@ -176,5 +183,54 @@ class ShareService {
         message: _localizationService
             .image_picker__error_too_large(limitInBytes ~/ 1048576),
         context: _context);
+  }
+}
+
+class ShareOperation {
+  Share share;
+  CancelableOperation shareOperation;
+  CancelableOperation subOperation;
+  bool isCancelled = false;
+
+  bool _shareComplete = false;
+  bool _subComplete = false;
+  FutureOr Function() _callback;
+
+  ShareOperation(this.share, this.shareOperation) {
+    shareOperation.then((_) {
+      _shareComplete = true;
+      _complete();
+    });
+  }
+
+  void setSubOperation(CancelableOperation operation) {
+    subOperation = operation;
+    subOperation.then((_) {
+      _subComplete = true;
+      _complete();
+    });
+
+    shareOperation.then((_) {
+      if (shareOperation.isCanceled) {
+        subOperation.cancel();
+      }
+    });
+  }
+
+  void cancel() {
+    isCancelled = true;
+    shareOperation?.cancel();
+    subOperation?.cancel();
+  }
+
+  void then(FutureOr Function() callback) {
+    _callback = callback;
+  }
+
+  void _complete() {
+    if ((subOperation == null || _subComplete) &&
+        (shareOperation == null || _shareComplete)) {
+      _callback();
+    }
   }
 }
