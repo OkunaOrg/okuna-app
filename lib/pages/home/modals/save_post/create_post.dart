@@ -428,7 +428,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
       OBPillButton(
         text: _localizationService.post__create_camera,
         color: Pigment.fromString('#50b1f2'),
-        icon: const OBIcon(OBIcons.video),
+        icon: const OBIcon(OBIcons.cameraCartoon),
         onPressed: () async {
           _unfocusTextField();
           try {

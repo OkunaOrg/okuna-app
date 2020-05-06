@@ -819,6 +819,11 @@ class LocalizationService {
     return Intl.message("Unknown error", name: 'error__unknown_error');
   }
 
+  String error__receive_share_text_too_long(int limit) {
+    return Intl.message("Text is too long (limit: $limit characters)",
+        args: [limit], name: 'image_picker__error_too_large');
+  }
+
   String get error__receive_share_temp_write_failed {
     return Intl.message('Failed to copy shared file to temporary location',
         name: 'error__receive_share_temp_write_failed');

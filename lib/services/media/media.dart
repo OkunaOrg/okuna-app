@@ -99,7 +99,7 @@ class MediaService {
       return null;
     }
 
-    media = await _prepareMedia(
+    media = await processMedia(
       media: media,
       context: context,
       flattenGifs: flattenGifs,
@@ -120,7 +120,7 @@ class MediaService {
 
     if (pickedImage == null) return null;
 
-    var media = await _prepareMedia(
+    var media = await processMedia(
       media: MediaFile(pickedImage, FileType.image),
       context: context,
       flattenGifs: true,
@@ -140,7 +140,7 @@ class MediaService {
 
     if (pickedVideo == null) return null;
 
-    var media = await _prepareMedia(
+    var media = await processMedia(
       media: MediaFile(pickedVideo, FileType.video),
       context: context,
     );
@@ -148,7 +148,7 @@ class MediaService {
     return media.file;
   }
 
-  Future<MediaFile> _prepareMedia(
+  Future<MediaFile> processMedia(
       {@required MediaFile media,
       @required BuildContext context,
       bool flattenGifs = false,
@@ -178,9 +178,9 @@ class MediaService {
 
     MediaFile copiedMedia = MediaFile(copiedFile, mediaType);
     if (mediaType == FileType.image) {
-      result = await _prepareImage(copiedMedia, tempPath, mediaUuid, imageType);
+      result = await _processImage(copiedMedia, tempPath, mediaUuid, imageType);
     } else if (mediaType == FileType.video) {
-      result = await _prepareVideo(copiedMedia);
+      result = await _processVideo(copiedMedia);
     } else {
       throw 'Unsupported media type: ${media.type}';
     }
@@ -188,7 +188,7 @@ class MediaService {
     return result;
   }
 
-  Future<MediaFile> _prepareImage(MediaFile media, String tempPath,
+  Future<MediaFile> _processImage(MediaFile media, String tempPath,
       String mediaUuid, OBImageType imageType) async {
     var image = await fixExifRotation(media.file, deleteOriginal: true);
     String processedImageName = mediaUuid + '.jpg';
@@ -205,9 +205,7 @@ class MediaService {
       throw FileTooLargeException(
           _validationService.getAllowedImageSize(imageType));
     }
-
-    processedImage = await processImage(processedImage);
-
+    
     MediaFile result;
     if (imageType == OBImageType.post) {
       result = MediaFile(processedImage, media.type);
@@ -224,7 +222,7 @@ class MediaService {
     return result;
   }
 
-  Future<MediaFile> _prepareVideo(MediaFile media) async {
+  Future<MediaFile> _processVideo(MediaFile media) async {
     if (!await _validationService.isVideoAllowedSize(media.file)) {
       throw FileTooLargeException(_validationService.getAllowedVideoSize());
     }
@@ -232,9 +230,6 @@ class MediaService {
     return media;
   }
 
-  Future<File> processImage(File image) async {
-    return image;
-  }
 
   Future<File> fixExifRotation(File image, {deleteOriginal: false}) async {
     List<int> imageBytes = await image.readAsBytes();

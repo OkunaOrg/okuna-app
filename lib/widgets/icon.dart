@@ -272,6 +272,7 @@ class OBIcons {
   static const profile = OBIconData(filename: 'profile-icon.png');
   static const photo = OBIconData(filename: 'photo-icon.png');
   static const video = OBIconData(filename: 'video-icon.png');
+  static const cameraCartoon = OBIconData(filename: 'camera-icon.png');
   static const gif = OBIconData(filename: 'gif-icon.png');
   static const audience = OBIconData(filename: 'audience-icon.png');
   static const burner = OBIconData(filename: 'burner-icon.png');
