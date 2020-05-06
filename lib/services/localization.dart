@@ -819,6 +819,11 @@ class LocalizationService {
     return Intl.message("Unknown error", name: 'error__unknown_error');
   }
 
+  String error__receive_share_text_too_long(int limit) {
+    return Intl.message("Text is too long (limit: $limit characters)",
+        args: [limit], name: 'image_picker__error_too_large');
+  }
+
   String get error__receive_share_temp_write_failed {
     return Intl.message('Failed to copy shared file to temporary location',
         name: 'error__receive_share_temp_write_failed');
@@ -1918,6 +1923,14 @@ class LocalizationService {
     return Intl.message("Next", name: 'post__create_next');
   }
 
+  String get post__create_media {
+    return Intl.message("Media", name: 'post__create_media');
+  }
+
+  String get post__create_camera {
+    return Intl.message("Camera", name: 'post__create_camera');
+  }
+
   String get post__create_photo {
     return Intl.message("Photo", name: 'post__create_photo');
   }
@@ -2186,114 +2199,6 @@ class LocalizationService {
     return Intl.message(
         "This will hide all posts from this community from your profile.",
         name: 'post__exclude_community_from_profile_posts_confirmation');
-  }
-
-  String get post__manage_post_notifications {
-    return Intl.message("Manage post notifications",
-        name: 'post__manage_post_notifications');
-  }
-
-  String get post__manage_post_comment_notifications {
-    return Intl.message("Manage comment notifications",
-        name: 'post__manage_post_comment_notifications');
-  }
-
-  String get post__subscribe_post_notifications {
-    return Intl.message("Subscribe to post notifications",
-        name: 'post__subscribe_post_notifications');
-  }
-
-  String get post__subscribe_post_comment_notifications {
-    return Intl.message("Subscribe to comment notifications",
-        name: 'post__subscribe_post_comment_notifications');
-  }
-
-  String get post__mute_post_notifications_text {
-    return Intl.message("Mute post",
-        name: 'post__mute_post_notifications_text');
-  }
-
-  String get post__unmute_post_notifications_text {
-    return Intl.message("Unmute post",
-        name: 'post__unmute_post_notifications_text');
-  }
-
-  String get post__mute_post_comment_notifications_text {
-    return Intl.message("Mute comment",
-        name: 'post__mute_post_comment_notifications_text');
-  }
-
-  String get post__unmute_post_comment_notifications_text {
-    return Intl.message("Unmute comment",
-        name: 'post__unmute_post_comment_notifications_text');
-  }
-
-  String get post__manage_notifications_comments_title {
-    return Intl.message("Comments",
-        name: 'post__manage_notifications_comments_title');
-  }
-
-  String get post__manage_notifications_comments_desc {
-    return Intl.message("Get notifications when someone comments on this post",
-        name: 'post__manage_notifications_comments_desc');
-  }
-
-  String get post__manage_notifications_comment_reactions_title {
-    return Intl.message("Comment Reactions",
-        name: 'post__manage_notifications_comment_reactions_title');
-  }
-
-  String get post__manage_notifications_comment_reactions_desc {
-    return Intl.message(
-        "Get notifications when someone reacts to your comments",
-        name: 'post__manage_notifications_comment_reactions_desc');
-  }
-
-  String get post__manage_notifications_reactions_title {
-    return Intl.message("Reactions",
-        name: 'post__manage_notifications_reactions_title');
-  }
-
-  String get post__manage_notifications_reactions_desc {
-    return Intl.message("Get notifications when someone reacts to your post",
-        name: 'post__manage_notifications_reactions_desc');
-  }
-
-  String get post__manage_notifications_reactions_post_comment_desc {
-    return Intl.message("Get notifications when someone reacts to your comment",
-        name: 'post__manage_notifications_reactions_post_comment_desc');
-  }
-
-  String get post__manage_notifications_replies_title {
-    return Intl.message("Replies",
-        name: 'post__manage_notifications_replies_title');
-  }
-
-  String get post__manage_notifications_replies_desc {
-    return Intl.message(
-        "Get notifications when someone replies to comments on this post",
-        name: 'post__manage_notifications_replies_desc');
-  }
-
-  String get post__manage_notifications_replies_post_comment_desc {
-    return Intl.message(
-        "Get notifications when someone replies to this comment",
-        name: 'post__manage_notifications_replies_post_comment_desc');
-  }
-
-  String get post__manage_notifications_successfully_saved {
-    return Intl.message("Notification settings saved",
-        name: 'post__manage_notifications_successfully_saved');
-  }
-
-  String get post__manage_notifications_successfully_muted {
-    return Intl.message("Notifications muted",
-        name: 'post__manage_notifications_successfully_muted');
-  }
-
-  String get post__manage_notifications_successfully_unmuted {
-    return Intl.message("Notifications unmuted",
-        name: 'post__manage_notifications_successfully_unmuted');
   }
 
   String get post__comments_enabled_message {
@@ -3464,15 +3369,68 @@ class LocalizationService {
         name: 'notifications__connection_desc');
   }
 
-  String get notifications__post_notifications_title {
-    return Intl.message("Post notifications",
-        name: 'notifications__post_notifications_title');
+  String get notifications__comment_title {
+    return Intl.message("Post comment", name: 'notifications__comment_title');
   }
 
-  String get notifications__post_notifications_desc {
+  String get notifications__comment_desc {
     return Intl.message(
-        "Be notified of all post related notifications - comments, replies, reactions and user mentions",
-        name: 'notifications__post_notifications_desc');
+        "Be notified when someone comments on one of your posts or one you also commented",
+        name: 'notifications__comment_desc');
+  }
+
+  String get notifications__comment_reply_title {
+    return Intl.message("Post comment reply",
+        name: 'notifications__comment_reply_title');
+  }
+
+  String get notifications__comment_reply_desc {
+    return Intl.message(
+        "Be notified when someone replies to one of your comments or one you also replied to",
+        name: 'notifications__comment_reply_desc');
+  }
+
+  String get notifications__comment_user_mention_title {
+    return Intl.message("Post comment mention",
+        name: 'notifications__comment_user_mention_title');
+  }
+
+  String get notifications__comment_user_mention_desc {
+    return Intl.message(
+        "Be notified when someone mentions you on one of their comments",
+        name: 'notifications__comment_user_mention_desc');
+  }
+
+  String get notifications__post_user_mention_title {
+    return Intl.message("Post mention",
+        name: 'notifications__post_user_mention_title');
+  }
+
+  String get notifications__post_user_mention_desc {
+    return Intl.message(
+        "Be notified when someone mentions you on one of their posts",
+        name: 'notifications__post_user_mention_desc');
+  }
+
+  String get notifications__comment_reaction_title {
+    return Intl.message("Post comment reaction",
+        name: 'notifications__comment_reaction_title');
+  }
+
+  String get notifications__comment_reaction_desc {
+    return Intl.message(
+        "Be notified when someone reacts to one of your post commments",
+        name: 'notifications__comment_reaction_desc');
+  }
+
+  String get notifications__post_reaction_title {
+    return Intl.message("Post reaction",
+        name: 'notifications__post_reaction_title');
+  }
+
+  String get notifications__post_reaction_desc {
+    return Intl.message("Be notified when someone reacts to one of your posts",
+        name: 'notifications__post_reaction_desc');
   }
 
   String get notifications__community_invite_title {
@@ -3516,16 +3474,6 @@ class LocalizationService {
   String get notifications__mute_post_turn_off_post_notifications {
     return Intl.message("Turn off post notifications",
         name: 'notifications__mute_post_turn_off_post_notifications');
-  }
-
-  String get notifications__enable_comment_post_notifications {
-    return Intl.message("Enable new comment notifications",
-        name: 'notifications__enable_comment_post_notifications');
-  }
-
-  String get notifications__disable_comment_post_notifications {
-    return Intl.message("Disable new comment notifications",
-        name: 'notifications__disable_comment_post_notifications');
   }
 
   String get notifications__mute_post_turn_on_post_comment_notifications {

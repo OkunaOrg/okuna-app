@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:Okuna/models/circle.dart';
@@ -9,32 +10,29 @@ import 'package:Okuna/models/post_comment.dart';
 import 'package:Okuna/models/post_comment_reaction.dart';
 import 'package:Okuna/models/post_reaction.dart';
 import 'package:Okuna/models/user.dart';
+import 'package:Okuna/pages/home/bottom_sheets/camera_picker.dart';
 import 'package:Okuna/pages/home/bottom_sheets/community_actions.dart';
 import 'package:Okuna/pages/home/bottom_sheets/community_type_picker.dart';
 import 'package:Okuna/pages/home/bottom_sheets/confirm_action.dart';
 import 'package:Okuna/pages/home/bottom_sheets/connection_circles_picker.dart';
+import 'package:Okuna/pages/home/bottom_sheets/follows_lists_picker.dart';
 import 'package:Okuna/pages/home/bottom_sheets/hashtag_actions.dart';
 import 'package:Okuna/pages/home/bottom_sheets/hashtags_display_setting_picker.dart';
 import 'package:Okuna/pages/home/bottom_sheets/image_picker.dart';
 import 'package:Okuna/pages/home/bottom_sheets/link_previews_setting_picker.dart';
-import 'package:Okuna/pages/home/bottom_sheets/manage_notifications/manage_post_comment_notifications.dart';
-import 'package:Okuna/pages/home/bottom_sheets/manage_notifications/manage_post_notifications.dart';
-import 'package:Okuna/pages/home/bottom_sheets/post_comment_more_actions.dart';
-import 'package:Okuna/pages/home/bottom_sheets/follows_lists_picker.dart';
 import 'package:Okuna/pages/home/bottom_sheets/post_actions.dart';
-import 'package:Okuna/pages/home/bottom_sheets/user_actions/user_actions.dart';
-import 'package:Okuna/pages/home/bottom_sheets/video_picker.dart';
+import 'package:Okuna/pages/home/bottom_sheets/post_comment_more_actions.dart';
 import 'package:Okuna/pages/home/bottom_sheets/react_to_post.dart';
 import 'package:Okuna/pages/home/bottom_sheets/react_to_post_comment.dart';
+import 'package:Okuna/pages/home/bottom_sheets/user_actions/user_actions.dart';
+import 'package:Okuna/pages/home/bottom_sheets/video_picker.dart';
 import 'package:Okuna/pages/home/bottom_sheets/videos_autoplay_setting_picker.dart';
 import 'package:Okuna/pages/home/bottom_sheets/videos_sound_setting_picker.dart';
+import 'package:Okuna/services/media/models/media_file.dart';
 import 'package:Okuna/services/user_preferences.dart';
 import 'package:Okuna/widgets/post/post.dart';
 import 'package:flutter/material.dart';
-import 'dart:async';
 import 'package:meta/meta.dart';
-
-import 'media.dart';
 
 class BottomSheetService {
   bool hasActiveBottomSheet = false;
@@ -176,44 +174,9 @@ class BottomSheetService {
             displayContext: displayContext,
             onCommunityExcluded: onCommunityExcluded,
             onUndoCommunityExcluded: onUndoCommunityExcluded,
-            onPostCommunityExcludedFromProfilePosts:
-                onPostCommunityExcludedFromProfilePosts,
+            onPostCommunityExcludedFromProfilePosts: onPostCommunityExcludedFromProfilePosts,
             onPostDeleted: onPostDeleted,
             onPostReported: onPostReported,
-          );
-        });
-  }
-
-  Future<void> showManagePostNotifications(
-      {@required BuildContext context,
-      @required Post post,
-      VoidCallback onNotificationSettingsSave}) {
-    return _showModalBottomSheetApp(
-        context: context,
-        builder: (BuildContext context) {
-          return Material(
-            child: OBManagePostNotificationsBottomSheet(
-              post: post,
-              onNotificationSettingsSave: onNotificationSettingsSave,
-            ),
-          );
-        });
-  }
-
-  Future<void> showManagePostCommentNotifications(
-      {@required BuildContext context,
-      @required Post post,
-      @required PostComment postComment,
-      VoidCallback onNotificationSettingsSave}) {
-    return _showModalBottomSheetApp(
-        context: context,
-        builder: (BuildContext context) {
-          return Material(
-            child: OBManagePostCommentNotificationsBottomSheet(
-              post: post,
-              postComment: postComment,
-              onNotificationSettingsSave: onNotificationSettingsSave,
-            ),
           );
         });
   }
@@ -272,6 +235,14 @@ class BottomSheetService {
               onPostCommentDeleted: onPostCommentDeleted,
               post: post,
               postComment: postComment);
+        });
+  }
+
+  Future<MediaFile> showCameraPicker({@required BuildContext context}) {
+    return _showModalBottomSheetApp(
+        context: context,
+        builder: (BuildContext context) {
+          return OBCameraPickerBottomSheet();
         });
   }
 

@@ -8,7 +8,6 @@ import 'package:Okuna/models/post_comment.dart';
 import 'package:Okuna/models/post_comment_list.dart';
 import 'package:Okuna/models/post_media.dart';
 import 'package:Okuna/models/post_media_list.dart';
-import 'package:Okuna/models/post_notifications_subscription.dart';
 import 'package:Okuna/models/post_preview_link_data.dart';
 import 'package:Okuna/models/post_reaction.dart';
 import 'package:Okuna/models/reactions_emoji_count.dart';
@@ -27,7 +26,6 @@ class Post extends UpdatableModel<Post> {
   DateTime created;
   User creator;
   CirclesList circles;
-  PostNotificationsSubscription postNotificationsSubscription;
 
   ReactionsEmojiCountList reactionsEmojiCounts;
   PostReaction reaction;
@@ -104,8 +102,7 @@ class Post extends UpdatableModel<Post> {
       'is_encircled': isEncircled,
       'is_edited': isEdited,
       'is_closed': isClosed,
-      'is_reported': isReported,
-      'post_notifications_subscription': postNotificationsSubscription
+      'is_reported': isReported
     };
   }
 
@@ -132,7 +129,6 @@ class Post extends UpdatableModel<Post> {
       this.reaction,
       this.reactionsEmojiCounts,
       this.areCommentsEnabled,
-      this.postNotificationsSubscription,
       this.circles,
       this.community,
       this.status,
@@ -215,11 +211,6 @@ class Post extends UpdatableModel<Post> {
 
     if (json.containsKey('circles'))
       circles = factory.parseCircles(json['circles']);
-
-    if (json.containsKey('post_notifications_subscription'))
-      postNotificationsSubscription =
-          factory.parsePostNotificationsSubscription(
-              json['post_notifications_subscription']);
   }
 
   void updatePreviewDataFromJson(Map json) {
@@ -323,10 +314,6 @@ class Post extends UpdatableModel<Post> {
 
   int getCreatorId() {
     return creator.id;
-  }
-
-  PostNotificationsSubscription getNotificationsSubscription() {
-    return this.postNotificationsSubscription;
   }
 
   String getCreatorAvatar() {
@@ -479,8 +466,6 @@ class PostFactory extends UpdatableModelFactory<Post> {
         isEncircled: json['is_encircled'],
         isEdited: json['is_edited'],
         isClosed: json['is_closed'],
-        postNotificationsSubscription: parsePostNotificationsSubscription(
-            json['post_notifications_subscription']),
         reactionsEmojiCounts:
             parseReactionsEmojiCounts(json['reactions_emoji_counts']));
   }
@@ -533,13 +518,6 @@ class PostFactory extends UpdatableModelFactory<Post> {
   CirclesList parseCircles(List circlesData) {
     if (circlesData == null) return null;
     return CirclesList.fromJson(circlesData);
-  }
-
-  PostNotificationsSubscription parsePostNotificationsSubscription(
-      Map postNotificationsSubscriptionData) {
-    if (postNotificationsSubscriptionData == null) return null;
-    return PostNotificationsSubscription.fromJSON(
-        postNotificationsSubscriptionData);
   }
 
   Language parseLanguage(Map languageData) {
