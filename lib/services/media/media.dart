@@ -2,21 +2,25 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:Okuna/plugins/image_converter/image_converter.dart';
+import 'package:Okuna/services/bottom_sheet.dart';
 import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/media/models/media_file.dart';
+import 'package:Okuna/services/permissions.dart';
+import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/utils_service.dart';
 import 'package:Okuna/services/validation.dart';
 import 'package:async/async.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ffmpeg/flutter_ffmpeg.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:meta/meta.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
-
-import 'bottom_sheet.dart';
 
 export 'package:image_picker/image_picker.dart';
 
@@ -33,6 +37,8 @@ class MediaService {
   ValidationService _validationService;
   BottomSheetService _bottomSheetService;
   LocalizationService _localizationService;
+  ToastService _toastService;
+  PermissionsService _permissionsService;
   UtilsService _utilsService;
 
   void setLocalizationService(LocalizationService localizationService) {
@@ -51,87 +57,179 @@ class MediaService {
     _bottomSheetService = modalService;
   }
 
+  void setToastService(ToastService toastService) {
+    _toastService = toastService;
+  }
+
+  void setPermissionsService(PermissionsService permissionsService) {
+    _permissionsService = permissionsService;
+  }
+
+  /// Opens a bottom sheet with the options to pick either an image or a video.
+  /// The media is picked from the gallery or camera (determined by [source]).
+  ///
+  /// If a GIF is picked it will be converted to a video file before being returned.
+  ///
+  /// The returned file may be either an image or a video. Use [MediaFile.type]
+  /// to determine which one it is.
+  Future<MediaFile> pickMedia(
+      {@required BuildContext context,
+      @required ImageSource source,
+      bool flattenGifs}) async {
+    MediaFile media;
+
+    if (source == ImageSource.gallery) {
+      bool permissionGranted =
+          await _permissionsService.requestStoragePermissions(context: context);
+      if (permissionGranted) {
+        File file = await FilePicker.getFile(type: FileType.media);
+
+        if (file != null) {
+          FileType type = await getMediaType(file);
+          media = MediaFile(file, type);
+        }
+      }
+    } else if (source == ImageSource.camera) {
+      media = await _bottomSheetService.showCameraPicker(context: context);
+    } else {
+      throw 'Unsupported media source: $source';
+    }
+
+    if (media == null) {
+      return null;
+    }
+
+    media = await processMedia(
+      media: media,
+      context: context,
+      flattenGifs: flattenGifs,
+    );
+
+    return media;
+  }
+
+  /// Opens a bottom sheet with the option to pick an image from gallery or snap
+  /// a new one with the camera.
+  ///
+  /// The returned file should always point to an image. If a GIF is picked it will
+  /// be flattened.
   Future<File> pickImage(
-      {@required OBImageType imageType,
-      @required BuildContext context,
-      bool flattenGifs = true}) async {
+      {@required OBImageType imageType, @required BuildContext context}) async {
     File pickedImage =
         await _bottomSheetService.showImagePicker(context: context);
 
     if (pickedImage == null) return null;
 
-    final tempPath = await _getTempPath();
+    var media = await processMedia(
+      media: MediaFile(pickedImage, FileType.image),
+      context: context,
+      flattenGifs: true,
+      imageType: imageType,
+    );
 
-    final String processedImageUuid = _uuid.v4();
-    String imageExtension = basename(pickedImage.path);
-
-    // The image picker gives us the real image, lets copy it into a temp path
-    pickedImage =
-        pickedImage.copySync('$tempPath/$processedImageUuid$imageExtension');
-
-    File processedPickedImage;
-
-    bool pickedImageIsGif = await isGif(pickedImage);
-
-    if (!pickedImageIsGif || flattenGifs) {
-      pickedImage = await fixExifRotation(pickedImage, deleteOriginal: true);
-      String processedImageName = processedImageUuid + '.jpg';
-      processedPickedImage = File('$tempPath/$processedImageName');
-      List<int> convertedImageData =
-          await ImageConverter.convertImage(pickedImage.readAsBytesSync());
-      processedPickedImage.writeAsBytesSync(convertedImageData);
-    } else {
-      String processedImageName = processedImageUuid + '.gif';
-      processedPickedImage =
-          pickedImage.copySync('$tempPath/$processedImageName');
-    }
-
-    // We now have a processed one
-    pickedImage.deleteSync();
-
-    if (!await _validationService.isImageAllowedSize(
-        processedPickedImage, imageType)) {
-      throw FileTooLargeException(
-          _validationService.getAllowedImageSize(imageType));
-    }
-
-    processedPickedImage = !pickedImageIsGif || flattenGifs
-        ? await processImage(processedPickedImage)
-        : processedPickedImage;
-
-    if (imageType == OBImageType.post) return processedPickedImage;
-
-    double ratioX = IMAGE_RATIOS[imageType]['x'];
-    double ratioY = IMAGE_RATIOS[imageType]['y'];
-
-    File croppedFile =
-        await cropImage(processedPickedImage, ratioX: ratioX, ratioY: ratioY);
-
-    return croppedFile;
+    return media.file;
   }
 
+  /// Opens a bottom sheet with the option to pick a video from gallery or take
+  /// a new one with the camera.
+  ///
+  /// The returned file should always point to a video.
   Future<File> pickVideo({@required BuildContext context}) async {
     File pickedVideo =
         await _bottomSheetService.showVideoPicker(context: context);
 
     if (pickedVideo == null) return null;
 
-    String videoExtension = basename(pickedVideo.path);
-    String tmpImageName = _uuid.v4() + videoExtension;
-    final path = await _getTempPath();
-    final String pickedVideoCopyPath = '$path/$tmpImageName';
-    File pickedVideoCopy = pickedVideo.copySync(pickedVideoCopyPath);
+    var media = await processMedia(
+      media: MediaFile(pickedVideo, FileType.video),
+      context: context,
+    );
 
-    if (!await _validationService.isVideoAllowedSize(pickedVideoCopy)) {
+    return media.file;
+  }
+
+  Future<MediaFile> processMedia(
+      {@required MediaFile media,
+      @required BuildContext context,
+      bool flattenGifs = false,
+      OBImageType imageType = OBImageType.post}) async {
+    var mediaType = media.type;
+    MediaFile result;
+
+    // Copy the media to a temporary location.
+    final tempPath = await _getTempPath();
+    final String mediaUuid = _uuid.v4();
+    String mediaExtension = basename(media.file.path);
+    var copiedFile = media.file.copySync('$tempPath/$mediaUuid$mediaExtension');
+
+    if (await isGif(media.file) && !flattenGifs) {
+      mediaType = FileType.video;
+
+      Completer<File> completer = Completer();
+      convertGifToVideo(copiedFile).then((file) => completer.complete(file),
+          onError: (error, trace) {
+        print(error);
+        _toastService.error(
+            message: _localizationService.error__unknown_error,
+            context: context);
+      });
+      copiedFile = await completer.future;
+    }
+
+    MediaFile copiedMedia = MediaFile(copiedFile, mediaType);
+    if (mediaType == FileType.image) {
+      result = await _processImage(copiedMedia, tempPath, mediaUuid, imageType);
+    } else if (mediaType == FileType.video) {
+      result = await _processVideo(copiedMedia);
+    } else {
+      throw 'Unsupported media type: ${media.type}';
+    }
+
+    return result;
+  }
+
+  Future<MediaFile> _processImage(MediaFile media, String tempPath,
+      String mediaUuid, OBImageType imageType) async {
+    var image = await fixExifRotation(media.file, deleteOriginal: true);
+    String processedImageName = mediaUuid + '.jpg';
+    File processedImage = File('$tempPath/$processedImageName');
+    List<int> convertedImageData =
+        await ImageConverter.convertImage(image.readAsBytesSync());
+    processedImage.writeAsBytesSync(convertedImageData);
+
+    // We have a new processed copy, so we can delete our first copy.
+    image.deleteSync();
+
+    if (!await _validationService.isImageAllowedSize(
+        processedImage, imageType)) {
+      throw FileTooLargeException(
+          _validationService.getAllowedImageSize(imageType));
+    }
+    
+    MediaFile result;
+    if (imageType == OBImageType.post) {
+      result = MediaFile(processedImage, media.type);
+    } else {
+      double ratioX = IMAGE_RATIOS[imageType]['x'];
+      double ratioY = IMAGE_RATIOS[imageType]['y'];
+
+      File croppedFile =
+          await cropImage(processedImage, ratioX: ratioX, ratioY: ratioY);
+
+      result = MediaFile(croppedFile, media.type);
+    }
+
+    return result;
+  }
+
+  Future<MediaFile> _processVideo(MediaFile media) async {
+    if (!await _validationService.isVideoAllowedSize(media.file)) {
       throw FileTooLargeException(_validationService.getAllowedVideoSize());
     }
 
-    return pickedVideoCopy;
+    return media;
   }
 
-  Future<File> processImage(File image) async {
-    return image;
-  }
 
   Future<File> fixExifRotation(File image, {deleteOriginal: false}) async {
     List<int> imageBytes = await image.readAsBytes();
@@ -287,6 +385,22 @@ class MediaService {
     String mediaMimeSubtype = mediaMime.split('/')[1];
 
     return mediaMimeSubtype == 'gif';
+  }
+
+  Future<FileType> getMediaType(File file) async {
+    String mediaMime = await _utilsService.getFileMimeType(file);
+
+    String mediaMimeType = mediaMime.split('/')[0];
+
+    if (mediaMimeType == 'video') {
+      return FileType.video;
+    } else if (mediaMimeType == 'image') {
+      return FileType.image;
+    } else if (mediaMimeType == 'audio') {
+      return FileType.audio;
+    } else {
+      return null;
+    }
   }
 
   Future<File> cropImage(File image, {double ratioX, double ratioY}) async {

@@ -16,7 +16,7 @@ import 'package:Okuna/services/draft.dart';
 import 'package:Okuna/services/httpie.dart';
 import 'package:Okuna/services/link_preview.dart';
 import 'package:Okuna/services/localization.dart';
-import 'package:Okuna/services/media.dart';
+import 'package:Okuna/services/media/media.dart';
 import 'package:Okuna/services/navigation_service.dart';
 import 'package:Okuna/services/share.dart';
 import 'package:Okuna/services/toast.dart';
@@ -35,6 +35,7 @@ import 'package:Okuna/widgets/theming/primary_color_container.dart';
 import 'package:Okuna/widgets/theming/smart_text.dart';
 import 'package:Okuna/widgets/theming/text.dart';
 import 'package:async/async.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pigment/pigment.dart';
@@ -401,24 +402,22 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
   List<Widget> _getImagePostActions() {
     return [
       OBPillButton(
-        text: _localizationService.trans('post__create_photo'),
+        text: _localizationService.post__create_media,
         color: Pigment.fromString('#FCC14B'),
         icon: const OBIcon(OBIcons.photo),
         onPressed: () async {
           _unfocusTextField();
           try {
-            File pickedPhoto = await _mediaService.pickImage(
-                imageType: OBImageType.post,
-                context: context,
-                flattenGifs: false);
-            if (pickedPhoto != null) {
-              bool photoIsGif = await _mediaService.isGif(pickedPhoto);
-              if (photoIsGif) {
-                _mediaService.convertGifToVideo(pickedPhoto).then(
-                    (file) => _setPostVideoFile(file),
-                    onError: (error, trace) => throw error);
+            var pickedMedia = await _mediaService.pickMedia(
+              context: context,
+              source: ImageSource.gallery,
+              flattenGifs: false,
+            );
+            if (pickedMedia != null) {
+              if (pickedMedia.type == FileType.image) {
+                _setPostImageFile(pickedMedia.file);
               } else {
-                _setPostImageFile(pickedPhoto);
+                _setPostVideoFile(pickedMedia.file);
               }
             }
           } catch (error) {
@@ -427,14 +426,21 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
         },
       ),
       OBPillButton(
-        text: _localizationService.post__create_video,
+        text: _localizationService.post__create_camera,
         color: Pigment.fromString('#50b1f2'),
-        icon: const OBIcon(OBIcons.video),
+        icon: const OBIcon(OBIcons.cameraCartoon),
         onPressed: () async {
           _unfocusTextField();
           try {
-            File pickedVideo = await _mediaService.pickVideo(context: context);
-            if (pickedVideo != null) _setPostVideoFile(pickedVideo);
+            var pickedMedia = await _mediaService.pickMedia(
+                context: context, source: ImageSource.camera);
+            if (pickedMedia != null) {
+              if (pickedMedia.type == FileType.image) {
+                _setPostImageFile(pickedMedia.file);
+              } else {
+                _setPostVideoFile(pickedMedia.file);
+              }
+            }
           } catch (error) {
             _onError(error);
           }

@@ -194,7 +194,10 @@ class OBIcons {
   static const report = OBIconData(nativeIcon: Icons.flag);
   static const filter = OBIconData(nativeIcon: Icons.tune);
   static const gallery = OBIconData(nativeIcon: Icons.apps);
+  static const movie = OBIconData(nativeIcon: Icons.local_movies);
+  static const picture = OBIconData(nativeIcon: Icons.image);
   static const camera = OBIconData(nativeIcon: Icons.camera_alt);
+  static const video_camera = OBIconData(nativeIcon: Icons.videocam);
   static const privateCommunity = OBIconData(nativeIcon: Icons.lock);
   static const publicCommunity = OBIconData(nativeIcon: Icons.public);
   static const communityDescription = OBIconData(nativeIcon: Icons.book);
@@ -269,6 +272,7 @@ class OBIcons {
   static const profile = OBIconData(filename: 'profile-icon.png');
   static const photo = OBIconData(filename: 'photo-icon.png');
   static const video = OBIconData(filename: 'video-icon.png');
+  static const cameraCartoon = OBIconData(filename: 'camera-icon.png');
   static const gif = OBIconData(filename: 'gif-icon.png');
   static const audience = OBIconData(filename: 'audience-icon.png');
   static const burner = OBIconData(filename: 'burner-icon.png');

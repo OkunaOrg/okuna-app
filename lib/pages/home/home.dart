@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:Okuna/models/push_notification.dart';
 import 'package:Okuna/pages/home/lib/poppable_page_controller.dart';
 import 'package:Okuna/services/intercom.dart';
-import 'package:Okuna/services/media.dart';
+import 'package:Okuna/services/media/media.dart';
 import 'package:Okuna/services/push_notifications/push_notifications.dart';
 import 'package:Okuna/models/user.dart';
 import 'package:Okuna/pages/home/pages/communities/communities.dart';

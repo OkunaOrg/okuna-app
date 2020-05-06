@@ -143,6 +143,7 @@ flutter:
     - assets/images/icons/chat-icon.png
     - assets/images/icons/photo-icon.png
     - assets/images/icons/video-icon.png
+    - assets/images/icons/camera-icon.png
     - assets/images/icons/warning-icon.png
     - assets/images/icons/success-icon.png
     - assets/images/icons/error-icon.png

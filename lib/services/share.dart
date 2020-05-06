@@ -3,13 +3,14 @@ import 'dart:io';
 
 import 'package:Okuna/plugins/share/share.dart';
 import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/media/media.dart';
+import 'package:Okuna/services/media/models/media_file.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/validation.dart';
 import 'package:async/async.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-import 'media.dart';
 
 class ShareService {
   static const _stream = const EventChannel('openbook.social/receive_share');
@@ -127,31 +128,31 @@ class ShareService {
 
     if (share.image != null) {
       image = File.fromUri(Uri.parse(share.image));
-      image = await _mediaService.fixExifRotation(image);
-      image = await _mediaService.processImage(image);
-      if (!await _validationService.isImageAllowedSize(
-          image, OBImageType.post)) {
-        _showFileTooLargeToast(
-            _validationService.getAllowedImageSize(OBImageType.post));
-        return;
-      }
+      var processedFile = await _mediaService.processMedia(
+        media: MediaFile(image, FileType.image),
+        context: _context,
+      );
+      image = processedFile.file;
     }
 
     if (share.video != null) {
       video = File.fromUri(Uri.parse(share.video));
 
-      if (!await _validationService.isVideoAllowedSize(video)) {
-        _showFileTooLargeToast(_validationService.getAllowedVideoSize());
-        return;
-      }
+      var processedFile = await _mediaService.processMedia(
+        media: MediaFile(image, FileType.video),
+        context: _context,
+      );
+
+      video = processedFile.file;
     }
 
     if (share.text != null) {
       text = share.text;
       if (!_validationService.isPostTextAllowedLength(text)) {
+        String errorMessage = _localizationService
+            .error__receive_share_text_too_long(ValidationService.POST_MAX_LENGTH);
         _toastService.error(
-            message:
-                'Text too long (limit: ${ValidationService.POST_MAX_LENGTH} characters)',
+            message: errorMessage,
             context: _context);
         return;
       }
@@ -169,12 +170,5 @@ class ShareService {
         break;
       }
     }
-  }
-
-  Future _showFileTooLargeToast(int limitInBytes) async {
-    _toastService.error(
-        message: _localizationService
-            .image_picker__error_too_large(limitInBytes ~/ 1048576),
-        context: _context);
   }
 }

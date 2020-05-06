@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:Okuna/models/category.dart';
 import 'package:Okuna/models/community.dart';
-import 'package:Okuna/services/media.dart';
+import 'package:Okuna/services/media/media.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/theme_value_parser.dart';
 import 'package:Okuna/widgets/avatars/avatar.dart';
