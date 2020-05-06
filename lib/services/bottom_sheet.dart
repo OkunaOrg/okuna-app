@@ -17,8 +17,6 @@ import 'package:Okuna/pages/home/bottom_sheets/hashtag_actions.dart';
 import 'package:Okuna/pages/home/bottom_sheets/hashtags_display_setting_picker.dart';
 import 'package:Okuna/pages/home/bottom_sheets/image_picker.dart';
 import 'package:Okuna/pages/home/bottom_sheets/link_previews_setting_picker.dart';
-import 'package:Okuna/pages/home/bottom_sheets/manage_notifications/manage_post_comment_notifications.dart';
-import 'package:Okuna/pages/home/bottom_sheets/manage_notifications/manage_post_notifications.dart';
 import 'package:Okuna/pages/home/bottom_sheets/post_comment_more_actions.dart';
 import 'package:Okuna/pages/home/bottom_sheets/follows_lists_picker.dart';
 import 'package:Okuna/pages/home/bottom_sheets/post_actions.dart';
@@ -176,44 +174,9 @@ class BottomSheetService {
             displayContext: displayContext,
             onCommunityExcluded: onCommunityExcluded,
             onUndoCommunityExcluded: onUndoCommunityExcluded,
-            onPostCommunityExcludedFromProfilePosts:
-                onPostCommunityExcludedFromProfilePosts,
+            onPostCommunityExcludedFromProfilePosts: onPostCommunityExcludedFromProfilePosts,
             onPostDeleted: onPostDeleted,
             onPostReported: onPostReported,
-          );
-        });
-  }
-
-  Future<void> showManagePostNotifications(
-      {@required BuildContext context,
-      @required Post post,
-      VoidCallback onNotificationSettingsSave}) {
-    return _showModalBottomSheetApp(
-        context: context,
-        builder: (BuildContext context) {
-          return Material(
-            child: OBManagePostNotificationsBottomSheet(
-              post: post,
-              onNotificationSettingsSave: onNotificationSettingsSave,
-            ),
-          );
-        });
-  }
-
-  Future<void> showManagePostCommentNotifications(
-      {@required BuildContext context,
-      @required Post post,
-      @required PostComment postComment,
-      VoidCallback onNotificationSettingsSave}) {
-    return _showModalBottomSheetApp(
-        context: context,
-        builder: (BuildContext context) {
-          return Material(
-            child: OBManagePostCommentNotificationsBottomSheet(
-              post: post,
-              postComment: postComment,
-              onNotificationSettingsSave: onNotificationSettingsSave,
-            ),
           );
         });
   }
