@@ -1,6 +1,10 @@
 class UserNotificationsSettings {
   final int id;
-  bool postNotifications;
+  bool postCommentNotifications;
+  bool postCommentReactionNotifications;
+  bool postCommentReplyNotifications;
+  bool postCommentUserMentionNotifications;
+  bool postUserMentionNotifications;
   bool postReactionNotifications;
   bool followNotifications;
   bool connectionRequestNotifications;
@@ -14,7 +18,12 @@ class UserNotificationsSettings {
       this.connectionConfirmedNotifications,
       this.connectionRequestNotifications,
       this.followNotifications,
-      this.postNotifications,
+      this.postCommentNotifications,
+      this.postCommentReactionNotifications,
+      this.postCommentUserMentionNotifications,
+      this.postUserMentionNotifications,
+      this.postCommentReplyNotifications,
+      this.postReactionNotifications,
       this.communityInviteNotifications,
       this.communityNewPostNotifications,
       this.userNewPostNotifications});
@@ -27,12 +36,22 @@ class UserNotificationsSettings {
       connectionRequestNotifications:
           parsedJson['connection_request_notifications'],
       followNotifications: parsedJson['follow_notifications'],
-      postNotifications: parsedJson['post_notifications'],
+      postCommentNotifications: parsedJson['post_comment_notifications'],
+      postCommentReactionNotifications:
+          parsedJson['post_comment_reaction_notifications'],
+      postCommentReplyNotifications:
+          parsedJson['post_comment_reply_notifications'],
+      postCommentUserMentionNotifications:
+          parsedJson['post_comment_user_mention_notifications'],
+      postUserMentionNotifications:
+          parsedJson['post_user_mention_notifications'],
+      postReactionNotifications: parsedJson['post_reaction_notifications'],
       communityInviteNotifications:
           parsedJson['community_invite_notifications'],
       communityNewPostNotifications:
           parsedJson['community_new_post_notifications'],
-      userNewPostNotifications: parsedJson['user_new_post_notifications'],
+      userNewPostNotifications:
+          parsedJson['user_new_post_notifications'],
     );
   }
 
@@ -42,7 +61,12 @@ class UserNotificationsSettings {
       'connections_confirmed_notifications': connectionConfirmedNotifications,
       'connection_request_notifications': connectionRequestNotifications,
       'follow_notifications': followNotifications,
-      'post_notifications': postNotifications,
+      'post_comment_notifications': postCommentNotifications,
+      'post_comment_reaction_notifications': postCommentReactionNotifications,
+      'post_comment_user_mention_notifications': postCommentUserMentionNotifications,
+      'post_user_mention_notifications': postUserMentionNotifications,
+      'post_comment_reply_notifications': postCommentReplyNotifications,
+      'post_reaction_notifications': postReactionNotifications,
       'community_invite_notifications': communityInviteNotifications,
       'community_new_post_notifications': communityNewPostNotifications,
       'user_new_post_notifications': userNewPostNotifications,
@@ -57,8 +81,24 @@ class UserNotificationsSettings {
       connectionRequestNotifications = json['connection_request_notifications'];
     if (json.containsKey('follow_notifications'))
       followNotifications = json['follow_notifications'];
-    if (json.containsKey('post_notifications'))
-      postNotifications = json['post_notifications'];
+    if (json.containsKey('post_comment_notifications'))
+      postCommentNotifications = json['post_comment_notifications'];
+
+    if (json.containsKey('post_comment_reaction_notifications'))
+      postCommentReactionNotifications =
+          json['post_comment_reaction_notifications'];
+
+    if (json.containsKey('post_comment_reply_notifications'))
+      postCommentReplyNotifications = json['post_comment_reply_notifications'];
+
+    if (json.containsKey('post_comment_user_mention_notifications'))
+      postCommentUserMentionNotifications = json['post_comment_user_mention_notifications'];
+
+    if (json.containsKey('post_user_mention_notifications'))
+      postUserMentionNotifications = json['post_user_mention_notifications'];
+
+    if (json.containsKey('post_reaction_notifications'))
+      postReactionNotifications = json['post_reaction_notifications'];
     if (json.containsKey('community_invite_notifications'))
       communityInviteNotifications = json['community_invite_notifications'];
     if (json.containsKey('community_new_post_notifications'))
