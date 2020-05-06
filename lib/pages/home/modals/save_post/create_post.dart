@@ -563,24 +563,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
     }
 
     if (video != null) {
-      final isGif = await _mediaService.isGif(video);
-      if (isGif) {
-        var conversionOp = _mediaService.convertGifToVideo(video);
-
-        conversionOp.then((value) {
-          if (!conversionOp.isCanceled && value != null) {
-            _setPostVideoFile(value);
-          }
-        }, onError: (error, trace) {
-          if (!conversionOp.isCanceled) {
-            print(error);
-          }
-        });
-
-        return conversionOp;
-      } else {
-        _setPostVideoFile(video);
-      }
+      _setPostVideoFile(video);
     }
 
     return true;
