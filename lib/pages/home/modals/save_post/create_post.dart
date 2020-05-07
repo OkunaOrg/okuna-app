@@ -9,6 +9,7 @@ import 'package:Okuna/pages/home/lib/draft_editing_controller.dart';
 import 'package:Okuna/pages/home/modals/save_post/widgets/create_post_text.dart';
 import 'package:Okuna/pages/home/modals/save_post/widgets/post_community_previewer.dart';
 import 'package:Okuna/pages/home/modals/save_post/widgets/post_image_previewer.dart';
+import 'package:Okuna/pages/home/modals/save_post/widgets/post_media_previewer.dart';
 import 'package:Okuna/pages/home/modals/save_post/widgets/post_video_previewer.dart';
 import 'package:Okuna/pages/home/modals/save_post/widgets/remaining_post_characters.dart';
 import 'package:Okuna/provider.dart';
@@ -17,6 +18,7 @@ import 'package:Okuna/services/httpie.dart';
 import 'package:Okuna/services/link_preview.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/media/media.dart';
+import 'package:Okuna/services/media/models/media_file.dart';
 import 'package:Okuna/services/navigation_service.dart';
 import 'package:Okuna/services/share.dart';
 import 'package:Okuna/services/toast.dart';
@@ -79,6 +81,8 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
 
   _MediaPreview _mediaPreview;
 
+  bool _isProcessingMedia;
+
   List<Widget> _postItemsWidgets;
 
   bool _needsBootstrap;
@@ -100,6 +104,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
 
     _focusNode = FocusNode();
     _hasFocus = false;
+    _isProcessingMedia = false;
     _isPostTextAllowedLength = false;
     _isPostTextContainingValidHashtags = false;
     _isCreateCommunityPostInProgress = false;
@@ -204,7 +209,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
                     child: buildSearchBox(),
                   )
                 : const SizedBox(),
-            isAutocompleting || _hasNonLinkMedia
+            isAutocompleting || _hasNonLinkMedia || _isProcessingMedia
                 ? const SizedBox()
                 : Container(
                     height: _hasFocus == true ? 51 : 67,
@@ -386,18 +391,11 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
         onPressed: () async {
           _unfocusTextField();
           try {
-            var pickedMedia = await _mediaService.pickMedia(
-              context: context,
-              source: ImageSource.gallery,
-              flattenGifs: false,
-            );
-            if (pickedMedia != null) {
-              if (pickedMedia.type == FileType.image) {
-                _setPostImageFile(pickedMedia.file);
-              } else {
-                _setPostVideoFile(pickedMedia.file);
-              }
-            }
+            await _mediaService.pickMedia(
+                context: context,
+                source: ImageSource.gallery,
+                flattenGifs: false,
+                onProgress: _onMediaProgress);
           } catch (error) {
             _onError(error);
           }
@@ -410,15 +408,10 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
         onPressed: () async {
           _unfocusTextField();
           try {
-            var pickedMedia = await _mediaService.pickMedia(
-                context: context, source: ImageSource.camera);
-            if (pickedMedia != null) {
-              if (pickedMedia.type == FileType.image) {
-                _setPostImageFile(pickedMedia.file);
-              } else {
-                _setPostVideoFile(pickedMedia.file);
-              }
-            }
+            await _mediaService.pickMedia(
+                context: context,
+                source: ImageSource.camera,
+                onProgress: _onMediaProgress);
           } catch (error) {
             _onError(error);
           }
@@ -441,6 +434,52 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
 
   void _onFocusNodeChanged() {
     _hasFocus = _focusNode.hasFocus;
+  }
+
+  void _onMediaProgress(MediaProcessingState state, {dynamic data}) {
+    if (!mounted) {
+      return;
+    }
+
+    if (state == MediaProcessingState.processing) {
+      /* TODO(komposten): Improve this part
+          It would be preferable if the previous media was restored
+          if this new media was cancelled before finishing processing.
+       */
+      _removePostMedia();
+      _isProcessingMedia = true;
+      // TODO(komposten): onRemove should cancel the whole operation.
+      var postMediaWidget = OBPostMediaPreview(onRemove: _removePostMedia);
+      var remover = _addPostItemWidget(postMediaWidget);
+
+      _mediaPreview = _MediaPreview(
+          type: _MediaType.pending, preview: postMediaWidget, remover: remover);
+    } else if (state == MediaProcessingState.cancelled) {
+      /* TODO(komposten): Ideally, calling pickMedia should create an operation
+          which we can then cancel to end up here. That way starting a new media
+          process can cause the previous one to cancel and this elif to remove data
+          associated with it.
+       */
+    } else if (state == MediaProcessingState.error) {
+      _toastService.error(message: data, context: context);
+    } else if (state == MediaProcessingState.finished) {
+      var pickedMedia = data as MediaFile;
+
+      if (pickedMedia.type == FileType.image) {
+        _isProcessingMedia = false;
+
+        _setPostImageFile(pickedMedia.file);
+      } else if (pickedMedia.type == FileType.video) {
+        _isProcessingMedia = false;
+
+        _setPostVideoFile(pickedMedia.file);
+      } else {
+        _isProcessingMedia = false;
+        _removePostMedia();
+        _toastService.error(
+            message: 'An unsupported media type was picked!', context: context);
+      }
+    }
   }
 
   void _setPostImageFile(File image) {
@@ -705,4 +744,4 @@ class _MediaPreview {
       this.remover});
 }
 
-enum _MediaType { image, video, link }
+enum _MediaType { image, video, link, pending }

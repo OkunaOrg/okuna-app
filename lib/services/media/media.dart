@@ -75,9 +75,11 @@ class MediaService {
   Future<MediaFile> pickMedia(
       {@required BuildContext context,
       @required ImageSource source,
-      bool flattenGifs}) async {
+      bool flattenGifs,
+      void Function(MediaProcessingState, {dynamic data}) onProgress}) async {
     MediaFile media;
 
+    onProgress?.call(MediaProcessingState.picking);
     if (source == ImageSource.gallery) {
       bool permissionGranted =
           await _permissionsService.requestStoragePermissions(context: context);
@@ -92,10 +94,12 @@ class MediaService {
     } else if (source == ImageSource.camera) {
       media = await _bottomSheetService.showCameraPicker(context: context);
     } else {
-      throw 'Unsupported media source: $source';
+      onProgress?.call(MediaProcessingState.error,
+          data: 'Unsupported media source: $source');
     }
 
     if (media == null) {
+      onProgress?.call(MediaProcessingState.cancelled);
       return null;
     }
 
@@ -103,6 +107,7 @@ class MediaService {
       media: media,
       context: context,
       flattenGifs: flattenGifs,
+      onProgress: onProgress,
     );
 
     return media;
@@ -114,17 +119,25 @@ class MediaService {
   /// The returned file should always point to an image. If a GIF is picked it will
   /// be flattened.
   Future<File> pickImage(
-      {@required OBImageType imageType, @required BuildContext context}) async {
+      {@required OBImageType imageType,
+      @required BuildContext context,
+      void Function(MediaProcessingState, {dynamic data}) onProgress}) async {
+    onProgress?.call(MediaProcessingState.picking);
+
     File pickedImage =
         await _bottomSheetService.showImagePicker(context: context);
 
-    if (pickedImage == null) return null;
+    if (pickedImage == null) {
+      onProgress?.call(MediaProcessingState.cancelled);
+      return null;
+    }
 
     var media = await processMedia(
       media: MediaFile(pickedImage, FileType.image),
       context: context,
       flattenGifs: true,
       imageType: imageType,
+      onProgress: onProgress,
     );
 
     return media.file;
@@ -134,15 +147,23 @@ class MediaService {
   /// a new one with the camera.
   ///
   /// The returned file should always point to a video.
-  Future<File> pickVideo({@required BuildContext context}) async {
+  Future<File> pickVideo(
+      {@required BuildContext context,
+      void Function(MediaProcessingState, {dynamic data}) onProgress}) async {
+    onProgress?.call(MediaProcessingState.picking);
+
     File pickedVideo =
         await _bottomSheetService.showVideoPicker(context: context);
 
-    if (pickedVideo == null) return null;
+    if (pickedVideo == null) {
+      onProgress?.call(MediaProcessingState.cancelled);
+      return null;
+    }
 
     var media = await processMedia(
       media: MediaFile(pickedVideo, FileType.video),
       context: context,
+      onProgress: onProgress,
     );
 
     return media.file;
@@ -152,9 +173,12 @@ class MediaService {
       {@required MediaFile media,
       @required BuildContext context,
       bool flattenGifs = false,
-      OBImageType imageType = OBImageType.post}) async {
+      OBImageType imageType = OBImageType.post,
+      void Function(MediaProcessingState, {dynamic data}) onProgress}) async {
     var mediaType = media.type;
     MediaFile result;
+
+    onProgress?.call(MediaProcessingState.processing);
 
     // Copy the media to a temporary location.
     final tempPath = await _getTempPath();
@@ -182,9 +206,11 @@ class MediaService {
     } else if (mediaType == FileType.video) {
       result = await _processVideo(copiedMedia);
     } else {
-      throw 'Unsupported media type: ${media.type}';
+      onProgress?.call(MediaProcessingState.error,
+          data: 'Unsupported media type: ${media.type}');
     }
 
+    onProgress?.call(MediaProcessingState.finished, data: result);
     return result;
   }
 
@@ -205,7 +231,7 @@ class MediaService {
       throw FileTooLargeException(
           _validationService.getAllowedImageSize(imageType));
     }
-    
+
     MediaFile result;
     if (imageType == OBImageType.post) {
       result = MediaFile(processedImage, media.type);
@@ -229,7 +255,6 @@ class MediaService {
 
     return media;
   }
-
 
   Future<File> fixExifRotation(File image, {deleteOriginal: false}) async {
     List<int> imageBytes = await image.readAsBytes();
@@ -432,3 +457,5 @@ class FileTooLargeException implements Exception {
 }
 
 enum OBImageType { avatar, cover, post }
+
+enum MediaProcessingState { picking, processing, finished, cancelled, error }
