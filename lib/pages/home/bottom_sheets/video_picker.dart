@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:Okuna/pages/home/bottom_sheets/rounded_bottom_sheet.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/localization.dart';
-import 'package:Okuna/services/media.dart';
+import 'package:Okuna/services/media/media.dart';
 import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/theming/text.dart';
 import 'package:file_picker/file_picker.dart';
@@ -27,7 +27,7 @@ class OBVideoPickerBottomSheet extends StatelessWidget {
           bool permissionGranted = await provider.permissionService
               .requestStoragePermissions(context: context);
           if (permissionGranted) {
-            File file = await FilePicker.getFile(type: FileType.VIDEO);
+            File file = await FilePicker.getFile(type: FileType.video);
             Navigator.pop(context, file);
           }
         },

@@ -7,7 +7,7 @@ description: Social Network
 # Both the version and the builder number may be overridden in flutter
 # build by specifying --build-name and --build-number, respectively.
 # Read more about versioning at semver.org.
-version: 0.0.65+82
+version: 0.0.66+83
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -31,7 +31,7 @@ dependencies:
   retry: ^3.0.0+1
   shared_preferences: ^0.5.2
   flutter_markdown: ^0.2.0
-  file_picker: ^1.4.2
+  file_picker: ^1.9.0
   sentry: ^2.2.0
   screen: ^0.0.5
   back_button_interceptor: ^4.0.1
@@ -41,19 +41,19 @@ dependencies:
   flutter_pagewise: ^1.2.2
   tinycolor: ^1.0.2
   onesignal_flutter: ^2.2.0
-  flutter_advanced_networkimage: 0.6.0-alpha.1
+  flutter_advanced_networkimage: ^0.7.0
   dcache: ^0.1.0
   validators: ^1.0.0+1
   url_launcher: ^4.0.1
-  uni_links: ^0.1.4
+  uni_links: ^0.2.0
   flutter_slidable: "^0.4.9"
   flutter_cache_manager: ^1.1.1
   cached_network_image: ^2.0.0-rc
   timeago: ^2.0.9
   public_suffix: ^1.2.0
   pigment: ^1.0.3
-  photo_view: ^0.4.2
-  flutter_svg: ^0.14.0
+  photo_view: ^0.9.2
+  flutter_svg: ^0.17.4
   flutter_secure_storage: ^3.1.2
   mime: ^0.9.6+2
   http: ^0.12.0
@@ -70,8 +70,8 @@ dependencies:
   image_picker: 0.6.3+1
   image_cropper: ^1.2.1
   shimmer: ^1.0.0
-  share: ^0.6.1
-  path: ^1.6.2
+  share: ^0.6.4
+  path: ^1.7.0
   package_info: ^0.4.0
   flutter:
     sdk: flutter
@@ -143,6 +143,7 @@ flutter:
     - assets/images/icons/chat-icon.png
     - assets/images/icons/photo-icon.png
     - assets/images/icons/video-icon.png
+    - assets/images/icons/camera-icon.png
     - assets/images/icons/warning-icon.png
     - assets/images/icons/success-icon.png
     - assets/images/icons/error-icon.png

@@ -29,8 +29,6 @@ import 'package:Okuna/services/universal_links/universal_links.dart';
 import 'package:Okuna/widgets/toast.dart';
 import 'package:Okuna/translation/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart'
-    show debugDefaultTargetPlatformOverride;
 import 'package:flutter_advanced_networkimage/provider.dart';
 import 'package:flutter\_localizations/flutter\_localizations.dart';
 import 'package:sentry/sentry.dart';
@@ -252,91 +250,32 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
-void _setPlatformOverrideForDesktop() {
-  TargetPlatform targetPlatform;
-  if (Platform.isMacOS) {
-    targetPlatform = TargetPlatform.iOS;
-  } else if (Platform.isLinux || Platform.isWindows) {
-    targetPlatform = TargetPlatform.android;
-  }
-  if (targetPlatform != null) {
-    debugDefaultTargetPlatformOverride = targetPlatform;
-  }
-}
-
 Future<Null> main() async {
-  _setPlatformOverrideForDesktop();
-  // This captures errors reported by the Flutter framework.
-  FlutterError.onError = (FlutterErrorDetails details) async {
-    if (isOnDesktop) {
-      // Report errors on Desktop to embedder
-      DesktopErrorReporting.reportError(details.exception, details.stack);
-    } else if (isInDebugMode) {
-      // In development mode simply print to console.
-      FlutterError.dumpErrorToConsole(details);
-    } else {
-      // In production mode report to the application zone to report to
-      // Sentry.
-      Zone.current.handleUncaughtError(details.exception, details.stack);
+  MyApp app = MyApp();
+
+// Run the whole app in a zone to capture all uncaught errors.
+  runZonedGuarded(() => runApp(app), (Object error, StackTrace stackTrace) {
+    if (isInDebugMode) {
+      print(error);
+      print(stackTrace);
+      print('In dev mode. Not sending report to Sentry.io.');
+      return;
     }
-  };
 
-  // This creates a [Zone] that contains the Flutter application and stablishes
-  // an error handler that captures errors and reports them.
-  //
-  // Using a zone makes sure that as many errors as possible are captured,
-  // including those thrown from [Timer]s, microtasks, I/O, and those forwarded
-  // from the `FlutterError` handler.
-  //
-  // More about zones:
-  //
-  // - https://api.dartlang.org/stable/1.24.2/dart-async/Zone-class.html
-  // - https://www.dartlang.org/articles/libraries/zones
+    SentryClient sentryClient =
+        app.openbookProviderKey.currentState.sentryClient;
 
-  MyApp app;
-  // run the entire app with our own HttpieOverride
-  HttpOverrides.runWithHttpOverrides<Future<Null>>(
-      () async {
-        app = MyApp();
-        runApp(app);
-      },
-      HttpieOverrides(),
-      onError: (error, stackTrace) async {
-        if (isOnDesktop) {
-          DesktopErrorReporting.reportError(error, stackTrace);
-          return;
-        }
-        SentryClient sentryClient =
-            app.openbookProviderKey.currentState.sentryClient;
-        await _reportError(error, stackTrace, sentryClient);
-      });
-}
-
-/// Reports [error] along with its [stackTrace] to Sentry.io.
-Future<Null> _reportError(
-    dynamic error, dynamic stackTrace, SentryClient sentryClient) async {
-  print('Caught error: $error');
-
-  // Errors thrown in development mode are unlikely to be interesting. You can
-  // check if you are running in dev mode using an assertion and omit sending
-  // the report.
-  if (isInDebugMode) {
-    print(stackTrace);
-    print('In dev mode. Not sending report to Sentry.io.');
-    return;
-  }
-
-  print('Reporting to Sentry.io...');
-  final SentryResponse response = await sentryClient.captureException(
-    exception: error,
-    stackTrace: stackTrace,
-  );
-
-  if (response.isSuccessful) {
-    print('Success! Event ID: ${response.eventId}');
-  } else {
-    print('Failed to report to Sentry.io: ${response.error}');
-  }
+    try {
+      sentryClient.captureException(
+        exception: error,
+        stackTrace: stackTrace,
+      );
+      print('Error sent to sentry.io: $error');
+    } catch (e) {
+      print('Sending report to sentry.io failed: $e');
+      print('Original error: $error');
+    }
+  });
 }
 
 bool get isInDebugMode {

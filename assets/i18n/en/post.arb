@@ -231,6 +231,16 @@
     "type": "text",
     "placeholders": {}
   },
+  "create_media": "Media",
+  "@create_media": {
+    "type": "text",
+    "placeholders": {}
+  },
+  "create_camera": "Camera",
+  "@create_camera": {
+    "type": "text",
+    "placeholders": {}
+  },
   "create_photo": "Photo",
   "@create_photo": {
     "type": "text",

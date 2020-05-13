@@ -8,6 +8,7 @@ class OBTextFormField extends StatelessWidget {
   final TextEditingController controller;
   final FormFieldValidator<String> validator;
   final bool autofocus;
+  final bool readOnly;
   final InputDecoration decoration;
   final int maxLines;
   final TextInputType keyboardType;
@@ -25,6 +26,7 @@ class OBTextFormField extends StatelessWidget {
       {this.controller,
       this.validator,
       this.autofocus = false,
+      this.readOnly = false,
       this.keyboardType,
       this.inputFormatters,
       this.obscureText = false,
@@ -85,6 +87,7 @@ class OBTextFormField extends StatelessWidget {
                 textCapitalization: textCapitalization,
                 textInputAction: textInputAction,
                 autofocus: autofocus,
+                readOnly: readOnly,
                 controller: controller,
                 validator: validator,
                 keyboardType: keyboardType,

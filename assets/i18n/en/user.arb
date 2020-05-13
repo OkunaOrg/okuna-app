@@ -974,6 +974,11 @@
     "type": "text",
     "placeholders": {}
   },
+  "change_email_current_email_text": "Current email",
+  "@change_email_current_email_text": {
+    "type": "text",
+    "placeholders": {}
+  },
   "change_email_hint_text": "Enter your new email",
   "@change_email_hint_text": {
     "type": "text",

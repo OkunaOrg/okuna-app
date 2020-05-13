@@ -819,6 +819,11 @@ class LocalizationService {
     return Intl.message("Unknown error", name: 'error__unknown_error');
   }
 
+  String error__receive_share_text_too_long(int limit) {
+    return Intl.message("Text is too long (limit: $limit characters)",
+        args: [limit], name: 'error__receive_share_text_too_long');
+  }
+
   String get error__receive_share_temp_write_failed {
     return Intl.message('Failed to copy shared file to temporary location',
         name: 'error__receive_share_temp_write_failed');
@@ -1916,6 +1921,14 @@ class LocalizationService {
 
   String get post__create_next {
     return Intl.message("Next", name: 'post__create_next');
+  }
+
+  String get post__create_media {
+    return Intl.message("Media", name: 'post__create_media');
+  }
+
+  String get post__create_camera {
+    return Intl.message("Camera", name: 'post__create_camera');
   }
 
   String get post__create_photo {
@@ -3207,6 +3220,10 @@ class LocalizationService {
 
   String get user__change_email_email_text {
     return Intl.message("Email", name: 'user__change_email_email_text');
+  }
+
+  String get user__change_email_current_email_text {
+    return Intl.message("Current email", name: 'user__change_email_current_email_text');
   }
 
   String get user__change_email_hint_text {
