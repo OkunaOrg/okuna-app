@@ -103,6 +103,7 @@ class AuthApiService {
     bool communityPostsVisible,
     String bio,
     String location,
+    String visibility,
   }) {
     Map<String, dynamic> body = {};
 
@@ -127,6 +128,8 @@ class AuthApiService {
     if (url != null) body['url'] = url;
 
     if (bio != null) body['bio'] = bio;
+
+    if (visibility != null) body['visibility'] = visibility;
 
     if (followersCountVisible != null)
       body['followers_count_visible'] = followersCountVisible;

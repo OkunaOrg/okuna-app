@@ -24,6 +24,7 @@ class User extends UpdatableModel<User> {
   String email;
   String username;
   Language language;
+  UserVisibility visibility;
   UserProfile profile;
   DateTime dateJoined;
   UserNotificationsSettings notificationsSettings;
@@ -90,6 +91,7 @@ class User extends UpdatableModel<User> {
       'username': username,
       'language': language?.toJson(),
       'profile': profile?.toJson(),
+      'visibility': visibility?.code,
       'notifications_settings': notificationsSettings?.toJson(),
       'followers_count': followersCount,
       'following_count': followingCount,
@@ -134,6 +136,7 @@ class User extends UpdatableModel<User> {
       this.dateJoined,
       this.connectionsCircleId,
       this.username,
+      this.visibility,
       this.email,
       this.profile,
       this.language,
@@ -232,6 +235,10 @@ class User extends UpdatableModel<User> {
     if (json.containsKey('communities_invites')) {
       communitiesInvites =
           navigationUsersFactory.parseInvites(json['communities_invites']);
+    }
+
+    if (json.containsKey('visibility')) {
+      visibility = UserVisibility.parse(json['visibility']);
     }
   }
 
@@ -636,6 +643,7 @@ class UserFactory extends UpdatableModelFactory<User> {
             json['active_moderation_penalties_count'],
         email: json['email'],
         username: json['username'],
+        visibility: UserVisibility.parse(json['visibility']),
         language: parseLanguage(json['language']),
         followingCount: json['following_count'],
         isFollowing: json['is_following'],
@@ -694,5 +702,45 @@ class UserFactory extends UpdatableModelFactory<User> {
   DateTime parseDateJoined(String dateJoined) {
     if (dateJoined == null) return null;
     return DateTime.parse(dateJoined).toLocal();
+  }
+}
+
+class UserVisibility {
+  final String code;
+
+  const UserVisibility._internal(this.code);
+
+  toString() => code;
+
+  static const public = const UserVisibility._internal('P');
+  static const okuna = const UserVisibility._internal('O');
+  static const private = const UserVisibility._internal('T');
+
+
+  static const _values = const <UserVisibility>[
+    public,
+    okuna,
+    private,
+  ];
+
+  static values() => _values;
+
+  static UserVisibility parse(String string) {
+    if (string == null) return null;
+
+    UserVisibility userVisibility;
+    for (var type in _values) {
+      if (string == type.code) {
+        userVisibility = type;
+        break;
+      }
+    }
+
+    if (userVisibility == null) {
+      // Don't throw as we might introduce new notifications on the API which might not be yet in code
+      print('Unsupported UserVisibility');
+    }
+
+    return userVisibility;
   }
 }

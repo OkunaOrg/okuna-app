@@ -427,6 +427,7 @@ class UserService {
     bool communityPostsVisible,
     String bio,
     String location,
+    UserVisibility visibility,
   }) async {
     HttpieStreamedResponse response = await _authApiService.updateUser(
         avatar: avatar,
@@ -437,6 +438,7 @@ class UserService {
         followersCountVisible: followersCountVisible,
         communityPostsVisible: communityPostsVisible,
         bio: bio,
+        visibility: visibility?.code,
         location: location);
 
     _checkResponseIsOk(response);
@@ -2222,6 +2224,29 @@ class UserService {
         query: query, count: count, postUuid: post.uuid);
     _checkResponseIsOk(response);
     return UsersList.fromJson(json.decode(response.body));
+  }
+
+  Map<UserVisibility, Map<String,String>> getUserVisibilityLocalizationMap() {
+    var publicMap =  {
+      'title': _localizationService.user__visibility_public,
+      'description': _localizationService.user__visibility_public_desc
+    };
+
+    var okunaMap = {
+      'title': _localizationService.user__visibility_okuna,
+      'description': _localizationService.user__visibility_okuna_desc
+    };
+
+    var privateMap = {
+      'title': _localizationService.user__visibility_private,
+      'description': _localizationService.user__visibility_private_desc
+    };
+
+    return {
+      UserVisibility.public: publicMap,
+      UserVisibility.okuna: okunaMap,
+      UserVisibility.private: privateMap,
+    };
   }
 
   Future<String> _getDeviceName() async {

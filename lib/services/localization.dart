@@ -2653,6 +2653,17 @@ class LocalizationService {
         name: 'user__manage_profile_details_title_desc');
   }
 
+  String get user__manage_profile_visibility_title {
+    return Intl.message("Visibility",
+        name: 'user__manage_profile_visibility_title');
+  }
+
+  String get user__manage_profile_visibility_title_desc {
+    return Intl.message(
+        "Change whether your profile content is public, private or restricted to Okuna members.",
+        name: 'user__manage_profile_visibility_title_desc');
+  }
+
   String get user__profile_posts_excluded_communities {
     return Intl.message("Hidden communities",
         name: 'user__profile_posts_excluded_communities');
@@ -3223,7 +3234,8 @@ class LocalizationService {
   }
 
   String get user__change_email_current_email_text {
-    return Intl.message("Current email", name: 'user__change_email_current_email_text');
+    return Intl.message("Current email",
+        name: 'user__change_email_current_email_text');
   }
 
   String get user__change_email_hint_text {
@@ -3311,6 +3323,34 @@ class LocalizationService {
   String get user__disable_new_post_notifications {
     return Intl.message("Disable new post notifications",
         name: 'user__disable_new_post_notifications');
+  }
+
+  String get user__visibility {
+    return Intl.message("Visibility", name: 'user__visibility');
+  }
+
+  String get user__visibility_public {
+    return Intl.message("Public", name: 'user__visibility_public');
+  }
+
+  String get user__visibility_public_desc {
+    return Intl.message("Everyone on the internet can see your profile.", name: 'user__visibility_public_desc');
+  }
+
+  String get user__visibility_private {
+    return Intl.message("Private", name: 'user__visibility_private');
+  }
+
+  String get user__visibility_private_desc {
+    return Intl.message("Only people you approve can see your profile.", name: 'user__visibility_private_desc');
+  }
+
+  String get user__visibility_okuna {
+    return Intl.message("Okuna", name: 'user__visibility_okuna');
+  }
+
+  String get user__visibility_okuna_desc {
+    return Intl.message("Only members of Okuna can see your profile.", name: 'user__visibility_okuna_desc');
   }
 
   String user__disconnect_from_user(String userName) {
