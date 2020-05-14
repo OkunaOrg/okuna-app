@@ -53,6 +53,7 @@ import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/application_set
 import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/developer_settings.dart';
 import 'package:Okuna/pages/home/pages/profile/pages/edit_profile/manage_profile.dart';
 import 'package:Okuna/pages/home/pages/profile/pages/edit_profile/pages/profile_posts_excluded_communities/profile_posts_excluded_communities.dart';
+import 'package:Okuna/pages/home/pages/profile/pages/follow_requests.dart';
 import 'package:Okuna/pages/home/pages/search/widgets/top_posts/pages/top_posts_settings/pages/top_posts_excluded_communities.dart';
 import 'package:Okuna/pages/home/pages/search/widgets/top_posts/pages/top_posts_settings/top_posts_settings.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/settings/settings.dart';
@@ -1028,6 +1029,19 @@ class NavigationService {
               onExcludedCommunitiesAdded: onExcludedCommunitiesAdded,
               onExcludedCommunityRemoved: onExcludedCommunityRemoved,
             );
+          }),
+    );
+  }
+
+  Future<void> navigateToFollowRequests({
+    @required BuildContext context,
+  }) async {
+    return Navigator.push(
+      context,
+      OBSlideRightRoute<dynamic>(
+          slidableKey: Key('excludeCommunitiesFromProfilePostsPage'),
+          builder: (BuildContext context) {
+            return OBFollowRequestsPage();
           }),
     );
   }

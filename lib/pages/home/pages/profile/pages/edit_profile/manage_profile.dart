@@ -3,6 +3,7 @@ import 'package:Okuna/models/user.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/navigation_service.dart';
+import 'package:Okuna/services/user.dart';
 import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Okuna/widgets/theming/fading_highlighted_box.dart';
@@ -41,6 +42,7 @@ class OBManageProfilePageState extends State<OBManageProfilePage> {
 
   LocalizationService _localizationService;
   NavigationService _navigationService;
+  UserService _userService;
 
   bool _communityPostsVisible;
   bool _isFirstBuild;
@@ -60,6 +62,7 @@ class OBManageProfilePageState extends State<OBManageProfilePage> {
     var openbookProvider = OpenbookProvider.of(context);
     _localizationService = openbookProvider.localizationService;
     _navigationService = openbookProvider.navigationService;
+    _userService = openbookProvider.userService;
     var modalService = openbookProvider.modalService;
 
     return Scaffold(
@@ -97,7 +100,7 @@ class OBManageProfilePageState extends State<OBManageProfilePage> {
                   ),
                   _buildExcludedCommunitiesTile(),
                   Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
+                    padding: const EdgeInsets.symmetric(vertical: 10),
                     child: OBTileGroupTitle(
                       title: 'Visibility',
                     ),
@@ -106,6 +109,28 @@ class OBManageProfilePageState extends State<OBManageProfilePage> {
                   const SizedBox(
                     height: 20,
                   ),
+                  StreamBuilder(
+                      stream: _userService.getLoggedInUser().updateSubject,
+                      builder:
+                          (BuildContext context, AsyncSnapshot<User> snapshot) {
+                        if (snapshot.data?.visibility != UserVisibility.private)
+                          return const SizedBox();
+
+                        return ListTile(
+                          leading: const OBIcon(OBIcons.followRequests),
+                          title: OBText(
+                              _localizationService.user__follow_requests),
+                          subtitle: OBText(
+                            _localizationService
+                                .user__manage_profile_follow_requests_desc,
+                            size: OBTextSize.mediumSecondary,
+                          ),
+                          onTap: () {
+                            _navigationService.navigateToFollowRequests(
+                                context: context);
+                          },
+                        );
+                      }),
                 ],
               ),
             )

@@ -2347,6 +2347,11 @@ class LocalizationService {
         name: 'user__follow_requests');
   }
 
+  String get user__follow_request {
+    return Intl.message("Follow request",
+        name: 'user__follow_request');
+  }
+
   String get user__thousand_postfix {
     return Intl.message("k",
         desc: 'For eg. communty has 3k members',

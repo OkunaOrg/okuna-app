@@ -167,7 +167,7 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
           child: OBSearchBar(
         onSearch: _onSearch,
         hintText: _localizationService
-            .user_search__list_search_text(widget.resourcePluralName),
+            .user_search__list_search_text(widget.resourcePluralName.toLowerCase()),
       )));
     }
 
@@ -329,7 +329,7 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
       children: <Widget>[
         OBButtonAlert(
           text: _localizationService
-              .user_search__list_no_results_found(widget.resourcePluralName),
+              .user_search__list_no_results_found(widget.resourcePluralName.toLowerCase()),
           onPressed: _refreshList,
           buttonText:
               _localizationService.trans('user_search__list_refresh_text'),
