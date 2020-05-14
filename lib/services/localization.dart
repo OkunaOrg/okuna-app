@@ -821,7 +821,7 @@ class LocalizationService {
 
   String error__receive_share_text_too_long(int limit) {
     return Intl.message("Text is too long (limit: $limit characters)",
-        args: [limit], name: 'image_picker__error_too_large');
+        args: [limit], name: 'error__receive_share_text_too_long');
   }
 
   String get error__receive_share_temp_write_failed {

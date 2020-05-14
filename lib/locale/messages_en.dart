@@ -61,6 +61,8 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m20(currentUserLanguage) => "Language (${currentUserLanguage})";
 
+  static m67(limit) => "Text is too long (limit: ${limit} characters)";
+
   static m21(limit) => "File too large (limit: ${limit} MB)";
 
   static m22(resourceCount, resourceName) => "See all ${resourceCount} ${resourceName}";
@@ -93,7 +95,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m36(description) => "Failed to preview link with website error: ${description}";
 
-  static m67(link) => "Invalid link: ${link}";
+  static m68(link) => "Invalid link: ${link}";
 
   static m37(maxLength) => "Circle name must be no longer than ${maxLength} characters.";
 
@@ -500,6 +502,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "error__receive_share_invalid_uri_scheme" : MessageLookupByLibrary.simpleMessage("Failed to receive share"),
     "error__receive_share_temp_write_denied" : MessageLookupByLibrary.simpleMessage("Denied permission to copy shared file to temporary location"),
     "error__receive_share_temp_write_failed" : MessageLookupByLibrary.simpleMessage("Failed to copy shared file to temporary location"),
+    "error__receive_share_text_too_long" : m67,
     "error__unknown_error" : MessageLookupByLibrary.simpleMessage("Unknown error"),
     "image_picker__error_too_large" : m21,
     "image_picker__from_camera" : MessageLookupByLibrary.simpleMessage("From camera"),
@@ -677,7 +680,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "post__comments_page_tap_to_retry_replies" : MessageLookupByLibrary.simpleMessage("Tap to retry loading replies."),
     "post__comments_page_title" : MessageLookupByLibrary.simpleMessage("Post comments"),
     "post__comments_view_all_comments" : m31,
+    "post__create_camera" : MessageLookupByLibrary.simpleMessage("Camera"),
     "post__create_hashtags_invalid" : m32,
+    "post__create_media" : MessageLookupByLibrary.simpleMessage("Media"),
     "post__create_new" : MessageLookupByLibrary.simpleMessage("New post"),
     "post__create_new_community_post_label" : MessageLookupByLibrary.simpleMessage("Create new communtiy post"),
     "post__create_new_post_label" : MessageLookupByLibrary.simpleMessage("Create new post"),
@@ -752,7 +757,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "post__you_shared_with" : MessageLookupByLibrary.simpleMessage("You shared with"),
     "post_body_link_preview__empty" : MessageLookupByLibrary.simpleMessage("This link could not be previewed"),
     "post_body_link_preview__error_with_description" : m36,
-    "post_body_link_preview__invalid" : m67,
+    "post_body_link_preview__invalid" : m68,
     "post_body_media__unsupported" : MessageLookupByLibrary.simpleMessage("Unsupported media type"),
     "post_uploader__cancelled" : MessageLookupByLibrary.simpleMessage("Cancelled!"),
     "post_uploader__cancelling" : MessageLookupByLibrary.simpleMessage("Cancelling"),
@@ -781,6 +786,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "user__billion_postfix" : MessageLookupByLibrary.simpleMessage("b"),
     "user__block_description" : MessageLookupByLibrary.simpleMessage("You will both dissapear from each other\'s social network experience, with the exception of communities which the person is a staff member of."),
     "user__block_user" : MessageLookupByLibrary.simpleMessage("Block user"),
+    "user__change_email_current_email_text" : MessageLookupByLibrary.simpleMessage("Current email"),
     "user__change_email_email_text" : MessageLookupByLibrary.simpleMessage("Email"),
     "user__change_email_error" : MessageLookupByLibrary.simpleMessage("Email is already registered"),
     "user__change_email_hint_text" : MessageLookupByLibrary.simpleMessage("Enter your new email"),

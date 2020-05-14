@@ -105,9 +105,9 @@ class ShareService {
       _queuedShare = null;
 
       _isProcessingShare = true;
-      var operation = CancelableOperation.fromFuture(_onShare(share));
-      _activeShares[share] = ShareOperation(share, operation);
+      _activeShares[share] = ShareOperation(share, _onShare);
       _activeShares[share].then(() => _activeShares.remove(share));
+      _activeShares[share].start();
       _isProcessingShare = false;
 
       // Recurse since a new share might have came in while the last was being processed.
@@ -152,11 +152,10 @@ class ShareService {
     if (share.text != null) {
       text = share.text;
       if (!_validationService.isPostTextAllowedLength(text)) {
-        String errorMessage = _localizationService
-            .error__receive_share_text_too_long(ValidationService.POST_MAX_LENGTH);
-        _toastService.error(
-            message: errorMessage,
-            context: _context);
+        String errorMessage =
+            _localizationService.error__receive_share_text_too_long(
+                ValidationService.POST_MAX_LENGTH);
+        _toastService.error(message: errorMessage, context: _context);
         return;
       }
     }
@@ -181,6 +180,8 @@ class ShareService {
 }
 
 class ShareOperation {
+  final Future<void> Function(Share) _shareFunction;
+
   Share share;
   CancelableOperation shareOperation;
   CancelableOperation subOperation;
@@ -190,7 +191,11 @@ class ShareOperation {
   bool _subComplete = false;
   FutureOr Function() _callback;
 
-  ShareOperation(this.share, this.shareOperation) {
+  ShareOperation(this.share, Future<void> Function(Share) shareFunction)
+      : _shareFunction = shareFunction;
+
+  void start() {
+    shareOperation = CancelableOperation.fromFuture(_shareFunction(share));
     shareOperation.then((_) {
       _shareComplete = true;
       _complete();

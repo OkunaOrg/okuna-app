@@ -4,6 +4,13 @@
     "type": "text",
     "placeholders": {}
   },
+  "receive_share_text_too_long": "Text is too long (limit: {limit} characters)",
+  "@receive_share_text_too_long": {
+    "type": "text",
+    "placeholders": {
+      "limit": {}
+    }
+  },
   "receive_share_temp_write_failed": "Failed to copy shared file to temporary location",
   "@receive_share_temp_write_failed": {
     "type": "text",
