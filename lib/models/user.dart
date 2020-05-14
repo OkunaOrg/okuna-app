@@ -45,6 +45,7 @@ class User extends UpdatableModel<User> {
   bool isGlobalModerator;
   bool isFullyConnected;
   bool isPendingConnectionConfirmation;
+  bool isPendingFollowRequestApproval;
   bool isMemberOfCommunities;
   CirclesList connectedCircles;
   FollowsListsList followLists;
@@ -59,9 +60,9 @@ class User extends UpdatableModel<User> {
           storage: UpdatableModelSimpleStorage(size: 10)));
 
   static final maxSessionUsersFactory = UserFactory(
-    cache:
-    SimpleCache<int, User>(storage: UpdatableModelSimpleStorage(size: UpdatableModelSimpleStorage.MAX_INT))
-  );
+      cache: SimpleCache<int, User>(
+          storage: UpdatableModelSimpleStorage(
+              size: UpdatableModelSimpleStorage.MAX_INT)));
 
   factory User.fromJson(Map<String, dynamic> json,
       {bool storeInSessionCache = false, bool storeInMaxSessionCache = false}) {
@@ -70,15 +71,17 @@ class User extends UpdatableModel<User> {
     int userId = json['id'];
 
     User user = maxSessionUsersFactory.getItemWithIdFromCache(userId) ??
-    navigationUsersFactory.getItemWithIdFromCache(userId) ??
-    sessionUsersFactory.getItemWithIdFromCache(userId);
+        navigationUsersFactory.getItemWithIdFromCache(userId) ??
+        sessionUsersFactory.getItemWithIdFromCache(userId);
     if (user != null) {
       user.update(json);
       return user;
     }
-    return storeInMaxSessionCache ? maxSessionUsersFactory.fromJson(json) : storeInSessionCache
-        ? sessionUsersFactory.fromJson(json)
-        : navigationUsersFactory.fromJson(json);
+    return storeInMaxSessionCache
+        ? maxSessionUsersFactory.fromJson(json)
+        : storeInSessionCache
+            ? sessionUsersFactory.fromJson(json)
+            : navigationUsersFactory.fromJson(json);
   }
 
   Map<String, dynamic> toJson() {
@@ -98,7 +101,8 @@ class User extends UpdatableModel<User> {
       'unread_notifications_count': unreadNotificationsCount,
       'posts_count': postsCount,
       'invite_count': inviteCount,
-      'pending_communities_moderated_objects_count': pendingCommunitiesModeratedObjectsCount,
+      'pending_communities_moderated_objects_count':
+          pendingCommunitiesModeratedObjectsCount,
       'active_moderation_penalties_count': activeModerationPenaltiesCount,
       'are_guidelines_accepted': areGuidelinesAccepted,
       'are_new_post_notifications_enabled': areNewPostNotificationsEnabled,
@@ -110,11 +114,20 @@ class User extends UpdatableModel<User> {
       'is_global_moderator': isGlobalModerator,
       'is_fully_connected': isFullyConnected,
       'is_pending_connection_confirmation': isPendingConnectionConfirmation,
+      'is_pending_follow_request_approval': isPendingFollowRequestApproval,
       'is_member_of_communities': isMemberOfCommunities,
-      'connected_circles': connectedCircles?.circles?.map((Circle circle) => circle.toJson())?.toList(),
-      'follow_lists': followLists?.lists?.map((FollowsList followList) => followList.toJson())?.toList(),
-      'communities_memberships': communitiesMemberships?.communityMemberships?.map((CommunityMembership membership) => membership.toJson())?.toList(),
-      'communities_invites' : communitiesInvites?.communityInvites?.map((CommunityInvite invite) => invite.toJson())?.toList(),
+      'connected_circles': connectedCircles?.circles
+          ?.map((Circle circle) => circle.toJson())
+          ?.toList(),
+      'follow_lists': followLists?.lists
+          ?.map((FollowsList followList) => followList.toJson())
+          ?.toList(),
+      'communities_memberships': communitiesMemberships?.communityMemberships
+          ?.map((CommunityMembership membership) => membership.toJson())
+          ?.toList(),
+      'communities_invites': communitiesInvites?.communityInvites
+          ?.map((CommunityInvite invite) => invite.toJson())
+          ?.toList(),
     };
   }
 
@@ -155,6 +168,8 @@ class User extends UpdatableModel<User> {
       this.isReported,
       this.isFullyConnected,
       this.isMemberOfCommunities,
+      this.isPendingConnectionConfirmation,
+      this.isPendingFollowRequestApproval,
       this.connectedCircles,
       this.followLists,
       this.communitiesMemberships,
@@ -166,7 +181,8 @@ class User extends UpdatableModel<User> {
   void updateFromJson(Map json) {
     if (json.containsKey('username')) username = json['username'];
     if (json.containsKey('uuid')) uuid = json['uuid'];
-    if (json.containsKey('date_joined')) dateJoined = navigationUsersFactory.parseDateJoined(json['date_joined']);
+    if (json.containsKey('date_joined'))
+      dateJoined = navigationUsersFactory.parseDateJoined(json['date_joined']);
     if (json.containsKey('are_guidelines_accepted'))
       areGuidelinesAccepted = json['are_guidelines_accepted'];
     if (json.containsKey('email')) email = json['email'];
@@ -202,7 +218,9 @@ class User extends UpdatableModel<User> {
       unreadNotificationsCount = json['unread_notifications_count'];
     if (json.containsKey('posts_count')) postsCount = json['posts_count'];
     if (json.containsKey('invite_count')) inviteCount = json['invite_count'];
-    if (json.containsKey('are_new_post_notifications_enabled')) areNewPostNotificationsEnabled = json['are_new_post_notifications_enabled'];
+    if (json.containsKey('are_new_post_notifications_enabled'))
+      areNewPostNotificationsEnabled =
+          json['are_new_post_notifications_enabled'];
     if (json.containsKey('is_following')) isFollowing = json['is_following'];
     if (json.containsKey('is_followed')) isFollowed = json['is_followed'];
     if (json.containsKey('is_connected')) isConnected = json['is_connected'];
@@ -217,6 +235,10 @@ class User extends UpdatableModel<User> {
     if (json.containsKey('is_pending_connection_confirmation'))
       isPendingConnectionConfirmation =
           json['is_pending_connection_confirmation'];
+
+    if (json.containsKey('is_pending_follow_request_approval'))
+      isPendingFollowRequestApproval =
+          json['is_pending_follow_request_approval'];
     if (json.containsKey('connected_circles')) {
       connectedCircles =
           navigationUsersFactory.parseCircles(json['connected_circles']);
@@ -414,6 +436,16 @@ class User extends UpdatableModel<User> {
 
   void setIsReported(isReported) {
     this.isReported = isReported;
+    notifyUpdate();
+  }
+
+  void setIsPendingFollowRequestApproval(isPendingFollowRequestApproval) {
+    this.isPendingFollowRequestApproval = isPendingFollowRequestApproval;
+    notifyUpdate();
+  }
+
+  void setIsFollowing(isFollowing) {
+    this.isFollowing = isFollowing;
     notifyUpdate();
   }
 
@@ -648,13 +680,18 @@ class UserFactory extends UpdatableModelFactory<User> {
         followingCount: json['following_count'],
         isFollowing: json['is_following'],
         isFollowed: json['is_followed'],
-        areNewPostNotificationsEnabled: json['are_new_post_notifications_enabled'],
+        areNewPostNotificationsEnabled:
+            json['are_new_post_notifications_enabled'],
         isConnected: json['is_connected'],
         isGlobalModerator: json['is_global_moderator'],
         isBlocked: json['is_blocked'],
         isReported: json['is_reported'],
         isFullyConnected: json['is_fully_connected'],
         isMemberOfCommunities: json['is_member_of_communities'],
+        isPendingConnectionConfirmation:
+            json['is_pending_connection_confirmation'],
+        isPendingFollowRequestApproval:
+            json['is_pending_follow_request_approval'],
         profile: parseUserProfile(json['profile']),
         connectedCircles: parseCircles(json['connected_circles']),
         communitiesMemberships:
@@ -715,7 +752,6 @@ class UserVisibility {
   static const public = const UserVisibility._internal('P');
   static const okuna = const UserVisibility._internal('O');
   static const private = const UserVisibility._internal('T');
-
 
   static const _values = const <UserVisibility>[
     public,

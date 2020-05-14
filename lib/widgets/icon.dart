@@ -269,6 +269,7 @@ class OBIcons {
   static const visibilityPublic = OBIconData(nativeIcon: Icons.public);
   static const visibilityOkuna = OBIconData(nativeIcon: Icons.people);
   static const visibilityPrivate = OBIconData(nativeIcon: Icons.lock);
+  static const followRequests = OBIconData(nativeIcon: Icons.move_to_inbox);
   static const success = OBIconData(filename: 'success-icon.png');
   static const error = OBIconData(filename: 'error-icon.png');
   static const warning = OBIconData(filename: 'warning-icon.png');

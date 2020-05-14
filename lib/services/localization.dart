@@ -2342,6 +2342,11 @@ class LocalizationService {
         name: 'post__time_short_now_text');
   }
 
+  String get user__follow_requests {
+    return Intl.message("Follow requests",
+        name: 'user__follow_requests');
+  }
+
   String get user__thousand_postfix {
     return Intl.message("k",
         desc: 'For eg. communty has 3k members',
@@ -2441,6 +2446,14 @@ class LocalizationService {
 
   String get user__follow_button_follow_text {
     return Intl.message("Follow", name: 'user__follow_button_follow_text');
+  }
+
+  String get user__follow_button_request_to_follow_text {
+    return Intl.message("Request", name: 'user__follow_button_request_to_follow_text');
+  }
+
+  String get user__follow_button_requested_to_follow_text {
+    return Intl.message("Requested", name: 'user__follow_button_requested_to_follow_text');
   }
 
   String get user__follow_button_follow_back_text {
@@ -2645,6 +2658,10 @@ class LocalizationService {
 
   String get user__manage_profile_details_title {
     return Intl.message("Details", name: 'user__manage_profile_details_title');
+  }
+
+  String get user__manage_profile_follow_requests_desc {
+    return Intl.message("See all your received follow requests.", name: 'user__manage_profile_follow_requests_desc');
   }
 
   String get user__manage_profile_details_title_desc {
@@ -4262,6 +4279,11 @@ class LocalizationService {
   String get bottom_sheets__confirm_action_no {
     return Intl.message("No", name: 'bottom_sheets__confirm_action_no');
   }
+
+  String get bottom_sheets__dismiss {
+    return Intl.message("Dismiss", name: 'bottom_sheets__dismiss');
+  }
+
 
   Locale getLocale() {
     return locale;

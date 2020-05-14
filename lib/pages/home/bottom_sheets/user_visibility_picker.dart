@@ -118,7 +118,7 @@ class OBUserVisibilityPickerBottomSheetState
           Expanded(
             child: OBButton(
               size: OBButtonSize.large,
-              child: Text(selectionIsTheCurrentOne ? _localizationService.user_search__cancel : _localizationService.post__edit_save),
+              child: Text(selectionIsTheCurrentOne ? _localizationService.bottom_sheets__dismiss : _localizationService.post__edit_save),
               type: selectionIsTheCurrentOne
                   ? OBButtonType.highlight
                   : OBButtonType.success,

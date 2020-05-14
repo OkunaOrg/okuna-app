@@ -10,6 +10,7 @@ import 'package:Okuna/models/communities_list.dart';
 import 'package:Okuna/models/community.dart';
 import 'package:Okuna/models/device.dart';
 import 'package:Okuna/models/devices_list.dart';
+import 'package:Okuna/models/follow_request_list.dart';
 import 'package:Okuna/models/follows_lists_list.dart';
 import 'package:Okuna/models/circles_list.dart';
 import 'package:Okuna/models/connection.dart';
@@ -1094,6 +1095,46 @@ class UserService {
         await _authApiService.getFollowings(count: count, maxId: maxId);
     _checkResponseIsOk(response);
     return UsersList.fromJson(json.decode(response.body));
+  }
+
+  Future<void> requestToFollowUser(User user) async {
+    HttpieResponse response =
+        await _followsApiService.requestToFollowUserWithUsername(user.username);
+    _checkResponseIsOk(response);
+    user.setIsPendingFollowRequestApproval(true);
+  }
+
+  Future<void> cancelRequestToFollowUser(User user) async {
+    HttpieResponse response =
+    await _followsApiService.cancelRequestToFollowUserWithUsername(user.username);
+    _checkResponseIsOk(response);
+    user.setIsPendingFollowRequestApproval(false);
+  }
+
+  Future<void> approveFollowRequestFromUser(User user) async {
+    HttpieResponse response =
+        await _followsApiService.approveFollowRequestFromUserWithUsername(user.username);
+    _checkResponseIsOk(response);
+    user.setIsPendingFollowRequestApproval(false);
+    user.setIsFollowing(true);
+  }
+
+  Future<void> rejectFollowRequestFromUser(User user) async {
+    HttpieResponse response =
+    await _followsApiService.rejectFollowRequestFromUserWithUsername(user.username);
+    _checkResponseIsOk(response);
+    user.setIsPendingFollowRequestApproval(false);
+  }
+
+  Future<FollowRequestList> getReceivedFollowRequests(
+      {bool authenticatedRequest = true,
+        int maxId,
+        int count,
+        Community withCommunity}) async {
+    HttpieResponse response =
+    await _followsApiService.getReceivedFollowRequests(count: count, maxId: maxId);
+    _checkResponseIsOk(response);
+    return FollowRequestList.fromJson(json.decode(response.body));
   }
 
   Future<Follow> followUserWithUsername(String username,
@@ -2226,8 +2267,8 @@ class UserService {
     return UsersList.fromJson(json.decode(response.body));
   }
 
-  Map<UserVisibility, Map<String,String>> getUserVisibilityLocalizationMap() {
-    var publicMap =  {
+  Map<UserVisibility, Map<String, String>> getUserVisibilityLocalizationMap() {
+    var publicMap = {
       'title': _localizationService.user__visibility_public,
       'description': _localizationService.user__visibility_public_desc
     };
