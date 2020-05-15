@@ -141,7 +141,6 @@ class OBNotificationsSettingsPageState
           onTap: _toggleFollowNotifications,
           hasDivider: false,
         ),
-        listItemSeparator,
         OBToggleField(
           key: Key('Follow request'),
           value: _followRequestNotifications,
@@ -152,7 +151,6 @@ class OBNotificationsSettingsPageState
           onTap: _toggleFollowRequestNotifications,
           hasDivider: false,
         ),
-        listItemSeparator,
         OBToggleField(
           key: Key('Follow request approved'),
           value: _followRequestApprovedNotifications,
@@ -163,6 +161,7 @@ class OBNotificationsSettingsPageState
           onTap: _toggleFollowRequestApprovedNotifications,
           hasDivider: false,
         ),
+        listItemSeparator,
         OBToggleField(
           key: Key('Connection request'),
           value: _connectionRequestNotifications,
