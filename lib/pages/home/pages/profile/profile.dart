@@ -43,12 +43,15 @@ class OBProfilePageState extends State<OBProfilePage> {
   OBPostDisplayContext _postsDisplayContext;
 
   List<Community> _recentlyExcludedCommunities;
+  GlobalKey<RefreshIndicatorState> _protectedProfileRefreshIndicatorKey = GlobalKey();
+  bool _needsProtectedProfileBootstrap;
 
   @override
   void initState() {
     super.initState();
     _obPostsStreamController = OBPostsStreamController();
     _needsBootstrap = true;
+    _needsProtectedProfileBootstrap = true;
     _user = widget.user;
     if (widget.controller != null) widget.controller.attach(this);
     _profileCommunityPostsVisible =
@@ -73,26 +76,23 @@ class OBProfilePageState extends State<OBProfilePage> {
         backgroundColor: Color.fromARGB(0, 0, 0, 0),
         navigationBar: OBProfileNavBar(_user),
         child: OBPrimaryColorContainer(
-          child: _buildProfileContent(),
+          child: StreamBuilder(
+              stream: widget.user.updateSubject,
+              builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
+                User user = snapshot.data;
+                if (user == null) return const SizedBox();
+
+                if (_postsDisplayContext ==
+                        OBPostDisplayContext.ownProfilePosts ||
+                    user.visibility != UserVisibility.private ||
+                    user.isFollowing) {
+                  return _buildVisibleProfileContent();
+                }
+
+                // User is private and its not us
+                return _buildProtectedProfileContent();
+              }),
         ));
-  }
-
-  Widget _buildProfileContent() {
-    return StreamBuilder(
-        stream: widget.user.updateSubject,
-        builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
-          User user = snapshot.data;
-          if (user == null) return const SizedBox();
-
-          if (_postsDisplayContext == OBPostDisplayContext.ownProfilePosts ||
-              user.visibility != UserVisibility.private ||
-              user.isFollowing) {
-            return _buildVisibleProfileContent();
-          }
-
-          // User is private and its not us
-          return _buildRestrictedProfileContent();
-        });
   }
 
   Widget _buildVisibleProfileContent() {
@@ -116,7 +116,15 @@ class OBProfilePageState extends State<OBProfilePage> {
     );
   }
 
-  Widget _buildRestrictedProfileContent() {
+  Widget _buildProtectedProfileContent() {
+    if(_needsProtectedProfileBootstrap){
+      Future.delayed(Duration(milliseconds: 100), () {
+        _protectedProfileRefreshIndicatorKey.currentState.show();
+      });
+      _needsProtectedProfileBootstrap = false;
+    }
+
+
     List<Widget> profileDetails = _buildProfileContentDetails();
 
     profileDetails.addAll([
@@ -126,10 +134,15 @@ class OBProfilePageState extends State<OBProfilePage> {
       )
     ]);
 
-    return SingleChildScrollView(
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        children: profileDetails,
+    return RefreshIndicator(
+      displacement: 40,
+      key: _protectedProfileRefreshIndicatorKey,
+      onRefresh: _refreshUser,
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          children: profileDetails,
+        ),
       ),
     );
   }
@@ -155,7 +168,8 @@ class OBProfilePageState extends State<OBProfilePage> {
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               OBSecondaryText(
-                _localizationService.user__protected_account_desc(widget.user.username),
+                _localizationService
+                    .user__protected_account_desc(widget.user.username),
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               const SizedBox(
@@ -167,8 +181,10 @@ class OBProfilePageState extends State<OBProfilePage> {
                   if (snapshot.data == null) return const SizedBox();
                   User user = snapshot.data;
                   return OBSecondaryText((user.isPendingFollowRequestApproval
-                      ? _localizationService.user__protected_account_instructions_complete
-                      : _localizationService.user__protected_account_instructions));
+                      ? _localizationService
+                          .user__protected_account_instructions_complete
+                      : _localizationService
+                          .user__protected_account_instructions));
                 },
               ),
             ],

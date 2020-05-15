@@ -27,7 +27,7 @@ class FollowsApiService {
   Future<HttpieResponse> requestToFollowUserWithUsername(String username) {
     Map<String, dynamic> body = {'username': username};
 
-    return _httpService.postJSON('$apiURL$REQUEST_TO_FOLLOW_USER_PATH',
+    return _httpService.putJSON('$apiURL$REQUEST_TO_FOLLOW_USER_PATH',
         body: body, appendAuthorizationToken: true);
   }
 
