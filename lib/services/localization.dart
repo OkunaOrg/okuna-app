@@ -2698,6 +2698,27 @@ class LocalizationService {
         name: 'user__profile_posts_excluded_communities_desc');
   }
 
+  String get user__protected_account_title {
+    return Intl.message("This accounts posts are protected.",
+        name: 'user__protected_account_title');
+  }
+
+  String user__protected_account_desc(String username) {
+    return Intl.message("Only confirmed followers have access to @$username's posts.",
+        args: [username],
+        name: 'user__protected_account_desc');
+  }
+
+  String get user__protected_account_instructions {
+    return Intl.message('Click the "Follow" button to send a follow request.',
+        name: 'user__protected_account_instructions');
+  }
+
+  String get user__protected_account_instructions_complete {
+    return Intl.message('You have already sent a follow request.',
+        name: 'user__protected_account_instructions_complete');
+  }
+
   String get user__edit_profile_save_text {
     return Intl.message("Save", name: 'user__edit_profile_save_text');
   }

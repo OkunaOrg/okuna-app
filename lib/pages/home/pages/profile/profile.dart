@@ -6,6 +6,7 @@ import 'package:Okuna/pages/home/pages/profile/widgets/profile_cover.dart';
 import 'package:Okuna/pages/home/pages/profile/widgets/profile_nav_bar.dart';
 import 'package:Okuna/pages/home/pages/profile/widgets/profile_posts_stream_status_indicator.dart';
 import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/user.dart';
 import 'package:Okuna/widgets/alerts/alert.dart';
 import 'package:Okuna/widgets/icon.dart';
@@ -36,6 +37,7 @@ class OBProfilePageState extends State<OBProfilePage> {
   User _user;
   bool _needsBootstrap;
   UserService _userService;
+  LocalizationService _localizationService;
   OBPostsStreamController _obPostsStreamController;
   bool _profileCommunityPostsVisible;
   OBPostDisplayContext _postsDisplayContext;
@@ -63,6 +65,7 @@ class OBProfilePageState extends State<OBProfilePage> {
       _postsDisplayContext = isLoggedInUserProfile
           ? OBPostDisplayContext.ownProfilePosts
           : OBPostDisplayContext.foreignProfilePosts;
+      _localizationService = openbookProvider.localizationService;
       _needsBootstrap = false;
     }
 
@@ -147,12 +150,12 @@ class OBProfilePageState extends State<OBProfilePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               OBText(
-                'This accounts posts are protected.',
+                _localizationService.user__protected_account_title,
                 size: OBTextSize.large,
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               OBSecondaryText(
-                'Only confirmed followers have access to @${widget.user.username}\'s posts.',
+                _localizationService.user__protected_account_desc(widget.user.username),
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               const SizedBox(
@@ -164,8 +167,8 @@ class OBProfilePageState extends State<OBProfilePage> {
                   if (snapshot.data == null) return const SizedBox();
                   User user = snapshot.data;
                   return OBSecondaryText((user.isPendingFollowRequestApproval
-                      ? 'You have already sent a follow request.'
-                      : 'Click the "Follow" button to send a follow request.'));
+                      ? _localizationService.user__protected_account_instructions_complete
+                      : _localizationService.user__protected_account_instructions));
                 },
               ),
             ],
