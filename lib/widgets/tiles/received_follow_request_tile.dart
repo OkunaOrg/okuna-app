@@ -1,6 +1,8 @@
 import 'package:Okuna/models/follow_request.dart';
+import 'package:Okuna/models/user.dart';
 import 'package:Okuna/services/httpie.dart';
 import 'package:Okuna/services/localization.dart';
+import 'package:Okuna/services/navigation_service.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/user.dart';
 import 'package:Okuna/widgets/buttons/button.dart';
@@ -31,6 +33,7 @@ class OBReceivedFollowRequestTileState
   ToastService _toastService;
   LocalizationService _localizationService;
   UserService _userService;
+  NavigationService _navigationService;
   bool _needsBootstrap;
 
   bool _isFollowRequestActionInProgress;
@@ -49,10 +52,14 @@ class OBReceivedFollowRequestTileState
     if (_needsBootstrap) {
       _localizationService = openbookProvider.localizationService;
       _userService = openbookProvider.userService;
+      _navigationService = openbookProvider.navigationService;
     }
 
     return OBUserTile(
       widget.followRequest.creator,
+      onUserTilePressed: (User user){
+        _navigationService.navigateToUserProfile(user: user, context: context);
+      },
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
