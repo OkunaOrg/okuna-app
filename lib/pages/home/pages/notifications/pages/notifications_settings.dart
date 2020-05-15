@@ -42,6 +42,8 @@ class OBNotificationsSettingsPageState
   bool _postUserMentionNotifications;
   bool _postReactionNotifications;
   bool _followNotifications;
+  bool _followRequestNotifications;
+  bool _followRequestApprovedNotifications;
   bool _connectionRequestNotifications;
   bool _communityInviteNotifications;
   bool _communityNewPostNotifications;
@@ -57,6 +59,8 @@ class OBNotificationsSettingsPageState
     _postCommentReplyNotifications = true;
     _postReactionNotifications = true;
     _followNotifications = true;
+    _followRequestNotifications = true;
+    _followRequestApprovedNotifications = true;
     _connectionRequestNotifications = true;
     _communityInviteNotifications = true;
     _communityNewPostNotifications = true;
@@ -138,6 +142,27 @@ class OBNotificationsSettingsPageState
           hasDivider: false,
         ),
         listItemSeparator,
+        OBToggleField(
+          key: Key('Follow request'),
+          value: _followRequestNotifications,
+          title: _localizationService.notifications__follow_request_title,
+          subtitle: OBText(
+              _localizationService.notifications__follow_request_desc),
+          onChanged: _setFollowRequestNotifications,
+          onTap: _toggleFollowRequestNotifications,
+          hasDivider: false,
+        ),
+        listItemSeparator,
+        OBToggleField(
+          key: Key('Follow request approved'),
+          value: _followRequestApprovedNotifications,
+          title: _localizationService.notifications__follow_request_approved_title,
+          subtitle: OBText(
+              _localizationService.notifications__follow_request_approved_title_desc),
+          onChanged: _setFollowRequestApprovedNotifications,
+          onTap: _toggleFollowRequestApprovedNotifications,
+          hasDivider: false,
+        ),
         OBToggleField(
           key: Key('Connection request'),
           value: _connectionRequestNotifications,
@@ -296,6 +321,30 @@ class OBNotificationsSettingsPageState
     _submitNotificationsSettings();
   }
 
+  void _toggleFollowRequestNotifications() {
+    _setFollowRequestNotifications(!_followRequestNotifications);
+  }
+
+  void _setFollowRequestNotifications(bool newValue) {
+    setState(() {
+      _followRequestNotifications = newValue;
+    });
+
+    _submitNotificationsSettings();
+  }
+
+  void _toggleFollowRequestApprovedNotifications() {
+    _setFollowRequestApprovedNotifications(!_followRequestApprovedNotifications);
+  }
+
+  void _setFollowRequestApprovedNotifications(bool newValue) {
+    setState(() {
+      _followRequestApprovedNotifications = newValue;
+    });
+
+    _submitNotificationsSettings();
+  }
+
   void _toggleCommunityInviteNotifications() {
     _setCommunityInviteNotifications(!_communityInviteNotifications);
   }
@@ -437,6 +486,8 @@ class OBNotificationsSettingsPageState
     try {
       _userService.updateAuthenticatedUserNotificationsSettings(
           followNotifications: _followNotifications,
+          followRequestNotifications: _followRequestNotifications,
+          followRequestApprovedNotifications: _followRequestApprovedNotifications,
           postCommentNotifications: _postCommentNotifications,
           postCommentReplyNotifications: _postCommentReplyNotifications,
           postCommentUserMentionNotifications: _postCommentUserMentionNotifications,
@@ -484,6 +535,8 @@ class OBNotificationsSettingsPageState
       _postReactionNotifications =
           notificationSettings.postReactionNotifications;
       _followNotifications = notificationSettings.followNotifications;
+      _followRequestNotifications = notificationSettings.followRequestNotifications;
+      _followRequestApprovedNotifications = notificationSettings.followRequestApprovedNotifications;
       _communityInviteNotifications =
           notificationSettings.communityInviteNotifications;
       _communityNewPostNotifications =

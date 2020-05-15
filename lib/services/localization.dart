@@ -3438,6 +3438,24 @@ class LocalizationService {
         name: 'notifications__follow_desc');
   }
 
+  String get notifications__follow_request_title {
+    return Intl.message("Follow request", name: 'notifications__follow_request_title');
+  }
+
+  String get notifications__follow_request_desc {
+    return Intl.message("Be notified when someone wants to follow you.",
+        name: 'notifications__follow_request_desc');
+  }
+
+  String get notifications__follow_request_approved_title {
+    return Intl.message("Follow request approved", name: 'notifications__follow_request_approved_title');
+  }
+
+  String get notifications__follow_request_approved_title_desc {
+    return Intl.message("Be notified when someone approves your follow request.",
+        name: 'notifications__follow_request_approved_title_desc');
+  }
+
   String get notifications__connection_title {
     return Intl.message("Connection request",
         name: 'notifications__connection_title');

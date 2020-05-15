@@ -363,6 +363,8 @@ class AuthApiService {
     bool postUserMentionNotifications,
     bool postReactionNotifications,
     bool followNotifications,
+    bool followRequestNotifications,
+    bool followRequestApprovedNotifications,
     bool connectionRequestNotifications,
     bool connectionConfirmedNotifications,
     bool communityInviteNotifications,
@@ -393,6 +395,12 @@ class AuthApiService {
 
     if (followNotifications != null)
       body['follow_notifications'] = followNotifications;
+
+    if (followRequestNotifications != null)
+      body['follow_request_notifications'] = followRequestNotifications;
+
+    if (followRequestApprovedNotifications != null)
+      body['follow_request_approved_notifications'] = followRequestApprovedNotifications;
 
     if (connectionRequestNotifications != null)
       body['connection_request_notifications'] = connectionRequestNotifications;
