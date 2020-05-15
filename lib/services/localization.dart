@@ -2453,10 +2453,6 @@ class LocalizationService {
     return Intl.message("Follow", name: 'user__follow_button_follow_text');
   }
 
-  String get user__follow_button_request_to_follow_text {
-    return Intl.message("Request", name: 'user__follow_button_request_to_follow_text');
-  }
-
   String get user__follow_button_requested_to_follow_text {
     return Intl.message("Requested", name: 'user__follow_button_requested_to_follow_text');
   }

@@ -165,7 +165,7 @@ class OBProfilePageState extends State<OBProfilePage> {
                   User user = snapshot.data;
                   return OBSecondaryText((user.isPendingFollowRequestApproval
                       ? 'You have already sent a follow request.'
-                      : 'Click the "Request" button to send a follow request.'));
+                      : 'Click the "Follow" button to send a follow request.'));
                 },
               ),
             ],
