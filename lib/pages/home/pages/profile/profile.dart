@@ -7,9 +7,13 @@ import 'package:Okuna/pages/home/pages/profile/widgets/profile_nav_bar.dart';
 import 'package:Okuna/pages/home/pages/profile/widgets/profile_posts_stream_status_indicator.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/user.dart';
+import 'package:Okuna/widgets/alerts/alert.dart';
+import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/post/post.dart';
 import 'package:Okuna/widgets/posts_stream/posts_stream.dart';
 import 'package:Okuna/widgets/theming/primary_color_container.dart';
+import 'package:Okuna/widgets/theming/secondary_text.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -66,33 +70,121 @@ class OBProfilePageState extends State<OBProfilePage> {
         backgroundColor: Color.fromARGB(0, 0, 0, 0),
         navigationBar: OBProfileNavBar(_user),
         child: OBPrimaryColorContainer(
+          child: _buildProfileContent(),
+        ));
+  }
+
+  Widget _buildProfileContent() {
+    return StreamBuilder(
+        stream: widget.user.updateSubject,
+        builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
+          User user = snapshot.data;
+          if (user == null) return const SizedBox();
+
+          if (_postsDisplayContext == OBPostDisplayContext.ownProfilePosts ||
+              user.visibility != UserVisibility.private ||
+              user.isFollowing) {
+            return _buildVisibleProfileContent();
+          }
+
+          // User is private and its not us
+          return _buildRestrictedProfileContent();
+        });
+  }
+
+  Widget _buildVisibleProfileContent() {
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        Expanded(
+          child: OBPostsStream(
+              streamIdentifier: 'profile_${widget.user.username}',
+              displayContext: _postsDisplayContext,
+              prependedItems: _buildProfileContentDetails(),
+              controller: _obPostsStreamController,
+              postBuilder: _buildPostsStreamPost,
+              secondaryRefresher: _refreshUser,
+              refresher: _refreshPosts,
+              onScrollLoader: _loadMorePosts,
+              onPostsRefreshed: _onPostsRefreshed,
+              statusIndicatorBuilder: _buildPostsStreamStatusIndicator),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildRestrictedProfileContent() {
+    List<Widget> profileDetails = _buildProfileContentDetails();
+
+    profileDetails.addAll([
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        child: _buildPrivateProfileContentAlert(),
+      )
+    ]);
+
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        children: profileDetails,
+      ),
+    );
+  }
+
+  Widget _buildPrivateProfileContentAlert() {
+    return OBAlert(
+        child: Row(
+      children: [
+        OBIcon(
+          OBIcons.visibilityPrivate,
+          size: OBIconSize.large,
+        ),
+        const SizedBox(
+          width: 20,
+        ),
+        Flexible(
           child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              Expanded(
-                child: OBPostsStream(
-                    streamIdentifier: 'profile_${widget.user.username}',
-                    displayContext: _postsDisplayContext,
-                    prependedItems: <Widget>[
-                      OBProfileCover(_user),
-                      OBProfileCard(
-                        _user,
-                        onUserProfileUpdated: _onUserProfileUpdated,
-                        onExcludedCommunitiesAdded: _onExcludedCommunitiesAdded,
-                        onExcludedCommunityRemoved: _onExcludedCommunityRemoved,
-                      ),
-                    ],
-                    controller: _obPostsStreamController,
-                    postBuilder: _buildPostsStreamPost,
-                    secondaryRefresher: _refreshUser,
-                    refresher: _refreshPosts,
-                    onScrollLoader: _loadMorePosts,
-                    onPostsRefreshed: _onPostsRefreshed,
-                    statusIndicatorBuilder: _buildPostsStreamStatusIndicator),
-              )
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              OBText(
+                'This accounts posts are protected.',
+                size: OBTextSize.large,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              OBSecondaryText(
+                'Only confirmed followers have access to @${widget.user.username}\'s posts.',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              StreamBuilder(
+                stream: widget.user.updateSubject,
+                builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
+                  if (snapshot.data == null) return const SizedBox();
+                  User user = snapshot.data;
+                  return OBSecondaryText((user.isPendingFollowRequestApproval
+                      ? 'You have already sent a follow request.'
+                      : 'Click the "Request" button to send a follow request.'));
+                },
+              ),
             ],
           ),
-        ));
+        )
+      ],
+    ));
+  }
+
+  List<Widget> _buildProfileContentDetails() {
+    return [
+      OBProfileCover(_user),
+      OBProfileCard(
+        _user,
+        onUserProfileUpdated: _onUserProfileUpdated,
+        onExcludedCommunitiesAdded: _onExcludedCommunitiesAdded,
+        onExcludedCommunityRemoved: _onExcludedCommunityRemoved,
+      )
+    ];
   }
 
   Widget _buildPostsStreamStatusIndicator(
