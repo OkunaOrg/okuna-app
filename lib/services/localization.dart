@@ -3577,6 +3577,18 @@ class LocalizationService {
         name: 'notifications__accepted_connection_request_tile');
   }
 
+  String get notifications__follow_request_tile {
+    return Intl.message("[name] [username] wants to follow you.",
+        desc: "Eg.: James @jamest wants to follow you.",
+        name: 'notifications__follow_request_tile');
+  }
+
+  String get notifications__approved_follow_request_tile {
+    return Intl.message("[name] [username] approved your follow request.",
+        desc: "Eg.: James @jamest approved your follow request.",
+        name: 'notifications__approved_follow_request_tile');
+  }
+
   String get notifications__reacted_to_post_tile {
     return Intl.message("[name] [username] reacted to your post.",
         desc: "Eg.: James @jamest reacted to your post.",

@@ -85,7 +85,7 @@ class OBProfilePageState extends State<OBProfilePage> {
                 if (_postsDisplayContext ==
                         OBPostDisplayContext.ownProfilePosts ||
                     user.visibility != UserVisibility.private ||
-                    user.isFollowing) {
+                    (user.isFollowing != null && user.isFollowing)) {
                   return _buildVisibleProfileContent();
                 }
 
