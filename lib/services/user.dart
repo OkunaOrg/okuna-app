@@ -1116,7 +1116,7 @@ class UserService {
         await _followsApiService.approveFollowRequestFromUserWithUsername(user.username);
     _checkResponseIsOk(response);
     user.setIsPendingFollowRequestApproval(false);
-    user.setIsFollowing(true);
+    user.setIsFollowed(true);
   }
 
   Future<void> rejectFollowRequestFromUser(User user) async {

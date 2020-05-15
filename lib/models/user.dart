@@ -449,6 +449,11 @@ class User extends UpdatableModel<User> {
     notifyUpdate();
   }
 
+  void setIsFollowed(isFollowed) {
+    this.isFollowed = isFollowed;
+    notifyUpdate();
+  }
+
   bool canDisableOrEnableCommentsForPost(Post post) {
     User loggedInUser = this;
     bool _canDisableOrEnableComments = false;
