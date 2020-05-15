@@ -60,6 +60,8 @@ class OBFollowButtonState extends State<OBFollowButton> {
   }
 
   Widget _buildRequestToFollowButton() {
+    if(widget.user.isPendingFollowRequestApproval == null) return const SizedBox();
+
     final followButtonText =
         widget.user.isPendingFollowRequestApproval
             ? _localizationService.user__follow_button_requested_to_follow_text

@@ -178,7 +178,7 @@ class OBProfilePageState extends State<OBProfilePage> {
               StreamBuilder(
                 stream: widget.user.updateSubject,
                 builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
-                  if (snapshot.data == null) return const SizedBox();
+                  if (snapshot.data == null || snapshot.data.isPendingFollowRequestApproval == null) return const SizedBox();
                   User user = snapshot.data;
                   return OBSecondaryText((user.isPendingFollowRequestApproval
                       ? _localizationService

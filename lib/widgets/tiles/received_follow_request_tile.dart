@@ -37,6 +37,13 @@ class OBReceivedFollowRequestTileState
   CancelableOperation _followRequestActionOperation;
 
   @override
+  void initState() {
+    super.initState();
+    _needsBootstrap = true;
+    _isFollowRequestActionInProgress = false;
+  }
+
+  @override
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
     if (_needsBootstrap) {
@@ -47,18 +54,24 @@ class OBReceivedFollowRequestTileState
     return OBUserTile(
       widget.followRequest.creator,
       trailing: Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
           OBButton(
             size: OBButtonSize.small,
             isLoading: _isFollowRequestActionInProgress,
-            child: Text(toBeginningOfSentenceCase(_localizationService.moderation__community_review_reject)),
+            child: Text(toBeginningOfSentenceCase(
+                _localizationService.moderation__community_review_reject)),
             type: OBButtonType.danger,
             onPressed: _onWantsToRejectRequest,
+          ),
+          const SizedBox(
+            width: 10,
           ),
           OBButton(
             size: OBButtonSize.small,
             isLoading: _isFollowRequestActionInProgress,
-            child: Text(toBeginningOfSentenceCase(_localizationService.moderation__community_review_approve)),
+            child: Text(toBeginningOfSentenceCase(
+                _localizationService.moderation__community_review_approve)),
             type: OBButtonType.success,
             onPressed: _onWantsToApproveRequest,
           ),
