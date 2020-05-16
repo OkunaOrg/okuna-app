@@ -21,7 +21,7 @@ import 'package:Okuna/services/media/media.dart';
 import 'package:Okuna/services/notifications_api.dart';
 import 'package:Okuna/services/permissions.dart';
 import 'package:Okuna/services/push_notifications/push_notifications.dart';
-import 'package:Okuna/services/share.dart';
+import 'package:Okuna/services/share/share.dart';
 import 'package:Okuna/services/text_autocompletion.dart';
 import 'package:Okuna/services/universal_links/universal_links.dart';
 import 'package:Okuna/services/emoji_picker.dart';

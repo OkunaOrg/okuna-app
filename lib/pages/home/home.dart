@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:Okuna/models/push_notification.dart';
 import 'package:Okuna/pages/home/lib/poppable_page_controller.dart';
@@ -19,7 +18,8 @@ import 'package:Okuna/pages/home/widgets/tab-scaffold.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/httpie.dart';
 import 'package:Okuna/services/modal_service.dart';
-import 'package:Okuna/services/share.dart';
+import 'package:Okuna/services/share/models/share.dart';
+import 'package:Okuna/services/share/share.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/user.dart';
 import 'package:Okuna/services/user_preferences.dart';

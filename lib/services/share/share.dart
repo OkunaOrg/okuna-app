@@ -5,6 +5,9 @@ import 'package:Okuna/plugins/share/share.dart' as SharePlugin;
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/media/media.dart';
 import 'package:Okuna/services/media/models/media_file.dart';
+import 'package:Okuna/services/share/models/share.dart';
+import 'package:Okuna/services/share/models/subscriber.dart';
+import 'package:Okuna/services/share/models/subscription.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/validation.dart';
 import 'package:async/async.dart';
@@ -241,40 +244,4 @@ class ShareOperation {
       _callback();
     }
   }
-}
-
-class ShareSubscriber {
-  final bool acceptsText;
-  final bool acceptsImages;
-  final bool acceptsVideos;
-  final Future<dynamic> Function(Share) onShare;
-  final void Function(MediaProcessingState, {dynamic data})
-      mediaProgressCallback;
-
-  const ShareSubscriber(this.acceptsText, this.acceptsImages,
-      this.acceptsVideos, this.onShare, this.mediaProgressCallback);
-
-  bool acceptsShare(SharePlugin.Share share) {
-    return ((share.text == null || acceptsText) &&
-        (share.image == null || acceptsImages) &&
-        (share.video == null || acceptsVideos));
-  }
-}
-
-class ShareSubscription {
-  final VoidCallback _cancel;
-
-  ShareSubscription(this._cancel);
-
-  void cancel() {
-    _cancel();
-  }
-}
-
-class Share {
-  final String text;
-  final File image;
-  final File video;
-
-  const Share({this.text, this.image, this.video});
 }
