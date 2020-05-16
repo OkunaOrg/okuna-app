@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:Okuna/plugins/share/share.dart';
+import 'package:Okuna/plugins/share/share.dart' as SharePlugin;
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/media/media.dart';
 import 'package:Okuna/services/media/models/media_file.dart';
@@ -21,12 +21,11 @@ class ShareService {
   LocalizationService _localizationService;
 
   StreamSubscription _shareReceiveSubscription;
-  List<Future<dynamic> Function({String text, File image, File video})>
-      _subscribers;
+  List<ShareSubscriber> _subscribers;
 
-  Share _queuedShare;
+  SharePlugin.Share _queuedShare;
   bool _isProcessingShare = false;
-  Map<Share, ShareOperation> _activeShares;
+  Map<SharePlugin.Share, ShareOperation> _activeShares;
 
   BuildContext _context;
 
@@ -64,30 +63,32 @@ class ShareService {
 
   /// Subscribe to share events.
   ///
-  /// [onShare] should return [true] if it consumes the share immediately,
-  /// a [CancelableOperation] if some amount of work has to be done first (like
-  /// gif to video conversion in OBSavePostModal), or [false] if the subscriber
-  /// did _not_ consume the share (the share will be passed on to the next subscriber).
+  /// [onShare] should a [CancelableOperation] if some amount of work has to be
+  /// done first (like gif to video conversion in OBSavePostModal) to process
+  /// the share, otherwise [null] is expected.
   ///
   /// If a [CancelableOperation] is returned, it _must_ handle cancellation
   /// properly.
-  void subscribe(
-      Future<dynamic> Function({String text, File image, File video}) onShare) {
-    _subscribers.add(onShare);
+  ShareSubscription subscribe({
+    bool acceptsText = true,
+    bool acceptsImages = true,
+    bool acceptsVideos = true,
+    @required Future<dynamic> Function(Share) onShare,
+    void Function(MediaProcessingState state, {dynamic data}) onMediaProgress,
+  }) {
+    var subscriber = ShareSubscriber(
+        acceptsText, acceptsImages, acceptsVideos, onShare, onMediaProgress);
+    _subscribers.add(subscriber);
 
     if (_subscribers.length == 1) {
       _processQueuedShare();
     }
-  }
 
-  void unsubscribe(
-      Future<dynamic> Function({String text, File image, File video})
-          subscriber) {
-    _subscribers.remove(subscriber);
+    return ShareSubscription(() => _subscribers.remove(subscriber));
   }
 
   void _onReceiveShare(dynamic shared) async {
-    _queuedShare = Share.fromReceived(shared);
+    _queuedShare = SharePlugin.Share.fromReceived(shared);
 
     if (_subscribers.isNotEmpty && !_isProcessingShare) {
       _processQueuedShare();
@@ -115,10 +116,16 @@ class ShareService {
     }
   }
 
-  Future<void> _onShare(Share share) async {
+  Future<void> _onShare(SharePlugin.Share share) async {
     String text;
     File image;
     File video;
+
+    // TODO(komposten)
+    // 1) Find first sub who can handle the share.
+    // 2) Ask for a media progress listener.
+    // 3) Run normal operations down to the sub loop.
+    // 4) Use the sub directly instead of the sub loop.
 
     if (share.error != null) {
       _toastService.error(
@@ -142,7 +149,7 @@ class ShareService {
       video = File.fromUri(Uri.parse(share.video));
 
       var processedFile = await _mediaService.processMedia(
-        media: MediaFile(image, FileType.video),
+        media: MediaFile(video, FileType.video),
         context: _context,
       );
 
@@ -160,12 +167,14 @@ class ShareService {
       }
     }
 
+    var newShare = Share(text: text, image: image, video: video);
+
     for (var sub in _subscribers.reversed) {
       if (_activeShares[share].isCancelled) {
         break;
       }
 
-      var subResult = await sub(text: text, image: image, video: video);
+      var subResult = await sub.onShare(newShare);
 
       // Stop event propagation if we have a sub-result that is either true or
       // a CancelableOperation.
@@ -180,9 +189,9 @@ class ShareService {
 }
 
 class ShareOperation {
-  final Future<void> Function(Share) _shareFunction;
+  final Future<void> Function(SharePlugin.Share) _shareFunction;
 
-  Share share;
+  SharePlugin.Share share;
   CancelableOperation shareOperation;
   CancelableOperation subOperation;
   bool isCancelled = false;
@@ -191,7 +200,7 @@ class ShareOperation {
   bool _subComplete = false;
   FutureOr Function() _callback;
 
-  ShareOperation(this.share, Future<void> Function(Share) shareFunction)
+  ShareOperation(this.share, Future<void> Function(SharePlugin.Share) shareFunction)
       : _shareFunction = shareFunction;
 
   void start() {
@@ -232,4 +241,40 @@ class ShareOperation {
       _callback();
     }
   }
+}
+
+class ShareSubscriber {
+  final bool acceptsText;
+  final bool acceptsImages;
+  final bool acceptsVideos;
+  final Future<dynamic> Function(Share) onShare;
+  final void Function(MediaProcessingState, {dynamic data})
+      mediaProgressCallback;
+
+  const ShareSubscriber(this.acceptsText, this.acceptsImages,
+      this.acceptsVideos, this.onShare, this.mediaProgressCallback);
+
+  bool acceptsShare(SharePlugin.Share share) {
+    return ((share.text == null || acceptsText) &&
+        (share.image == null || acceptsImages) &&
+        (share.video == null || acceptsVideos));
+  }
+}
+
+class ShareSubscription {
+  final VoidCallback _cancel;
+
+  ShareSubscription(this._cancel);
+
+  void cancel() {
+    _cancel();
+  }
+}
+
+class Share {
+  final String text;
+  final File image;
+  final File video;
+
+  const Share({this.text, this.image, this.video});
 }

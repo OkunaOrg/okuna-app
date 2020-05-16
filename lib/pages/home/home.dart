@@ -331,7 +331,7 @@ class OBHomePageState extends State<OBHomePage>
       }
     }
 
-    _shareService.subscribe(_onShare);
+    _shareService.subscribe(onShare: _onShare);
   }
 
   Future _logout({unsubscribePushNotifications = false}) async {
@@ -433,9 +433,9 @@ class OBHomePageState extends State<OBHomePage>
     //_navigateToTab(OBHomePageTabs.notifications);
   }
 
-  Future<bool> _onShare({String text, File image, File video}) async {
+  Future<bool> _onShare(Share share) async {
     bool postCreated = await _timelinePageController.createPost(
-        text: text, image: image, video: video);
+        text: share.text, image: share.image, video: share.video);
 
     if (postCreated) {
       _timelinePageController.popUntilFirstRoute();

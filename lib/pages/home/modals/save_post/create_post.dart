@@ -70,6 +70,8 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
   DraftService _draftService;
   ShareService _shareService;
 
+  ShareSubscription _shareSubscription;
+
   TextEditingController _textController;
   FocusNode _focusNode;
   int _charactersCount;
@@ -161,7 +163,8 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
     _isPostTextContainingValidHashtags = _validationService
         .isPostTextContainingValidHashtags(_textController.text);
     if (!_isEditingPost) {
-      _shareService.subscribe(_onShare);
+      _shareSubscription = _shareService.subscribe(
+          onShare: _onShare, onMediaProgress: _onMediaProgress);
     }
   }
 
@@ -171,7 +174,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
     _textController.removeListener(_onPostTextChanged);
     _focusNode.removeListener(_onFocusNodeChanged);
     _saveOperation?.cancel();
-    _shareService.unsubscribe(_onShare);
+    _shareSubscription.cancel();
   }
 
   @override
@@ -558,22 +561,22 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
         type: _MediaType.image, preview: postImageWidget, image: postImage);
   }
 
-  Future<dynamic> _onShare({String text, File image, File video}) async {
+  Future<dynamic> _onShare(Share share) async {
     _removePostMedia();
 
-    if (text != null) {
+    if (share.text != null) {
       _textController.value = TextEditingValue(
-        text: text,
-        selection: TextSelection.collapsed(offset: text.length),
+        text: share.text,
+        selection: TextSelection.collapsed(offset: share.text.length),
       );
     }
 
-    if (image != null) {
-      _setPostImageFile(image);
+    if (share.image != null) {
+      _setPostImageFile(share.image);
     }
 
-    if (video != null) {
-      _setPostVideoFile(video);
+    if (share.video != null) {
+      _setPostVideoFile(share.video);
     }
 
     return true;
