@@ -176,7 +176,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
     _textController.removeListener(_onPostTextChanged);
     _focusNode.removeListener(_onFocusNodeChanged);
     _saveOperation?.cancel();
-    _shareSubscription.cancel();
+    _shareSubscription?.cancel();
   }
 
   @override
@@ -564,8 +564,6 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
   }
 
   Future<dynamic> _onShare(Share share) async {
-    _removePostMedia();
-
     if (share.text != null) {
       _textController.value = TextEditingValue(
         text: share.text,
@@ -573,11 +571,11 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
       );
     }
 
-    if (share.image != null) {
+    if (share.image != null && share.image.path != _mediaPreview.file?.path) {
       _setPostImageFile(share.image);
     }
 
-    if (share.video != null) {
+    if (share.video != null && share.video.path != _mediaPreview.file?.path) {
       _setPostVideoFile(share.video);
     }
 

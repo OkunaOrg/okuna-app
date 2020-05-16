@@ -66,12 +66,11 @@ class ShareService {
 
   /// Subscribe to share events.
   ///
-  /// [onShare] should a [CancelableOperation] if some amount of work has to be
-  /// done first (like gif to video conversion in OBSavePostModal) to process
-  /// the share, otherwise [null] is expected.
+  /// [onShare] should return a [CancelableOperation] if some amount of work has
+  /// to be done to process the share to process the share.
   ///
-  /// If a [CancelableOperation] is returned, it _must_ handle cancellation
-  /// properly.
+  /// If a [CancelableOperation] is returned, it is expected to handle
+  /// cancellation properly.
   ShareSubscription subscribe({
     bool acceptsText = true,
     bool acceptsImages = true,
@@ -124,11 +123,10 @@ class ShareService {
     File image;
     File video;
 
-    // TODO(komposten)
-    // 1) Find first sub who can handle the share.
-    // 2) Ask for a media progress listener.
-    // 3) Run normal operations down to the sub loop.
-    // 4) Use the sub directly instead of the sub loop.
+    //TODO(komposten): Cancelling the share op should cancel processMedia!
+
+    ShareSubscriber subscriber =
+        _subscribers.lastWhere((sub) => sub.acceptsShare(share));
 
     if (share.error != null) {
       _toastService.error(
@@ -144,6 +142,7 @@ class ShareService {
       var processedFile = await _mediaService.processMedia(
         media: MediaFile(image, FileType.image),
         context: _context,
+        onProgress: subscriber.mediaProgressCallback,
       );
       image = processedFile.file;
     }
@@ -154,6 +153,7 @@ class ShareService {
       var processedFile = await _mediaService.processMedia(
         media: MediaFile(video, FileType.video),
         context: _context,
+        onProgress: subscriber.mediaProgressCallback,
       );
 
       video = processedFile.file;
@@ -172,21 +172,13 @@ class ShareService {
 
     var newShare = Share(text: text, image: image, video: video);
 
-    for (var sub in _subscribers.reversed) {
-      if (_activeShares[share].isCancelled) {
-        break;
-      }
+    if (_activeShares[share].isCancelled) {
+      return;
+    }
 
-      var subResult = await sub.onShare(newShare);
-
-      // Stop event propagation if we have a sub-result that is either true or
-      // a CancelableOperation.
-      if (subResult is CancelableOperation) {
-        _activeShares[share].setSubOperation(subResult);
-        break;
-      } else if (subResult == true) {
-        break;
-      }
+    var subResult = await subscriber.onShare(newShare);
+    if (subResult is CancelableOperation) {
+      _activeShares[share].setSubOperation(subResult);
     }
   }
 }
