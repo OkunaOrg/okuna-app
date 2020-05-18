@@ -12,6 +12,7 @@ import 'package:Okuna/services/devices_api.dart';
 import 'package:Okuna/services/dialog.dart';
 import 'package:Okuna/services/documents.dart';
 import 'package:Okuna/services/draft.dart';
+import 'package:Okuna/services/event/event.dart';
 import 'package:Okuna/services/explore_timeline_preferences.dart';
 import 'package:Okuna/services/hashtags_api.dart';
 import 'package:Okuna/services/intercom.dart';
@@ -121,6 +122,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   ConnectivityService connectivityService = ConnectivityService();
   LinkPreviewService linkPreviewService = LinkPreviewService();
   DraftService draftService = DraftService();
+  EventService eventService = EventService();
 
   SentryClient sentryClient;
 
