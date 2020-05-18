@@ -15,6 +15,7 @@ import 'package:Okuna/pages/home/modals/save_post/widgets/remaining_post_charact
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/draft.dart';
 import 'package:Okuna/services/event/event.dart';
+import 'package:Okuna/services/event/models/event.dart';
 import 'package:Okuna/services/event/models/subscription.dart';
 import 'package:Okuna/services/httpie.dart';
 import 'package:Okuna/services/link_preview.dart';
@@ -171,6 +172,8 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
       _shareSubscription = _eventService.subscribe(_onShareEvent);
       _mediaSubscription = _eventService.subscribe(_onMediaEvent);
     }
+
+    _eventService.post(SavePostModalEvent(PostModalState.opened));
   }
 
   @override
@@ -242,6 +245,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
         onTap: () {
           _removePostMedia();
           Navigator.pop(context);
+          _eventService.post(SavePostModalEvent(PostModalState.cancelled));
         },
       ),
       title: _isEditingPost
@@ -319,6 +323,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
         _mediaService.clearThumbnailForFile(_mediaPreview.file);
       Navigator.pop(context, createPostData);
       _clearDraft();
+      _eventService.post(SavePostModalEvent(PostModalState.published));
     }
   }
 
@@ -596,6 +601,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
       _mediaService.clearThumbnailForFile(_mediaPreview.file);
     Navigator.pop(context, newPostData);
     _clearDraft();
+    _eventService.post(SavePostModalEvent(PostModalState.published));
   }
 
   void _savePost() async {
@@ -607,6 +613,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
 
       editedPost = await _saveOperation.value;
       Navigator.pop(context, editedPost);
+      _eventService.post(SavePostModalEvent(PostModalState.published));
     } catch (error) {
       _onError(error);
     } finally {
@@ -756,3 +763,11 @@ class _MediaPreview {
 }
 
 enum _MediaType { image, video, link, pending }
+
+class SavePostModalEvent extends Event {
+  final PostModalState state;
+
+  SavePostModalEvent(this.state);
+}
+
+enum PostModalState { opened, cancelled, published }

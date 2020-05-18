@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:Okuna/models/push_notification.dart';
 import 'package:Okuna/models/user.dart';
 import 'package:Okuna/pages/home/lib/poppable_page_controller.dart';
+import 'package:Okuna/pages/home/modals/save_post/create_post.dart';
 import 'package:Okuna/pages/home/pages/communities/communities.dart';
 import 'package:Okuna/pages/home/pages/menu/menu.dart';
 import 'package:Okuna/pages/home/pages/notifications/notifications.dart';
@@ -14,6 +15,7 @@ import 'package:Okuna/pages/home/widgets/own_profile_active_icon.dart';
 import 'package:Okuna/pages/home/widgets/tab-scaffold.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/event/event.dart';
+import 'package:Okuna/services/event/models/subscription.dart';
 import 'package:Okuna/services/httpie.dart';
 import 'package:Okuna/services/intercom.dart';
 import 'package:Okuna/services/modal_service.dart';
@@ -63,6 +65,9 @@ class OBHomePageState extends State<OBHomePage>
   OBMainMenuPageController _mainMenuPageController;
   OBCommunitiesPageController _communitiesPageController;
   OBNotificationsPageController _notificationsPageController;
+
+  Completer _postModalCompleter;
+  EventSubscription _postModalEventSubscription;
 
   int _loggedInUserUnreadNotifications;
   String _loggedInUserAvatarUrl;
@@ -432,14 +437,33 @@ class OBHomePageState extends State<OBHomePage>
 
   Future<void> _onShareEvent(ShareEvent event) async {
     if (event.status == ShareStatus.received) {
-      bool postCreated = await _timelinePageController.createPost();
-
-      if (postCreated) {
-        _timelinePageController.popUntilFirstRoute();
-        _navigateToTab(OBHomePageTabs.timeline);
-      }
-
       event.consume();
+
+      _postModalCompleter = new Completer();
+
+      // Subscribe to post modal events so we know when the post modal is opened
+      // and closed.
+      _postModalEventSubscription = _eventService.subscribe(_onPostModalEvent);
+      _timelinePageController.createPost();
+
+      // Wait for the post modal to open before returning to ensure it has
+      // registered its event listeners before the share is processed further.
+      await _postModalCompleter.future;
+      _postModalCompleter = null;
+    }
+  }
+
+  Future<void> _onPostModalEvent(SavePostModalEvent event) async {
+    if (event.state == PostModalState.opened) {
+      if (!_postModalCompleter.isCompleted) {
+        _postModalCompleter?.complete();
+      }
+    } else if (event.state == PostModalState.published) {
+      _timelinePageController.popUntilFirstRoute();
+      _navigateToTab(OBHomePageTabs.timeline);
+      _postModalEventSubscription.cancel();
+    } else if (event.state == PostModalState.cancelled) {
+      _postModalEventSubscription.cancel();
     }
   }
 
