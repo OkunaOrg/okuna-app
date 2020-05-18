@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:Okuna/plugins/image_converter/image_converter.dart';
 import 'package:Okuna/services/bottom_sheet.dart';
+import 'package:Okuna/services/event/event.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/media/models/media_file.dart';
 import 'package:Okuna/services/permissions.dart';
@@ -22,6 +23,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
+import 'models/media_event.dart';
+
 export 'package:image_picker/image_picker.dart';
 
 class MediaService {
@@ -40,6 +43,7 @@ class MediaService {
   ToastService _toastService;
   PermissionsService _permissionsService;
   UtilsService _utilsService;
+  EventService _eventService;
 
   void setLocalizationService(LocalizationService localizationService) {
     _localizationService = localizationService;
@@ -65,6 +69,10 @@ class MediaService {
     _permissionsService = permissionsService;
   }
 
+  void setEventService(EventService eventService) {
+    _eventService = eventService;
+  }
+
   /// Opens a bottom sheet with the options to pick either an image or a video.
   /// The media is picked from the gallery or camera (determined by [source]).
   ///
@@ -75,11 +83,10 @@ class MediaService {
   Future<MediaFile> pickMedia(
       {@required BuildContext context,
       @required ImageSource source,
-      bool flattenGifs,
-      void Function(MediaProcessingState, {dynamic data}) onProgress}) async {
+      bool flattenGifs}) async {
     MediaFile media;
 
-    onProgress?.call(MediaProcessingState.picking);
+    _eventService.post(MediaProcessEvent(MediaProcessingState.picking));
     if (source == ImageSource.gallery) {
       bool permissionGranted =
           await _permissionsService.requestStoragePermissions(context: context);
@@ -94,12 +101,12 @@ class MediaService {
     } else if (source == ImageSource.camera) {
       media = await _bottomSheetService.showCameraPicker(context: context);
     } else {
-      onProgress?.call(MediaProcessingState.error,
-          data: 'Unsupported media source: $source');
+      _eventService.post(MediaProcessEvent(MediaProcessingState.error,
+          data: 'Unsupported media source: $source'));
     }
 
     if (media == null) {
-      onProgress?.call(MediaProcessingState.cancelled);
+      _eventService.post(MediaProcessEvent(MediaProcessingState.cancelled));
       return null;
     }
 
@@ -107,7 +114,6 @@ class MediaService {
       media: media,
       context: context,
       flattenGifs: flattenGifs,
-      onProgress: onProgress,
     );
 
     return media;
@@ -120,15 +126,14 @@ class MediaService {
   /// be flattened.
   Future<File> pickImage(
       {@required OBImageType imageType,
-      @required BuildContext context,
-      void Function(MediaProcessingState, {dynamic data}) onProgress}) async {
-    onProgress?.call(MediaProcessingState.picking);
+      @required BuildContext context}) async {
+    _eventService.post(MediaProcessEvent(MediaProcessingState.picking));
 
     File pickedImage =
         await _bottomSheetService.showImagePicker(context: context);
 
     if (pickedImage == null) {
-      onProgress?.call(MediaProcessingState.cancelled);
+      _eventService.post(MediaProcessEvent(MediaProcessingState.cancelled));
       return null;
     }
 
@@ -137,7 +142,6 @@ class MediaService {
       context: context,
       flattenGifs: true,
       imageType: imageType,
-      onProgress: onProgress,
     );
 
     return media.file;
@@ -148,22 +152,20 @@ class MediaService {
   ///
   /// The returned file should always point to a video.
   Future<File> pickVideo(
-      {@required BuildContext context,
-      void Function(MediaProcessingState, {dynamic data}) onProgress}) async {
-    onProgress?.call(MediaProcessingState.picking);
+      {@required BuildContext context}) async {
+    _eventService.post(MediaProcessEvent(MediaProcessingState.picking));
 
     File pickedVideo =
         await _bottomSheetService.showVideoPicker(context: context);
 
     if (pickedVideo == null) {
-      onProgress?.call(MediaProcessingState.cancelled);
+      _eventService.post(MediaProcessEvent(MediaProcessingState.cancelled));
       return null;
     }
 
     var media = await processMedia(
       media: MediaFile(pickedVideo, FileType.video),
       context: context,
-      onProgress: onProgress,
     );
 
     return media.file;
@@ -173,12 +175,11 @@ class MediaService {
       {@required MediaFile media,
       @required BuildContext context,
       bool flattenGifs = false,
-      OBImageType imageType = OBImageType.post,
-      void Function(MediaProcessingState, {dynamic data}) onProgress}) async {
+      OBImageType imageType = OBImageType.post}) async {
     var mediaType = media.type;
     MediaFile result;
 
-    onProgress?.call(MediaProcessingState.processing);
+    _eventService.post(MediaProcessEvent(MediaProcessingState.processing));
 
     // Copy the media to a temporary location.
     final tempPath = await _getTempPath();
@@ -206,11 +207,11 @@ class MediaService {
     } else if (mediaType == FileType.video) {
       result = await _processVideo(copiedMedia);
     } else {
-      onProgress?.call(MediaProcessingState.error,
-          data: 'Unsupported media type: ${media.type}');
+      _eventService.post(MediaProcessEvent(MediaProcessingState.error,
+          data: 'Unsupported media type: ${media.type}'));
     }
 
-    onProgress?.call(MediaProcessingState.finished, data: result);
+    _eventService.post(MediaProcessEvent(MediaProcessingState.finished, data: result));
     return result;
   }
 
@@ -457,5 +458,3 @@ class FileTooLargeException implements Exception {
 }
 
 enum OBImageType { avatar, cover, post }
-
-enum MediaProcessingState { picking, processing, finished, cancelled, error }

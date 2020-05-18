@@ -3,7 +3,7 @@ import 'models/listener.dart';
 import 'models/subscription.dart';
 
 class EventService {
-  Map<Type, List<EventListener>> subscribers;
+  Map<Type, List<dynamic>> subscribers = {};
 
   /// Register a subscriber for a specific event type.
   /// By default the subscriber will be added to the front of the subscriber list
@@ -11,7 +11,7 @@ class EventService {
   /// added to the end of the list instead.
   EventSubscription subscribe<T extends Event>(EventListener<T> listener,
       {bool append = false}) {
-    var subList = subscribers.putIfAbsent(T, () => <EventListener>[]);
+    var subList = subscribers.putIfAbsent(T, () => <EventListener<T>>[]);
 
     if (!append) {
       subList.insert(0, listener);
@@ -19,7 +19,17 @@ class EventService {
       subList.add(listener);
     }
 
-    return EventSubscription(() => subList.remove(listener));
+    post(SubscriptionEvent(T, subList.length, subList.length - 1));
+
+    return EventSubscription(() => _unsubscribe(T, listener));
+  }
+
+  void _unsubscribe(Type eventType, dynamic listener) {
+    var subList = subscribers[eventType];
+
+    if (subList != null && subList.remove(listener)) {
+      post(SubscriptionEvent(eventType, subList.length, subList.length + 1));
+    }
   }
 
   Future<void> post(Event event) async {
@@ -32,4 +42,19 @@ class EventService {
       }
     }
   }
+
+  /// Returns the number of subscribers for the event type [T].
+  int subscriberCount(Type eventType) {
+    return subscribers[eventType]?.length ?? 0;
+  }
+}
+
+/// An event which is send out every time a subscriber is added or removed.
+class SubscriptionEvent extends Event {
+  final Type eventType;
+  final int newSubscriberCount;
+  final int oldSubscriberCount;
+
+  SubscriptionEvent(
+      this.eventType, this.newSubscriberCount, this.oldSubscriberCount);
 }

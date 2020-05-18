@@ -1,25 +1,24 @@
 import 'dart:async';
 
 import 'package:Okuna/models/push_notification.dart';
-import 'package:Okuna/pages/home/lib/poppable_page_controller.dart';
-import 'package:Okuna/services/intercom.dart';
-import 'package:Okuna/services/media/media.dart';
-import 'package:Okuna/services/push_notifications/push_notifications.dart';
 import 'package:Okuna/models/user.dart';
+import 'package:Okuna/pages/home/lib/poppable_page_controller.dart';
 import 'package:Okuna/pages/home/pages/communities/communities.dart';
+import 'package:Okuna/pages/home/pages/menu/menu.dart';
 import 'package:Okuna/pages/home/pages/notifications/notifications.dart';
 import 'package:Okuna/pages/home/pages/own_profile.dart';
-import 'package:Okuna/pages/home/pages/timeline/timeline.dart';
-import 'package:Okuna/pages/home/pages/menu/menu.dart';
 import 'package:Okuna/pages/home/pages/search/search.dart';
+import 'package:Okuna/pages/home/pages/timeline/timeline.dart';
 import 'package:Okuna/pages/home/widgets/bottom-tab-bar.dart';
 import 'package:Okuna/pages/home/widgets/own_profile_active_icon.dart';
 import 'package:Okuna/pages/home/widgets/tab-scaffold.dart';
 import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/event/event.dart';
 import 'package:Okuna/services/httpie.dart';
+import 'package:Okuna/services/intercom.dart';
 import 'package:Okuna/services/modal_service.dart';
-import 'package:Okuna/services/share/models/share.dart';
-import 'package:Okuna/services/share/share.dart';
+import 'package:Okuna/services/push_notifications/push_notifications.dart';
+import 'package:Okuna/services/share/models/share_event.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/user.dart';
 import 'package:Okuna/services/user_preferences.dart';
@@ -47,8 +46,7 @@ class OBHomePageState extends State<OBHomePage>
   IntercomService _intercomService;
   ModalService _modalService;
   UserPreferencesService _userPreferencesService;
-  ShareService _shareService;
-  MediaService _mediaService;
+  EventService _eventService;
 
   int _currentIndex;
   int _lastIndex;
@@ -112,8 +110,7 @@ class OBHomePageState extends State<OBHomePage>
       _toastService = openbookProvider.toastService;
       _modalService = openbookProvider.modalService;
       _userPreferencesService = openbookProvider.userPreferencesService;
-      _shareService = openbookProvider.shareService;
-      _mediaService = openbookProvider.mediaService;
+      _eventService = openbookProvider.eventService;
       _bootstrap();
       _needsBootstrap = false;
     }
@@ -331,7 +328,7 @@ class OBHomePageState extends State<OBHomePage>
       }
     }
 
-    _shareService.subscribe(onShare: _onShare);
+    _eventService.subscribe(_onShareEvent);
   }
 
   Future _logout({unsubscribePushNotifications = false}) async {
@@ -433,16 +430,17 @@ class OBHomePageState extends State<OBHomePage>
     //_navigateToTab(OBHomePageTabs.notifications);
   }
 
-  Future<bool> _onShare(Share share) async {
-    bool postCreated = await _timelinePageController.createPost(
-        text: share.text, image: share.image, video: share.video);
+  Future<void> _onShareEvent(ShareEvent event) async {
+    if (event.status == ShareStatus.received) {
+      bool postCreated = await _timelinePageController.createPost();
 
-    if (postCreated) {
-      _timelinePageController.popUntilFirstRoute();
-      _navigateToTab(OBHomePageTabs.timeline);
+      if (postCreated) {
+        _timelinePageController.popUntilFirstRoute();
+        _navigateToTab(OBHomePageTabs.timeline);
+      }
+
+      event.consume();
     }
-
-    return true;
   }
 
   void _navigateToTab(OBHomePageTabs tab) {

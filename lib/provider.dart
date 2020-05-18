@@ -197,6 +197,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     mediaService.setBottomSheetService(bottomSheetService);
     mediaService.setPermissionsService(permissionService);
     mediaService.setUtilsService(utilsService);
+    mediaService.setEventService(eventService);
     documentsService.setHttpService(httpService);
     moderationApiService.setStringTemplateService(stringTemplateService);
     moderationApiService.setHttpieService(httpService);
@@ -206,6 +207,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     shareService.setMediaService(mediaService);
     shareService.setToastService(toastService);
     shareService.setValidationService(validationService);
+    shareService.setEventService(eventService);
     permissionService.setToastService(toastService);
     hashtagsApiService.setHttpieService(httpService);
     hashtagsApiService.setStringTemplateService(stringTemplateService);

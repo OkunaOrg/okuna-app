@@ -14,15 +14,17 @@ import 'package:Okuna/pages/home/modals/save_post/widgets/post_video_previewer.d
 import 'package:Okuna/pages/home/modals/save_post/widgets/remaining_post_characters.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/draft.dart';
+import 'package:Okuna/services/event/event.dart';
+import 'package:Okuna/services/event/models/subscription.dart';
 import 'package:Okuna/services/httpie.dart';
 import 'package:Okuna/services/link_preview.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/media/media.dart';
+import 'package:Okuna/services/media/models/media_event.dart';
 import 'package:Okuna/services/media/models/media_file.dart';
 import 'package:Okuna/services/navigation_service.dart';
 import 'package:Okuna/services/share/models/share.dart';
-import 'package:Okuna/services/share/models/subscription.dart';
-import 'package:Okuna/services/share/share.dart';
+import 'package:Okuna/services/share/models/share_event.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/user.dart';
 import 'package:Okuna/services/validation.dart';
@@ -70,9 +72,10 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
   LocalizationService _localizationService;
   LinkPreviewService _linkPreviewService;
   DraftService _draftService;
-  ShareService _shareService;
+  EventService _eventService;
 
-  ShareSubscription _shareSubscription;
+  EventSubscription _shareSubscription;
+  EventSubscription _mediaSubscription;
 
   TextEditingController _textController;
   FocusNode _focusNode;
@@ -165,8 +168,8 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
     _isPostTextContainingValidHashtags = _validationService
         .isPostTextContainingValidHashtags(_textController.text);
     if (!_isEditingPost) {
-      _shareSubscription = _shareService.subscribe(
-          onShare: _onShare, onMediaProgress: _onMediaProgress);
+      _shareSubscription = _eventService.subscribe(_onShareEvent);
+      _mediaSubscription = _eventService.subscribe(_onMediaEvent);
     }
   }
 
@@ -177,6 +180,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
     _focusNode.removeListener(_onFocusNodeChanged);
     _saveOperation?.cancel();
     _shareSubscription?.cancel();
+    _mediaSubscription?.cancel();
   }
 
   @override
@@ -191,7 +195,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
       _toastService = openbookProvider.toastService;
       _userService = openbookProvider.userService;
       _draftService = openbookProvider.draftService;
-      _shareService = openbookProvider.shareService;
+      _eventService = openbookProvider.eventService;
       bootstrap();
       _needsBootstrap = false;
     }
@@ -399,8 +403,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
             await _mediaService.pickMedia(
                 context: context,
                 source: ImageSource.gallery,
-                flattenGifs: false,
-                onProgress: _onMediaProgress);
+                flattenGifs: false);
           } catch (error) {
             _onError(error);
           }
@@ -415,8 +418,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
           try {
             await _mediaService.pickMedia(
                 context: context,
-                source: ImageSource.camera,
-                onProgress: _onMediaProgress);
+                source: ImageSource.camera);
           } catch (error) {
             _onError(error);
           }
@@ -441,12 +443,12 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
     _hasFocus = _focusNode.hasFocus;
   }
 
-  void _onMediaProgress(MediaProcessingState state, {dynamic data}) {
+  Future<void> _onMediaEvent(MediaProcessEvent event) async {
     if (!mounted) {
       return;
     }
 
-    if (state == MediaProcessingState.processing) {
+    if (event.state == MediaProcessingState.processing) {
       /* TODO(komposten): Improve this part
           It would be preferable if the previous media was restored
           if this new media was cancelled before finishing processing.
@@ -459,31 +461,31 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
 
       _mediaPreview = _MediaPreview(
           type: _MediaType.pending, preview: postMediaWidget, remover: remover);
-    } else if (state == MediaProcessingState.cancelled) {
+    } else if (event.state == MediaProcessingState.cancelled) {
       /* TODO(komposten): Ideally, calling pickMedia should create an operation
           which we can then cancel to end up here. That way starting a new media
           process can cause the previous one to cancel and this elif to remove data
           associated with it.
        */
-    } else if (state == MediaProcessingState.error) {
-      _toastService.error(message: data, context: context);
-    } else if (state == MediaProcessingState.finished) {
-      var pickedMedia = data as MediaFile;
+      _removePostMedia();
+      _isProcessingMedia = false;
+    } else if (event.state == MediaProcessingState.error) {
+      _toastService.error(message: event.data, context: context);
+      _isProcessingMedia = false;
+    } else if (event.state == MediaProcessingState.finished) {
+      var pickedMedia = event.data as MediaFile;
 
       if (pickedMedia.type == FileType.image) {
-        _isProcessingMedia = false;
-
         _setPostImageFile(pickedMedia.file);
       } else if (pickedMedia.type == FileType.video) {
-        _isProcessingMedia = false;
-
         _setPostVideoFile(pickedMedia.file);
       } else {
-        _isProcessingMedia = false;
         _removePostMedia();
         _toastService.error(
             message: 'An unsupported media type was picked!', context: context);
       }
+
+      _isProcessingMedia = false;
     }
   }
 
@@ -563,23 +565,29 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
         type: _MediaType.image, preview: postImageWidget, image: postImage);
   }
 
-  Future<dynamic> _onShare(Share share) async {
-    if (share.text != null) {
-      _textController.value = TextEditingValue(
-        text: share.text,
-        selection: TextSelection.collapsed(offset: share.text.length),
-      );
-    }
+  Future<void> _onShareEvent(ShareEvent event) async {
+    if (event.status == ShareStatus.received) {
+      event.consume();
+    } else if (event.status == ShareStatus.processed) {
+      Share share = event.data;
 
-    if (share.image != null && share.image.path != _mediaPreview.file?.path) {
-      _setPostImageFile(share.image);
-    }
+      if (share.text != null) {
+        _textController.value = TextEditingValue(
+          text: share.text,
+          selection: TextSelection.collapsed(offset: share.text.length),
+        );
+      }
 
-    if (share.video != null && share.video.path != _mediaPreview.file?.path) {
-      _setPostVideoFile(share.video);
-    }
+      if (share.image != null && share.image.path != _mediaPreview.file?.path) {
+        _setPostImageFile(share.image);
+      }
 
-    return true;
+      if (share.video != null && share.video.path != _mediaPreview.file?.path) {
+        _setPostVideoFile(share.video);
+      }
+
+      event.consume();
+    }
   }
 
   Future<void> _createCommunityPost() async {

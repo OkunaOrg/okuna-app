@@ -2,12 +2,12 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:Okuna/plugins/share/share.dart' as SharePlugin;
+import 'package:Okuna/services/event/event.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/media/media.dart';
 import 'package:Okuna/services/media/models/media_file.dart';
 import 'package:Okuna/services/share/models/share.dart';
-import 'package:Okuna/services/share/models/subscriber.dart';
-import 'package:Okuna/services/share/models/subscription.dart';
+import 'package:Okuna/services/share/models/share_event.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/validation.dart';
 import 'package:async/async.dart';
@@ -22,9 +22,9 @@ class ShareService {
   MediaService _mediaService;
   ValidationService _validationService;
   LocalizationService _localizationService;
+  EventService _eventService;
 
   StreamSubscription _shareReceiveSubscription;
-  List<ShareSubscriber> _subscribers;
 
   SharePlugin.Share _queuedShare;
   bool _isProcessingShare = false;
@@ -33,7 +33,6 @@ class ShareService {
   BuildContext _context;
 
   ShareService() {
-    _subscribers = [];
     _activeShares = {};
 
     if (Platform.isAndroid) {
@@ -60,39 +59,25 @@ class ShareService {
     _mediaService = mediaService;
   }
 
+  void setEventService(EventService eventService) {
+    _eventService = eventService;
+    _eventService.subscribe(_onSubscriberEvent);
+  }
+
   void setContext(BuildContext context) {
     _context = context;
   }
 
-  /// Subscribe to share events.
-  ///
-  /// [onShare] should return a [CancelableOperation] if some amount of work has
-  /// to be done to process the share to process the share.
-  ///
-  /// If a [CancelableOperation] is returned, it is expected to handle
-  /// cancellation properly.
-  ShareSubscription subscribe({
-    bool acceptsText = true,
-    bool acceptsImages = true,
-    bool acceptsVideos = true,
-    @required Future<dynamic> Function(Share) onShare,
-    void Function(MediaProcessingState state, {dynamic data}) onMediaProgress,
-  }) {
-    var subscriber = ShareSubscriber(
-        acceptsText, acceptsImages, acceptsVideos, onShare, onMediaProgress);
-    _subscribers.add(subscriber);
-
-    if (_subscribers.length == 1) {
+  Future<void> _onSubscriberEvent(SubscriptionEvent event) async {
+    if (event.oldSubscriberCount == 0 && event.newSubscriberCount > 0) {
       _processQueuedShare();
     }
-
-    return ShareSubscription(() => _subscribers.remove(subscriber));
   }
 
   void _onReceiveShare(dynamic shared) async {
     _queuedShare = SharePlugin.Share.fromReceived(shared);
 
-    if (_subscribers.isNotEmpty && !_isProcessingShare) {
+    if (_eventService.subscriberCount(SubscriptionEvent) > 0 && !_isProcessingShare) {
       _processQueuedShare();
     }
   }
@@ -123,11 +108,13 @@ class ShareService {
     File image;
     File video;
 
+    await _eventService.post(ShareEvent(ShareStatus.received));
+
     //TODO(komposten): Cancelling the share op should cancel processMedia!
 
-    ShareSubscriber subscriber =
-        _subscribers.lastWhere((sub) => sub.acceptsShare(share));
-
+    /*TODO(komposten): Send a cancel or failure event if an exception is thrown
+       at any point (i.e. share.error != null, image/video too big, or text too long.
+     */
     if (share.error != null) {
       _toastService.error(
           message: _localizationService.trans(share.error), context: _context);
@@ -142,7 +129,6 @@ class ShareService {
       var processedFile = await _mediaService.processMedia(
         media: MediaFile(image, FileType.image),
         context: _context,
-        onProgress: subscriber.mediaProgressCallback,
       );
       image = processedFile.file;
     }
@@ -153,7 +139,6 @@ class ShareService {
       var processedFile = await _mediaService.processMedia(
         media: MediaFile(video, FileType.video),
         context: _context,
-        onProgress: subscriber.mediaProgressCallback,
       );
 
       video = processedFile.file;
@@ -176,10 +161,7 @@ class ShareService {
       return;
     }
 
-    var subResult = await subscriber.onShare(newShare);
-    if (subResult is CancelableOperation) {
-      _activeShares[share].setSubOperation(subResult);
-    }
+    _eventService.post(ShareEvent(ShareStatus.processed, data: newShare));
   }
 }
 
@@ -188,11 +170,9 @@ class ShareOperation {
 
   SharePlugin.Share share;
   CancelableOperation shareOperation;
-  CancelableOperation subOperation;
   bool isCancelled = false;
 
   bool _shareComplete = false;
-  bool _subComplete = false;
   FutureOr Function() _callback;
 
   ShareOperation(this.share, Future<void> Function(SharePlugin.Share) shareFunction)
@@ -206,24 +186,9 @@ class ShareOperation {
     });
   }
 
-  void setSubOperation(CancelableOperation operation) {
-    subOperation = operation;
-    subOperation.then((_) {
-      _subComplete = true;
-      _complete();
-    });
-
-    shareOperation.then((_) {
-      if (shareOperation.isCanceled) {
-        subOperation.cancel();
-      }
-    });
-  }
-
   void cancel() {
     isCancelled = true;
     shareOperation?.cancel();
-    subOperation?.cancel();
   }
 
   void then(FutureOr Function() callback) {
@@ -231,8 +196,7 @@ class ShareOperation {
   }
 
   void _complete() {
-    if ((subOperation == null || _subComplete) &&
-        (shareOperation == null || _shareComplete)) {
+    if (shareOperation == null || _shareComplete) {
       _callback();
     }
   }
