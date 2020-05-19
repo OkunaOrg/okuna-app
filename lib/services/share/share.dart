@@ -86,15 +86,15 @@ class ShareService {
     if (_queuedShare != null) {
       // Schedule cancellation of existing share operations. We don't cancel
       // immediately since that can cause concurrent modification of _activeShares.
-      _activeShares
-          .forEach((key, value) => Future.delayed(Duration(), value.cancel));
+      _activeShares.forEach((key, value) async => await value.cancel());
 
       var share = _queuedShare;
       _queuedShare = null;
 
       _isProcessingShare = true;
       _activeShares[share] = ShareOperation(share, _onShare);
-      _activeShares[share].then(() => _activeShares.remove(share));
+      _activeShares[share].then(
+          () => Future.delayed(Duration(), () => _activeShares.remove(share)));
       _activeShares[share].start();
       _isProcessingShare = false;
 
@@ -110,8 +110,6 @@ class ShareService {
 
     await _eventService.post(ShareEvent(ShareStatus.received));
 
-    //TODO(komposten): Cancelling the share op should cancel processMedia!
-
     /*TODO(komposten): Send a cancel or failure event if an exception is thrown
        at any point (i.e. share.error != null, image/video too big, or text too long.
      */
@@ -126,22 +124,25 @@ class ShareService {
 
     if (share.image != null) {
       image = File.fromUri(Uri.parse(share.image));
-      var processedFile = await _mediaService.processMedia(
+      var imageProcessOp = _mediaService.processMedia(
         media: MediaFile(image, FileType.image),
         context: _context,
       );
-      image = processedFile.file;
+
+      imageProcessOp.then((media) => image = media.file);
+      _activeShares[share].addMediaOperation(imageProcessOp);
     }
 
     if (share.video != null) {
       video = File.fromUri(Uri.parse(share.video));
 
-      var processedFile = await _mediaService.processMedia(
+      var videoProcessOp = _mediaService.processMedia(
         media: MediaFile(video, FileType.video),
         context: _context,
       );
 
-      video = processedFile.file;
+      videoProcessOp.then((media) => video = media.file);
+      _activeShares[share].addMediaOperation(videoProcessOp);
     }
 
     if (share.text != null) {
@@ -154,6 +155,8 @@ class ShareService {
         return;
       }
     }
+
+    await _activeShares[share].getMediaOperationFuture();
 
     var newShare = Share(text: text, image: image, video: video);
 
@@ -170,6 +173,8 @@ class ShareOperation {
 
   SharePlugin.Share share;
   CancelableOperation shareOperation;
+  List<CancelableOperation> _mediaOperations = [];
+  List<Future> _mediaOperationFutures = [];
   bool isCancelled = false;
 
   bool _shareComplete = false;
@@ -186,13 +191,33 @@ class ShareOperation {
     });
   }
 
-  void cancel() {
+  Future<void> cancel() async {
     isCancelled = true;
-    shareOperation?.cancel();
+    await shareOperation?.cancel();
+    _mediaOperations.forEach((operation) async => await operation.cancel());
   }
 
   void then(FutureOr Function() callback) {
     _callback = callback;
+  }
+
+  void addMediaOperation(CancelableOperation operation) {
+    _mediaOperations.add(operation);
+
+    // Create a completer for this operation and add its future
+    // to the media operation future list.
+    var completer = Completer();
+    _mediaOperationFutures.add(completer.future);
+
+    if (operation.isCompleted || operation.isCanceled) {
+      completer.complete();
+    } else {
+      operation.then((_) => completer.complete());
+    }
+  }
+
+  Future<void> getMediaOperationFuture() {
+    return Future.wait(_mediaOperationFutures);
   }
 
   void _complete() {

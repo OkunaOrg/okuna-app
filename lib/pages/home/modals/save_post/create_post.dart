@@ -460,18 +460,12 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
        */
       _removePostMedia();
       _isProcessingMedia = true;
-      // TODO(komposten): onRemove should cancel the whole operation.
-      var postMediaWidget = OBPostMediaPreview(onRemove: _removePostMedia);
+      var postMediaWidget = OBPostMediaPreview(onRemove: event.operation.cancel);
       var remover = _addPostItemWidget(postMediaWidget);
 
       _mediaPreview = _MediaPreview(
           type: _MediaType.pending, preview: postMediaWidget, remover: remover);
     } else if (event.state == MediaProcessingState.cancelled) {
-      /* TODO(komposten): Ideally, calling pickMedia should create an operation
-          which we can then cancel to end up here. That way starting a new media
-          process can cause the previous one to cancel and this elif to remove data
-          associated with it.
-       */
       _removePostMedia();
       _isProcessingMedia = false;
     } else if (event.state == MediaProcessingState.error) {

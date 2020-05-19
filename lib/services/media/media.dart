@@ -80,7 +80,7 @@ class MediaService {
   ///
   /// The returned file may be either an image or a video. Use [MediaFile.type]
   /// to determine which one it is.
-  Future<MediaFile> pickMedia(
+  Future<CancelableOperation<MediaFile>> pickMedia(
       {@required BuildContext context,
       @required ImageSource source,
       bool flattenGifs}) async {
@@ -103,6 +103,7 @@ class MediaService {
     } else {
       _eventService.post(MediaProcessEvent(MediaProcessingState.error,
           data: 'Unsupported media source: $source'));
+      return null;
     }
 
     if (media == null) {
@@ -110,13 +111,13 @@ class MediaService {
       return null;
     }
 
-    media = await processMedia(
+    var processOp = processMedia(
       media: media,
       context: context,
       flattenGifs: flattenGifs,
     );
 
-    return media;
+    return processOp;
   }
 
   /// Opens a bottom sheet with the option to pick an image from gallery or snap
@@ -137,14 +138,17 @@ class MediaService {
       return null;
     }
 
-    var media = await processMedia(
+    var media = processMedia(
       media: MediaFile(pickedImage, FileType.image),
       context: context,
       flattenGifs: true,
       imageType: imageType,
     );
 
-    return media.file;
+    // Awaiting CancelableOperation.value should be safe here since the operation
+    // is never cancelled (processMedia does not cancel it, and the outside never
+    // sees it).
+    return (await media.value).file;
   }
 
   /// Opens a bottom sheet with the option to pick a video from gallery or take
@@ -163,56 +167,88 @@ class MediaService {
       return null;
     }
 
-    var media = await processMedia(
+    var media = processMedia(
       media: MediaFile(pickedVideo, FileType.video),
       context: context,
     );
 
-    return media.file;
+    // Awaiting CancelableOperation.value should be safe here since the operation
+    // is never cancelled (processMedia does not cancel it, and the outside never
+    // sees it).
+    return (await media.value).file;
   }
 
-  Future<MediaFile> processMedia(
+  CancelableOperation<MediaFile> processMedia(
       {@required MediaFile media,
       @required BuildContext context,
       bool flattenGifs = false,
-      OBImageType imageType = OBImageType.post}) async {
-    var mediaType = media.type;
-    MediaFile result;
+      OBImageType imageType = OBImageType.post}) {
+    CancelableOperation gifOperation;
 
-    _eventService.post(MediaProcessEvent(MediaProcessingState.processing));
+    // Create a cancelable completer to use for our processing operation.
+    var completer =
+        CancelableCompleter<MediaFile>(onCancel: () async {
+          gifOperation?.cancel();
+          await _eventService.post(MediaProcessEvent(MediaProcessingState.cancelled));
+        });
 
-    // Copy the media to a temporary location.
-    final tempPath = await _getTempPath();
-    final String mediaUuid = _uuid.v4();
-    String mediaExtension = basename(media.file.path);
-    var copiedFile = media.file.copySync('$tempPath/$mediaUuid$mediaExtension');
+    // Start the processing work in a new Future.
+    var operationFuture = Future.sync(() async {
+      var mediaType = media.type;
+      MediaFile result;
 
-    if (await isGif(media.file) && !flattenGifs) {
-      mediaType = FileType.video;
+      if (!completer.isCanceled) {
+        _eventService.post(MediaProcessEvent(MediaProcessingState.processing,
+            operation: completer.operation));
+      }
 
-      Completer<File> completer = Completer();
-      convertGifToVideo(copiedFile).then((file) => completer.complete(file),
-          onError: (error, trace) {
-        print(error);
-        _toastService.error(
-            message: _localizationService.error__unknown_error,
-            context: context);
-      });
-      copiedFile = await completer.future;
-    }
+      // Copy the media to a temporary location.
+      final tempPath = await _getTempPath();
+      final String mediaUuid = _uuid.v4();
+      String mediaExtension = basename(media.file.path);
+      var copiedFile =
+          media.file.copySync('$tempPath/$mediaUuid$mediaExtension');
 
-    MediaFile copiedMedia = MediaFile(copiedFile, mediaType);
-    if (mediaType == FileType.image) {
-      result = await _processImage(copiedMedia, tempPath, mediaUuid, imageType);
-    } else if (mediaType == FileType.video) {
-      result = await _processVideo(copiedMedia);
-    } else {
-      _eventService.post(MediaProcessEvent(MediaProcessingState.error,
-          data: 'Unsupported media type: ${media.type}'));
-    }
+      if (await isGif(media.file) && !flattenGifs) {
+        mediaType = FileType.video;
 
-    _eventService.post(MediaProcessEvent(MediaProcessingState.finished, data: result));
-    return result;
+        Completer<File> completer = Completer();
+        gifOperation = convertGifToVideo(copiedFile)
+            .then((file) => completer.complete(file), onError: (error, trace) {
+          print(error);
+          _toastService.error(
+              message: _localizationService.error__unknown_error,
+              context: context);
+        });
+        copiedFile = await completer.future;
+      }
+
+      if (!completer.isCanceled) {
+        MediaFile copiedMedia = MediaFile(copiedFile, mediaType);
+        if (mediaType == FileType.image) {
+          result =
+              await _processImage(copiedMedia, tempPath, mediaUuid, imageType);
+        } else if (mediaType == FileType.video) {
+          result = await _processVideo(copiedMedia);
+        } else {
+          _eventService.post(MediaProcessEvent(MediaProcessingState.error,
+              data: 'Unsupported media type: ${media.type}'));
+        }
+      }
+
+      if (!completer.isCanceled) {
+        _eventService.post(
+            MediaProcessEvent(MediaProcessingState.finished, data: result));
+        return result;
+      } else {
+        return null;
+      }
+    });
+
+    // When the work has completed, complete our CancelableCompleter.
+    operationFuture.then(completer.complete);
+
+    return completer.operation;
   }
 
   Future<MediaFile> _processImage(MediaFile media, String tempPath,
