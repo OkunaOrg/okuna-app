@@ -1101,14 +1101,14 @@ class UserService {
     HttpieResponse response =
         await _followsApiService.requestToFollowUserWithUsername(user.username);
     _checkResponseIsCreated(response);
-    user.setIsPendingFollowRequestApproval(true);
+    user.setIsFollowRequested(true);
   }
 
   Future<void> cancelRequestToFollowUser(User user) async {
     HttpieResponse response =
     await _followsApiService.cancelRequestToFollowUserWithUsername(user.username);
     _checkResponseIsOk(response);
-    user.setIsPendingFollowRequestApproval(false);
+    user.setIsFollowRequested(false);
   }
 
   Future<void> approveFollowRequestFromUser(User user) async {

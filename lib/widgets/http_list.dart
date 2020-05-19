@@ -131,7 +131,7 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
   void scrollToTop({bool shouldRefresh = true}) {
     if (_listScrollController.hasClients) {
       if (_listScrollController.offset == 0 && shouldRefresh) {
-        _listRefreshIndicatorKey.currentState.show();
+        _refreshWithRefreshIndicator();
       }
 
       _listScrollController.animateTo(
@@ -395,7 +395,7 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
 
   void _bootstrap() async {
     Future.delayed(Duration(milliseconds: 0), () async {
-      await _listRefreshIndicatorKey.currentState.show();
+      await _refreshWithRefreshIndicator();
       setState(() {
         _wasBootstrapped = true;
       });
@@ -430,13 +430,21 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
       {bool shouldScrollToTop = false,
       bool shouldUseRefreshIndicator = false}) async {
     await (shouldUseRefreshIndicator
-        ? _listRefreshIndicatorKey.currentState.show()
+        ? _refreshWithRefreshIndicator()
         : _refreshList());
     if (shouldScrollToTop &&
         _listScrollController.hasClients &&
         _listScrollController.offset != 0) {
       scrollToTop();
     }
+  }
+
+  void _refreshWithRefreshIndicator(){
+    // Deactivate if active
+    _listRefreshIndicatorKey.currentState.deactivate();
+
+    // Activate
+    _listRefreshIndicatorKey.currentState.show();
   }
 
   Future<bool> _loadMoreListItems() async {

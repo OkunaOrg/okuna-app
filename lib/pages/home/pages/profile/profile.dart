@@ -139,6 +139,7 @@ class OBProfilePageState extends State<OBProfilePage> {
       key: _protectedProfileRefreshIndicatorKey,
       onRefresh: _refreshUser,
       child: SingleChildScrollView(
+        physics: const ClampingScrollPhysics(),
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: profileDetails,
@@ -178,13 +179,13 @@ class OBProfilePageState extends State<OBProfilePage> {
               StreamBuilder(
                 stream: widget.user.updateSubject,
                 builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
-                  if (snapshot.data == null || snapshot.data.isPendingFollowRequestApproval == null) return const SizedBox();
+                  if (snapshot.data == null || snapshot.data.isFollowRequested == null) return const SizedBox();
                   User user = snapshot.data;
-                  return OBSecondaryText((user.isPendingFollowRequestApproval
+                  return OBSecondaryText((user.isFollowRequested
                       ? _localizationService
                           .user__protected_account_instructions_complete
                       : _localizationService
-                          .user__protected_account_instructions));
+                          .user__protected_account_instructions(getFollowButtonText())));
                 },
               ),
             ],
@@ -236,6 +237,12 @@ class OBProfilePageState extends State<OBProfilePage> {
             onPostCommunityExcludedFromProfilePosts:
                 _onPostCommunityExcludedFromProfilePosts,
           );
+  }
+
+  String getFollowButtonText(){
+    return widget.user.isFollowed != null && widget.user.isFollowed
+        ? _localizationService.user__follow_button_follow_back_text
+        : _localizationService.user__follow_button_follow_text;
   }
 
   void _onPostCommunityExcludedFromProfilePosts(Community community) {

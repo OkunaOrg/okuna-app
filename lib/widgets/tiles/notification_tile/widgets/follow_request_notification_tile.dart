@@ -31,7 +31,8 @@ class OBFollowRequestNotificationTile extends StatelessWidget {
       if (onPressed != null) onPressed();
       OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
 
-      openbookProvider.navigationService.navigateToFollowRequests(
+      openbookProvider.navigationService.navigateToUserProfile(
+        user: followRequestNotification.followRequest.creator,
           context: context);
     };
 

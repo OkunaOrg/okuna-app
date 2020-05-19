@@ -3,6 +3,7 @@ import 'package:Okuna/models/user.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/bottom_sheet.dart';
 import 'package:Okuna/services/httpie.dart';
+import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/user.dart';
 import 'package:Okuna/widgets/buttons/button.dart';
@@ -23,6 +24,7 @@ class OBConfirmConnectionButtonState extends State<OBConfirmConnectionButton> {
   UserService _userService;
   ToastService _toastService;
   BottomSheetService _bottomSheetService;
+  LocalizationService _localizationService;
   bool _requestInProgress;
 
   @override
@@ -37,6 +39,7 @@ class OBConfirmConnectionButtonState extends State<OBConfirmConnectionButton> {
     _userService = openbookProvider.userService;
     _toastService = openbookProvider.toastService;
     _bottomSheetService = openbookProvider.bottomSheetService;
+    _localizationService = openbookProvider.localizationService;
 
     return StreamBuilder(
       stream: widget.user.updateSubject,
@@ -57,7 +60,7 @@ class OBConfirmConnectionButtonState extends State<OBConfirmConnectionButton> {
   Widget _buildConfirmConnectionButton() {
     return OBButton(
       child: Text(
-        'Confirm',
+        _localizationService.user__profile_action_confirm_connection_short,
         style: TextStyle(fontWeight: FontWeight.bold),
       ),
       isLoading: _requestInProgress,

@@ -39,6 +39,7 @@ class User extends UpdatableModel<User> {
   bool areNewPostNotificationsEnabled;
   bool isFollowing;
   bool isFollowed;
+  bool isFollowRequested;
   bool isConnected;
   bool isReported;
   bool isBlocked;
@@ -108,6 +109,7 @@ class User extends UpdatableModel<User> {
       'are_new_post_notifications_enabled': areNewPostNotificationsEnabled,
       'is_following': isFollowing,
       'is_followed': isFollowed,
+      'is_follow_requested': isFollowRequested,
       'is_connected': isConnected,
       'is_reported': isReported,
       'is_blocked': isBlocked,
@@ -162,6 +164,7 @@ class User extends UpdatableModel<User> {
       this.areNewPostNotificationsEnabled,
       this.isFollowing,
       this.isFollowed,
+      this.isFollowRequested,
       this.isBlocked,
       this.isGlobalModerator,
       this.isConnected,
@@ -223,6 +226,7 @@ class User extends UpdatableModel<User> {
           json['are_new_post_notifications_enabled'];
     if (json.containsKey('is_following')) isFollowing = json['is_following'];
     if (json.containsKey('is_followed')) isFollowed = json['is_followed'];
+    if (json.containsKey('is_follow_requested')) isFollowRequested = json['is_follow_requested'];
     if (json.containsKey('is_connected')) isConnected = json['is_connected'];
     if (json.containsKey('is_global_moderator'))
       isGlobalModerator = json['is_global_moderator'];
@@ -446,6 +450,11 @@ class User extends UpdatableModel<User> {
 
   void setIsFollowing(isFollowing) {
     this.isFollowing = isFollowing;
+    notifyUpdate();
+  }
+
+  void setIsFollowRequested(isFollowRequested) {
+    this.isFollowRequested = isFollowRequested;
     notifyUpdate();
   }
 
@@ -685,6 +694,7 @@ class UserFactory extends UpdatableModelFactory<User> {
         followingCount: json['following_count'],
         isFollowing: json['is_following'],
         isFollowed: json['is_followed'],
+        isFollowRequested: json['is_follow_requested'],
         areNewPostNotificationsEnabled:
             json['are_new_post_notifications_enabled'],
         isConnected: json['is_connected'],

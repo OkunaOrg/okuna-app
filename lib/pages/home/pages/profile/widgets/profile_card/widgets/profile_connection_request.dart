@@ -1,4 +1,5 @@
 import 'package:Okuna/models/user.dart';
+import 'package:Okuna/provider.dart';
 import 'package:Okuna/widgets/alerts/alert.dart';
 import 'package:Okuna/widgets/buttons/actions/confirm_connection_button.dart';
 import 'package:Okuna/widgets/buttons/actions/deny_connection_button.dart';
@@ -12,6 +13,9 @@ class OBProfileConnectionRequest extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
+
     return StreamBuilder(
       stream: user.updateSubject,
       initialData: user,
@@ -34,7 +38,7 @@ class OBProfileConnectionRequest extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   OBText(
-                    '$userName has sent you a connection request.',
+                    openbookProvider.localizationService.user__profile_user_sent_connection_request(userName),
                     maxLines: 4,
                     size: OBTextSize.medium,
                     overflow: TextOverflow.ellipsis,

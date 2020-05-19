@@ -67,7 +67,7 @@ class OBFollowRequestsPageState
       stream: followRequest.creator.updateSubject,
       builder: (BuildContext context, AsyncSnapshot<User> snapshot){
         // In case the request was approved elsewhere, make sure we dont render it
-        if(snapshot.data != null && snapshot.data.isFollowed != null && snapshot.data.isFollowed) return const SizedBox();
+        if((snapshot.data != null && snapshot.data.isFollowed != null && snapshot.data.isFollowed) || (snapshot.data != null && snapshot.data.isPendingFollowRequestApproval != null && !snapshot.data.isPendingFollowRequestApproval)) return const SizedBox();
 
         return OBReceivedFollowRequestTile(
           followRequest,

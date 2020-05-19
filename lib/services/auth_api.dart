@@ -329,6 +329,7 @@ class AuthApiService {
 
   Future<HttpieResponse> loginWithCredentials(
       {@required String username, @required String password}) {
+
     return this._httpService.postJSON('$apiURL$LOGIN_PATH',
         body: {'username': username, 'password': password});
   }
