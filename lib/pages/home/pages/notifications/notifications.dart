@@ -279,6 +279,10 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
   }
 
   Future<List<OBNotification>> _refreshGeneralNotifications() async {
+    // TODO[Performance] remove on the _refreshNotifications call is faster
+    _generalNotificationsListController.items().forEach((OBNotification notification) {
+      notification.markNotificationAsRead();
+    });
     List<OBNotification> newNotifications =
         await _refreshNotifications(_generalTypes);
     await _refreshUnreadGeneralNotificationsCount();
@@ -286,6 +290,11 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
   }
 
   Future<List<OBNotification>> _refreshRequestNotifications() async {
+    // TODO[Performance] remove onthe the _refreshNotifications call is faster
+    _requestsNotificationsListController.items().forEach((OBNotification notification) {
+      notification.markNotificationAsRead();
+    });
+
     List<OBNotification> newNotifications =
         await _refreshNotifications(_requestTypes);
     await _refreshUnreadRequestNotificationsCount();
@@ -294,7 +303,9 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
 
   Future<List<OBNotification>> _refreshNotifications(
       [List<NotificationType> types]) async {
-    await _readNotifications(types: types);
+    // TODO[Performance] This API call takes ages so we're not awaiting anymore.
+    // When the perf is improved, make sure to await before requesting new notifications
+    _readNotifications(types: types);
 
     NotificationsList notificationsList =
         await _userService.getNotifications(types: types);
@@ -332,7 +343,7 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
     }
 
     int maxId = firstItem.id;
-    await _userService.readNotifications(maxId: maxId, types: types);
+    return _userService.readNotifications(maxId: maxId, types: types);
   }
 
   Future<List<OBNotification>> _loadMoreGeneralNotifications(

@@ -676,6 +676,10 @@ class OBHttpListController<T> {
     return _state._list.isNotEmpty;
   }
 
+  List<T> items() {
+    return _state._list;
+  }
+
   T firstItem() {
     return _state._list.first;
   }
