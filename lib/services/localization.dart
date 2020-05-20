@@ -2342,6 +2342,14 @@ class LocalizationService {
         name: 'post__time_short_now_text');
   }
 
+  String get user__follow_requests {
+    return Intl.message("Follow requests", name: 'user__follow_requests');
+  }
+
+  String get user__follow_request {
+    return Intl.message("Follow request", name: 'user__follow_request');
+  }
+
   String get user__thousand_postfix {
     return Intl.message("k",
         desc: 'For eg. communty has 3k members',
@@ -2388,6 +2396,28 @@ class LocalizationService {
   String get user__profile_action_deny_connection {
     return Intl.message("Deny connection request",
         name: 'user__profile_action_deny_connection');
+  }
+
+  String get user__profile_action_deny_connection_short {
+    return Intl.message("Deny",
+        name: 'user__profile_action_deny_connection_short');
+  }
+
+  String get user__profile_action_confirm_connection_short {
+    return Intl.message("Confirm",
+        name: 'user__profile_action_confirm_connection_short');
+  }
+
+
+  String user__profile_user_sent_follow_request(String userUsername) {
+    return Intl.message('@$userUsername has sent you a follow request.',
+        args: [userUsername], name: 'user__profile_user_sent_follow_request');
+  }
+
+  String user__profile_user_sent_connection_request(String userUsername) {
+    return Intl.message('@$userUsername has sent you a connection request.',
+        args: [userUsername],
+        name: 'user__profile_user_sent_connection_request');
   }
 
   String get user__profile_action_user_blocked {
@@ -2441,6 +2471,11 @@ class LocalizationService {
 
   String get user__follow_button_follow_text {
     return Intl.message("Follow", name: 'user__follow_button_follow_text');
+  }
+
+  String get user__follow_button_requested_to_follow_text {
+    return Intl.message("Requested",
+        name: 'user__follow_button_requested_to_follow_text');
   }
 
   String get user__follow_button_follow_back_text {
@@ -2647,10 +2682,26 @@ class LocalizationService {
     return Intl.message("Details", name: 'user__manage_profile_details_title');
   }
 
+  String get user__manage_profile_follow_requests_desc {
+    return Intl.message("See all your received follow requests.",
+        name: 'user__manage_profile_follow_requests_desc');
+  }
+
   String get user__manage_profile_details_title_desc {
     return Intl.message(
         "Change your username, name, url, location, avatar or cover photo.",
         name: 'user__manage_profile_details_title_desc');
+  }
+
+  String get user__manage_profile_visibility_title {
+    return Intl.message("Visibility",
+        name: 'user__manage_profile_visibility_title');
+  }
+
+  String get user__manage_profile_visibility_title_desc {
+    return Intl.message(
+        "Change whether your profile content is public, private or restricted to Okuna members.",
+        name: 'user__manage_profile_visibility_title_desc');
   }
 
   String get user__profile_posts_excluded_communities {
@@ -2667,6 +2718,30 @@ class LocalizationService {
     return Intl.message(
         "See, add and remove hidden communities from your profile.",
         name: 'user__profile_posts_excluded_communities_desc');
+  }
+
+  String get user__protected_account_title {
+    return Intl.message("This accounts posts are protected.",
+        name: 'user__protected_account_title');
+  }
+
+  String user__protected_account_desc(String username) {
+    return Intl.message(
+        "Only confirmed followers have access to @$username's posts.",
+        args: [username],
+        name: 'user__protected_account_desc');
+  }
+
+  String user__protected_account_instructions(String followButtonText) {
+    return Intl.message(
+        'Click the "$followButtonText" button to send a follow request.',
+        args: [followButtonText],
+        name: 'user__protected_account_instructions');
+  }
+
+  String get user__protected_account_instructions_complete {
+    return Intl.message('You have already sent a follow request.',
+        name: 'user__protected_account_instructions_complete');
   }
 
   String get user__edit_profile_save_text {
@@ -3223,7 +3298,8 @@ class LocalizationService {
   }
 
   String get user__change_email_current_email_text {
-    return Intl.message("Current email", name: 'user__change_email_current_email_text');
+    return Intl.message("Current email",
+        name: 'user__change_email_current_email_text');
   }
 
   String get user__change_email_hint_text {
@@ -3313,6 +3389,37 @@ class LocalizationService {
         name: 'user__disable_new_post_notifications');
   }
 
+  String get user__visibility {
+    return Intl.message("Visibility", name: 'user__visibility');
+  }
+
+  String get user__visibility_public {
+    return Intl.message("Public", name: 'user__visibility_public');
+  }
+
+  String get user__visibility_public_desc {
+    return Intl.message("Everyone on the internet can see your profile.",
+        name: 'user__visibility_public_desc');
+  }
+
+  String get user__visibility_private {
+    return Intl.message("Private", name: 'user__visibility_private');
+  }
+
+  String get user__visibility_private_desc {
+    return Intl.message("Only people you approve can see your profile.",
+        name: 'user__visibility_private_desc');
+  }
+
+  String get user__visibility_okuna {
+    return Intl.message("Okuna", name: 'user__visibility_okuna');
+  }
+
+  String get user__visibility_okuna_desc {
+    return Intl.message("Only members of Okuna can see your profile.",
+        name: 'user__visibility_okuna_desc');
+  }
+
   String user__disconnect_from_user(String userName) {
     return Intl.message("Disconnect from $userName",
         args: [userName], name: 'user__disconnect_from_user');
@@ -3357,6 +3464,27 @@ class LocalizationService {
   String get notifications__follow_desc {
     return Intl.message("Be notified when someone starts following you",
         name: 'notifications__follow_desc');
+  }
+
+  String get notifications__follow_request_title {
+    return Intl.message("Follow request",
+        name: 'notifications__follow_request_title');
+  }
+
+  String get notifications__follow_request_desc {
+    return Intl.message("Be notified when someone wants to follow you.",
+        name: 'notifications__follow_request_desc');
+  }
+
+  String get notifications__follow_request_approved_title {
+    return Intl.message("Follow request approved",
+        name: 'notifications__follow_request_approved_title');
+  }
+
+  String get notifications__follow_request_approved_title_desc {
+    return Intl.message(
+        "Be notified when someone approves your follow request.",
+        name: 'notifications__follow_request_approved_title_desc');
   }
 
   String get notifications__connection_title {
@@ -3496,6 +3624,18 @@ class LocalizationService {
     return Intl.message("[name] [username] accepted your connection request.",
         desc: "Eg.: James @jamest accepted your connection request.",
         name: 'notifications__accepted_connection_request_tile');
+  }
+
+  String get notifications__follow_request_tile {
+    return Intl.message("[name] [username] wants to follow you.",
+        desc: "Eg.: James @jamest wants to follow you.",
+        name: 'notifications__follow_request_tile');
+  }
+
+  String get notifications__approved_follow_request_tile {
+    return Intl.message("[name] [username] approved your follow request.",
+        desc: "Eg.: James @jamest approved your follow request.",
+        name: 'notifications__approved_follow_request_tile');
   }
 
   String get notifications__reacted_to_post_tile {
@@ -4221,6 +4361,10 @@ class LocalizationService {
 
   String get bottom_sheets__confirm_action_no {
     return Intl.message("No", name: 'bottom_sheets__confirm_action_no');
+  }
+
+  String get bottom_sheets__dismiss {
+    return Intl.message("Dismiss", name: 'bottom_sheets__dismiss');
   }
 
   Locale getLocale() {

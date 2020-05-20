@@ -50,13 +50,36 @@ class OBFollowButtonState extends State<OBFollowButton> {
 
         if (user?.isFollowing == null) return const SizedBox();
 
-        return user.isFollowing ? _buildUnfollowButton() : _buildFollowButton();
+        return user.isFollowing
+            ? _buildUnfollowButton()
+            : user.visibility != UserVisibility.private || user.isFollowing
+                ? _buildFollowButton()
+                : _buildRequestToFollowButton();
       },
     );
   }
 
+  Widget _buildRequestToFollowButton() {
+    if(widget.user.isFollowRequested == null) return const SizedBox();
+
+    final followButtonText =
+        widget.user.isFollowRequested
+            ? _localizationService.user__follow_button_requested_to_follow_text
+            : getFollowButtonText();
+
+    return OBButton(
+      size: widget.size,
+      child: Text(
+        followButtonText,
+        style: TextStyle(fontWeight: FontWeight.bold),
+      ),
+      isLoading: _requestInProgress,
+      onPressed: widget.user.isFollowRequested ? _cancelRequestToFollowUser : _requestToFollowUser,
+    );
+  }
+
   Widget _buildFollowButton() {
-    final followButtonText = widget.user.isFollowed != null && widget.user.isFollowed ? _localizationService.user__follow_button_follow_back_text : _localizationService.user__follow_button_follow_text;
+    final followButtonText = getFollowButtonText();
 
     return OBButton(
       size: widget.size,
@@ -94,6 +117,31 @@ class OBFollowButtonState extends State<OBFollowButton> {
     }
   }
 
+
+  void _requestToFollowUser() async {
+    _setRequestInProgress(true);
+    try {
+      await _userService.requestToFollowUser(widget.user);
+      widget.user.setIsFollowRequested(true);
+    } catch (error) {
+      _onError(error);
+    } finally {
+      _setRequestInProgress(false);
+    }
+  }
+
+  void _cancelRequestToFollowUser() async {
+    _setRequestInProgress(true);
+    try {
+      await _userService.cancelRequestToFollowUser(widget.user);
+      widget.user.setIsFollowRequested(false);
+    } catch (error) {
+      _onError(error);
+    } finally {
+      _setRequestInProgress(false);
+    }
+  }
+
   void _unFollowUser() async {
     _setRequestInProgress(true);
     try {
@@ -106,6 +154,12 @@ class OBFollowButtonState extends State<OBFollowButton> {
     }
   }
 
+  String getFollowButtonText(){
+    return widget.user.isFollowed != null && widget.user.isFollowed
+        ? _localizationService.user__follow_button_follow_back_text
+        : _localizationService.user__follow_button_follow_text;
+  }
+
   void _onError(error) async {
     if (error is HttpieConnectionRefusedError) {
       _toastService.error(
@@ -114,7 +168,8 @@ class OBFollowButtonState extends State<OBFollowButton> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: _localizationService.error__unknown_error, context: context);
+      _toastService.error(
+          message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

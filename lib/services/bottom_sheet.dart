@@ -25,6 +25,7 @@ import 'package:Okuna/pages/home/bottom_sheets/post_comment_more_actions.dart';
 import 'package:Okuna/pages/home/bottom_sheets/react_to_post.dart';
 import 'package:Okuna/pages/home/bottom_sheets/react_to_post_comment.dart';
 import 'package:Okuna/pages/home/bottom_sheets/user_actions/user_actions.dart';
+import 'package:Okuna/pages/home/bottom_sheets/user_visibility_picker.dart';
 import 'package:Okuna/pages/home/bottom_sheets/video_picker.dart';
 import 'package:Okuna/pages/home/bottom_sheets/videos_autoplay_setting_picker.dart';
 import 'package:Okuna/pages/home/bottom_sheets/videos_sound_setting_picker.dart';
@@ -89,6 +90,16 @@ class BottomSheetService {
         builder: (BuildContext context) {
           return OBCommunityTypePickerBottomSheet(
               onTypeChanged: onChanged, initialType: initialType);
+        });
+  }
+
+
+  Future<void> showUserVisibilityPicker(
+      {@required BuildContext context}) {
+    return _showModalBottomSheetApp(
+        context: context,
+        builder: (BuildContext context) {
+          return OBUserVisibilityPickerBottomSheet();
         });
   }
 

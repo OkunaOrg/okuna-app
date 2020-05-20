@@ -7,6 +7,8 @@ class UserNotificationsSettings {
   bool postUserMentionNotifications;
   bool postReactionNotifications;
   bool followNotifications;
+  bool followRequestNotifications;
+  bool followRequestApprovedNotifications;
   bool connectionRequestNotifications;
   bool connectionConfirmedNotifications;
   bool communityInviteNotifications;
@@ -18,6 +20,8 @@ class UserNotificationsSettings {
       this.connectionConfirmedNotifications,
       this.connectionRequestNotifications,
       this.followNotifications,
+      this.followRequestNotifications,
+      this.followRequestApprovedNotifications,
       this.postCommentNotifications,
       this.postCommentReactionNotifications,
       this.postCommentUserMentionNotifications,
@@ -36,6 +40,8 @@ class UserNotificationsSettings {
       connectionRequestNotifications:
           parsedJson['connection_request_notifications'],
       followNotifications: parsedJson['follow_notifications'],
+      followRequestNotifications: parsedJson['follow_request_notifications'],
+      followRequestApprovedNotifications: parsedJson['follow_request_approved_notifications'],
       postCommentNotifications: parsedJson['post_comment_notifications'],
       postCommentReactionNotifications:
           parsedJson['post_comment_reaction_notifications'],
@@ -61,6 +67,8 @@ class UserNotificationsSettings {
       'connections_confirmed_notifications': connectionConfirmedNotifications,
       'connection_request_notifications': connectionRequestNotifications,
       'follow_notifications': followNotifications,
+      'follow_request_notifications': followRequestNotifications,
+      'follow_request_approved_notifications': followRequestApprovedNotifications,
       'post_comment_notifications': postCommentNotifications,
       'post_comment_reaction_notifications': postCommentReactionNotifications,
       'post_comment_user_mention_notifications': postCommentUserMentionNotifications,
@@ -81,6 +89,13 @@ class UserNotificationsSettings {
       connectionRequestNotifications = json['connection_request_notifications'];
     if (json.containsKey('follow_notifications'))
       followNotifications = json['follow_notifications'];
+
+    if (json.containsKey('follow_request_notifications'))
+      followRequestNotifications = json['follow_request_notifications'];
+
+    if (json.containsKey('follow_request_approved_notifications'))
+      followRequestApprovedNotifications = json['follow_request_approved_notifications'];
+
     if (json.containsKey('post_comment_notifications'))
       postCommentNotifications = json['post_comment_notifications'];
 

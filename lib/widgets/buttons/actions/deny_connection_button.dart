@@ -1,6 +1,7 @@
 import 'package:Okuna/models/user.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/httpie.dart';
+import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/user.dart';
 import 'package:Okuna/widgets/buttons/button.dart';
@@ -20,6 +21,7 @@ class OBDenyConnectionButton extends StatefulWidget {
 class OBDenyConnectionButtonState extends State<OBDenyConnectionButton> {
   UserService _userService;
   ToastService _toastService;
+  LocalizationService _localizationService;
   bool _requestInProgress;
 
   @override
@@ -33,6 +35,7 @@ class OBDenyConnectionButtonState extends State<OBDenyConnectionButton> {
     var openbookProvider = OpenbookProvider.of(context);
     _userService = openbookProvider.userService;
     _toastService = openbookProvider.toastService;
+    _localizationService = openbookProvider.localizationService;
 
     return StreamBuilder(
       stream: widget.user.updateSubject,
@@ -52,7 +55,7 @@ class OBDenyConnectionButtonState extends State<OBDenyConnectionButton> {
   Widget _buildDenyConnectionButton() {
     return OBButton(
       child: Text(
-        'Deny',
+        _localizationService.user__profile_action_deny_connection_short,
         style: TextStyle(fontWeight: FontWeight.bold),
       ),
       isLoading: _requestInProgress,

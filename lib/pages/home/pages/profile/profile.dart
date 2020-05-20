@@ -6,10 +6,15 @@ import 'package:Okuna/pages/home/pages/profile/widgets/profile_cover.dart';
 import 'package:Okuna/pages/home/pages/profile/widgets/profile_nav_bar.dart';
 import 'package:Okuna/pages/home/pages/profile/widgets/profile_posts_stream_status_indicator.dart';
 import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/user.dart';
+import 'package:Okuna/widgets/alerts/alert.dart';
+import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/post/post.dart';
 import 'package:Okuna/widgets/posts_stream/posts_stream.dart';
 import 'package:Okuna/widgets/theming/primary_color_container.dart';
+import 'package:Okuna/widgets/theming/secondary_text.dart';
+import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -32,17 +37,21 @@ class OBProfilePageState extends State<OBProfilePage> {
   User _user;
   bool _needsBootstrap;
   UserService _userService;
+  LocalizationService _localizationService;
   OBPostsStreamController _obPostsStreamController;
   bool _profileCommunityPostsVisible;
   OBPostDisplayContext _postsDisplayContext;
 
   List<Community> _recentlyExcludedCommunities;
+  GlobalKey<RefreshIndicatorState> _protectedProfileRefreshIndicatorKey = GlobalKey();
+  bool _needsProtectedProfileBootstrap;
 
   @override
   void initState() {
     super.initState();
     _obPostsStreamController = OBPostsStreamController();
     _needsBootstrap = true;
+    _needsProtectedProfileBootstrap = true;
     _user = widget.user;
     if (widget.controller != null) widget.controller.attach(this);
     _profileCommunityPostsVisible =
@@ -59,6 +68,7 @@ class OBProfilePageState extends State<OBProfilePage> {
       _postsDisplayContext = isLoggedInUserProfile
           ? OBPostDisplayContext.ownProfilePosts
           : OBPostDisplayContext.foreignProfilePosts;
+      _localizationService = openbookProvider.localizationService;
       _needsBootstrap = false;
     }
 
@@ -66,33 +76,135 @@ class OBProfilePageState extends State<OBProfilePage> {
         backgroundColor: Color.fromARGB(0, 0, 0, 0),
         navigationBar: OBProfileNavBar(_user),
         child: OBPrimaryColorContainer(
+          child: StreamBuilder(
+              stream: widget.user.updateSubject,
+              builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
+                User user = snapshot.data;
+                if (user == null) return const SizedBox();
+
+                if (_postsDisplayContext ==
+                        OBPostDisplayContext.ownProfilePosts ||
+                    user.visibility != UserVisibility.private ||
+                    (user.isFollowing != null && user.isFollowing)) {
+                  return _buildVisibleProfileContent();
+                }
+
+                // User is private and its not us
+                return _buildProtectedProfileContent();
+              }),
+        ));
+  }
+
+  Widget _buildVisibleProfileContent() {
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        Expanded(
+          child: OBPostsStream(
+              streamIdentifier: 'profile_${widget.user.username}',
+              displayContext: _postsDisplayContext,
+              prependedItems: _buildProfileContentDetails(),
+              controller: _obPostsStreamController,
+              postBuilder: _buildPostsStreamPost,
+              secondaryRefresher: _refreshUser,
+              refresher: _refreshPosts,
+              onScrollLoader: _loadMorePosts,
+              onPostsRefreshed: _onPostsRefreshed,
+              statusIndicatorBuilder: _buildPostsStreamStatusIndicator),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildProtectedProfileContent() {
+    if(_needsProtectedProfileBootstrap){
+      Future.delayed(Duration(milliseconds: 100), () {
+        _protectedProfileRefreshIndicatorKey.currentState.show();
+      });
+      _needsProtectedProfileBootstrap = false;
+    }
+
+
+    List<Widget> profileDetails = _buildProfileContentDetails();
+
+    profileDetails.addAll([
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        child: _buildPrivateProfileContentAlert(),
+      )
+    ]);
+
+    return RefreshIndicator(
+      displacement: 40,
+      key: _protectedProfileRefreshIndicatorKey,
+      onRefresh: _refreshUser,
+      child: SingleChildScrollView(
+        physics: const ClampingScrollPhysics(),
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          children: profileDetails,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPrivateProfileContentAlert() {
+    return OBAlert(
+        child: Row(
+      children: [
+        OBIcon(
+          OBIcons.visibilityPrivate,
+          size: OBIconSize.large,
+        ),
+        const SizedBox(
+          width: 20,
+        ),
+        Flexible(
           child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              Expanded(
-                child: OBPostsStream(
-                    streamIdentifier: 'profile_${widget.user.username}',
-                    displayContext: _postsDisplayContext,
-                    prependedItems: <Widget>[
-                      OBProfileCover(_user),
-                      OBProfileCard(
-                        _user,
-                        onUserProfileUpdated: _onUserProfileUpdated,
-                        onExcludedCommunitiesAdded: _onExcludedCommunitiesAdded,
-                        onExcludedCommunityRemoved: _onExcludedCommunityRemoved,
-                      ),
-                    ],
-                    controller: _obPostsStreamController,
-                    postBuilder: _buildPostsStreamPost,
-                    secondaryRefresher: _refreshUser,
-                    refresher: _refreshPosts,
-                    onScrollLoader: _loadMorePosts,
-                    onPostsRefreshed: _onPostsRefreshed,
-                    statusIndicatorBuilder: _buildPostsStreamStatusIndicator),
-              )
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              OBText(
+                _localizationService.user__protected_account_title,
+                size: OBTextSize.large,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              OBSecondaryText(
+                _localizationService
+                    .user__protected_account_desc(widget.user.username),
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              StreamBuilder(
+                stream: widget.user.updateSubject,
+                builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
+                  if (snapshot.data == null || snapshot.data.isFollowRequested == null) return const SizedBox();
+                  User user = snapshot.data;
+                  return OBSecondaryText((user.isFollowRequested
+                      ? _localizationService
+                          .user__protected_account_instructions_complete
+                      : _localizationService
+                          .user__protected_account_instructions(getFollowButtonText())));
+                },
+              ),
             ],
           ),
-        ));
+        )
+      ],
+    ));
+  }
+
+  List<Widget> _buildProfileContentDetails() {
+    return [
+      OBProfileCover(_user),
+      OBProfileCard(
+        _user,
+        onUserProfileUpdated: _onUserProfileUpdated,
+        onExcludedCommunitiesAdded: _onExcludedCommunitiesAdded,
+        onExcludedCommunityRemoved: _onExcludedCommunityRemoved,
+      )
+    ];
   }
 
   Widget _buildPostsStreamStatusIndicator(
@@ -125,6 +237,12 @@ class OBProfilePageState extends State<OBProfilePage> {
             onPostCommunityExcludedFromProfilePosts:
                 _onPostCommunityExcludedFromProfilePosts,
           );
+  }
+
+  String getFollowButtonText(){
+    return widget.user.isFollowed != null && widget.user.isFollowed
+        ? _localizationService.user__follow_button_follow_back_text
+        : _localizationService.user__follow_button_follow_text;
   }
 
   void _onPostCommunityExcludedFromProfilePosts(Community community) {

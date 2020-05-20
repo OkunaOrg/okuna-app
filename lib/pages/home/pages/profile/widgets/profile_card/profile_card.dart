@@ -8,6 +8,7 @@ import 'package:Okuna/pages/home/pages/profile/widgets/profile_card/widgets/prof
 import 'package:Okuna/pages/home/pages/profile/widgets/profile_card/widgets/profile_connection_request.dart';
 import 'package:Okuna/pages/home/pages/profile/widgets/profile_card/widgets/profile_counts/profile_counts.dart';
 import 'package:Okuna/pages/home/pages/profile/widgets/profile_card/widgets/profile_details/profile_details.dart';
+import 'package:Okuna/pages/home/pages/profile/widgets/profile_card/widgets/profile_follow_request.dart';
 import 'package:Okuna/pages/home/pages/profile/widgets/profile_card/widgets/profile_in_lists.dart';
 import 'package:Okuna/pages/home/pages/profile/widgets/profile_card/widgets/profile_name.dart';
 import 'package:Okuna/pages/home/pages/profile/widgets/profile_card/widgets/profile_username.dart';
@@ -42,7 +43,7 @@ class OBProfileCard extends StatelessWidget {
       overflow: Overflow.visible,
       children: <Widget>[
         Padding(
-          padding: EdgeInsets.only(left: 30.0, right: 20),
+          padding: EdgeInsets.only(left: 18.0, right: 18),
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
@@ -75,6 +76,7 @@ class OBProfileCard extends StatelessWidget {
                   OBProfileCounts(user),
                   OBProfileConnectedIn(user),
                   OBProfileConnectionRequest(user),
+                  OBProfileFollowRequest(user),
                   OBProfileInLists(user)
                 ],
               ),
@@ -103,7 +105,7 @@ class OBProfileCard extends StatelessWidget {
         ),
         Positioned(
           top: -((OBAvatar.AVATAR_SIZE_EXTRA_LARGE / 2)) - 10,
-          left: 30,
+          left: 18,
           child: StreamBuilder(
               stream: user.updateSubject,
               initialData: user,

@@ -3,6 +3,8 @@ import 'package:Okuna/models/notifications/community_new_post_notification.dart'
 import 'package:Okuna/models/notifications/connection_confirmed_notification.dart';
 import 'package:Okuna/models/notifications/connection_request_notification.dart';
 import 'package:Okuna/models/notifications/follow_notification.dart';
+import 'package:Okuna/models/notifications/follow_request_approved_notification.dart';
+import 'package:Okuna/models/notifications/follow_request_notification.dart';
 import 'package:Okuna/models/notifications/post_comment_notification.dart';
 import 'package:Okuna/models/notifications/post_comment_reaction_notification.dart';
 import 'package:Okuna/models/notifications/post_comment_reply_notification.dart';
@@ -114,6 +116,13 @@ class NotificationFactory extends UpdatableModelFactory<OBNotification> {
       case NotificationType.follow:
         contentObject = FollowNotification.fromJson(contentObjectData);
         break;
+      case NotificationType.followRequestApproved:
+        contentObject =
+            FollowRequestApprovedNotification.fromJson(contentObjectData);
+        break;
+      case NotificationType.followRequest:
+        contentObject = FollowRequestNotification.fromJson(contentObjectData);
+        break;
       case NotificationType.postComment:
         contentObject = PostCommentNotification.fromJson(contentObjectData);
         break;
@@ -139,7 +148,8 @@ class NotificationFactory extends UpdatableModelFactory<OBNotification> {
         contentObject = CommunityInviteNotification.fromJson(contentObjectData);
         break;
       case NotificationType.communityNewPost:
-        contentObject = CommunityNewPostNotification.fromJson(contentObjectData);
+        contentObject =
+            CommunityNewPostNotification.fromJson(contentObjectData);
         break;
       case NotificationType.userNewPost:
         contentObject = UserNewPostNotification.fromJson(contentObjectData);
@@ -171,8 +181,11 @@ class NotificationType {
   static const connectionRequest = const NotificationType._internal('CR');
   static const connectionConfirmed = const NotificationType._internal('CC');
   static const follow = const NotificationType._internal('F');
+  static const followRequest = const NotificationType._internal('FR');
+  static const followRequestApproved = const NotificationType._internal('FRA');
   static const communityInvite = const NotificationType._internal('CI');
-  static const postCommentUserMention = const NotificationType._internal('PCUM');
+  static const postCommentUserMention =
+      const NotificationType._internal('PCUM');
   static const postUserMention = const NotificationType._internal('PUM');
   static const communityNewPost = const NotificationType._internal('CNP');
   static const userNewPost = const NotificationType._internal('UNP');
@@ -185,6 +198,8 @@ class NotificationType {
     connectionRequest,
     connectionConfirmed,
     follow,
+    followRequest,
+    followRequestApproved,
     communityInvite,
     postCommentUserMention,
     postUserMention,
