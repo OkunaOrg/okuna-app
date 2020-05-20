@@ -213,8 +213,8 @@ class MediaService {
         mediaType = FileType.video;
 
         Completer<File> completer = Completer();
-        gifOperation = convertGifToVideo(copiedFile)
-            .then((file) => completer.complete(file), onError: (error, trace) {
+        gifOperation = convertGifToVideo(copiedFile);
+        gifOperation.then((file) => completer.complete(file), onError: (error, trace) {
           print(error);
           _toastService.error(
               message: _localizationService.error__unknown_error,
