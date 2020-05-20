@@ -454,10 +454,6 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
     }
 
     if (event.state == MediaProcessingState.processing) {
-      /* TODO(komposten): Improve this part
-          It would be preferable if the previous media was restored
-          if this new media was cancelled before finishing processing.
-       */
       _removePostMedia();
       _isProcessingMedia = true;
       var postMediaWidget = OBPostMediaPreview(onRemove: event.operation.cancel);
@@ -486,6 +482,8 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
 
       _isProcessingMedia = false;
     }
+
+    event.consume();
   }
 
   void _setPostImageFile(File image) {
@@ -566,6 +564,13 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
 
   Future<void> _onShareEvent(ShareEvent event) async {
     if (event.status == ShareStatus.received) {
+      // Cancel any existing media processing operation.
+      if (_isProcessingMedia) {
+        if (_mediaPreview.preview is OBPostMediaPreview) {
+          (_mediaPreview.preview as OBPostMediaPreview).onRemove();
+        }
+      }
+
       event.consume();
     } else if (event.status == ShareStatus.processed) {
       Share share = event.data;
