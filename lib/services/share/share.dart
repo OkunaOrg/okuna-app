@@ -69,7 +69,9 @@ class ShareService {
   }
 
   Future<void> _onSubscriberEvent(SubscriptionEvent event) async {
-    if (event.oldSubscriberCount == 0 && event.newSubscriberCount > 0) {
+    if (event.eventType == ShareEvent &&
+        event.oldSubscriberCount == 0 &&
+        event.newSubscriberCount > 0) {
       _processQueuedShare();
     }
   }
@@ -77,7 +79,7 @@ class ShareService {
   void _onReceiveShare(dynamic shared) async {
     _queuedShare = SharePlugin.Share.fromReceived(shared);
 
-    if (_eventService.subscriberCount(SubscriptionEvent) > 0 && !_isProcessingShare) {
+    if (_eventService.subscriberCount(ShareEvent) > 0 && !_isProcessingShare) {
       _processQueuedShare();
     }
   }
