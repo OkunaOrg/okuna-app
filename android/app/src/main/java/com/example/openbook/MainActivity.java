@@ -2,7 +2,6 @@ package social.openbook.app;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
@@ -26,9 +25,8 @@ import com.example.openbook.ImageConverter;
 import com.example.openbook.plugins.ImageConverterPlugin;
 import com.example.openbook.util.InputStreamSupplier;
 
-import io.flutter.app.FlutterActivity;
+import io.flutter.embedding.android.FlutterActivity;
 import io.flutter.plugin.common.EventChannel;
-import io.flutter.plugins.GeneratedPluginRegistrant;
 
 public class MainActivity extends FlutterActivity {
 
@@ -37,34 +35,6 @@ public class MainActivity extends FlutterActivity {
   private EventChannel.EventSink eventSink = null;
   private List<Intent> intentBacklog = new ArrayList<>();
   private boolean streamCanceled = false;
-
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    GeneratedPluginRegistrant.registerWith(this);
-    ImageConverterPlugin.registerWith(this.registrarFor("com.example.openbook.plugins.ImageConverterPlugin"));
-
-    new EventChannel(getFlutterView(), SHARE_STREAM).setStreamHandler(
-      new EventChannel.StreamHandler() {
-        @Override
-        public void onListen(Object args, final EventChannel.EventSink events) {
-          eventSink = events;
-          streamCanceled = false;
-          for (int i = 0; i < intentBacklog.size(); i++) {
-            sendIntent(intentBacklog.remove(i));
-          }
-        }
-
-        @Override
-        public void onCancel(Object args) {
-          eventSink = null;
-          streamCanceled = true;
-        }
-      }
-    );
-
-    sendIntent(getIntent());
-  }
 
   @Override
   protected void onNewIntent(Intent intent) {
@@ -180,7 +150,7 @@ public class MainActivity extends FlutterActivity {
 	  if (!directory.exists()) {
 		directory.mkdirs();
 	  }
-	  
+
       return File.createTempFile(name, extension, directory);
     } catch (IOException e) {
       throw new KeyedException(KeyedException.Key.TempCreationFailed, e);
