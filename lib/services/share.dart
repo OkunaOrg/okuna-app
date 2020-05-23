@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class ShareService {
-  static const _stream = const EventChannel('openbook.social/receive_share');
+  static const _stream = const EventChannel('okuna.io/receive_share');
 
   ToastService _toastService;
   MediaService _mediaService;

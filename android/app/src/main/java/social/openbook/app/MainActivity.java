@@ -2,8 +2,8 @@ package social.openbook.app;
 
 import android.content.Intent;
 import android.os.Bundle;
-import com.example.openbook.plugins.ImageConverterPlugin;
-import com.example.openbook.plugins.SharePlugin;
+import social.openbook.app.plugins.ImageConverterPlugin;
+import social.openbook.app.plugins.SharePlugin;
 import io.flutter.embedding.android.FlutterActivity;
 import io.flutter.embedding.engine.plugins.PluginRegistry;
 

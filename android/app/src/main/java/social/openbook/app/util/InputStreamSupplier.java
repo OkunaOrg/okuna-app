@@ -1,4 +1,4 @@
-package com.example.openbook.util;
+package social.openbook.app.util;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;

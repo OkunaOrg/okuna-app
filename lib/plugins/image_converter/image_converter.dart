@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 
 class ImageConverter {
   static const MethodChannel _channel =
-      const MethodChannel('openspace.social/image_converter');
+      const MethodChannel('okuna.io/image_converter');
 
   static Future<List<int>> convertImage(List<int> imageData, [TargetFormat format = TargetFormat.JPEG]) async {
     String formatName;

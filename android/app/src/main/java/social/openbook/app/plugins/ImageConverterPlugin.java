@@ -1,10 +1,9 @@
-package com.example.openbook.plugins;
+package social.openbook.app.plugins;
 
 import androidx.annotation.NonNull;
-import com.example.openbook.ImageConverter;
-import com.example.openbook.ImageConverter.TargetFormat;
+import social.openbook.app.ImageConverter;
+import social.openbook.app.ImageConverter.TargetFormat;
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
-import io.flutter.plugin.common.BinaryMessenger;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
@@ -18,7 +17,7 @@ public class ImageConverterPlugin implements MethodCallHandler, FlutterPlugin {
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
-        methodChannel = new MethodChannel(binding.getBinaryMessenger(), "openspace.social/image_converter");
+        methodChannel = new MethodChannel(binding.getBinaryMessenger(), "okuna.io/image_converter");
         methodChannel.setMethodCallHandler(this);
     }
 

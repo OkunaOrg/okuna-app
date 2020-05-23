@@ -1,4 +1,4 @@
-package com.example.openbook.plugins;
+package social.openbook.app.plugins;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,8 +7,8 @@ import android.util.Log;
 import android.webkit.MimeTypeMap;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import com.example.openbook.ImageConverter;
-import com.example.openbook.util.InputStreamSupplier;
+import social.openbook.app.ImageConverter;
+import social.openbook.app.util.InputStreamSupplier;
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.EventChannel;
 
@@ -24,7 +24,7 @@ public class SharePlugin implements FlutterPlugin, EventChannel.StreamHandler {
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
         applicationContext = binding.getApplicationContext();
-        eventChannel = new EventChannel(binding.getBinaryMessenger(), "openbook.social/receive_share");
+        eventChannel = new EventChannel(binding.getBinaryMessenger(), "okuna.io/receive_share");
         eventChannel.setStreamHandler(this);
     }
 
