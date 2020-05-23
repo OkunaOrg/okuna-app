@@ -12,6 +12,7 @@ import 'package:Okuna/services/devices_api.dart';
 import 'package:Okuna/services/dialog.dart';
 import 'package:Okuna/services/documents.dart';
 import 'package:Okuna/services/draft.dart';
+import 'package:Okuna/services/event/event.dart';
 import 'package:Okuna/services/explore_timeline_preferences.dart';
 import 'package:Okuna/services/hashtags_api.dart';
 import 'package:Okuna/services/intercom.dart';
@@ -21,7 +22,7 @@ import 'package:Okuna/services/media/media.dart';
 import 'package:Okuna/services/notifications_api.dart';
 import 'package:Okuna/services/permissions.dart';
 import 'package:Okuna/services/push_notifications/push_notifications.dart';
-import 'package:Okuna/services/share.dart';
+import 'package:Okuna/services/share/share.dart';
 import 'package:Okuna/services/text_autocompletion.dart';
 import 'package:Okuna/services/universal_links/universal_links.dart';
 import 'package:Okuna/services/emoji_picker.dart';
@@ -121,6 +122,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   ConnectivityService connectivityService = ConnectivityService();
   LinkPreviewService linkPreviewService = LinkPreviewService();
   DraftService draftService = DraftService();
+  EventService eventService = EventService();
 
   SentryClient sentryClient;
 
@@ -195,6 +197,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     mediaService.setBottomSheetService(bottomSheetService);
     mediaService.setPermissionsService(permissionService);
     mediaService.setUtilsService(utilsService);
+    mediaService.setEventService(eventService);
     documentsService.setHttpService(httpService);
     moderationApiService.setStringTemplateService(stringTemplateService);
     moderationApiService.setHttpieService(httpService);
@@ -204,6 +207,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     shareService.setMediaService(mediaService);
     shareService.setToastService(toastService);
     shareService.setValidationService(validationService);
+    shareService.setEventService(eventService);
     permissionService.setToastService(toastService);
     hashtagsApiService.setHttpieService(httpService);
     hashtagsApiService.setStringTemplateService(stringTemplateService);

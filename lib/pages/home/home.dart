@@ -1,25 +1,26 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:Okuna/models/push_notification.dart';
-import 'package:Okuna/pages/home/lib/poppable_page_controller.dart';
-import 'package:Okuna/services/intercom.dart';
-import 'package:Okuna/services/media/media.dart';
-import 'package:Okuna/services/push_notifications/push_notifications.dart';
 import 'package:Okuna/models/user.dart';
+import 'package:Okuna/pages/home/lib/poppable_page_controller.dart';
+import 'package:Okuna/pages/home/modals/save_post/create_post.dart';
 import 'package:Okuna/pages/home/pages/communities/communities.dart';
+import 'package:Okuna/pages/home/pages/menu/menu.dart';
 import 'package:Okuna/pages/home/pages/notifications/notifications.dart';
 import 'package:Okuna/pages/home/pages/own_profile.dart';
-import 'package:Okuna/pages/home/pages/timeline/timeline.dart';
-import 'package:Okuna/pages/home/pages/menu/menu.dart';
 import 'package:Okuna/pages/home/pages/search/search.dart';
+import 'package:Okuna/pages/home/pages/timeline/timeline.dart';
 import 'package:Okuna/pages/home/widgets/bottom-tab-bar.dart';
 import 'package:Okuna/pages/home/widgets/own_profile_active_icon.dart';
 import 'package:Okuna/pages/home/widgets/tab-scaffold.dart';
 import 'package:Okuna/provider.dart';
+import 'package:Okuna/services/event/event.dart';
+import 'package:Okuna/services/event/models/subscription.dart';
 import 'package:Okuna/services/httpie.dart';
+import 'package:Okuna/services/intercom.dart';
 import 'package:Okuna/services/modal_service.dart';
-import 'package:Okuna/services/share.dart';
+import 'package:Okuna/services/push_notifications/push_notifications.dart';
+import 'package:Okuna/services/share/models/share_event.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/user.dart';
 import 'package:Okuna/services/user_preferences.dart';
@@ -47,8 +48,7 @@ class OBHomePageState extends State<OBHomePage>
   IntercomService _intercomService;
   ModalService _modalService;
   UserPreferencesService _userPreferencesService;
-  ShareService _shareService;
-  MediaService _mediaService;
+  EventService _eventService;
 
   int _currentIndex;
   int _lastIndex;
@@ -65,6 +65,9 @@ class OBHomePageState extends State<OBHomePage>
   OBMainMenuPageController _mainMenuPageController;
   OBCommunitiesPageController _communitiesPageController;
   OBNotificationsPageController _notificationsPageController;
+
+  Completer _postModalCompleter;
+  EventSubscription _postModalEventSubscription;
 
   int _loggedInUserUnreadNotifications;
   String _loggedInUserAvatarUrl;
@@ -112,8 +115,7 @@ class OBHomePageState extends State<OBHomePage>
       _toastService = openbookProvider.toastService;
       _modalService = openbookProvider.modalService;
       _userPreferencesService = openbookProvider.userPreferencesService;
-      _shareService = openbookProvider.shareService;
-      _mediaService = openbookProvider.mediaService;
+      _eventService = openbookProvider.eventService;
       _bootstrap();
       _needsBootstrap = false;
     }
@@ -331,7 +333,7 @@ class OBHomePageState extends State<OBHomePage>
       }
     }
 
-    _shareService.subscribe(_onShare);
+    _eventService.subscribe(_onShareEvent);
   }
 
   Future _logout({unsubscribePushNotifications = false}) async {
@@ -433,16 +435,36 @@ class OBHomePageState extends State<OBHomePage>
     //_navigateToTab(OBHomePageTabs.notifications);
   }
 
-  Future<bool> _onShare({String text, File image, File video}) async {
-    bool postCreated = await _timelinePageController.createPost(
-        text: text, image: image, video: video);
+  Future<void> _onShareEvent(ShareEvent event) async {
+    if (event.status == ShareStatus.received) {
+      event.consume();
 
-    if (postCreated) {
+      _postModalCompleter = new Completer();
+
+      // Subscribe to post modal events so we know when the post modal is opened
+      // and closed.
+      _postModalEventSubscription = _eventService.subscribe(_onPostModalEvent);
+      _timelinePageController.createPost();
+
+      // Wait for the post modal to open before returning to ensure it has
+      // registered its event listeners before the share is processed further.
+      await _postModalCompleter.future;
+      _postModalCompleter = null;
+    }
+  }
+
+  Future<void> _onPostModalEvent(SavePostModalEvent event) async {
+    if (event.state == PostModalState.opened) {
+      if (!_postModalCompleter.isCompleted) {
+        _postModalCompleter?.complete();
+      }
+    } else if (event.state == PostModalState.published) {
       _timelinePageController.popUntilFirstRoute();
       _navigateToTab(OBHomePageTabs.timeline);
+      _postModalEventSubscription.cancel();
+    } else if (event.state == PostModalState.cancelled) {
+      _postModalEventSubscription.cancel();
     }
-
-    return true;
   }
 
   void _navigateToTab(OBHomePageTabs tab) {
