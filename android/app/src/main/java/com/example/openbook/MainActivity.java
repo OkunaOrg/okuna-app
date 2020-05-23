@@ -2,7 +2,7 @@ package social.openbook.app;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Environment;
+import android.os.Bundle;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
 
@@ -19,13 +19,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.function.Supplier;
 
 import com.example.openbook.ImageConverter;
 import com.example.openbook.plugins.ImageConverterPlugin;
 import com.example.openbook.util.InputStreamSupplier;
 
 import io.flutter.embedding.android.FlutterActivity;
+import io.flutter.embedding.engine.plugins.PluginRegistry;
 import io.flutter.plugin.common.EventChannel;
 
 public class MainActivity extends FlutterActivity {
@@ -35,6 +35,19 @@ public class MainActivity extends FlutterActivity {
   private EventChannel.EventSink eventSink = null;
   private List<Intent> intentBacklog = new ArrayList<>();
   private boolean streamCanceled = false;
+
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+
+    // Register the ImageConverterPlugin manually. It won't register automatically since it isn't added as a plugin via
+    // our pubspec.yaml.
+    // Note: getFlutterEngine() should not be null here since it is created in super.onCreate().
+    PluginRegistry pluginRegistry = getFlutterEngine().getPlugins();
+    pluginRegistry.add(new ImageConverterPlugin());
+
+    sendIntent(getIntent());
+  }
 
   @Override
   protected void onNewIntent(Intent intent) {
