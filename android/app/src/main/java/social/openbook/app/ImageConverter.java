@@ -1,4 +1,4 @@
-package com.example.openbook;
+package social.openbook.app;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
