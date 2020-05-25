@@ -43,7 +43,8 @@ class OBProfilePageState extends State<OBProfilePage> {
   OBPostDisplayContext _postsDisplayContext;
 
   List<Community> _recentlyExcludedCommunities;
-  GlobalKey<RefreshIndicatorState> _protectedProfileRefreshIndicatorKey = GlobalKey();
+  GlobalKey<RefreshIndicatorState> _protectedProfileRefreshIndicatorKey =
+      GlobalKey();
   bool _needsProtectedProfileBootstrap;
 
   @override
@@ -77,6 +78,7 @@ class OBProfilePageState extends State<OBProfilePage> {
         navigationBar: OBProfileNavBar(_user),
         child: OBPrimaryColorContainer(
           child: StreamBuilder(
+              initialData: widget.user,
               stream: widget.user.updateSubject,
               builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
                 User user = snapshot.data;
@@ -117,13 +119,12 @@ class OBProfilePageState extends State<OBProfilePage> {
   }
 
   Widget _buildProtectedProfileContent() {
-    if(_needsProtectedProfileBootstrap){
+    if (_needsProtectedProfileBootstrap) {
       Future.delayed(Duration(milliseconds: 100), () {
         _protectedProfileRefreshIndicatorKey.currentState.show();
       });
       _needsProtectedProfileBootstrap = false;
     }
-
 
     List<Widget> profileDetails = _buildProfileContentDetails();
 
@@ -179,13 +180,16 @@ class OBProfilePageState extends State<OBProfilePage> {
               StreamBuilder(
                 stream: widget.user.updateSubject,
                 builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
-                  if (snapshot.data == null || snapshot.data.isFollowRequested == null) return const SizedBox();
+                  if (snapshot.data == null ||
+                      snapshot.data.isFollowRequested == null)
+                    return const SizedBox();
                   User user = snapshot.data;
                   return OBSecondaryText((user.isFollowRequested
                       ? _localizationService
                           .user__protected_account_instructions_complete
                       : _localizationService
-                          .user__protected_account_instructions(getFollowButtonText())));
+                          .user__protected_account_instructions(
+                              getFollowButtonText())));
                 },
               ),
             ],
@@ -239,7 +243,7 @@ class OBProfilePageState extends State<OBProfilePage> {
           );
   }
 
-  String getFollowButtonText(){
+  String getFollowButtonText() {
     return widget.user.isFollowed != null && widget.user.isFollowed
         ? _localizationService.user__follow_button_follow_back_text
         : _localizationService.user__follow_button_follow_text;
