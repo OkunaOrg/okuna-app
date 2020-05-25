@@ -142,7 +142,7 @@ class ShareService {
       video = File.fromUri(Uri.parse(share.video));
 
       var processedFile = await _mediaService.processMedia(
-        media: MediaFile(image, FileType.video),
+        media: MediaFile(video, FileType.video),
         context: _context,
       );
 
