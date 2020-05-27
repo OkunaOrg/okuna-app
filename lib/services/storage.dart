@@ -54,6 +54,11 @@ class _SecureStore implements _Store<String> {
   final storage = new FlutterSecureStorage();
   Set<String> _storedKeys = Set();
 
+  // Clears the whole storage, including other namespaces.
+  Future clearAll(){
+    return storage.deleteAll();
+  }
+
   _SecureStore() {
     _loadPreviouslyStoredKeys();
   }
@@ -77,8 +82,8 @@ class _SecureStore implements _Store<String> {
     try {
       return storage.read(key: key);
     } on PlatformException {
-      // This might happen when failed to decrypt
-      await storage.delete(key: key);
+      // This might happen when failed to decrypt, in that case the whole storage is useless. Clear it.
+      await clearAll();
       return null;
     }
   }
