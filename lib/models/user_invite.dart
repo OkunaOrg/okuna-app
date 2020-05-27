@@ -13,7 +13,7 @@ class UserInvite extends UpdatableModel<UserInvite> {
 
   static const String IOS_DOWNLOAD_LINK = 'https://testflight.apple.com/join/XniAjdyF';
   static const String TESTFLIGHT_DOWNLOAD_LINK = 'https://itunes.apple.com/us/app/testflight/id899247664';
-  static const String ANDROID_DOWNLOAD_LINK = 'https://play.google.com/apps/testing/social.openbook.app';
+  static const String ANDROID_DOWNLOAD_LINK = 'https://play.google.com/store/apps/details?id=social.openbook.app';
   static const  INVITE_LINK = '{apiURL}api/auth/invite?token={token}';
 
   static convertUserInviteStatusToBool(UserInviteFilterByStatus value) {
