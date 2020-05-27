@@ -175,7 +175,7 @@ class ValidationService {
   }
 
   bool isUsernameAllowedCharacters(String username) {
-    String p = r'^[a-zA-Z0-9_.]+$';
+    String p = r'^[a-zA-Z0-9](?:[._]?[a-z-A-Z0-9])*$';
 
     RegExp regExp = new RegExp(p, caseSensitive: false);
 
