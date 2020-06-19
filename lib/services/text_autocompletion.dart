@@ -43,62 +43,20 @@ class TextAutocompletionService {
 
   void autocompleteTextWithUsername(
       TextEditingController textController, String username) {
-    String text = textController.text;
-    int cursorPosition = textController.selection.baseOffset;
-    String lastWord = _getWordBeforeCursor(text, cursorPosition);
-
-    if (!lastWord.startsWith('@')) {
-      throw 'Tried to autocomplete text with username without @';
-    }
-
-    var newText = text.substring(0, cursorPosition - lastWord.length) +
-        '@$username ' +
-        text.substring(cursorPosition);
-    var newSelection = TextSelection.collapsed(
-        offset: cursorPosition - lastWord.length + username.length + 2);
-
-    textController.value =
-        TextEditingValue(text: newText, selection: newSelection);
+    _autocompleteText(textController, username, '@',
+        () => throw 'Tried to autocomplete text with username without @');
   }
 
   void autocompleteTextWithHashtagName(
       TextEditingController textController, String hashtag) {
-    String text = textController.text;
-    int cursorPosition = textController.selection.baseOffset;
-    String lastWord = _getWordBeforeCursor(text, cursorPosition);
-
-    if (!lastWord.startsWith('#')) {
-      throw 'Tried to autocomplete text with hashtag without #';
-    }
-
-    var newText = text.substring(0, cursorPosition - lastWord.length) +
-        '#$hashtag ' +
-        text.substring(cursorPosition);
-    var newSelection = TextSelection.collapsed(
-        offset: cursorPosition - lastWord.length + hashtag.length + 2);
-
-    textController.value =
-        TextEditingValue(text: newText, selection: newSelection);
+    _autocompleteText(textController, hashtag, '#',
+        () => throw 'Tried to autocomplete text with hashtag without #');
   }
 
   void autocompleteTextWithCommunityName(
       TextEditingController textController, String communityName) {
-    String text = textController.text;
-    int cursorPosition = textController.selection.baseOffset;
-    String lastWord = _getWordBeforeCursor(text, cursorPosition);
-
-    if (!lastWord.startsWith('c/')) {
-      throw 'Tried to autocomplete text with community name without c/';
-    }
-
-    var newText = text.substring(0, cursorPosition - lastWord.length) +
-        'c/$communityName ' +
-        text.substring(cursorPosition);
-    var newSelection = TextSelection.collapsed(
-        offset: cursorPosition - lastWord.length + communityName.length + 3);
-
-    textController.value =
-        TextEditingValue(text: newText, selection: newSelection);
+    _autocompleteText(textController, communityName, 'c/',
+        () => throw 'Tried to autocomplete text with community name without c/');
   }
 
   String _getWordBeforeCursor(String text, int cursorPosition) {
@@ -108,6 +66,26 @@ class TextAutocompletionService {
     } else {
       return text;
     }
+  }
+
+  void _autocompleteText(TextEditingController textController, String value,
+      String prefix, VoidCallback onPrefixMissing) {
+    String text = textController.text;
+    int cursorPosition = textController.selection.baseOffset;
+    String lastWord = _getWordBeforeCursor(text, cursorPosition);
+
+    if (!lastWord.startsWith(prefix)) {
+      onPrefixMissing();
+    }
+
+    var newText = text.substring(0, cursorPosition - lastWord.length) +
+        '$prefix$value ' +
+        text.substring(cursorPosition);
+    var newSelection = TextSelection.collapsed(
+        offset: cursorPosition - lastWord.length + prefix.length + value.length + 1);
+
+    textController.value =
+        TextEditingValue(text: newText, selection: newSelection);
   }
 }
 
