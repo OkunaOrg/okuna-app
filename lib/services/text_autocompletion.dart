@@ -95,7 +95,7 @@ class TextAutocompletionService {
         'c/$communityName ' +
         text.substring(cursorPosition);
     var newSelection = TextSelection.collapsed(
-        offset: cursorPosition - lastWord.length + communityName.length + 4);
+        offset: cursorPosition - lastWord.length + communityName.length + 3);
 
     textController.value =
         TextEditingValue(text: newText, selection: newSelection);
