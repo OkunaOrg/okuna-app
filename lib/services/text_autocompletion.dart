@@ -2,6 +2,10 @@ import 'package:Okuna/services/validation.dart';
 import 'package:flutter/cupertino.dart';
 
 class TextAutocompletionService {
+  static const String _usernamePrefix = '@';
+  static const String _hashtagPrefix = '#';
+  static const String _communityPrefix = 'c/';
+
   ValidationService _validationService;
 
   void setValidationService(validationService) {
@@ -16,21 +20,21 @@ class TextAutocompletionService {
       String lastWord =
           _getWordBeforeCursor(textController.text, cursorPosition);
 
-      if (lastWord.startsWith('@')) {
-        String searchQuery = lastWord.substring(1);
+      if (lastWord.startsWith(_usernamePrefix)) {
+        String searchQuery = lastWord.substring(_usernamePrefix.length);
         return TextAutocompletionResult(
             isAutocompleting: true,
             autocompleteQuery: searchQuery,
             type: TextAutocompletionType.account);
-      } else if (lastWord.startsWith('c/')) {
-        String searchQuery = lastWord.substring(3);
+      } else if (lastWord.startsWith(_communityPrefix)) {
+        String searchQuery = lastWord.substring(_communityPrefix.length);
         return TextAutocompletionResult(
             isAutocompleting: true,
             autocompleteQuery: searchQuery,
             type: TextAutocompletionType.community);
-      } else if (lastWord.startsWith('#') && lastWord.length > 1 &&
+      } else if (lastWord.startsWith(_hashtagPrefix) && lastWord.length > 1 &&
           _validationService.isPostTextContainingValidHashtags(lastWord)) {
-        String searchQuery = lastWord.substring(1);
+        String searchQuery = lastWord.substring(_hashtagPrefix.length);
         return TextAutocompletionResult(
             isAutocompleting: true,
             autocompleteQuery: searchQuery,
@@ -43,20 +47,20 @@ class TextAutocompletionService {
 
   void autocompleteTextWithUsername(
       TextEditingController textController, String username) {
-    _autocompleteText(textController, username, '@',
-        () => throw 'Tried to autocomplete text with username without @');
+    _autocompleteText(textController, username, _usernamePrefix,
+        () => throw 'Tried to autocomplete text with username without $_usernamePrefix');
   }
 
   void autocompleteTextWithHashtagName(
       TextEditingController textController, String hashtag) {
-    _autocompleteText(textController, hashtag, '#',
-        () => throw 'Tried to autocomplete text with hashtag without #');
+    _autocompleteText(textController, hashtag, _hashtagPrefix,
+        () => throw 'Tried to autocomplete text with hashtag without $_hashtagPrefix');
   }
 
   void autocompleteTextWithCommunityName(
       TextEditingController textController, String communityName) {
-    _autocompleteText(textController, communityName, 'c/',
-        () => throw 'Tried to autocomplete text with community name without c/');
+    _autocompleteText(textController, communityName, _communityPrefix,
+        () => throw 'Tried to autocomplete text with community name without $_communityPrefix');
   }
 
   String _getWordBeforeCursor(String text, int cursorPosition) {
