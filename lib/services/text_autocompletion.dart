@@ -78,14 +78,13 @@ class TextAutocompletionService {
       onPrefixMissing();
     }
 
-    var newText = text.substring(0, cursorPosition - lastWord.length) +
-        '$prefix$value ' +
-        text.substring(cursorPosition);
-    var newSelection = TextSelection.collapsed(
-        offset: cursorPosition - lastWord.length + prefix.length + value.length + 1);
+    var newTextStart =
+        text.substring(0, cursorPosition - lastWord.length) + '$prefix$value ';
+    var newTextEnd = text.substring(cursorPosition);
+    var newSelection = TextSelection.collapsed(offset: newTextStart.length);
 
-    textController.value =
-        TextEditingValue(text: newText, selection: newSelection);
+    textController.value = TextEditingValue(
+        text: newTextStart + newTextEnd, selection: newSelection);
   }
 }
 
