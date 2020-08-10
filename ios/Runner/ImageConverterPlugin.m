@@ -13,7 +13,7 @@ typedef NS_ENUM(NSInteger, TargetFormat) {
 @implementation ImageConverterPlugin
 + (void)registerWithRegistrar:(NSObject <FlutterPluginRegistrar> *)registrar {
     FlutterMethodChannel *channel =
-            [FlutterMethodChannel methodChannelWithName:@"openspace.social/image_converter"
+            [FlutterMethodChannel methodChannelWithName:@"okuna.io/image_converter"
                                         binaryMessenger:[registrar messenger]];
     ImageConverterPlugin *instance = [[ImageConverterPlugin alloc] init];
     [registrar addMethodCallDelegate:instance channel:channel];

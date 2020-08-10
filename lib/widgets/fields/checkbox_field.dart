@@ -1,4 +1,5 @@
 import 'package:Okuna/widgets/checkbox.dart';
+import 'package:Okuna/widgets/theming/secondary_text.dart';
 import 'package:Okuna/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -34,8 +35,10 @@ class OBCheckboxField extends StatelessWidget {
             title,
             style: finalTitleStyle,
           ),
-          subtitle: subtitle != null ? OBText(subtitle) : null,
+          subtitle: subtitle != null ? OBSecondaryText(subtitle) : null,
           trailing: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               OBCheckbox(

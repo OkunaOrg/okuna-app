@@ -3,6 +3,8 @@ import 'package:Okuna/models/notifications/community_new_post_notification.dart'
 import 'package:Okuna/models/notifications/connection_confirmed_notification.dart';
 import 'package:Okuna/models/notifications/connection_request_notification.dart';
 import 'package:Okuna/models/notifications/follow_notification.dart';
+import 'package:Okuna/models/notifications/follow_request_approved_notification.dart';
+import 'package:Okuna/models/notifications/follow_request_notification.dart';
 import 'package:Okuna/models/notifications/notification.dart';
 import 'package:Okuna/models/notifications/post_comment_notification.dart';
 import 'package:Okuna/models/notifications/post_comment_reaction_notification.dart';
@@ -17,6 +19,8 @@ import 'package:Okuna/widgets/tiles/notification_tile/widgets/community_new_post
 import 'package:Okuna/widgets/tiles/notification_tile/widgets/connection_confirmed_notification_tile.dart';
 import 'package:Okuna/widgets/tiles/notification_tile/widgets/connection_request_notification_tile.dart';
 import 'package:Okuna/widgets/tiles/notification_tile/widgets/follow_notification_tile.dart';
+import 'package:Okuna/widgets/tiles/notification_tile/widgets/follow_request_approved_notification_tile.dart';
+import 'package:Okuna/widgets/tiles/notification_tile/widgets/follow_request_notification_tile.dart';
 import 'package:Okuna/widgets/tiles/notification_tile/widgets/post_comment_notification_tile.dart';
 import 'package:Okuna/widgets/tiles/notification_tile/widgets/post_comment_reaction_notification_tile.dart';
 import 'package:Okuna/widgets/tiles/notification_tile/widgets/post_comment_reply_notification_tile.dart';
@@ -86,6 +90,20 @@ class OBNotificationTile extends StatelessWidget {
         notificationTile = OBFollowNotificationTile(
           notification: notification,
           followNotification: notificationContentObject,
+          onPressed: finalOnPressed,
+        );
+        break;
+      case FollowRequestNotification:
+        notificationTile = OBFollowRequestNotificationTile(
+          notification: notification,
+          followRequestNotification: notificationContentObject,
+          onPressed: finalOnPressed,
+        );
+        break;
+      case FollowRequestApprovedNotification:
+        notificationTile = OBFollowRequestApprovedNotificationTile(
+          notification: notification,
+          followRequestApprovedNotification: notificationContentObject,
           onPressed: finalOnPressed,
         );
         break;

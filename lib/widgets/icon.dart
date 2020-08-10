@@ -265,6 +265,11 @@ class OBIcons {
   static const linkPreviews = OBIconData(nativeIcon: Icons.library_books);
   static const nativeInfo = OBIconData(nativeIcon: Icons.info);
   static const hashtag = OBIconData(nativeIcon: Icons.label);
+  static const visibility = OBIconData(nativeIcon: Icons.remove_red_eye);
+  static const visibilityPublic = OBIconData(nativeIcon: Icons.public);
+  static const visibilityOkuna = OBIconData(nativeIcon: Icons.people);
+  static const visibilityPrivate = OBIconData(nativeIcon: Icons.lock);
+  static const followRequests = OBIconData(nativeIcon: Icons.move_to_inbox);
   static const success = OBIconData(filename: 'success-icon.png');
   static const error = OBIconData(filename: 'error-icon.png');
   static const warning = OBIconData(filename: 'warning-icon.png');

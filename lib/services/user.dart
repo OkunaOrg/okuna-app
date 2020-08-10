@@ -10,6 +10,7 @@ import 'package:Okuna/models/communities_list.dart';
 import 'package:Okuna/models/community.dart';
 import 'package:Okuna/models/device.dart';
 import 'package:Okuna/models/devices_list.dart';
+import 'package:Okuna/models/follow_request_list.dart';
 import 'package:Okuna/models/follows_lists_list.dart';
 import 'package:Okuna/models/circles_list.dart';
 import 'package:Okuna/models/connection.dart';
@@ -427,6 +428,7 @@ class UserService {
     bool communityPostsVisible,
     String bio,
     String location,
+    UserVisibility visibility,
   }) async {
     HttpieStreamedResponse response = await _authApiService.updateUser(
         avatar: avatar,
@@ -437,6 +439,7 @@ class UserService {
         followersCountVisible: followersCountVisible,
         communityPostsVisible: communityPostsVisible,
         bio: bio,
+        visibility: visibility?.code,
         location: location);
 
     _checkResponseIsOk(response);
@@ -1092,6 +1095,46 @@ class UserService {
         await _authApiService.getFollowings(count: count, maxId: maxId);
     _checkResponseIsOk(response);
     return UsersList.fromJson(json.decode(response.body));
+  }
+
+  Future<void> requestToFollowUser(User user) async {
+    HttpieResponse response =
+        await _followsApiService.requestToFollowUserWithUsername(user.username);
+    _checkResponseIsCreated(response);
+    user.setIsFollowRequested(true);
+  }
+
+  Future<void> cancelRequestToFollowUser(User user) async {
+    HttpieResponse response =
+    await _followsApiService.cancelRequestToFollowUserWithUsername(user.username);
+    _checkResponseIsOk(response);
+    user.setIsFollowRequested(false);
+  }
+
+  Future<void> approveFollowRequestFromUser(User user) async {
+    HttpieResponse response =
+        await _followsApiService.approveFollowRequestFromUserWithUsername(user.username);
+    _checkResponseIsOk(response);
+    user.setIsPendingFollowRequestApproval(false);
+    user.setIsFollowed(true);
+  }
+
+  Future<void> rejectFollowRequestFromUser(User user) async {
+    HttpieResponse response =
+    await _followsApiService.rejectFollowRequestFromUserWithUsername(user.username);
+    _checkResponseIsOk(response);
+    user.setIsPendingFollowRequestApproval(false);
+  }
+
+  Future<FollowRequestList> getReceivedFollowRequests(
+      {bool authenticatedRequest = true,
+        int maxId,
+        int count,
+        Community withCommunity}) async {
+    HttpieResponse response =
+    await _followsApiService.getReceivedFollowRequests(count: count, maxId: maxId);
+    _checkResponseIsOk(response);
+    return FollowRequestList.fromJson(json.decode(response.body));
   }
 
   Future<Follow> followUserWithUsername(String username,
@@ -1960,6 +2003,8 @@ class UserService {
     bool postUserMentionNotifications,
     bool postReactionNotifications,
     bool followNotifications,
+    bool followRequestNotifications,
+    bool followRequestApprovedNotifications,
     bool connectionRequestNotifications,
     bool connectionConfirmedNotifications,
     bool communityInviteNotifications,
@@ -1976,6 +2021,8 @@ class UserService {
             postCommentReactionNotifications: postCommentReactionNotifications,
             postReactionNotifications: postReactionNotifications,
             followNotifications: followNotifications,
+            followRequestNotifications: followRequestNotifications,
+            followRequestApprovedNotifications: followRequestApprovedNotifications,
             connectionConfirmedNotifications: connectionConfirmedNotifications,
             communityInviteNotifications: communityInviteNotifications,
             connectionRequestNotifications: connectionRequestNotifications,
@@ -2222,6 +2269,29 @@ class UserService {
         query: query, count: count, postUuid: post.uuid);
     _checkResponseIsOk(response);
     return UsersList.fromJson(json.decode(response.body));
+  }
+
+  Map<UserVisibility, Map<String, String>> getUserVisibilityLocalizationMap() {
+    var publicMap = {
+      'title': _localizationService.user__visibility_public,
+      'description': _localizationService.user__visibility_public_desc
+    };
+
+    var okunaMap = {
+      'title': _localizationService.user__visibility_okuna,
+      'description': _localizationService.user__visibility_okuna_desc
+    };
+
+    var privateMap = {
+      'title': _localizationService.user__visibility_private,
+      'description': _localizationService.user__visibility_private_desc
+    };
+
+    return {
+      UserVisibility.public: publicMap,
+      UserVisibility.okuna: okunaMap,
+      UserVisibility.private: privateMap,
+    };
   }
 
   Future<String> _getDeviceName() async {

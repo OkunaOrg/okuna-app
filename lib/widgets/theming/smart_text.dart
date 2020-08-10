@@ -96,21 +96,21 @@ final _tagRegex = RegExp(r"\B#\w*[a-zA-Z]+\w*", caseSensitive: false);
 
 // Architecture of this regex:
 //  (?:                                 don't capture this group, so the mention itself is still the first capturing group
-//    [^A-Za-u0-9]|^                    make sure that no word characters are in front of name
+//    \s|^                              make sure that no word characters are in front of name
 //  )
 //  (
-//    @                                 begin of mention
+//    \@                                 begin of mention
 //    [A-Za-z0-9]                       first character of username
-//    (
-//      (
-//        [A-Za-z0-9]|[._-](?![._-])    word character or one of [._-] which may not be followed by another special char
+//    (?:
+//      (?:
+//        [A-Za-z0-9]|[._](?![._])      word character or one of [._] which may not be followed by another special char
 //      ){0,28}                         repeat this 0 to 28 times
 //      [A-Za-z0-9]                     always end on a word character
 //    )?                                entire part is optional to allow single character names
 //  )                                   end of mention
 //  (?=\b|$)                            next char must be either a word boundary or end of text
 final _usernameRegex = RegExp(
-    r"(?:[^A-Za-u0-9]|^)(@[A-Za-z0-9](([A-Za-z0-9]|[._-](?![._-])){0,28}[A-Za-z0-9])?)(?=\b|$)",
+    r"(?:\s|^)(\@[A-Za-z0-9](?:(?:[A-Za-z0-9]|[._](?![._])){0,28}[A-Za-z0-9])?)(?:\b|$)",
     caseSensitive: false);
 
 // Same idea as inner part of above regex, but only _ is allowed as special character

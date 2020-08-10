@@ -24,6 +24,7 @@ class User extends UpdatableModel<User> {
   String email;
   String username;
   Language language;
+  UserVisibility visibility;
   UserProfile profile;
   DateTime dateJoined;
   UserNotificationsSettings notificationsSettings;
@@ -38,12 +39,14 @@ class User extends UpdatableModel<User> {
   bool areNewPostNotificationsEnabled;
   bool isFollowing;
   bool isFollowed;
+  bool isFollowRequested;
   bool isConnected;
   bool isReported;
   bool isBlocked;
   bool isGlobalModerator;
   bool isFullyConnected;
   bool isPendingConnectionConfirmation;
+  bool isPendingFollowRequestApproval;
   bool isMemberOfCommunities;
   CirclesList connectedCircles;
   FollowsListsList followLists;
@@ -58,9 +61,9 @@ class User extends UpdatableModel<User> {
           storage: UpdatableModelSimpleStorage(size: 10)));
 
   static final maxSessionUsersFactory = UserFactory(
-    cache:
-    SimpleCache<int, User>(storage: UpdatableModelSimpleStorage(size: UpdatableModelSimpleStorage.MAX_INT))
-  );
+      cache: SimpleCache<int, User>(
+          storage: UpdatableModelSimpleStorage(
+              size: UpdatableModelSimpleStorage.MAX_INT)));
 
   factory User.fromJson(Map<String, dynamic> json,
       {bool storeInSessionCache = false, bool storeInMaxSessionCache = false}) {
@@ -69,15 +72,17 @@ class User extends UpdatableModel<User> {
     int userId = json['id'];
 
     User user = maxSessionUsersFactory.getItemWithIdFromCache(userId) ??
-    navigationUsersFactory.getItemWithIdFromCache(userId) ??
-    sessionUsersFactory.getItemWithIdFromCache(userId);
+        navigationUsersFactory.getItemWithIdFromCache(userId) ??
+        sessionUsersFactory.getItemWithIdFromCache(userId);
     if (user != null) {
       user.update(json);
       return user;
     }
-    return storeInMaxSessionCache ? maxSessionUsersFactory.fromJson(json) : storeInSessionCache
-        ? sessionUsersFactory.fromJson(json)
-        : navigationUsersFactory.fromJson(json);
+    return storeInMaxSessionCache
+        ? maxSessionUsersFactory.fromJson(json)
+        : storeInSessionCache
+            ? sessionUsersFactory.fromJson(json)
+            : navigationUsersFactory.fromJson(json);
   }
 
   Map<String, dynamic> toJson() {
@@ -90,29 +95,41 @@ class User extends UpdatableModel<User> {
       'username': username,
       'language': language?.toJson(),
       'profile': profile?.toJson(),
+      'visibility': visibility?.code,
       'notifications_settings': notificationsSettings?.toJson(),
       'followers_count': followersCount,
       'following_count': followingCount,
       'unread_notifications_count': unreadNotificationsCount,
       'posts_count': postsCount,
       'invite_count': inviteCount,
-      'pending_communities_moderated_objects_count': pendingCommunitiesModeratedObjectsCount,
+      'pending_communities_moderated_objects_count':
+          pendingCommunitiesModeratedObjectsCount,
       'active_moderation_penalties_count': activeModerationPenaltiesCount,
       'are_guidelines_accepted': areGuidelinesAccepted,
       'are_new_post_notifications_enabled': areNewPostNotificationsEnabled,
       'is_following': isFollowing,
       'is_followed': isFollowed,
+      'is_follow_requested': isFollowRequested,
       'is_connected': isConnected,
       'is_reported': isReported,
       'is_blocked': isBlocked,
       'is_global_moderator': isGlobalModerator,
       'is_fully_connected': isFullyConnected,
       'is_pending_connection_confirmation': isPendingConnectionConfirmation,
+      'is_pending_follow_request_approval': isPendingFollowRequestApproval,
       'is_member_of_communities': isMemberOfCommunities,
-      'connected_circles': connectedCircles?.circles?.map((Circle circle) => circle.toJson())?.toList(),
-      'follow_lists': followLists?.lists?.map((FollowsList followList) => followList.toJson())?.toList(),
-      'communities_memberships': communitiesMemberships?.communityMemberships?.map((CommunityMembership membership) => membership.toJson())?.toList(),
-      'communities_invites' : communitiesInvites?.communityInvites?.map((CommunityInvite invite) => invite.toJson())?.toList(),
+      'connected_circles': connectedCircles?.circles
+          ?.map((Circle circle) => circle.toJson())
+          ?.toList(),
+      'follow_lists': followLists?.lists
+          ?.map((FollowsList followList) => followList.toJson())
+          ?.toList(),
+      'communities_memberships': communitiesMemberships?.communityMemberships
+          ?.map((CommunityMembership membership) => membership.toJson())
+          ?.toList(),
+      'communities_invites': communitiesInvites?.communityInvites
+          ?.map((CommunityInvite invite) => invite.toJson())
+          ?.toList(),
     };
   }
 
@@ -134,6 +151,7 @@ class User extends UpdatableModel<User> {
       this.dateJoined,
       this.connectionsCircleId,
       this.username,
+      this.visibility,
       this.email,
       this.profile,
       this.language,
@@ -146,12 +164,15 @@ class User extends UpdatableModel<User> {
       this.areNewPostNotificationsEnabled,
       this.isFollowing,
       this.isFollowed,
+      this.isFollowRequested,
       this.isBlocked,
       this.isGlobalModerator,
       this.isConnected,
       this.isReported,
       this.isFullyConnected,
       this.isMemberOfCommunities,
+      this.isPendingConnectionConfirmation,
+      this.isPendingFollowRequestApproval,
       this.connectedCircles,
       this.followLists,
       this.communitiesMemberships,
@@ -163,7 +184,8 @@ class User extends UpdatableModel<User> {
   void updateFromJson(Map json) {
     if (json.containsKey('username')) username = json['username'];
     if (json.containsKey('uuid')) uuid = json['uuid'];
-    if (json.containsKey('date_joined')) dateJoined = navigationUsersFactory.parseDateJoined(json['date_joined']);
+    if (json.containsKey('date_joined'))
+      dateJoined = navigationUsersFactory.parseDateJoined(json['date_joined']);
     if (json.containsKey('are_guidelines_accepted'))
       areGuidelinesAccepted = json['are_guidelines_accepted'];
     if (json.containsKey('email')) email = json['email'];
@@ -199,9 +221,12 @@ class User extends UpdatableModel<User> {
       unreadNotificationsCount = json['unread_notifications_count'];
     if (json.containsKey('posts_count')) postsCount = json['posts_count'];
     if (json.containsKey('invite_count')) inviteCount = json['invite_count'];
-    if (json.containsKey('are_new_post_notifications_enabled')) areNewPostNotificationsEnabled = json['are_new_post_notifications_enabled'];
+    if (json.containsKey('are_new_post_notifications_enabled'))
+      areNewPostNotificationsEnabled =
+          json['are_new_post_notifications_enabled'];
     if (json.containsKey('is_following')) isFollowing = json['is_following'];
     if (json.containsKey('is_followed')) isFollowed = json['is_followed'];
+    if (json.containsKey('is_follow_requested')) isFollowRequested = json['is_follow_requested'];
     if (json.containsKey('is_connected')) isConnected = json['is_connected'];
     if (json.containsKey('is_global_moderator'))
       isGlobalModerator = json['is_global_moderator'];
@@ -214,6 +239,10 @@ class User extends UpdatableModel<User> {
     if (json.containsKey('is_pending_connection_confirmation'))
       isPendingConnectionConfirmation =
           json['is_pending_connection_confirmation'];
+
+    if (json.containsKey('is_pending_follow_request_approval'))
+      isPendingFollowRequestApproval =
+          json['is_pending_follow_request_approval'];
     if (json.containsKey('connected_circles')) {
       connectedCircles =
           navigationUsersFactory.parseCircles(json['connected_circles']);
@@ -232,6 +261,10 @@ class User extends UpdatableModel<User> {
     if (json.containsKey('communities_invites')) {
       communitiesInvites =
           navigationUsersFactory.parseInvites(json['communities_invites']);
+    }
+
+    if (json.containsKey('visibility')) {
+      visibility = UserVisibility.parse(json['visibility']);
     }
   }
 
@@ -407,6 +440,26 @@ class User extends UpdatableModel<User> {
 
   void setIsReported(isReported) {
     this.isReported = isReported;
+    notifyUpdate();
+  }
+
+  void setIsPendingFollowRequestApproval(isPendingFollowRequestApproval) {
+    this.isPendingFollowRequestApproval = isPendingFollowRequestApproval;
+    notifyUpdate();
+  }
+
+  void setIsFollowing(isFollowing) {
+    this.isFollowing = isFollowing;
+    notifyUpdate();
+  }
+
+  void setIsFollowRequested(isFollowRequested) {
+    this.isFollowRequested = isFollowRequested;
+    notifyUpdate();
+  }
+
+  void setIsFollowed(isFollowed) {
+    this.isFollowed = isFollowed;
     notifyUpdate();
   }
 
@@ -636,17 +689,24 @@ class UserFactory extends UpdatableModelFactory<User> {
             json['active_moderation_penalties_count'],
         email: json['email'],
         username: json['username'],
+        visibility: UserVisibility.parse(json['visibility']),
         language: parseLanguage(json['language']),
         followingCount: json['following_count'],
         isFollowing: json['is_following'],
         isFollowed: json['is_followed'],
-        areNewPostNotificationsEnabled: json['are_new_post_notifications_enabled'],
+        isFollowRequested: json['is_follow_requested'],
+        areNewPostNotificationsEnabled:
+            json['are_new_post_notifications_enabled'],
         isConnected: json['is_connected'],
         isGlobalModerator: json['is_global_moderator'],
         isBlocked: json['is_blocked'],
         isReported: json['is_reported'],
         isFullyConnected: json['is_fully_connected'],
         isMemberOfCommunities: json['is_member_of_communities'],
+        isPendingConnectionConfirmation:
+            json['is_pending_connection_confirmation'],
+        isPendingFollowRequestApproval:
+            json['is_pending_follow_request_approval'],
         profile: parseUserProfile(json['profile']),
         connectedCircles: parseCircles(json['connected_circles']),
         communitiesMemberships:
@@ -694,5 +754,44 @@ class UserFactory extends UpdatableModelFactory<User> {
   DateTime parseDateJoined(String dateJoined) {
     if (dateJoined == null) return null;
     return DateTime.parse(dateJoined).toLocal();
+  }
+}
+
+class UserVisibility {
+  final String code;
+
+  const UserVisibility._internal(this.code);
+
+  toString() => code;
+
+  static const public = const UserVisibility._internal('P');
+  static const okuna = const UserVisibility._internal('O');
+  static const private = const UserVisibility._internal('T');
+
+  static const _values = const <UserVisibility>[
+    public,
+    okuna,
+    private,
+  ];
+
+  static values() => _values;
+
+  static UserVisibility parse(String string) {
+    if (string == null) return null;
+
+    UserVisibility userVisibility;
+    for (var type in _values) {
+      if (string == type.code) {
+        userVisibility = type;
+        break;
+      }
+    }
+
+    if (userVisibility == null) {
+      // Don't throw as we might introduce new notifications on the API which might not be yet in code
+      print('Unsupported UserVisibility');
+    }
+
+    return userVisibility;
   }
 }

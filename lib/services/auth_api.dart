@@ -103,6 +103,7 @@ class AuthApiService {
     bool communityPostsVisible,
     String bio,
     String location,
+    String visibility,
   }) {
     Map<String, dynamic> body = {};
 
@@ -127,6 +128,8 @@ class AuthApiService {
     if (url != null) body['url'] = url;
 
     if (bio != null) body['bio'] = bio;
+
+    if (visibility != null) body['visibility'] = visibility;
 
     if (followersCountVisible != null)
       body['followers_count_visible'] = followersCountVisible;
@@ -326,6 +329,7 @@ class AuthApiService {
 
   Future<HttpieResponse> loginWithCredentials(
       {@required String username, @required String password}) {
+
     return this._httpService.postJSON('$apiURL$LOGIN_PATH',
         body: {'username': username, 'password': password});
   }
@@ -360,6 +364,8 @@ class AuthApiService {
     bool postUserMentionNotifications,
     bool postReactionNotifications,
     bool followNotifications,
+    bool followRequestNotifications,
+    bool followRequestApprovedNotifications,
     bool connectionRequestNotifications,
     bool connectionConfirmedNotifications,
     bool communityInviteNotifications,
@@ -390,6 +396,12 @@ class AuthApiService {
 
     if (followNotifications != null)
       body['follow_notifications'] = followNotifications;
+
+    if (followRequestNotifications != null)
+      body['follow_request_notifications'] = followRequestNotifications;
+
+    if (followRequestApprovedNotifications != null)
+      body['follow_request_approved_notifications'] = followRequestApprovedNotifications;
 
     if (connectionRequestNotifications != null)
       body['connection_request_notifications'] = connectionRequestNotifications;

@@ -7,7 +7,7 @@ description: Social Network
 # Both the version and the builder number may be overridden in flutter
 # build by specifying --build-name and --build-number, respectively.
 # Read more about versioning at semver.org.
-version: 0.0.66+83
+version: 0.0.67+91
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -68,7 +68,7 @@ dependencies:
       path: packages/video_player
   sprintf: "^4.0.0"
   image_picker: 0.6.3+1
-  image_cropper: ^1.2.1
+  image_cropper: ^1.2.2
   shimmer: ^1.0.0
   share: ^0.6.4
   path: ^1.7.0

@@ -1,22 +1,30 @@
-package com.example.openbook.plugins;
+package social.openbook.app.plugins;
 
-import android.media.Image;
-import android.util.Log;
-import com.example.openbook.ImageConverter;
-import com.example.openbook.ImageConverter.TargetFormat;
+import androidx.annotation.NonNull;
+import social.openbook.app.ImageConverter;
+import social.openbook.app.ImageConverter.TargetFormat;
+import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
-import io.flutter.plugin.common.PluginRegistry.Registrar;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
-public class ImageConverterPlugin implements MethodCallHandler {
-    public static void registerWith(Registrar registrar) {
-        final MethodChannel channel = new MethodChannel(registrar.messenger(), "openspace.social/image_converter");
-        channel.setMethodCallHandler(new ImageConverterPlugin());
+public class ImageConverterPlugin implements MethodCallHandler, FlutterPlugin {
+    private MethodChannel methodChannel;
+
+    @Override
+    public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
+        methodChannel = new MethodChannel(binding.getBinaryMessenger(), "okuna.io/image_converter");
+        methodChannel.setMethodCallHandler(this);
+    }
+
+    @Override
+    public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
+        methodChannel.setMethodCallHandler(null);
+        methodChannel = null;
     }
 
     @Override

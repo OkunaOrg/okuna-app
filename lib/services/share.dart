@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class ShareService {
-  static const _stream = const EventChannel('openbook.social/receive_share');
+  static const _stream = const EventChannel('okuna.io/receive_share');
 
   ToastService _toastService;
   MediaService _mediaService;
@@ -142,7 +142,7 @@ class ShareService {
       video = File.fromUri(Uri.parse(share.video));
 
       var processedFile = await _mediaService.processMedia(
-        media: MediaFile(image, FileType.video),
+        media: MediaFile(video, FileType.video),
         context: _context,
       );
 
