@@ -345,7 +345,7 @@ class OBHomePageState extends State<OBHomePage>
     }
   }
 
-  bool _backButtonInterceptor(bool stopDefaultButtonEvent) {
+  bool _backButtonInterceptor(bool stopDefaultButtonEvent, RouteInfo info) {
     OBHomePageTabs currentTab = OBHomePageTabs.values[_lastIndex];
     PoppablePageController currentTabController;
 
