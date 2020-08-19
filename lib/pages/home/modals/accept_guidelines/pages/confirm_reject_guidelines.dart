@@ -89,7 +89,7 @@ class OBConfirmRejectGuidelinesState extends State<OBConfirmRejectGuidelines> {
                           localizationService.user__confirm_guidelines_reject_join_slack),
                       onTap: () {
                         openbookProvider.urlLauncherService.launchUrl(
-                            'https://join.slack.com/t/okuna/shared_invite/enQtNDI2NjI3MDM0MzA2LTYwM2E1Y2NhYWRmNTMzZjFhYWZlYmM2YTQ0MWEwYjYyMzcxMGI0MTFhNTIwYjU2ZDI1YjllYzlhOWZjZDc4ZWY');
+                            'https://okuna.io/slack');
                       },
                     ),
                   ],
