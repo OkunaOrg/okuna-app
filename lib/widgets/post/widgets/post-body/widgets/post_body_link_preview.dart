@@ -1,6 +1,5 @@
+import 'package:Okuna/models/link_preview/link_preview.dart';
 import 'package:Okuna/models/post.dart';
-import 'package:Okuna/models/post_preview_link_data.dart';
-import 'package:Okuna/provider.dart';
 import 'package:Okuna/widgets/link_preview.dart';
 import 'package:flutter/material.dart';
 
@@ -21,18 +20,17 @@ class OBPostBodyLinkPreview extends StatelessWidget {
   }
 
   Widget _buildLinkPreview(BuildContext context, AsyncSnapshot<Post> snapshot) {
-    OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
-    String newLink =
-        openbookProvider.linkPreviewService.checkForLinkPreviewUrl(post.text);
-
-    if (post.linkPreview != null && newLink == post.linkPreview.url) {
+    if (post.linkPreview != null) {
       return OBLinkPreview(
         linkPreview: post.linkPreview,
       );
     }
 
+    var linkToPreview = post.getLinkToPreview();
+
     return OBLinkPreview(
-        link: newLink, onLinkPreviewRetrieved: _onLinkPreviewRetrieved);
+        link: linkToPreview.link,
+        onLinkPreviewRetrieved: _onLinkPreviewRetrieved);
   }
 
   void _onLinkPreviewRetrieved(LinkPreview linkPreview) {

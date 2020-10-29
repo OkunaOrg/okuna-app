@@ -1,18 +1,17 @@
 import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/post_comment.dart';
-import 'package:Okuna/models/user.dart';
 import 'package:Okuna/pages/home/lib/draft_editing_controller.dart';
 import 'package:Okuna/pages/home/pages/post_comments/post_comments_page_controller.dart';
 import 'package:Okuna/pages/home/pages/post_comments/widgets/post_commenter.dart';
 import 'package:Okuna/pages/home/pages/post_comments/widgets/post_comment/post_comment.dart';
 import 'package:Okuna/pages/home/pages/post_comments/widgets/post_comments_header_bar.dart';
 import 'package:Okuna/services/draft.dart';
-import 'package:Okuna/services/link_preview.dart';
 import 'package:Okuna/pages/home/pages/post_comments/widgets/post_preview.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/theme.dart';
 import 'package:Okuna/services/theme_value_parser.dart';
 import 'package:Okuna/services/user_preferences.dart';
+import 'package:Okuna/services/utils_service.dart';
 import 'package:Okuna/widgets/contextual_search_boxes/contextual_search_box_state.dart';
 import 'package:Okuna/widgets/link_preview.dart';
 import 'package:Okuna/widgets/nav_bars/themed_nav_bar.dart';
@@ -63,7 +62,7 @@ class OBPostCommentsPageState
   ToastService _toastService;
   ThemeService _themeService;
   DraftService _draftService;
-  LinkPreviewService _linkPreviewService;
+  UtilsService _utilsService;
   LocalizationService _localizationService;
   ThemeValueParserService _themeValueParserService;
   Post _post;
@@ -164,8 +163,8 @@ class OBPostCommentsPageState
       _themeValueParserService = provider.themeValueParserService;
       _themeService = provider.themeService;
       _localizationService = provider.localizationService;
-      _linkPreviewService = provider.linkPreviewService;
       _draftService = provider.draftService;
+      _utilsService = provider.utilsService;
       bootstrap();
       _needsBootstrap = false;
     }
@@ -696,7 +695,7 @@ class OBPostCommentsPageState
           TOTAL_FIXED_OFFSET_Y;
 
       if (widget.post.text != null &&
-          _linkPreviewService.hasLinkPreviewUrl(widget.post.text)) {
+          _utilsService.hasLinkToPreview(widget.post.text)) {
         // Approx height of link preview without image..
         finalPostHeight += OBLinkPreviewState.linkPreviewHeight;
       }

@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:Okuna/widgets/theming/smart_text.dart';
 import 'package:dcache/dcache.dart';
 import 'package:flutter/material.dart';
 import 'package:http_parser/http_parser.dart';
@@ -14,13 +15,20 @@ import 'package:pigment/pigment.dart';
 import 'localization.dart';
 
 class UtilsService {
+  String _trustedProxyUrl = '';
+
   static SimpleCache<String, bool> hexColorIsDarkCache =
       SimpleCache(storage: SimpleStorage(size: 30));
 
   static SimpleCache<String, Color> parseHexColorCache =
       SimpleCache(storage: SimpleStorage(size: 30));
 
-  static RegExp hashtagsRegExp = RegExp(r"\B#\w*[a-zA-Z]+\w*", caseSensitive: false);
+  static RegExp hashtagsRegExp =
+      RegExp(r"\B#\w*[a-zA-Z]+\w*", caseSensitive: false);
+
+  void setTrustedProxyUrl(String proxyUrl) {
+    _trustedProxyUrl = proxyUrl;
+  }
 
   Future<bool> fileHasImageMimeType(File file) async {
     String fileMimeType =
@@ -68,7 +76,10 @@ class UtilsService {
   }
 
   List<String> extractHashtagsInString(String str) {
-    return hashtagsRegExp.allMatches(str).map((match) => match.group(0)).toList();
+    return hashtagsRegExp
+        .allMatches(str)
+        .map((match) => match.group(0))
+        .toList();
   }
 
   int countHashtagsInString(String str) {
@@ -128,7 +139,8 @@ class UtilsService {
     }
   }
 
-  Future<dynamic> initialiseDateFormatting(LocalizationService localizationService) async {
+  Future<dynamic> initialiseDateFormatting(
+      LocalizationService localizationService) async {
     Locale locale = localizationService.getLocale();
     String localeName = locale.toString();
 
@@ -178,4 +190,32 @@ class UtilsService {
     });
     return extension;
   }
+
+  String getProxiedContentLink(String link) {
+    return '$_trustedProxyUrl?$link';
+  }
+
+  bool hasLinkToPreview(text){
+    return getLinkToPreviewFromText(text) != null;
+  }
+
+  String getLinkToPreviewFromText(String text) {
+    List matches = [];
+    String previewUrl;
+    matches.addAll(linkRegex.allMatches(text).map((match) {
+      return match.group(0);
+    }));
+
+    if (matches.length > 0) {
+      Uri url = Uri.parse(matches.first);
+      String urlMimeType = geFileNameMimeType(url.path);
+      if (urlMimeType != null) {
+        String urlFirstType = urlMimeType.split('/').first;
+        if (urlFirstType != 'image' && urlFirstType != 'text') return null;
+      }
+      previewUrl = matches.first;
+    }
+    return previewUrl;
+  }
+
 }

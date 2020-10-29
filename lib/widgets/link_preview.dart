@@ -1,13 +1,13 @@
 import 'dart:async';
 
-import 'package:Okuna/models/post_preview_link_data.dart';
+import 'package:Okuna/models/link_preview/link_preview.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/httpie.dart';
-import 'package:Okuna/services/link_preview.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/url_launcher.dart';
 import 'package:Okuna/services/user.dart';
 import 'package:Okuna/services/user_preferences.dart';
+import 'package:Okuna/services/utils_service.dart';
 import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/progress_indicator.dart';
 import 'package:Okuna/widgets/theming/highlighted_box.dart';
@@ -33,13 +33,14 @@ class OBLinkPreview extends StatefulWidget {
 }
 
 class OBLinkPreviewState extends State<OBLinkPreview> {
-  static double faviconSize = 16;
+  static double iconSize = 16;
   static double linkPreviewHeight = 300;
 
   LinkPreview _linkPreview;
-  LinkPreviewService _linkPreviewService;
   UrlLauncherService _urlLauncherService;
   LocalizationService _localizationService;
+  UtilsService _utilsService;
+  UserService _userService;
   UserPreferencesService _userPreferencesService;
 
   HttpieService _httpieService;
@@ -108,11 +109,12 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
   Widget build(BuildContext context) {
     if (_needsBootstrap) {
       OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
-      _linkPreviewService = openbookProvider.linkPreviewService;
       _urlLauncherService = openbookProvider.urlLauncherService;
       _localizationService = openbookProvider.localizationService;
       _httpieService = openbookProvider.httpService;
       _userPreferencesService = openbookProvider.userPreferencesService;
+      _utilsService = openbookProvider.utilsService;
+      _userService = openbookProvider.userService;
       _bootstrap();
       _needsBootstrap = false;
     }
@@ -220,7 +222,7 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
   }
 
   Widget _buildPreviewImage() {
-    if (_linkPreview.imageUrl == null && _linkPreview.image == null) {
+    if (_linkPreview.image == null) {
       return Semantics(
         label: 'Link preview image',
         child: Container(
@@ -234,25 +236,12 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
       );
     }
 
-    return _linkPreview.image != null
-        ? _buildLinkPreviewImageFromBytes(_linkPreview.image)
-        : _buildLinkPreviewImageFromUrl(_linkPreview.imageUrl);
-  }
-
-  Widget _buildLinkPreviewImageFromBytes(List<int> image) {
-    return Semantics(
-      label: 'Link preview image',
-      child: Container(
-        decoration: BoxDecoration(
-            image:
-                DecorationImage(fit: BoxFit.cover, image: MemoryImage(image))),
-      ),
-    );
+    return _buildLinkPreviewImageFromUrl(_linkPreview.image.url);
   }
 
   Widget _buildLinkPreviewImageFromUrl(String url) {
-    String proxiedImageUrl =
-        _linkPreviewService.getProxiedLink(_linkPreview.imageUrl);
+    String proxiedImageUrl = _utilsService.getProxiedContentLink(url);
+
     String proxyAuthToken = _httpieService.getAuthorizationToken();
 
     return _buildCrossCompatImageForSource(proxiedImageUrl,
@@ -271,8 +260,8 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                _linkPreview.faviconUrl != null
-                    ? _buildLinkPreviewFavicon()
+                _linkPreview.icon != null
+                    ? _buildLinkPreviewIcon()
                     : const SizedBox(),
                 OBSecondaryText(_getLinkPreviewDomain(),
                     overflow: TextOverflow.ellipsis,
@@ -308,15 +297,15 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
     );
   }
 
-  Widget _buildLinkPreviewFavicon() {
-    Widget faviconWidget;
+  Widget _buildLinkPreviewIcon() {
+    Widget iconWidget;
 
-    String proxiedFaviconImageUrl =
-        _linkPreviewService.getProxiedLink(_linkPreview.faviconUrl);
+    String proxiedIconImageUrl =
+        _utilsService.getProxiedContentLink(_linkPreview.icon.url);
     String proxyAuthToken = _httpieService.getAuthorizationToken();
 
-    faviconWidget = _buildCrossCompatImageForSource(proxiedFaviconImageUrl,
-        semanticsLabel: 'Favicon',
+    iconWidget = _buildCrossCompatImageForSource(proxiedIconImageUrl,
+        semanticsLabel: 'Icon',
         headers: {'Authorization': 'Token $proxyAuthToken'});
 
     return Padding(
@@ -324,9 +313,9 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(3.0),
         child: SizedBox(
-          height: faviconSize,
-          width: faviconSize,
-          child: faviconWidget,
+          height: iconSize,
+          width: iconSize,
+          child: iconWidget,
         ),
       ),
     );
@@ -334,11 +323,11 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
 
   Widget _buildCrossCompatImageForSource(String imageSource,
       {String semanticsLabel, Map<String, String> headers}) {
-    String faviconExtension = imageSource.split('.').last;
+    String iconExtension = imageSource.split('.').last;
 
     Widget image;
 
-    if (faviconExtension == 'svg') {
+    if (iconExtension == 'svg') {
       image = SvgPicture.network(
         imageSource,
         headers: headers,
@@ -397,7 +386,7 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
 
     try {
       _fetchLinkPreviewOperation =
-          CancelableOperation.fromFuture(_linkPreviewService.previewLink(link));
+          CancelableOperation.fromFuture(_userService.previewLink(link: link));
 
       LinkPreview linkPreview = await _fetchLinkPreviewOperation.value;
 
@@ -431,11 +420,6 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
       String localizedErrorMessage = _localizationService
           .post_body_link_preview__error_with_description(errorMessage);
       _setErrorMessage(localizedErrorMessage);
-    } else if (error is EmptyLinkToPreview) {
-      _setErrorMessage(_localizationService.post_body_link_preview__empty);
-    } else if (error is InvalidLinkToPreview) {
-      _setErrorMessage(
-          _localizationService.post_body_link_preview__invalid(widget.link));
     } else {
       _setErrorMessage(_localizationService.error__unknown_error);
       throw error;
@@ -443,8 +427,8 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
   }
 
   String _getLinkPreviewDomain() {
-    return (_linkPreview != null && _linkPreview.domainUrl != null
-            ? _linkPreview.domainUrl
+    return (_linkPreview != null && _linkPreview.domain != null
+            ? _linkPreview.domain
             : Uri.parse(widget.link).host)
         .toUpperCase();
   }

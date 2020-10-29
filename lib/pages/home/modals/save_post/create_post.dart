@@ -14,13 +14,13 @@ import 'package:Okuna/pages/home/modals/save_post/widgets/remaining_post_charact
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/draft.dart';
 import 'package:Okuna/services/httpie.dart';
-import 'package:Okuna/services/link_preview.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/media/media.dart';
 import 'package:Okuna/services/navigation_service.dart';
 import 'package:Okuna/services/share.dart';
 import 'package:Okuna/services/toast.dart';
 import 'package:Okuna/services/user.dart';
+import 'package:Okuna/services/utils_service.dart';
 import 'package:Okuna/services/validation.dart';
 import 'package:Okuna/widgets/avatars/avatar.dart';
 import 'package:Okuna/widgets/avatars/logged_in_user_avatar.dart';
@@ -64,9 +64,9 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
   MediaService _mediaService;
   ToastService _toastService;
   LocalizationService _localizationService;
-  LinkPreviewService _linkPreviewService;
   DraftService _draftService;
   ShareService _shareService;
+  UtilsService _utilsService;
 
   TextEditingController _textController;
   FocusNode _focusNode;
@@ -193,12 +193,12 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
       _validationService = openbookProvider.validationService;
       _navigationService = openbookProvider.navigationService;
       _mediaService = openbookProvider.mediaService;
-      _linkPreviewService = openbookProvider.linkPreviewService;
       _localizationService = openbookProvider.localizationService;
       _toastService = openbookProvider.toastService;
       _userService = openbookProvider.userService;
       _draftService = openbookProvider.draftService;
       _shareService = openbookProvider.shareService;
+      _utilsService = openbookProvider.utilsService;
       bootstrap();
       _needsBootstrap = false;
     }
@@ -604,7 +604,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
     if (_hasImage || _hasVideo) return;
     String text = _textController.text;
 
-    String linkPreviewUrl = _linkPreviewService.checkForLinkPreviewUrl(text);
+    String linkPreviewUrl = _utilsService.getLinkToPreviewFromText(text);
 
     if (linkPreviewUrl == null) {
       _clearLinkPreviewUrl();

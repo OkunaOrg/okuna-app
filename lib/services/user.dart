@@ -22,6 +22,7 @@ import 'package:Okuna/models/hashtag.dart';
 import 'package:Okuna/models/hashtags_list.dart';
 import 'package:Okuna/models/language.dart';
 import 'package:Okuna/models/language_list.dart';
+import 'package:Okuna/models/link_preview/link_preview.dart';
 import 'package:Okuna/models/moderation/moderated_object.dart';
 import 'package:Okuna/models/moderation/moderated_object_list.dart';
 import 'package:Okuna/models/moderation/moderated_object_log_list.dart';
@@ -1105,34 +1106,34 @@ class UserService {
   }
 
   Future<void> cancelRequestToFollowUser(User user) async {
-    HttpieResponse response =
-    await _followsApiService.cancelRequestToFollowUserWithUsername(user.username);
+    HttpieResponse response = await _followsApiService
+        .cancelRequestToFollowUserWithUsername(user.username);
     _checkResponseIsOk(response);
     user.setIsFollowRequested(false);
   }
 
   Future<void> approveFollowRequestFromUser(User user) async {
-    HttpieResponse response =
-        await _followsApiService.approveFollowRequestFromUserWithUsername(user.username);
+    HttpieResponse response = await _followsApiService
+        .approveFollowRequestFromUserWithUsername(user.username);
     _checkResponseIsOk(response);
     user.setIsPendingFollowRequestApproval(false);
     user.setIsFollowed(true);
   }
 
   Future<void> rejectFollowRequestFromUser(User user) async {
-    HttpieResponse response =
-    await _followsApiService.rejectFollowRequestFromUserWithUsername(user.username);
+    HttpieResponse response = await _followsApiService
+        .rejectFollowRequestFromUserWithUsername(user.username);
     _checkResponseIsOk(response);
     user.setIsPendingFollowRequestApproval(false);
   }
 
   Future<FollowRequestList> getReceivedFollowRequests(
       {bool authenticatedRequest = true,
-        int maxId,
-        int count,
-        Community withCommunity}) async {
-    HttpieResponse response =
-    await _followsApiService.getReceivedFollowRequests(count: count, maxId: maxId);
+      int maxId,
+      int count,
+      Community withCommunity}) async {
+    HttpieResponse response = await _followsApiService
+        .getReceivedFollowRequests(count: count, maxId: maxId);
     _checkResponseIsOk(response);
     return FollowRequestList.fromJson(json.decode(response.body));
   }
@@ -2022,7 +2023,8 @@ class UserService {
             postReactionNotifications: postReactionNotifications,
             followNotifications: followNotifications,
             followRequestNotifications: followRequestNotifications,
-            followRequestApprovedNotifications: followRequestApprovedNotifications,
+            followRequestApprovedNotifications:
+                followRequestApprovedNotifications,
             connectionConfirmedNotifications: connectionConfirmedNotifications,
             communityInviteNotifications: communityInviteNotifications,
             connectionRequestNotifications: connectionRequestNotifications,
@@ -2269,6 +2271,12 @@ class UserService {
         query: query, count: count, postUuid: post.uuid);
     _checkResponseIsOk(response);
     return UsersList.fromJson(json.decode(response.body));
+  }
+
+  Future<LinkPreview> previewLink({@required String link}) async {
+    HttpieResponse response = await _postsApiService.previewLink(link: link);
+    _checkResponseIsOk(response);
+    return LinkPreview.fromJSON(json.decode(response.body));
   }
 
   Map<UserVisibility, Map<String, String>> getUserVisibilityLocalizationMap() {

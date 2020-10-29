@@ -24,7 +24,7 @@ class OBPostBody extends StatelessWidget {
 
     if (post.hasText()) {
       if (!post.hasMediaThumbnail() &&
-          openbookProvider.linkPreviewService.hasLinkPreviewUrl(post.text)) {
+          post.hasLinkToPreview()) {
         bodyItems.add(
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
