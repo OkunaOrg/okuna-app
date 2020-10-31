@@ -59,10 +59,10 @@ PODS:
     - TOCropViewController (~> 2.5.4)
   - image_picker (0.0.1):
     - Flutter
-  - Intercom (6.0.2)
-  - intercom_flutter (2.1.1):
+  - Intercom (7.1.3)
+  - "intercom_flutter (2.2.0+1)":
     - Flutter
-    - Intercom (~> 6.0.1)
+    - Intercom (~> 7.1.0)
   - libwebp (1.1.0):
     - libwebp/demux (= 1.1.0)
     - libwebp/mux (= 1.1.0)
@@ -72,14 +72,14 @@ PODS:
   - libwebp/mux (1.1.0):
     - libwebp/demux
   - libwebp/webp (1.1.0)
-  - Mantle (2.1.1):
-    - Mantle/extobjc (= 2.1.1)
-  - Mantle/extobjc (2.1.1)
+  - Mantle (2.1.6):
+    - Mantle/extobjc (= 2.1.6)
+  - Mantle/extobjc (2.1.6)
   - mobile-ffmpeg-https (4.3.1)
-  - OneSignal (2.14.3)
-  - onesignal_flutter (2.6.0):
+  - OneSignal (2.15.2)
+  - onesignal_flutter (2.6.1):
     - Flutter
-    - OneSignal (= 2.14.3)
+    - OneSignal (= 2.15.2)
   - package_info (0.0.1):
     - Flutter
   - path_provider (0.0.1):
@@ -87,9 +87,9 @@ PODS:
   - Reachability (3.2)
   - screen (0.0.1):
     - Flutter
-  - SDWebImage (5.8.4):
-    - SDWebImage/Core (= 5.8.4)
-  - SDWebImage/Core (5.8.4)
+  - SDWebImage (5.9.4):
+    - SDWebImage/Core (= 5.9.4)
+  - SDWebImage/Core (5.9.4)
   - SDWebImageWebPCoder (0.6.1):
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.7)
@@ -97,11 +97,11 @@ PODS:
     - Flutter
   - shared_preferences (0.0.1):
     - Flutter
-  - sqflite (0.0.1):
+  - sqflite (0.0.2):
     - Flutter
-    - FMDB (~> 2.7.2)
+    - FMDB (>= 2.7.5)
   - SwiftyGif (5.3.0)
-  - TOCropViewController (2.5.4)
+  - TOCropViewController (2.5.5)
   - uni_links (0.0.1):
     - Flutter
   - url_launcher (0.0.1):
@@ -217,24 +217,24 @@ SPEC CHECKSUMS:
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   image_cropper: c8f9b4157933c7bb965a66d1c5e6c8fd408c6eb4
   image_picker: e3eacd46b94694dde7cf2705955cece853aa1a8f
-  Intercom: 523417d82ed1a8c635cc7f97b266eb8bd0bd9d85
-  intercom_flutter: 45b06d70365ccae12227cbceeca36c6a23457f54
+  Intercom: e44b10bbc38ccf6494c76f9bee4e2e3d7d007153
+  intercom_flutter: 8b168f7cad88366708aa1972a395e6195205fc3a
   libwebp: 946cb3063cea9236285f7e9a8505d806d30e07f3
-  Mantle: 35238ae6f2e2b2d474fa7b67fee82a59fea71915
+  Mantle: 4c0ed6ce47c96eccc4dc3bb071deb3def0e2c3be
   mobile-ffmpeg-https: c4a3c255163ddb1abc4b4dfc613c2d885f8c46eb
-  OneSignal: 7dfe466265c05f02b95a274b9c997a0619ad2117
-  onesignal_flutter: 129551f13dc887d88aaf837e2cd823e1926e8159
+  OneSignal: 9531e385388565f4d31797ddadbe0fcc786430ec
+  onesignal_flutter: b4412973eac419ccce07363e43e0d6057c583a96
   package_info: 873975fc26034f0b863a300ad47e7f1ac6c7ec62
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   screen: abd91ca7bf3426e1cc3646d27e9b2358d6bf07b0
-  SDWebImage: cf6922231e95550934da2ada0f20f2becf2ceba9
+  SDWebImage: b69257f4ab14e9b6a2ef53e910fdf914d8f757c1
   SDWebImageWebPCoder: d0dac55073088d24b2ac1b191a71a8f8d0adac21
   share: 0b2c3e82132f5888bccca3351c504d0003b3b410
   shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
-  sqflite: 4001a31ff81d210346b500c55b17f4d6c7589dd0
+  sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
   SwiftyGif: e466e86c660d343357ab944a819a101c4127cb40
-  TOCropViewController: 2a1ae1242600b1f2d996fd91a5268b2309a33b5c
+  TOCropViewController: da59f531f8ac8a94ef6d6c0fc34009350f9e8bfe
   uni_links: d97da20c7701486ba192624d99bffaaffcfc298a
   url_launcher: 0067ddb8f10d36786672aa0722a21717dba3a298
   video_player: fd8b6188941ec5a530d6ab0830a34f78faa0452e
@@ -244,4 +244,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: cbb1dad82c74b8ac115e7b86f4dda3a7601f5a3b
 
-COCOAPODS: 1.9.1
+COCOAPODS: 1.10.0
