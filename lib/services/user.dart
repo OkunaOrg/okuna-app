@@ -2279,6 +2279,14 @@ class UserService {
     return LinkPreview.fromJSON(json.decode(response.body));
   }
 
+  Future<bool> linkIsPreviewable({@required String link}) async {
+    HttpieResponse response =
+        await _postsApiService.linkIsPreviewable(link: link);
+    _checkResponseIsOk(response);
+    bool isPreviewable = json.decode(response.body)['is_previewable'];
+    return isPreviewable;
+  }
+
   Map<UserVisibility, Map<String, String>> getUserVisibilityLocalizationMap() {
     var publicMap = {
       'title': _localizationService.user__visibility_public,

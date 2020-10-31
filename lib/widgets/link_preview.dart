@@ -8,6 +8,7 @@ import 'package:Okuna/services/url_launcher.dart';
 import 'package:Okuna/services/user.dart';
 import 'package:Okuna/services/user_preferences.dart';
 import 'package:Okuna/services/utils_service.dart';
+import 'package:Okuna/widgets/buttons/actions/block_button.dart';
 import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/progress_indicator.dart';
 import 'package:Okuna/widgets/theming/highlighted_box.dart';
@@ -49,7 +50,7 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
   CancelableOperation _fetchLinkPreviewOperation;
 
   bool _needsBootstrap;
-  String _errorMessage;
+  bool _failedToPreviewLink;
 
   StreamSubscription _linkPreviewsAreEnabledChangeSubscription;
 
@@ -61,6 +62,7 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
     _needsBootstrap = true;
     _linkPreview = widget.linkPreview;
     _linkPreviewRequestInProgress = true;
+    _failedToPreviewLink = false;
   }
 
   void didUpdateWidget(oldWidget) {
@@ -130,8 +132,8 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
                   child: AnimatedSwitcher(
                     duration: Duration(milliseconds: 300),
                     child: _linkPreviewRequestInProgress || _linkPreview == null
-                        ? _errorMessage != null
-                            ? _buildErrorMessage()
+                        ? _failedToPreviewLink
+                            ? _buildFailedToPreviewLink()
                             : _buildRequestInProgress()
                         : _buildLinkPreview(),
                   ),
@@ -142,7 +144,7 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
         : const SizedBox();
   }
 
-  Widget _buildErrorMessage() {
+  Widget _buildFailedToPreviewLink() {
     return SizedBox(
         // Estimated size of the preview bottom bar
         height: linkPreviewHeight,
@@ -162,9 +164,28 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
                     ),
                     ConstrainedBox(
                       constraints: BoxConstraints(maxWidth: 150),
-                      child: OBText(
-                        _errorMessage,
-                        textAlign: TextAlign.center,
+                      child: Column(
+                        children: [
+                          OBText(
+                            _localizationService.link_preview_failed__title,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            ),
+                          ),
+                          const SizedBox(height: 10,),
+                          OBText(
+                            _localizationService.link_preview_failed__description,
+                            textAlign: TextAlign.center,
+                          ),
+                          const SizedBox(height: 20,),
+                          OBButton(
+                              child: Text(_localizationService.retry),
+                              onPressed: _retrieveLinkPreview,
+                              type: OBButtonType.highlight,
+                          )
+                        ],
                       ),
                     )
                   ],
@@ -376,7 +397,7 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
   }
 
   Future _retrieveLinkPreview() async {
-    _setErrorMessage(null);
+    _setFailedToPreviewLink(false);
     if (_fetchLinkPreviewOperation != null) return;
     _setLinkPreviewRequestInProgress(true);
 
@@ -395,14 +416,10 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
       if (linkPreview != null) {
         _setLinkPreview(linkPreview);
         debugLog('Retrieved link preview for url: $link');
-      } else {
-        debugLog('Retrieved empty link preview for url: $link');
-        _setErrorMessage(_localizationService.post_body_link_preview__empty);
       }
     } catch (error) {
       debugLog('Failed to retrieve link preview for url: $link');
       _onError(error);
-      throw error;
     } finally {
       _fetchLinkPreviewOperation = null;
       _setLinkPreviewRequestInProgress(false);
@@ -410,18 +427,10 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
   }
 
   void _onError(error) async {
-    if (error is HttpieConnectionRefusedError) {
-      String localizedErrorMessage =
-          _localizationService.post_body_link_preview__error_with_description(
-              error.toHumanReadableMessage());
-      _setErrorMessage(localizedErrorMessage);
-    } else if (error is HttpieRequestError) {
-      String errorMessage = await error.toHumanReadableMessage();
-      String localizedErrorMessage = _localizationService
-          .post_body_link_preview__error_with_description(errorMessage);
-      _setErrorMessage(localizedErrorMessage);
-    } else {
-      _setErrorMessage(_localizationService.error__unknown_error);
+    _setFailedToPreviewLink(true);
+
+    if (!(error is HttpieConnectionRefusedError) ||
+        !(error is HttpieRequestError)) {
       throw error;
     }
   }
@@ -433,9 +442,9 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
         .toUpperCase();
   }
 
-  void _setErrorMessage(String errorMessage) {
+  void _setFailedToPreviewLink(bool failedToPreviewLink) {
     setState(() {
-      _errorMessage = errorMessage;
+      _failedToPreviewLink = failedToPreviewLink;
     });
   }
 

@@ -2408,7 +2408,6 @@ class LocalizationService {
         name: 'user__profile_action_confirm_connection_short');
   }
 
-
   String user__profile_user_sent_follow_request(String userUsername) {
     return Intl.message('@$userUsername has sent you a follow request.',
         args: [userUsername], name: 'user__profile_user_sent_follow_request');
@@ -4190,6 +4189,19 @@ class LocalizationService {
         "Failed to preview link with website error: $description",
         args: [description],
         name: 'post_body_link_preview__error_with_description');
+  }
+
+  String get link_preview_failed__title {
+    return Intl.message("Preview failed", name: 'link_preview_failed__title');
+  }
+
+  String get link_preview_failed__description {
+    return Intl.message("We could not preview this link right now",
+        name: 'link_preview_failed');
+  }
+
+  String get retry {
+    return Intl.message("Retry", name: 'retry');
   }
 
   String get posts_stream__all_loaded {

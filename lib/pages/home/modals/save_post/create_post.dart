@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:Okuna/models/community.dart';
+import 'package:Okuna/models/link_preview/link_preview.dart';
 import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/post_image.dart';
 import 'package:Okuna/models/post_media.dart';
@@ -71,7 +72,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
   TextEditingController _textController;
   FocusNode _focusNode;
   int _charactersCount;
-  String _linkPreviewUrl;
+  LinkPreview _linkPreview;
 
   bool _isPostTextAllowedLength;
   bool _isPostTextContainingValidHashtags;
@@ -101,6 +102,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
 
   bool _saveInProgress;
   CancelableOperation _saveOperation;
+  CancelableOperation<LinkPreview> _linkPreviewCheckOperation;
 
   @override
   void initState() {
@@ -109,7 +111,6 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
 
     _focusNode = FocusNode();
     _hasFocus = false;
-    _linkPreviewUrl = '';
     _isPostTextAllowedLength = false;
     _isPostTextContainingValidHashtags = false;
     _isCreateCommunityPostInProgress = false;
@@ -492,7 +493,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
       _postImageWidgetRemover = _addPostItemWidget(postImageWidget);
     });
 
-    _clearLinkPreviewUrl();
+    _clearLinkPreview();
   }
 
   void _setPostVideoFile(File video) {
@@ -515,7 +516,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
       _postVideoWidgetRemover = _addPostItemWidget(postVideoWidget);
     });
 
-    _clearLinkPreviewUrl();
+    _clearLinkPreview();
   }
 
   void _setPostVideo(PostVideo postVideo) {
@@ -601,35 +602,52 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
   }
 
   void _checkForLinkPreview() async {
-    if (_hasImage || _hasVideo) return;
+    if (_linkPreviewCheckOperation != null) {
+      _linkPreviewCheckOperation.cancel();
+      _linkPreviewCheckOperation = null;
+    }
+
     String text = _textController.text;
 
     String linkPreviewUrl = _utilsService.getLinkToPreviewFromText(text);
 
-    if (linkPreviewUrl == null) {
-      _clearLinkPreviewUrl();
+    if (_hasImage || _hasVideo || linkPreviewUrl == null) {
+      _clearLinkPreview();
       return;
     }
 
-    if (linkPreviewUrl != null && linkPreviewUrl != _linkPreviewUrl) {
-      _setLinkPreviewUrl(linkPreviewUrl);
+    bool isNewLinkPreview =
+        _linkPreview == null || _linkPreview.url != linkPreviewUrl;
+
+    if (isNewLinkPreview) {
+      try {
+        _linkPreviewCheckOperation = CancelableOperation.fromFuture(
+            _userService.previewLink(link: linkPreviewUrl));
+        LinkPreview linkPreview = await _linkPreviewCheckOperation.value;
+        _setLinkPreview(linkPreview);
+      } catch (error) {
+        debugLog('Could not check whether link was previewable');
+        _clearLinkPreview();
+      } finally {
+        _linkPreviewCheckOperation = null;
+      }
     }
   }
 
-  void _setLinkPreviewUrl(String url) {
+  void _setLinkPreview(LinkPreview linkPreview) {
     if (_linkPreviewWidgetRemover != null) _linkPreviewWidgetRemover();
 
     setState(() {
-      _linkPreviewUrl = url;
+      _linkPreview = linkPreview;
       _linkPreviewWidgetRemover = _addPostItemWidget(OBLinkPreview(
-        link: _linkPreviewUrl,
+        linkPreview: _linkPreview,
       ));
     });
   }
 
-  void _clearLinkPreviewUrl() {
+  void _clearLinkPreview() {
     setState(() {
-      _linkPreviewUrl = null;
+      _linkPreview = null;
       if (_linkPreviewWidgetRemover != null) _linkPreviewWidgetRemover();
     });
   }

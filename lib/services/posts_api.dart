@@ -83,6 +83,7 @@ class PostsApiService {
       'api/posts/{postUuid}/participants/search/';
 
   static const PREVIEW_LINK_PATH = 'api/posts/links/preview/';
+  static const LINK_IS_PREVIEWABLE_PATH = 'api/posts/links/is-previewable/';
 
   void setHttpieService(HttpieService httpService) {
     _httpService = httpService;
@@ -619,6 +620,14 @@ class PostsApiService {
     Map<String, dynamic> body = {'link': link};
 
     return _httpService.postJSON(_makeApiUrl(PREVIEW_LINK_PATH),
+        body: body, appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> linkIsPreviewable(
+      {@required String link}) {
+    Map<String, dynamic> body = {'link': link};
+
+    return _httpService.postJSON(_makeApiUrl(LINK_IS_PREVIEWABLE_PATH),
         body: body, appendAuthorizationToken: true);
   }
 
