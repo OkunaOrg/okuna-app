@@ -4,6 +4,7 @@ import 'package:Okuna/services/auth_api.dart';
 import 'package:Okuna/services/httpie.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/user.dart';
+import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 import 'dart:io';
 
@@ -281,15 +282,17 @@ class CreateAccountBloc {
 
     var accountWasCreated = false;
 
+    print(userRegistrationData);
+
     try {
       HttpieStreamedResponse response = await _authApiService.createUser(
           email: userRegistrationData.email,
-          isOfLegalAge: userRegistrationData.isOfLegalAge,
+          isOfLegalAge: true,
           name: userRegistrationData.name,
           username: userRegistrationData.username,
           token: userRegistrationData.token,
           password: userRegistrationData.password,
-          areGuidelinesAccepted: userRegistrationData.areGuidelinesAccepted,
+          areGuidelinesAccepted: true,
           avatar: userRegistrationData.avatar);
 
       if (!response.isCreated()) throw HttpieRequestError(response);

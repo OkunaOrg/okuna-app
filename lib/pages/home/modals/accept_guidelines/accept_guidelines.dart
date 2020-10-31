@@ -219,7 +219,8 @@ class OBAcceptGuidelinesModalState extends State {
   }
 
   void _onGuidelinesScroll() {
-    if (!_acceptButtonEnabled &&
+    if (!_acceptButtonEnabled
+        && _guidelinesText.isNotEmpty &&
         _guidelinesScrollController.position.pixels >
             (_guidelinesScrollController.position.maxScrollExtent * 0.9)) {
       _setAcceptButtonEnabled(true);

@@ -4,25 +4,23 @@ import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/widgets/buttons/button.dart';
 import 'package:Okuna/widgets/buttons/secondary_button.dart';
 import 'package:Okuna/widgets/buttons/success_button.dart';
-import 'package:Okuna/widgets/fields/checkbox_field.dart';
 import 'package:flutter/material.dart';
+import 'package:pigment/pigment.dart';
 
-class OBAuthLegalAgeStepPage extends StatefulWidget {
+class OBAcceptStepPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return OBAuthLegalAgeStepPageState();
+    return OBAcceptStepPageState();
   }
 }
 
-class OBAuthLegalAgeStepPageState extends State<OBAuthLegalAgeStepPage> {
+class OBAcceptStepPageState extends State<OBAcceptStepPage> {
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
-  bool _isAgeConfirmed;
   CreateAccountBloc _createAccountBloc;
   LocalizationService _localizationService;
 
   @override
   void initState() {
-    _isAgeConfirmed = false;
     super.initState();
   }
 
@@ -40,14 +38,10 @@ class OBAuthLegalAgeStepPageState extends State<OBAuthLegalAgeStepPage> {
                 child: Column(
                   children: <Widget>[
                     _buildConfirmLegalAgeText(),
-                    SizedBox(
-                      height: 20.0,
-                    ),
-                    _buildLegalAgeForm(),
                   ],
                 ))),
       ),
-      backgroundColor: Color(0xFF4B0082),
+      backgroundColor: Pigment.fromString('#007d9c'),
       bottomNavigationBar: BottomAppBar(
         color: Colors.transparent,
         elevation: 0.0,
@@ -73,7 +67,7 @@ class OBAuthLegalAgeStepPageState extends State<OBAuthLegalAgeStepPage> {
       children: <Widget>[
         SizedBox(width: 10.0),
         Text(
-          '🤔',
+          '👩‍⚖️',
           style: TextStyle(fontSize: 45.0, color: Colors.white),
           textAlign: TextAlign.center,
         ),
@@ -81,36 +75,20 @@ class OBAuthLegalAgeStepPageState extends State<OBAuthLegalAgeStepPage> {
           height: 20.0,
         ),
         Text(
-          _localizationService.trans('auth__create_acc__one_last_thing'),
+          _localizationService.auth__create_acc__legal_confirmation,
           style: TextStyle(
               fontSize: 24.0, fontWeight: FontWeight.bold, color: Colors.white),
           textAlign: TextAlign.center,
         ),
+        const SizedBox(
+          height: 10,
+        ),
+        Text(
+          _localizationService.auth__create_acc__legal_confirmation_desc,
+          style: TextStyle(color: Colors.white, fontSize: 16),
+          textAlign: TextAlign.center,
+        ),
       ],
-    );
-  }
-
-  Widget _buildLegalAgeForm() {
-    return Form(
-      key: _formKey,
-      child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            OBCheckboxField(
-              value: _isAgeConfirmed,
-              title: '',
-              onTap: () {
-                setState(() {
-                  _isAgeConfirmed = !_isAgeConfirmed;
-                  _createAccountBloc.setLegalAgeConfirmation(_isAgeConfirmed);
-                });
-              },
-              leading: Container(
-                child: Text(_localizationService.trans('auth__create_acc__are_you_legal_age'),
-                    style: TextStyle(fontSize: 16.0, color: Colors.white)),
-              ),
-            )
-          ]),
     );
   }
 
@@ -118,16 +96,18 @@ class OBAuthLegalAgeStepPageState extends State<OBAuthLegalAgeStepPage> {
     return OBSuccessButton(
       minWidth: double.infinity,
       size: OBButtonSize.large,
-      child: Text(_localizationService.trans('auth__create_acc__register'), style: TextStyle(fontSize: 18.0)),
-      isDisabled: !_isAgeConfirmed,
+      child: Text(_localizationService.trans('auth__create_acc__register'),
+          style: TextStyle(fontSize: 18.0)),
       onPressed: () {
+        _createAccountBloc.setLegalAgeConfirmation(true);
         Navigator.pushNamed(context, '/auth/submit_step');
       },
     );
   }
 
   Widget _buildPreviousButton({@required BuildContext context}) {
-    String buttonText = _localizationService.trans('auth__create_acc__previous');
+    String buttonText =
+        _localizationService.trans('auth__create_acc__previous');
 
     return OBSecondaryButton(
       isFullWidth: true,

@@ -454,9 +454,31 @@ class LocalizationService {
     return Intl.message("Login", name: 'auth__create_acc__done_continue');
   }
 
-  String get auth__create_acc__one_last_thing {
-    return Intl.message("One last thing...",
-        name: 'auth__create_acc__one_last_thing');
+  String get auth__create_acc__legal_confirmation {
+    return Intl.message("Legal confirmation",
+        name: 'auth__create_acc__legal_confirmation');
+  }
+
+  String get auth__create_acc__legal_confirmation_desc {
+    return Intl.message(
+        "By registering in Okuna, I certify that I'm older than 16 years old and have read the Community Guidelines, Privacy Policy and Terms of Use and agree to all of the items included",
+        name: 'auth__create_acc__legal_confirmation_desc');
+  }
+
+  String get auth__create_acc__legal {
+    return Intl.message("The important stuff", name: 'auth__create_acc__legal');
+  }
+
+  String get auth__create_acc__legal_desc {
+    return Intl.message(
+        "Please take a moment to read through the following documents",
+        name: 'auth__create_acc__legal_desc');
+  }
+
+  String get auth__create_acc__legal_desc_extra {
+    return Intl.message(
+        "They contain important information about your experience in Okuna and you will have to accept to them",
+        name: 'auth__create_acc__legal_desc_extra');
   }
 
   String get auth__create_acc__register {
@@ -755,7 +777,6 @@ class LocalizationService {
         name: 'drawer__useful_links_privacy_policy_desc');
   }
 
-
   String get drawer__useful_links_terms_of_use {
     return Intl.message("Terms of use",
         name: 'drawer__useful_links_terms_of_use');
@@ -831,6 +852,11 @@ class LocalizationService {
   String get drawer__useful_links_slack_channel {
     return Intl.message("Community Slack channel",
         name: 'drawer__useful_links_slack_channel');
+  }
+
+  String get drawer__useful_links_community_guidelines {
+    return Intl.message("Community guidelines",
+        name: 'drawer__useful_links_community_guidelines');
   }
 
   String get drawer__useful_links_slack_channel_desc {

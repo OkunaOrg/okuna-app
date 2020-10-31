@@ -1,15 +1,15 @@
 import 'dart:io';
 
 import 'package:Okuna/delegates/localization_delegate.dart';
+import 'package:Okuna/pages/auth/create_account/accept_step.dart';
 import 'package:Okuna/pages/auth/create_account/create_account.dart';
 import 'package:Okuna/pages/auth/create_account/done_step/done_step.dart';
 import 'package:Okuna/pages/auth/create_account/email_step.dart';
-import 'package:Okuna/pages/auth/create_account/guidelines_step.dart';
 import 'package:Okuna/pages/auth/create_account/suggested_communities/suggested_communities.dart';
 import 'package:Okuna/pages/auth/create_account/username_step.dart';
 import 'package:Okuna/pages/auth/reset_password/forgot_password_step.dart';
 import 'package:Okuna/pages/auth/create_account/get_started.dart';
-import 'package:Okuna/pages/auth/create_account/legal_age_step.dart';
+import 'package:Okuna/pages/auth/create_account/legal_step.dart';
 import 'package:Okuna/pages/auth/create_account/submit_step.dart';
 import 'package:Okuna/pages/auth/create_account/password_step.dart';
 import 'package:Okuna/pages/auth/reset_password/reset_password_success_step.dart';
@@ -22,8 +22,6 @@ import 'package:Okuna/pages/waitlist/subscribe_done_step.dart';
 import 'package:Okuna/pages/waitlist/subscribe_email_step.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/pages/auth/create_account/name_step.dart';
-import 'package:Okuna/plugins/desktop/error-reporting.dart';
-import 'package:Okuna/services/httpie.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/services/universal_links/universal_links.dart';
 import 'package:Okuna/widgets/toast.dart';
@@ -160,13 +158,13 @@ class _MyAppState extends State<MyApp> {
                 bootstrapOpenbookProviderInContext(context);
                 return OBAuthGetStartedPage();
               },
-              '/auth/guidelines_step': (BuildContext context) {
+              '/auth/legal_step': (BuildContext context) {
                 bootstrapOpenbookProviderInContext(context);
-                return OBAuthGuidelinesStepPage();
+                return OBLegalStepPage();
               },
-              '/auth/legal_age_step': (BuildContext context) {
+              '/auth/accept_step': (BuildContext context) {
                 bootstrapOpenbookProviderInContext(context);
-                return OBAuthLegalAgeStepPage();
+                return OBAcceptStepPage();
               },
               '/auth/name_step': (BuildContext context) {
                 bootstrapOpenbookProviderInContext(context);
