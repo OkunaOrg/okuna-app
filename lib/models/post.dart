@@ -6,18 +6,21 @@ import 'package:Okuna/models/hashtag.dart';
 import 'package:Okuna/models/hashtags_list.dart';
 import 'package:Okuna/models/post_comment.dart';
 import 'package:Okuna/models/post_comment_list.dart';
+import 'package:Okuna/models/post_link.dart';
+import 'package:Okuna/models/post_links_list.dart';
 import 'package:Okuna/models/post_media.dart';
 import 'package:Okuna/models/post_media_list.dart';
-import 'package:Okuna/models/post_preview_link_data.dart';
 import 'package:Okuna/models/post_reaction.dart';
 import 'package:Okuna/models/reactions_emoji_count.dart';
 import 'package:Okuna/models/reactions_emoji_count_list.dart';
 import 'package:Okuna/models/updatable_model.dart';
 import 'package:Okuna/models/user.dart';
+import 'package:Okuna/services/httpie.dart';
 import 'package:dcache/dcache.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 import 'language.dart';
+import 'link_preview/link_preview.dart';
 
 class Post extends UpdatableModel<Post> {
   final int id;
@@ -41,10 +44,10 @@ class Post extends UpdatableModel<Post> {
   OBPostStatus status;
 
   PostMediaList media;
-  LinkPreview linkPreview;
   PostCommentList commentsList;
   Community community;
   HashtagsList hashtagsList;
+  PostLinksList postLinksList;
   Map<String, Hashtag> hashtagsMap;
 
   bool isMuted;
@@ -56,6 +59,9 @@ class Post extends UpdatableModel<Post> {
   // stored only in the app
   bool isExcludedFromTopPosts = false;
   bool isExcludedFromProfilePosts = false;
+
+  // Stored as cache
+  LinkPreview linkPreview;
 
   static final factory = PostFactory();
 
@@ -97,6 +103,9 @@ class Post extends UpdatableModel<Post> {
       'hashtags': hashtagsList?.hashtags
           ?.map((Hashtag hashtag) => hashtag.toJson())
           ?.toList(),
+      'links': postLinksList?.postLinks
+          ?.map((PostLink postLink) => postLink.toJson())
+          ?.toList(),
       'community': community?.toJson(),
       'is_muted': isMuted,
       'is_encircled': isEncircled,
@@ -126,6 +135,7 @@ class Post extends UpdatableModel<Post> {
       this.mediaWidth,
       this.commentsList,
       this.hashtagsList,
+      this.postLinksList,
       this.reaction,
       this.reactionsEmojiCounts,
       this.areCommentsEnabled,
@@ -209,21 +219,12 @@ class Post extends UpdatableModel<Post> {
       _updateHashtagsMap();
     }
 
+    if (json.containsKey('links')) {
+      postLinksList = factory.parsePostLinksList(json['links']);
+    }
+
     if (json.containsKey('circles'))
       circles = factory.parseCircles(json['circles']);
-  }
-
-  void updatePreviewDataFromJson(Map json) {
-    linkPreview = LinkPreview();
-    if (json.containsKey('title')) linkPreview.title = json['title'];
-    if (json.containsKey('description'))
-      linkPreview.description = json['description'];
-    if (json.containsKey('image_url')) linkPreview.imageUrl = json['image_url'];
-    if (json.containsKey('favicon_url'))
-      linkPreview.faviconUrl = json['favicon_url'];
-    if (json.containsKey('domain_url'))
-      linkPreview.domainUrl = json['domain_url'];
-    notifyUpdate();
   }
 
   void updateIsExcludedFromTopPosts(bool isExcluded) {
@@ -264,8 +265,18 @@ class Post extends UpdatableModel<Post> {
     return media != null && media.postMedia.isNotEmpty;
   }
 
-  bool hasLinkPreview() {
-    return linkPreview != null;
+  PostLink getLinkToPreview() {
+    if (postLinksList.postLinks.isNotEmpty) {
+      var linkPreview = postLinksList.postLinks
+          .firstWhere((link) => link.hasPreview, orElse: () => null);
+      return linkPreview;
+    }
+
+    return null;
+  }
+
+  bool hasLinkToPreview() {
+    return getLinkToPreview() != null;
   }
 
   bool hasText() {
@@ -463,6 +474,7 @@ class PostFactory extends UpdatableModelFactory<Post> {
         community: parseCommunity(json['community']),
         commentsList: parseCommentList(json['comments']),
         hashtagsList: parseHashtagsList(json['hashtags']),
+        postLinksList: parsePostLinksList(json['links']),
         isEncircled: json['is_encircled'],
         isEdited: json['is_edited'],
         isClosed: json['is_closed'],
@@ -513,6 +525,11 @@ class PostFactory extends UpdatableModelFactory<Post> {
   HashtagsList parseHashtagsList(List hashtagsList) {
     if (hashtagsList == null) return null;
     return HashtagsList.fromJson(hashtagsList);
+  }
+
+  PostLinksList parsePostLinksList(List postLinksList) {
+    if (postLinksList == null) return null;
+    return PostLinksList.fromJson(postLinksList);
   }
 
   CirclesList parseCircles(List circlesData) {

@@ -8,14 +8,14 @@ import 'package:async/async.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class OBCommunityGuidelinesPage extends StatefulWidget {
+class OBPrivacyPolicyPage extends StatefulWidget {
   @override
-  OBCommunityGuidelinesPageState createState() {
-    return OBCommunityGuidelinesPageState();
+  OBPrivacyPolicyPageState createState() {
+    return OBPrivacyPolicyPageState();
   }
 }
 
-class OBCommunityGuidelinesPageState extends State {
+class OBPrivacyPolicyPageState extends State {
   String _guidelinesText;
   bool _needsBootstrap;
 
@@ -37,10 +37,9 @@ class OBCommunityGuidelinesPageState extends State {
   void _bootstrap() async {
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
     _getGuidelinesOperation = CancelableOperation.fromFuture(
-        openbookProvider.documentsService.getCommunityGuidelines());
+        openbookProvider.documentsService.getPrivacyPolicy());
 
     String guidelines = await _getGuidelinesOperation.value;
-
     _setGuidelinesText(guidelines);
   }
 
@@ -53,7 +52,7 @@ class OBCommunityGuidelinesPageState extends State {
 
     return CupertinoPageScaffold(
       navigationBar: OBThemedNavigationBar(
-        title: 'Community guidelines',
+        title: 'Privacy policy',
       ),
       child: OBPrimaryColorContainer(
         child: Column(

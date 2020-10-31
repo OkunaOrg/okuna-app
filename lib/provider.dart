@@ -15,7 +15,6 @@ import 'package:Okuna/services/draft.dart';
 import 'package:Okuna/services/explore_timeline_preferences.dart';
 import 'package:Okuna/services/hashtags_api.dart';
 import 'package:Okuna/services/intercom.dart';
-import 'package:Okuna/services/link_preview.dart';
 import 'package:Okuna/services/moderation_api.dart';
 import 'package:Okuna/services/media/media.dart';
 import 'package:Okuna/services/notifications_api.dart';
@@ -119,7 +118,6 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   TextAutocompletionService textAccountAutocompletionService =
       TextAutocompletionService();
   ConnectivityService connectivityService = ConnectivityService();
-  LinkPreviewService linkPreviewService = LinkPreviewService();
   DraftService draftService = DraftService();
 
   SentryClient sentryClient;
@@ -198,9 +196,6 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     documentsService.setHttpService(httpService);
     moderationApiService.setStringTemplateService(stringTemplateService);
     moderationApiService.setHttpieService(httpService);
-    linkPreviewService.setHttpieService(httpService);
-    linkPreviewService.setUtilsService(utilsService);
-    linkPreviewService.setValidationService(validationService);
     shareService.setMediaService(mediaService);
     shareService.setToastService(toastService);
     shareService.setValidationService(validationService);
@@ -238,10 +233,10 @@ class OpenbookProviderState extends State<OpenbookProvider> {
         androidApiKey: environment.intercomAndroidKey,
         appId: environment.intercomAppId);
     sentryClient = SentryClient(dsn: environment.sentryDsn);
-    linkPreviewService
-        .setTrustedProxyUrl(environment.linkPreviewsTrustedProxyUrl);
+    utilsService.setTrustedProxyUrl(environment.linkPreviewsTrustedProxyUrl);
 
     await connectivityService.bootstrap();
+    documentsService.preload();
     userPreferencesService.bootstrap();
   }
 
