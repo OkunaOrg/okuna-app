@@ -734,7 +734,7 @@ class LocalizationService {
   }
 
   String get drawer__useful_links_guidelines {
-    return Intl.message("Okuna guidelines",
+    return Intl.message("Platform guidelines",
         name: 'drawer__useful_links_guidelines');
   }
 
@@ -742,6 +742,29 @@ class LocalizationService {
     return Intl.message(
         "The guidelines we're all expected to follow for a healthy and friendly co-existence.",
         name: 'drawer__useful_links_guidelines_desc');
+  }
+
+  String get drawer__useful_links_privacy_policy {
+    return Intl.message("Privacy policy",
+        name: 'drawer__useful_links_privacy_policy');
+  }
+
+  String get drawer__useful_links_privacy_policy_desc {
+    return Intl.message(
+        "The legal document explaining how we take care of your data and more.",
+        name: 'drawer__useful_links_privacy_policy_desc');
+  }
+
+
+  String get drawer__useful_links_terms_of_use {
+    return Intl.message("Terms of use",
+        name: 'drawer__useful_links_terms_of_use');
+  }
+
+  String get drawer__useful_links_terms_of_use_desc {
+    return Intl.message(
+        "The legal agreement between you and Okuna you must abide to in order to have access to the platform",
+        name: 'drawer__useful_links_terms_of_use_desc');
   }
 
   String get drawer__useful_links_guidelines_github {

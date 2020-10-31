@@ -34,6 +34,7 @@ import 'package:Okuna/pages/home/pages/community/pages/manage_community/pages/co
 import 'package:Okuna/pages/home/pages/community/pages/manage_community/pages/delete_community.dart';
 import 'package:Okuna/pages/home/pages/community/pages/manage_community/pages/leave_community.dart';
 import 'package:Okuna/pages/home/pages/hashtag/hashtag.dart';
+import 'package:Okuna/pages/home/pages/menu/pages/privacy_policy.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/settings/about.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/community_guidelines.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/connections_circle/connections_circle.dart';
@@ -51,6 +52,7 @@ import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/account_setting
 import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/account_settings/pages/user_language_settings/user_language_settings.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/application_settings.dart';
 import 'package:Okuna/pages/home/pages/menu/pages/settings/pages/developer_settings.dart';
+import 'package:Okuna/pages/home/pages/menu/pages/terms_of_use.dart';
 import 'package:Okuna/pages/home/pages/profile/pages/edit_profile/manage_profile.dart';
 import 'package:Okuna/pages/home/pages/profile/pages/edit_profile/pages/profile_posts_excluded_communities/profile_posts_excluded_communities.dart';
 import 'package:Okuna/pages/home/pages/profile/pages/follow_requests.dart';
@@ -544,6 +546,28 @@ class NavigationService {
           slidableKey: _getKeyRandomisedWithWord('communityGuidelinesPage'),
           builder: (BuildContext context) {
             return OBCommunityGuidelinesPage();
+          }),
+    );
+  }
+
+  Future navigateToPrivacyPolicyPage({@required BuildContext context}) {
+    return Navigator.push(
+      context,
+      OBSlideRightRoute<dynamic>(
+          slidableKey: _getKeyRandomisedWithWord('privacyPolicyPage'),
+          builder: (BuildContext context) {
+            return OBPrivacyPolicyPage();
+          }),
+    );
+  }
+
+  Future navigateToTermsOfUsePage({@required BuildContext context}) {
+    return Navigator.push(
+      context,
+      OBSlideRightRoute<dynamic>(
+          slidableKey: _getKeyRandomisedWithWord('termsOfUsePage'),
+          builder: (BuildContext context) {
+            return OBTermsOfUsePage();
           }),
     );
   }
