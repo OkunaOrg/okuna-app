@@ -48,7 +48,7 @@ class OBAboutPageState extends State<OBAboutPage> {
             ListTile(
               leading: OBIcon(OBIcons.nativeInfo),
               title: OBText(
-                'Okuna v0.0.67'
+                'Okuna v1.0.0'
               ),
             ),
           ],
