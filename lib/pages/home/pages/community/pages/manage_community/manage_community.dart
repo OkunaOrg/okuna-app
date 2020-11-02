@@ -190,7 +190,6 @@ class OBManageCommunityPage extends StatelessWidget {
           children: <Widget>[
             Expanded(
                 child: ListView(
-                    physics: const ClampingScrollPhysics(),
                     padding: EdgeInsets.zero,
                     children: menuListTiles)),
           ],

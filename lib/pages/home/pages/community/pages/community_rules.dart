@@ -39,7 +39,6 @@ class OBCommunityRulesPage extends StatelessWidget {
                 communityColor == null) return const SizedBox();
 
             return SingleChildScrollView(
-              physics: const ClampingScrollPhysics(),
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 20),

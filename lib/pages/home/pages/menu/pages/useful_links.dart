@@ -23,7 +23,6 @@ class OBUsefulLinksPage extends StatelessWidget {
           children: <Widget>[
             Expanded(
                 child: ListView(
-              physics: const ClampingScrollPhysics(),
               // Important: Remove any padding from the ListView.
               padding: EdgeInsets.zero,
               children: <Widget>[

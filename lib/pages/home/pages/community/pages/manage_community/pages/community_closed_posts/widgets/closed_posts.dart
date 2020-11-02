@@ -80,7 +80,6 @@ class OBCommunityClosedPostsState extends State<OBCommunityClosedPosts> {
   Widget _buildClosedPosts() {
     return ListView.builder(
         controller: _postsScrollController,
-        physics: const ClampingScrollPhysics(),
         cacheExtent: 30,
         padding: const EdgeInsets.all(0),
         itemCount: _posts.length,

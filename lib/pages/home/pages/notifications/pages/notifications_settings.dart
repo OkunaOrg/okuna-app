@@ -87,7 +87,6 @@ class OBNotificationsSettingsPageState
         ),
         child: OBPrimaryColorContainer(
           child: SingleChildScrollView(
-              physics: const ClampingScrollPhysics(),
               child: _bootstrapInProgress
                   ? _buildBootstrapInProgressIndicator()
                   : _buildToggles()),

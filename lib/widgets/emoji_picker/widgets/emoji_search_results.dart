@@ -27,7 +27,6 @@ class OBEmojiSearchResults extends StatelessWidget {
 
   Widget _buildSearchResults() {
     return ListView.builder(
-        physics: const ClampingScrollPhysics(),
         itemCount: results.length,
         itemBuilder: (BuildContext context, int index) {
           EmojiGroupSearchResults searchResults = results[index];

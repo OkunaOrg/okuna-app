@@ -126,7 +126,6 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
         _buildTabBar(),
         Expanded(
           child: TabBarView(
-              physics: const ClampingScrollPhysics(),
               controller: _tabController,
               children: _buildTabBarViews()),
         )

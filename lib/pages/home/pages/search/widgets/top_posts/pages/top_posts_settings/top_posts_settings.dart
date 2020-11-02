@@ -48,7 +48,6 @@ class OBTopPostsSettingsState extends State<OBTopPostsSettingsPage> {
           child: Column(
             children: <Widget>[
               ListView(
-                physics: const ClampingScrollPhysics(),
                 // Important: Remove any padding from the ListView.
                 padding: EdgeInsets.zero,
                 shrinkWrap: true,

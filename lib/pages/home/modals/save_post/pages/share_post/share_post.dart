@@ -100,7 +100,6 @@ class OBSharePostPageState extends State<OBSharePostPage> {
                 children: <Widget>[
                   Expanded(
                       child: ListView(
-                          physics: const ClampingScrollPhysics(),
                           padding: EdgeInsets.zero,
                           children: shareToTiles)),
                 ],

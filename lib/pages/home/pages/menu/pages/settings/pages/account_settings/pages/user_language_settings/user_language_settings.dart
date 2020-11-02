@@ -61,7 +61,6 @@ class OBUserLanguageSettingsPageState
         ),
         child: OBPrimaryColorContainer(
           child: SingleChildScrollView(
-              physics: const ClampingScrollPhysics(),
               child: _bootstrapInProgress
                   ? _buildBootstrapInProgressIndicator()
                   : _buildLanguageSelector()),
@@ -92,7 +91,6 @@ class OBUserLanguageSettingsPageState
         child: Column(
           children: <Widget>[
             ListView.builder(
-                physics: const ClampingScrollPhysics(),
                 itemCount: _allLanguages.length,
                 shrinkWrap: true,
                 itemBuilder: (BuildContext context, int index) {

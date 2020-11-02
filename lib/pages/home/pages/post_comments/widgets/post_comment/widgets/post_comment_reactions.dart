@@ -56,7 +56,6 @@ class OBPostCommentReactionsState extends State<OBPostCommentReactions> {
             child: SizedBox(
               height: 30,
               child: ListView.separated(
-                physics: const ClampingScrollPhysics(),
                 itemCount: emojiCounts.length,
                 scrollDirection: Axis.horizontal,
                 separatorBuilder: (BuildContext context, int index) {

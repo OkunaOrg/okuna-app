@@ -75,7 +75,6 @@ class OBUserInviteDetailPageState extends State<OBUserInviteDetailPage> {
                     OBUserInviteDetailHeader(widget.userInvite),
                     Expanded(
                       child: ListView(
-                          physics: const ClampingScrollPhysics(),
                           padding: EdgeInsets.zero,
                           children: _buildActionsList())
                     ),
