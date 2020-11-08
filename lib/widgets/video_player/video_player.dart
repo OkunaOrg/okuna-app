@@ -9,8 +9,8 @@ import 'package:Okuna/widgets/video_player/widgets/video_player_controls.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
-import 'package:flutter_widgets/flutter_widgets.dart';
 import 'package:video_player/video_player.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 import '../progress_indicator.dart';
 

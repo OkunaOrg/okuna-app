@@ -51,7 +51,7 @@ class DialogService {
       context: context,
       pageBuilder: (BuildContext buildContext, Animation<double> animation,
           Animation<double> secondaryAnimation) {
-        final ThemeData theme = Theme.of(context, shadowThemeOnly: true);
+        final ThemeData theme = Theme.of(context);
         final Widget pageChild = OBZoomablePhotoModal(imageUrl);
         return Builder(builder: (BuildContext context) {
           return theme != null
@@ -80,7 +80,7 @@ class DialogService {
       context: context,
       pageBuilder: (BuildContext buildContext, Animation<double> animation,
           Animation<double> secondaryAnimation) {
-        final ThemeData theme = Theme.of(context, shadowThemeOnly: true);
+        final ThemeData theme = Theme.of(context);
         final Widget pageChild = Material(
           child: OBVideoDialog(
             autoPlay: autoPlay,
