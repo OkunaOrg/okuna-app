@@ -37,23 +37,30 @@ class OBThemedNavigationBar extends StatelessWidget
             .parseGradient(theme.primaryAccentColor)
             .colors[1];
 
-        return CupertinoNavigationBar(
-          border: null,
-          actionsForegroundColor: actionsForegroundColor != null
-              ? actionsForegroundColor
-              : Colors.black,
-          middle: middle ??
-              (title != null
-                  ? OBText(
-                      title,
-                    )
-                  : const SizedBox()),
-          transitionBetweenRoutes: false,
-          backgroundColor:
-              themeValueParserService.parseColor(theme.primaryColor),
-          trailing: trailing,
-          leading: leading,
-        );
+        Color actionsColor = actionsForegroundColor != null
+            ? actionsForegroundColor
+            : Colors.black;
+
+        ThemeData themeData = Theme.of(context);
+
+        return Theme(
+            data: themeData.copyWith(
+              primaryColor: actionsColor,
+            ),
+            child: CupertinoNavigationBar(
+              border: null,
+              middle: middle ??
+                  (title != null
+                      ? OBText(
+                          title,
+                        )
+                      : const SizedBox()),
+              transitionBetweenRoutes: false,
+              backgroundColor:
+                  themeValueParserService.parseColor(theme.primaryColor),
+              trailing: trailing,
+              leading: leading,
+            ));
       },
     );
   }

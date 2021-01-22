@@ -39,12 +39,12 @@ PODS:
     - DKImagePickerController/PhotoGallery
     - Flutter
   - Flutter (1.0.0)
-  - flutter_ffmpeg (0.2.10):
+  - flutter_ffmpeg (0.3.0):
     - Flutter
-    - flutter_ffmpeg/https (= 0.2.10)
-  - flutter_ffmpeg/https (0.2.10):
+    - flutter_ffmpeg/https (= 0.3.0)
+  - flutter_ffmpeg/https (0.3.0):
     - Flutter
-    - mobile-ffmpeg-https (= 4.3.1)
+    - mobile-ffmpeg-https (= 4.4)
   - flutter_image_compress (0.0.1):
     - Flutter
     - Mantle
@@ -75,7 +75,7 @@ PODS:
   - Mantle (2.1.6):
     - Mantle/extobjc (= 2.1.6)
   - Mantle/extobjc (2.1.6)
-  - mobile-ffmpeg-https (4.3.1)
+  - mobile-ffmpeg-https (4.4)
   - OneSignal (2.15.2)
   - onesignal_flutter (2.6.1):
     - Flutter
@@ -210,18 +210,18 @@ SPEC CHECKSUMS:
   DKImagePickerController: b5eb7f7a388e4643264105d648d01f727110fc3d
   DKPhotoGallery: fdfad5125a9fdda9cc57df834d49df790dbb4179
   file_picker: 3e6c3790de664ccf9b882732d9db5eaf6b8d4eb1
-  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  flutter_ffmpeg: cf0a6941ef67e88248c998cc3e34f8acb0b4e454
+  Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
+  flutter_ffmpeg: 657ce8a1502c3d25bf34efc58b380b248836f772
   flutter_image_compress: 082f8daaf6c1b0c9fe798251c750ef0ecd98d7ae
   flutter_secure_storage: 7953c38a04c3fdbb00571bcd87d8e3b5ceb9daec
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   image_cropper: c8f9b4157933c7bb965a66d1c5e6c8fd408c6eb4
-  image_picker: e3eacd46b94694dde7cf2705955cece853aa1a8f
+  image_picker: 9c3312491f862b28d21ecd8fdf0ee14e601b3f09
   Intercom: e44b10bbc38ccf6494c76f9bee4e2e3d7d007153
   intercom_flutter: 8b168f7cad88366708aa1972a395e6195205fc3a
   libwebp: 946cb3063cea9236285f7e9a8505d806d30e07f3
   Mantle: 4c0ed6ce47c96eccc4dc3bb071deb3def0e2c3be
-  mobile-ffmpeg-https: c4a3c255163ddb1abc4b4dfc613c2d885f8c46eb
+  mobile-ffmpeg-https: 311fc4a8f671cf36d1d6b8f421e8246b790978d9
   OneSignal: 9531e385388565f4d31797ddadbe0fcc786430ec
   onesignal_flutter: b4412973eac419ccce07363e43e0d6057c583a96
   package_info: 873975fc26034f0b863a300ad47e7f1ac6c7ec62
@@ -236,12 +236,12 @@ SPEC CHECKSUMS:
   SwiftyGif: e466e86c660d343357ab944a819a101c4127cb40
   TOCropViewController: da59f531f8ac8a94ef6d6c0fc34009350f9e8bfe
   uni_links: d97da20c7701486ba192624d99bffaaffcfc298a
-  url_launcher: 0067ddb8f10d36786672aa0722a21717dba3a298
+  url_launcher: 6fef411d543ceb26efce54b05a0a40bfd74cbbef
   video_player: fd8b6188941ec5a530d6ab0830a34f78faa0452e
   video_thumbnail: c4e2a3c539e247d4de13cd545344fd2d26ffafd1
   VIMediaCache: aa650f82cb114c68a343beb4e67416cf5eb2f3a2
   wakelock: 0d4a70faf8950410735e3f61fb15d517c8a6efc4
 
-PODFILE CHECKSUM: cbb1dad82c74b8ac115e7b86f4dda3a7601f5a3b
+PODFILE CHECKSUM: 7dc5841d149cfe653777ea843ecb3d27ccd3a8f2
 
 COCOAPODS: 1.10.0

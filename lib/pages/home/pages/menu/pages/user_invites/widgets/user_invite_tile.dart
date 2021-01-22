@@ -43,8 +43,7 @@ class OBUserInviteTileState extends State<OBUserInviteTile> {
   @override
   void dispose() {
     super.dispose();
-    if (_deleteOperation != null)
-      _deleteOperation.cancel();
+    if (_deleteOperation != null) _deleteOperation.cancel();
   }
 
   @override
@@ -59,27 +58,23 @@ class OBUserInviteTileState extends State<OBUserInviteTile> {
     if (widget.userInvite.createdUser != null) {
       tile = ListTile(
           onTap: () {
-              navigationService.navigateToUserProfile(
-                  user: widget.userInvite.createdUser,
-                  context: context);
+            navigationService.navigateToUserProfile(
+                user: widget.userInvite.createdUser, context: context);
           },
           leading: const OBIcon(OBIcons.invite),
           title: OBText(
             widget.userInvite.nickname,
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
-          subtitle: _buildActionableSecondaryText()
-      );
+          subtitle: _buildActionableSecondaryText());
     } else {
       tile = Slidable(
-        delegate: new SlidableDrawerDelegate(),
+        actionPane: SlidableDrawerActionPane(),
         actionExtentRatio: 0.25,
         child: ListTile(
             onTap: () {
-                navigationService.navigateToInviteDetailPage(
-                    userInvite: widget.userInvite,
-                    context: context
-                );
+              navigationService.navigateToInviteDetailPage(
+                  userInvite: widget.userInvite, context: context);
             },
             leading: const OBIcon(OBIcons.invite),
             title: OBText(
@@ -107,7 +102,8 @@ class OBUserInviteTileState extends State<OBUserInviteTile> {
     if (widget.userInvite.createdUser != null) {
       return OBActionableSmartText(
         size: OBTextSize.mediumSecondary,
-        text: _localizationService.user__invites_joined_with(widget.userInvite.createdUser.username),
+        text: _localizationService
+            .user__invites_joined_with(widget.userInvite.createdUser.username),
       );
     } else {
       return OBSecondaryText(_localizationService.user__invites_pending);
@@ -117,7 +113,8 @@ class OBUserInviteTileState extends State<OBUserInviteTile> {
   void _deleteUserInvite() async {
     _setRequestInProgress(true);
     try {
-      _deleteOperation = CancelableOperation.fromFuture(_userService.deleteUserInvite(widget.userInvite));
+      _deleteOperation = CancelableOperation.fromFuture(
+          _userService.deleteUserInvite(widget.userInvite));
       await _deleteOperation.value;
       _setRequestInProgress(false);
       if (widget.onUserInviteDeletedCallback != null) {
@@ -139,7 +136,8 @@ class OBUserInviteTileState extends State<OBUserInviteTile> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: _localizationService.error__unknown_error, context: context);
+      _toastService.error(
+          message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

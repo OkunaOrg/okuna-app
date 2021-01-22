@@ -33,18 +33,22 @@ class OBColoredNavBar extends StatelessWidget
     Color finalActionsColor =
         actionsColor ?? (isDarkColor ? Colors.white : Colors.black);
 
-    return CupertinoNavigationBar(
-        border: null,
-        leading: leading,
-        actionsForegroundColor: finalActionsColor,
-        middle: middle ??
-            Text(
-              title,
-              style: TextStyle(color: textColor ?? finalActionsColor),
-            ),
-        transitionBetweenRoutes: false,
-        backgroundColor: color,
-        trailing: trailing);
+    ThemeData themeData = Theme.of(context);
+
+    return Theme(
+      data: themeData.copyWith(primaryColor: finalActionsColor),
+      child: CupertinoNavigationBar(
+          border: null,
+          leading: leading,
+          middle: middle ??
+              Text(
+                title,
+                style: TextStyle(color: textColor ?? finalActionsColor),
+              ),
+          transitionBetweenRoutes: false,
+          backgroundColor: color,
+          trailing: trailing),
+    );
   }
 
   @override

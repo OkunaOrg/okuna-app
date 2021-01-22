@@ -28,10 +28,10 @@ class OBCommunityNavBar extends StatelessWidget
 
           return CupertinoNavigationBar(
             border: null,
-            actionsForegroundColor: actionsColor,
             middle: OBText(
               'c/' + community.name,
-              style: TextStyle(color: actionsColor, fontWeight: FontWeight.bold),
+              style:
+                  TextStyle(color: actionsColor, fontWeight: FontWeight.bold),
             ),
             transitionBetweenRoutes: false,
             backgroundColor: color,

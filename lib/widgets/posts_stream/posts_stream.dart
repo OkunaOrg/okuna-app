@@ -192,12 +192,14 @@ class OBPostsStreamState extends State<OBPostsStream>
     List<Widget> _stackChildren = [];
 
     _stackChildren.add(InViewNotifierList(
-      key: Key(_streamUniqueIdentifier),
-      padding: const EdgeInsets.all(0),
-      controller: _streamScrollController,
-      isInViewPortCondition: _checkTimelineItemIsInViewport,
-      children: streamItems,
-    ));
+        key: Key(_streamUniqueIdentifier),
+        padding: const EdgeInsets.all(0),
+        controller: _streamScrollController,
+        isInViewPortCondition: _checkTimelineItemIsInViewport,
+        itemCount: streamItems.length,
+        builder: (BuildContext context, int index) {
+          return streamItems[index];
+        }));
 
     if (!_shouldHideStackedLoadingScreen) {
       _stackChildren.add(Positioned(

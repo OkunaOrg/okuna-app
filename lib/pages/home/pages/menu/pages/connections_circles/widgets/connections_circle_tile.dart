@@ -56,7 +56,7 @@ class OBConnectionsCircleTileState extends State<OBConnectionsCircleTile> {
     if (widget.isReadOnly) return tile;
 
     tile = Slidable(
-      delegate: new SlidableDrawerDelegate(),
+      actionPane: SlidableDrawerActionPane(),
       actionExtentRatio: 0.25,
       child: tile,
       secondaryActions: <Widget>[
@@ -75,7 +75,8 @@ class OBConnectionsCircleTileState extends State<OBConnectionsCircleTile> {
   }
 
   Widget _buildTile() {
-    String prettyCount = getPrettyCount(widget.connectionsCircle.usersCount, _localizationService);
+    String prettyCount = getPrettyCount(
+        widget.connectionsCircle.usersCount, _localizationService);
 
     return ListTile(
         onTap: () {
@@ -90,7 +91,8 @@ class OBConnectionsCircleTileState extends State<OBConnectionsCircleTile> {
           widget.connectionsCircle.name,
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        subtitle: OBSecondaryText(_localizationService.user__circle_peoples_count(prettyCount)));
+        subtitle: OBSecondaryText(
+            _localizationService.user__circle_peoples_count(prettyCount)));
   }
 
   void _deleteConnectionsCircle() async {
@@ -117,7 +119,8 @@ class OBConnectionsCircleTileState extends State<OBConnectionsCircleTile> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: _localizationService.error__unknown_error, context: context);
+      _toastService.error(
+          message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

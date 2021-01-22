@@ -170,7 +170,7 @@ class OBNotificationTile extends StatelessWidget {
           onPressed: finalOnPressed,
         );
         break;
-        case UserNewPostNotification:
+      case UserNewPostNotification:
         notificationTile = OBUserNewPostNotificationTile(
           notification: notification,
           userNewPostNotification: notificationContentObject,
@@ -178,7 +178,8 @@ class OBNotificationTile extends StatelessWidget {
         );
         break;
       default:
-        print('Unsupported notification content object type ${notificationContentObject}');
+        print(
+            'Unsupported notification content object type ${notificationContentObject}');
         return const SizedBox();
     }
 
@@ -187,7 +188,7 @@ class OBNotificationTile extends StatelessWidget {
 
   Widget _buildDismissable(Widget child) {
     return Slidable(
-      delegate: const SlidableDrawerDelegate(),
+      actionPane: SlidableDrawerActionPane(),
       actionExtentRatio: 0.25,
       child: child,
       secondaryActions: <Widget>[
