@@ -27,8 +27,13 @@ class OBVideoPickerBottomSheet extends StatelessWidget {
           bool permissionGranted = await provider.permissionService
               .requestStoragePermissions(context: context);
           if (permissionGranted) {
-            File file = await FilePicker.getFile(type: FileType.video);
-            Navigator.pop(context, file);
+            FilePickerResult result =
+                await FilePicker.platform.pickFiles(type: FileType.video);
+
+            if (result != null) {
+              File file = File(result.files.single.path);
+              Navigator.pop(context, file);
+            }
           }
         },
       ),
@@ -51,11 +56,11 @@ class OBVideoPickerBottomSheet extends StatelessWidget {
 
     return OBRoundedBottomSheet(
         child: Padding(
-          padding: EdgeInsets.only(bottom: 16),
-          child: Column(
-            children: videoPickerActions,
-            mainAxisSize: MainAxisSize.min,
-          ),
-        ));
+      padding: EdgeInsets.only(bottom: 16),
+      child: Column(
+        children: videoPickerActions,
+        mainAxisSize: MainAxisSize.min,
+      ),
+    ));
   }
 }

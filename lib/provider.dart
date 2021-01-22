@@ -62,7 +62,7 @@ class OpenbookProvider extends StatefulWidget {
   }
 
   static OpenbookProviderState of(BuildContext context) {
-    return (context.inheritFromWidgetOfExactType(_OpenbookProvider)
+    return (context.dependOnInheritedWidgetOfExactType<_OpenbookProvider>()
             as _OpenbookProvider)
         .data;
   }

@@ -42,7 +42,7 @@ class OBFollowsListTileState extends State<OBFollowsListTile> {
     var navigationService = provider.navigationService;
 
     Widget tile = Slidable(
-      delegate: new SlidableDrawerDelegate(),
+      actionPane: SlidableDrawerActionPane(),
       actionExtentRatio: 0.25,
       child: ListTile(
           onTap: () {

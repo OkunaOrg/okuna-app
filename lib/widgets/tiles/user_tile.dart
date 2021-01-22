@@ -28,7 +28,8 @@ class OBUserTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
-    LocalizationService _localizationService = openbookProvider.localizationService;
+    LocalizationService _localizationService =
+        openbookProvider.localizationService;
     Widget tile = ListTile(
       onTap: () {
         if (onUserTilePressed != null) onUserTilePressed(user);
@@ -49,7 +50,8 @@ class OBUserTile extends StatelessWidget {
         children: [
           OBSecondaryText(user.getProfileName()),
           showFollowing && user.isFollowing != null && user.isFollowing
-              ? OBSecondaryText(_localizationService.trans('user__tile_following'))
+              ? OBSecondaryText(
+                  _localizationService.trans('user__tile_following'))
               : const SizedBox()
         ],
       ),
@@ -57,7 +59,7 @@ class OBUserTile extends StatelessWidget {
 
     if (onUserTileDeleted != null) {
       tile = Slidable(
-        delegate: new SlidableDrawerDelegate(),
+        actionPane: SlidableDrawerActionPane(),
         actionExtentRatio: 0.25,
         child: tile,
         secondaryActions: <Widget>[

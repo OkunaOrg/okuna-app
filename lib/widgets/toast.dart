@@ -1,4 +1,3 @@
-import 'package:Okuna/services/toast.dart';
 import 'package:flutter/material.dart';
 
 // TODO Queue toasts.
@@ -15,7 +14,7 @@ class OBToast extends StatefulWidget {
 
   static OBToastState of(BuildContext context) {
     final OBToastState toastState =
-        context.rootAncestorStateOfType(const TypeMatcher<OBToastState>());
+        context.findRootAncestorStateOfType<OBToastState>();
     toastState._setCurrentContext(context);
     return toastState;
   }

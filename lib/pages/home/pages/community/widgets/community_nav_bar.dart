@@ -26,15 +26,25 @@ class OBCommunityNavBar extends StatelessWidget
           bool isDarkColor = themeValueParserService.isDarkColor(color);
           Color actionsColor = isDarkColor ? Colors.white : Colors.black;
 
-          return CupertinoNavigationBar(
-            border: null,
-            actionsForegroundColor: actionsColor,
-            middle: OBText(
-              'c/' + community.name,
-              style: TextStyle(color: actionsColor, fontWeight: FontWeight.bold),
+          CupertinoThemeData themeData = CupertinoTheme.of(context);
+
+          return CupertinoTheme(
+            data: themeData.copyWith(
+                primaryColor: actionsColor,
+                textTheme: CupertinoTextThemeData(
+                  primaryColor:
+                      actionsColor, //change color of the TOP navbar icon
+                )),
+            child: CupertinoNavigationBar(
+              border: null,
+              middle: OBText(
+                'c/' + community.name,
+                style:
+                    TextStyle(color: actionsColor, fontWeight: FontWeight.bold),
+              ),
+              transitionBetweenRoutes: false,
+              backgroundColor: color,
             ),
-            transitionBetweenRoutes: false,
-            backgroundColor: color,
           );
         });
   }

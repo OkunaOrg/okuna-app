@@ -28,8 +28,13 @@ class OBImagePickerBottomSheet extends StatelessWidget {
           bool permissionGranted = await provider.permissionService
               .requestStoragePermissions(context: context);
           if (permissionGranted) {
-            File file = await FilePicker.getFile(type: FileType.image);
-            Navigator.pop(context, file);
+            FilePickerResult result =
+                await FilePicker.platform.pickFiles(type: FileType.image);
+
+            if (result != null) {
+              File file = File(result.files.single.path);
+              Navigator.pop(context, file);
+            }
           }
         },
       ),
@@ -52,11 +57,11 @@ class OBImagePickerBottomSheet extends StatelessWidget {
 
     return OBRoundedBottomSheet(
         child: Padding(
-          padding: EdgeInsets.only(bottom: 16),
-          child: Column(
-            children: imagePickerActions,
-            mainAxisSize: MainAxisSize.min,
-          ),
-        ));
+      padding: EdgeInsets.only(bottom: 16),
+      child: Column(
+        children: imagePickerActions,
+        mainAxisSize: MainAxisSize.min,
+      ),
+    ));
   }
 }
