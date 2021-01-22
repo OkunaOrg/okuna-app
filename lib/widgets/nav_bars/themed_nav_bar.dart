@@ -41,12 +41,15 @@ class OBThemedNavigationBar extends StatelessWidget
             ? actionsForegroundColor
             : Colors.black;
 
-        ThemeData themeData = Theme.of(context);
+        CupertinoThemeData themeData = CupertinoTheme.of(context);
 
-        return Theme(
+        return CupertinoTheme(
             data: themeData.copyWith(
-              primaryColor: actionsColor,
-            ),
+                primaryColor: actionsColor,
+                textTheme: CupertinoTextThemeData(
+                  primaryColor:
+                      actionsColor, //change color of the TOP navbar icon
+                )),
             child: CupertinoNavigationBar(
               border: null,
               middle: middle ??

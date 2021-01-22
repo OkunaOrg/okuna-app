@@ -33,10 +33,15 @@ class OBColoredNavBar extends StatelessWidget
     Color finalActionsColor =
         actionsColor ?? (isDarkColor ? Colors.white : Colors.black);
 
-    ThemeData themeData = Theme.of(context);
+    CupertinoThemeData themeData = CupertinoTheme.of(context);
 
-    return Theme(
-      data: themeData.copyWith(primaryColor: finalActionsColor),
+    return CupertinoTheme(
+      data: themeData.copyWith(
+          primaryColor: finalActionsColor,
+          textTheme: CupertinoTextThemeData(
+            primaryColor:
+                finalActionsColor, //change color of the TOP navbar icon
+          )),
       child: CupertinoNavigationBar(
           border: null,
           leading: leading,
