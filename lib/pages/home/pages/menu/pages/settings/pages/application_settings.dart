@@ -24,7 +24,6 @@ class OBApplicationSettingsPage extends StatelessWidget {
           title: _localizationService.drawer__application_settings),
       child: OBPrimaryColorContainer(
         child: ListView(
-          physics: const ClampingScrollPhysics(),
           // Important: Remove any padding from the ListView.
           children: <Widget>[
             Padding(

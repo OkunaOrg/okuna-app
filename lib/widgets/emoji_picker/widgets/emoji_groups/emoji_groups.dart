@@ -12,7 +12,6 @@ class OBEmojiGroups extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-        physics: const ClampingScrollPhysics(),
         itemCount: emojiGroups.length,
         itemBuilder: (BuildContext context, index) {
           EmojiGroup emojiGroup = emojiGroups[index];

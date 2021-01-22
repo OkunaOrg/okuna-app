@@ -19,7 +19,6 @@ class OBSettingsPage extends StatelessWidget {
           title: localizationService.trans('drawer__settings')),
       child: OBPrimaryColorContainer(
         child: ListView(
-          physics: const ClampingScrollPhysics(),
           // Important: Remove any padding from the ListView.
           padding: EdgeInsets.zero,
           children: <Widget>[

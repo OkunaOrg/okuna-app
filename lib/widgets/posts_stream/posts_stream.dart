@@ -193,7 +193,6 @@ class OBPostsStreamState extends State<OBPostsStream>
 
     _stackChildren.add(InViewNotifierList(
       key: Key(_streamUniqueIdentifier),
-      physics: const ClampingScrollPhysics(),
       padding: const EdgeInsets.all(0),
       controller: _streamScrollController,
       isInViewPortCondition: _checkTimelineItemIsInViewport,

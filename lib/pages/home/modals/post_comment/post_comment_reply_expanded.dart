@@ -223,7 +223,6 @@ class OBPostCommentReplyExpandedModalState
                 ),
                 Expanded(
                   child: SingleChildScrollView(
-                    physics: const ClampingScrollPhysics(),
                     child: Padding(
                         padding: EdgeInsets.only(
                             left: 20.0, right: 20.0, bottom: 30.0, top: 0.0),

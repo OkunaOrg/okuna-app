@@ -109,7 +109,6 @@ class OBSharePostWithCirclesPageState
 
   Widget _buildSearchResults() {
     return ListView.builder(
-        physics: const ClampingScrollPhysics(),
         itemCount: _circleSearchResults.length,
         itemBuilder: (BuildContext context, int index) {
           Circle circle = _circleSearchResults[index];

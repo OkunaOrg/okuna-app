@@ -133,7 +133,6 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
         navigationBar: _buildNavigationBar(),
         child: OBPrimaryColorContainer(
           child: SingleChildScrollView(
-            physics: const ClampingScrollPhysics(),
             child: Form(
                 key: _formKey,
                 child: Column(

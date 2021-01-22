@@ -266,7 +266,7 @@ class Post extends UpdatableModel<Post> {
   }
 
   PostLink getLinkToPreview() {
-    if (postLinksList.postLinks.isNotEmpty) {
+    if (postLinksList != null && postLinksList.postLinks != null && postLinksList.postLinks.isNotEmpty) {
       var linkPreview = postLinksList.postLinks
           .firstWhere((link) => link.hasPreview, orElse: () => null);
       return linkPreview;

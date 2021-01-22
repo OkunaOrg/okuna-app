@@ -41,14 +41,13 @@ class OBAboutPageState extends State<OBAboutPage> {
       navigationBar: OBThemedNavigationBar(title: _localizationService.drawer__about),
       child: OBPrimaryColorContainer(
         child: ListView(
-          physics: const ClampingScrollPhysics(),
           // Important: Remove any padding from the ListView.
           padding: EdgeInsets.zero,
           children: <Widget>[
             ListTile(
               leading: OBIcon(OBIcons.nativeInfo),
               title: OBText(
-                'Okuna v0.0.67'
+                'Okuna v1.0.0'
               ),
             ),
           ],

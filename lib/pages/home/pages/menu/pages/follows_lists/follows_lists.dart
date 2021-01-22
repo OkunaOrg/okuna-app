@@ -84,7 +84,6 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
                   child: RefreshIndicator(
                       key: _refreshIndicatorKey,
                       child: ListView.builder(
-                          physics: const ClampingScrollPhysics(),
                           controller: _followsListsScrollController,
                           padding: EdgeInsets.all(0),
                           itemCount: _followsListsSearchResults.length + 1,
