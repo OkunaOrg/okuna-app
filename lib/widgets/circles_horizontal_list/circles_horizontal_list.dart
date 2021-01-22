@@ -24,7 +24,6 @@ class OBCirclesHorizontalList extends StatelessWidget {
     int itemCount = circles.length + 1;
 
     return ListView.builder(
-      physics: const ClampingScrollPhysics(),
       scrollDirection: Axis.horizontal,
       itemCount: itemCount,
       itemBuilder: (BuildContext context, int index) {

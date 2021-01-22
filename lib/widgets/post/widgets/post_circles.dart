@@ -24,7 +24,6 @@ class OBPostCircles extends StatelessWidget {
           height: 26.0,
           child: ListView.builder(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-            physics: const ClampingScrollPhysics(),
             itemCount: 1,
             scrollDirection: Axis.horizontal,
             itemBuilder: (BuildContext context, int index) {

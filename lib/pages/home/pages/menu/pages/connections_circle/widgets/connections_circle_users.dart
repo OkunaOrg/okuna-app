@@ -30,7 +30,6 @@ class OBConnectionsCircleUsers extends StatelessWidget {
           };
 
           return ListView.builder(
-              physics: const ClampingScrollPhysics(),
               padding: EdgeInsets.all(0),
               itemCount: users.length,
               itemBuilder: (context, index) {

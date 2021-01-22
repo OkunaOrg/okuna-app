@@ -60,7 +60,6 @@ class OBCommunityButtons extends StatelessWidget {
       child: SizedBox(
         height: 35,
         child: ListView.separated(
-          physics: const ClampingScrollPhysics(),
           itemCount: communityButtons.length,
           scrollDirection: Axis.horizontal,
           itemBuilder: (BuildContext context, index) {

@@ -454,9 +454,31 @@ class LocalizationService {
     return Intl.message("Login", name: 'auth__create_acc__done_continue');
   }
 
-  String get auth__create_acc__one_last_thing {
-    return Intl.message("One last thing...",
-        name: 'auth__create_acc__one_last_thing');
+  String get auth__create_acc__legal_confirmation {
+    return Intl.message("Legal confirmation",
+        name: 'auth__create_acc__legal_confirmation');
+  }
+
+  String get auth__create_acc__legal_confirmation_desc {
+    return Intl.message(
+        "By registering in Okuna, I certify that I'm older than 16 years old and have read the Community Guidelines, Privacy Policy and Terms of Use and agree to all of the items included",
+        name: 'auth__create_acc__legal_confirmation_desc');
+  }
+
+  String get auth__create_acc__legal {
+    return Intl.message("The important stuff", name: 'auth__create_acc__legal');
+  }
+
+  String get auth__create_acc__legal_desc {
+    return Intl.message(
+        "Please take a moment to read through the following documents",
+        name: 'auth__create_acc__legal_desc');
+  }
+
+  String get auth__create_acc__legal_desc_extra {
+    return Intl.message(
+        "They contain important information about your experience in Okuna and you will have to accept to them",
+        name: 'auth__create_acc__legal_desc_extra');
   }
 
   String get auth__create_acc__register {
@@ -734,7 +756,7 @@ class LocalizationService {
   }
 
   String get drawer__useful_links_guidelines {
-    return Intl.message("Okuna guidelines",
+    return Intl.message("Platform guidelines",
         name: 'drawer__useful_links_guidelines');
   }
 
@@ -742,6 +764,28 @@ class LocalizationService {
     return Intl.message(
         "The guidelines we're all expected to follow for a healthy and friendly co-existence.",
         name: 'drawer__useful_links_guidelines_desc');
+  }
+
+  String get drawer__useful_links_privacy_policy {
+    return Intl.message("Privacy policy",
+        name: 'drawer__useful_links_privacy_policy');
+  }
+
+  String get drawer__useful_links_privacy_policy_desc {
+    return Intl.message(
+        "The legal document explaining how we take care of your data and more.",
+        name: 'drawer__useful_links_privacy_policy_desc');
+  }
+
+  String get drawer__useful_links_terms_of_use {
+    return Intl.message("Terms of use",
+        name: 'drawer__useful_links_terms_of_use');
+  }
+
+  String get drawer__useful_links_terms_of_use_desc {
+    return Intl.message(
+        "The legal agreement between you and Okuna you must abide to in order to have access to the platform",
+        name: 'drawer__useful_links_terms_of_use_desc');
   }
 
   String get drawer__useful_links_guidelines_github {
@@ -808,6 +852,11 @@ class LocalizationService {
   String get drawer__useful_links_slack_channel {
     return Intl.message("Community Slack channel",
         name: 'drawer__useful_links_slack_channel');
+  }
+
+  String get drawer__useful_links_community_guidelines {
+    return Intl.message("Community guidelines",
+        name: 'drawer__useful_links_community_guidelines');
   }
 
   String get drawer__useful_links_slack_channel_desc {
@@ -2407,7 +2456,6 @@ class LocalizationService {
     return Intl.message("Confirm",
         name: 'user__profile_action_confirm_connection_short');
   }
-
 
   String user__profile_user_sent_follow_request(String userUsername) {
     return Intl.message('@$userUsername has sent you a follow request.',
@@ -4190,6 +4238,19 @@ class LocalizationService {
         "Failed to preview link with website error: $description",
         args: [description],
         name: 'post_body_link_preview__error_with_description');
+  }
+
+  String get link_preview_failed__title {
+    return Intl.message("Preview failed", name: 'link_preview_failed__title');
+  }
+
+  String get link_preview_failed__description {
+    return Intl.message("We could not preview this link right now",
+        name: 'link_preview_failed');
+  }
+
+  String get retry {
+    return Intl.message("Retry", name: 'retry');
   }
 
   String get posts_stream__all_loaded {

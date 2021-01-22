@@ -82,6 +82,9 @@ class PostsApiService {
   static const SEARCH_POST_PARTICIPANTS_PATH =
       'api/posts/{postUuid}/participants/search/';
 
+  static const PREVIEW_LINK_PATH = 'api/posts/links/preview/';
+  static const LINK_IS_PREVIEWABLE_PATH = 'api/posts/links/is-previewable/';
+
   void setHttpieService(HttpieService httpService) {
     _httpService = httpService;
   }
@@ -195,6 +198,7 @@ class PostsApiService {
 
     return _httpService.post(_makeApiUrl(path), appendAuthorizationToken: true);
   }
+
 
   Future<HttpieResponse> getPostWithUuidStatus(String postUuid) {
     String path = _makeGetPostStatusPath(postUuid: postUuid);
@@ -609,6 +613,22 @@ class PostsApiService {
     String path = _makeExcludedCommunityFromProfilePostsPath(communityName);
     return _httpService.delete(_makeApiUrl(path),
         appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> previewLink(
+      {@required String link}) {
+    Map<String, dynamic> body = {'link': link};
+
+    return _httpService.postJSON(_makeApiUrl(PREVIEW_LINK_PATH),
+        body: body, appendAuthorizationToken: true);
+  }
+
+  Future<HttpieResponse> linkIsPreviewable(
+      {@required String link}) {
+    Map<String, dynamic> body = {'link': link};
+
+    return _httpService.postJSON(_makeApiUrl(LINK_IS_PREVIEWABLE_PATH),
+        body: body, appendAuthorizationToken: true);
   }
 
   String _makeExcludedCommunityFromProfilePostsPath(String communityName) {

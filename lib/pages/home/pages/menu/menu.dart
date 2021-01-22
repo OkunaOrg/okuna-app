@@ -49,7 +49,6 @@ class OBMainMenuPage extends StatelessWidget {
 
                     return Expanded(
                         child: ListView(
-                      physics: const ClampingScrollPhysics(),
                       // Important: Remove any padding from the ListView.
                       padding: EdgeInsets.zero,
                       children: <Widget>[

@@ -110,7 +110,6 @@ class OBModeratedObjectsPageState extends State<OBModeratedObjectsPage> {
                         delegate: OBModeratedObjectsPageLoadMoreDelegate(),
                         child: ListView.builder(
                           controller: _scrollController,
-                          physics: const ClampingScrollPhysics(),
                           padding: EdgeInsets.all(0),
                           itemCount: _moderatedObjects.length + 1,
                           itemBuilder: _buildModeratedObject,

@@ -8,14 +8,14 @@ import 'package:async/async.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class OBCommunityGuidelinesPage extends StatefulWidget {
+class OBTermsOfUsePage extends StatefulWidget {
   @override
-  OBCommunityGuidelinesPageState createState() {
-    return OBCommunityGuidelinesPageState();
+  OBTermsOfUsePageState createState() {
+    return OBTermsOfUsePageState();
   }
 }
 
-class OBCommunityGuidelinesPageState extends State {
+class OBTermsOfUsePageState extends State {
   String _guidelinesText;
   bool _needsBootstrap;
 
@@ -37,10 +37,9 @@ class OBCommunityGuidelinesPageState extends State {
   void _bootstrap() async {
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
     _getGuidelinesOperation = CancelableOperation.fromFuture(
-        openbookProvider.documentsService.getCommunityGuidelines());
+        openbookProvider.documentsService.getTermsOfUse());
 
     String guidelines = await _getGuidelinesOperation.value;
-
     _setGuidelinesText(guidelines);
   }
 
@@ -53,24 +52,25 @@ class OBCommunityGuidelinesPageState extends State {
 
     return CupertinoPageScaffold(
       navigationBar: OBThemedNavigationBar(
-        title: 'Community guidelines',
+        title: 'Terms of use',
       ),
       child: OBPrimaryColorContainer(
         child: Column(
           children: <Widget>[
             Expanded(
-              child: _guidelinesText.isNotEmpty ? OBMarkdown(
-                data: _guidelinesText,
-              ) : Padding(
-                padding: const EdgeInsets.all(20),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    OBProgressIndicator()
-                  ],
-                ),
-              ),)
+              child: _guidelinesText.isNotEmpty
+                  ? OBMarkdown(
+                      data: _guidelinesText,
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [OBProgressIndicator()],
+                      ),
+                    ),
+            )
           ],
         ),
       ),

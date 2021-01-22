@@ -30,7 +30,6 @@ class OBCommunityStaffPage extends StatelessWidget {
           initialData: community,
           builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
             return SingleChildScrollView(
-              physics: const ClampingScrollPhysics(),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[

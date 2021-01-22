@@ -22,7 +22,6 @@ class OBAccountSettingsPage extends StatelessWidget {
       navigationBar: OBThemedNavigationBar(title: localizationService.drawer__settings),
       child: OBPrimaryColorContainer(
         child: ListView(
-          physics: const ClampingScrollPhysics(),
           // Important: Remove any padding from the ListView.
           padding: EdgeInsets.zero,
           children: <Widget>[

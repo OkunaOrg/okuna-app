@@ -7,7 +7,7 @@ description: Social Network
 # Both the version and the builder number may be overridden in flutter
 # build by specifying --build-name and --build-number, respectively.
 # Read more about versioning at semver.org.
-version: 0.0.68+92
+version: 1.0.0+95
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -23,7 +23,7 @@ dependencies:
       url: https://github.com/OkunaOrg/inview_notifier_list.git
       ref: c74749a052f91fbdd11fad959c2c59d0d10c7695
   connectivity: ^0.4.4
-  flutter_widgets: ^0.1.6
+  visibility_detector: ^0.1.5
   http_retry: ^0.1.1+3
   video_thumbnail: ^0.1.5+1
   flutter_ffmpeg: ^0.2.10
