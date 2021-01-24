@@ -7,7 +7,7 @@ description: Social Network
 # Both the version and the builder number may be overridden in flutter
 # build by specifying --build-name and --build-number, respectively.
 # Read more about versioning at semver.org.
-version: 1.0.0+95
+version: 1.0.1+96
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -93,7 +93,7 @@ dev_dependencies:
   intl_translation: ^0.17.10+1
 
 dependency_overrides:
-   intl: ^0.17.0-nullsafety.2
+  intl: ^0.17.0-nullsafety.2
 
 flutter_icons:
   android: true
@@ -107,7 +107,6 @@ flutter_icons:
 
 # The following section is specific to Flutter.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -202,7 +201,7 @@ flutter:
       fonts:
         - asset: assets/fonts/Cocogoose-Pro-Semilight.ttf
           style: normal
-    - family: ''
+    - family: ""
       fonts:
         - asset: assets/fonts/NunitoSans-Regular.ttf
           weight: 400
