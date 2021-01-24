@@ -283,7 +283,7 @@ class MediaService {
     final thumbnailData = await VideoThumbnail.thumbnailData(
       video: videoFile.path,
       imageFormat: ImageFormat.JPEG,
-      maxHeightOrWidth: 500,
+      maxWidth: 500,
       quality: 100,
     );
 

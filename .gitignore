@@ -19,3 +19,4 @@ report.xml
 
 .flutter-plugins-dependencies
 /ios/Flutter/.last_build_id
+/.fvm/flutter_sdk
