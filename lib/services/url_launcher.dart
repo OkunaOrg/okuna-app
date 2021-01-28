@@ -11,7 +11,7 @@ class UrlLauncherService {
     }
   }
 
-  Future<bool> canLaunchUrl(String url){
+  Future<bool> canLaunchUrl(String url) {
     return canLaunch(url);
   }
 }
