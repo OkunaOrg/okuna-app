@@ -1,4 +1,5 @@
 import 'package:Okuna/models/hashtag.dart';
+import 'package:Okuna/models/post_link.dart';
 import 'package:Okuna/services/localization.dart';
 import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/theming/secondary_text.dart';
@@ -19,6 +20,7 @@ class OBCollapsibleSmartText extends StatefulWidget {
   final SmartTextElement trailingSmartTextElement;
   final Function getChild;
   final Map<String, Hashtag> hashtagsMap;
+  final List<PostLink> links;
 
   const OBCollapsibleSmartText(
       {Key key,
@@ -29,7 +31,8 @@ class OBCollapsibleSmartText extends StatefulWidget {
       this.lengthOverflow = TextOverflow.ellipsis,
       this.getChild,
       this.trailingSmartTextElement,
-      this.hashtagsMap})
+      this.hashtagsMap,
+      this.links})
       : super(key: key);
 
   @override
@@ -133,6 +136,7 @@ class OBCollapsibleSmartTextState extends State<OBCollapsibleSmartText> {
           lengthOverflow: widget.lengthOverflow,
           trailingSmartTextElement: widget.trailingSmartTextElement,
           hashtagsMap: widget.hashtagsMap,
+          links: widget.links,
         ),
         translateButton
       ],
