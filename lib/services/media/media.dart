@@ -82,9 +82,11 @@ class MediaService {
       bool permissionGranted =
           await _permissionsService.requestStoragePermissions(context: context);
       if (permissionGranted) {
-        File file = await FilePicker.getFile(type: FileType.media);
+        FilePickerResult result =
+            await FilePicker.platform.pickFiles(type: FileType.media);
 
-        if (file != null) {
+        if (result != null) {
+          File file = File(result.files.single.path);
           FileType type = await getMediaType(file);
           media = MediaFile(file, type);
         }
@@ -205,7 +207,7 @@ class MediaService {
       throw FileTooLargeException(
           _validationService.getAllowedImageSize(imageType));
     }
-    
+
     MediaFile result;
     if (imageType == OBImageType.post) {
       result = MediaFile(processedImage, media.type);
@@ -229,7 +231,6 @@ class MediaService {
 
     return media;
   }
-
 
   Future<File> fixExifRotation(File image, {deleteOriginal: false}) async {
     List<int> imageBytes = await image.readAsBytes();
@@ -282,7 +283,7 @@ class MediaService {
     final thumbnailData = await VideoThumbnail.thumbnailData(
       video: videoFile.path,
       imageFormat: ImageFormat.JPEG,
-      maxHeightOrWidth: 500,
+      maxWidth: 500,
       quality: 100,
     );
 

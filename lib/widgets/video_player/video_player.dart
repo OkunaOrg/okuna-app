@@ -74,12 +74,12 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
 
   Future _videoPreparationFuture;
 
-
-
   @override
   void initState() {
     super.initState();
-    _controller = widget.controller == null ? OBVideoPlayerController() : widget.controller;
+    _controller = widget.controller == null
+        ? OBVideoPlayerController()
+        : widget.controller;
     _controller.attach(this);
     _obVideoPlayerControlsController = OBVideoPlayerControlsController();
     _hasVideoOpenedInDialog = widget.isInDialog ?? false;
@@ -176,8 +176,7 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
       throw OBVideoPlayerInitializationException('Player controller had error');
     }
 
-    if (_controller._attemptedToPlayWhileNotReady)
-      _playerController.play();
+    if (_controller._attemptedToPlayWhileNotReady) _playerController.play();
 
     if (mounted) {
       setState(() {

@@ -5,13 +5,22 @@ class UrlLauncherService {
     bool canOpenUrl = await canLaunchUrl(url);
 
     if (canOpenUrl) {
-      await launch(url);
+      await launch(
+        url,
+        universalLinksOnly: true,
+        forceSafariVC: false,
+      );
     } else {
+      try {
+        await launch(url);
+      } on Exception {
+        await launch(url, forceWebView: true);
+      }
       throw UrlLauncherUnsupportedUrlException(url);
     }
   }
 
-  Future<bool> canLaunchUrl(String url){
+  Future<bool> canLaunchUrl(String url) {
     return canLaunch(url);
   }
 }

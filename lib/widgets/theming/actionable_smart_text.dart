@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:Okuna/models/community.dart';
 import 'package:Okuna/models/hashtag.dart';
+import 'package:Okuna/models/post_link.dart';
+import 'package:Okuna/models/post_links_list.dart';
 import 'package:Okuna/models/user.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/navigation_service.dart';
@@ -20,6 +22,7 @@ class OBActionableSmartText extends StatefulWidget {
   final TextOverflow lengthOverflow;
   final SmartTextElement trailingSmartTextElement;
   final Map<String, Hashtag> hashtagsMap;
+  final List<PostLink> links;
 
   const OBActionableSmartText(
       {Key key,
@@ -29,7 +32,8 @@ class OBActionableSmartText extends StatefulWidget {
       this.overflow = TextOverflow.clip,
       this.lengthOverflow = TextOverflow.ellipsis,
       this.trailingSmartTextElement,
-      this.hashtagsMap})
+      this.hashtagsMap,
+      this.links})
       : super(key: key);
 
   @override
@@ -122,8 +126,11 @@ class OBActionableTextState extends State<OBActionableSmartText> {
     StreamSubscription requestSubscription = _userService
         .getHashtagWithName(rawHashtagName)
         .asStream()
-        .listen((Hashtag hashtag)=> _onHashtagRetrieved(hashtag: hashtag, rawHashtagName: rawHashtagName),
-            onError: _onError, onDone: _onRequestDone);
+        .listen(
+            (Hashtag hashtag) => _onHashtagRetrieved(
+                hashtag: hashtag, rawHashtagName: rawHashtagName),
+            onError: _onError,
+            onDone: _onRequestDone);
     _setRequestSubscription(requestSubscription);
   }
 

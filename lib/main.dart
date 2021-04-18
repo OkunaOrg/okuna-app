@@ -29,7 +29,7 @@ import 'package:Okuna/translation/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
 import 'package:flutter\_localizations/flutter\_localizations.dart';
-import 'package:sentry/sentry.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'dart:async';
 
 import 'delegates/es_es_localizations_delegate.dart';
@@ -45,7 +45,7 @@ class MyApp extends StatefulWidget {
   _MyAppState createState() => _MyAppState();
 
   static void setLocale(BuildContext context, Locale newLocale) {
-    _MyAppState state = context.ancestorStateOfType(TypeMatcher<_MyAppState>());
+    _MyAppState state = context.findAncestorStateOfType<_MyAppState>();
 
     state.setState(() {
       state.locale = newLocale;
@@ -265,7 +265,7 @@ Future<Null> main() async {
 
     try {
       sentryClient.captureException(
-        exception: error,
+        error,
         stackTrace: stackTrace,
       );
       print('Error sent to sentry.io: $error');
@@ -295,18 +295,18 @@ TextTheme _defaultTextTheme() {
     style = new TextStyle(fontFamilyFallback: ['Emoji']);
   }
   return new TextTheme(
-    body1: style,
-    body2: style,
+    bodyText2: style,
+    bodyText1: style,
     button: style,
     caption: style,
-    display1: style,
-    display2: style,
-    display3: style,
-    display4: style,
-    headline: style,
+    headline4: style,
+    headline3: style,
+    headline2: style,
+    headline1: style,
+    headline5: style,
     overline: style,
-    subhead: style,
-    subtitle: style,
-    title: style,
+    subtitle1: style,
+    subtitle2: style,
+    headline6: style,
   );
 }

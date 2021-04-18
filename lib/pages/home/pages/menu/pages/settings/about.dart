@@ -18,7 +18,6 @@ class OBAboutPage extends StatefulWidget {
 // TODO The get_version plugin does not work for iOS.
 
 class OBAboutPageState extends State<OBAboutPage> {
-
   @override
   void initState() {
     super.initState();
@@ -29,16 +28,17 @@ class OBAboutPageState extends State<OBAboutPage> {
     var pi = await PackageInfo.fromPlatform();
 
     if (!mounted) return;
-    setState(() {
-    });
+    setState(() {});
   }
 
   Widget build(BuildContext context) {
-    LocalizationService _localizationService = OpenbookProvider.of(context).localizationService;
+    LocalizationService _localizationService =
+        OpenbookProvider.of(context).localizationService;
 
     return CupertinoPageScaffold(
       backgroundColor: Color.fromARGB(0, 0, 0, 0),
-      navigationBar: OBThemedNavigationBar(title: _localizationService.drawer__about),
+      navigationBar:
+          OBThemedNavigationBar(title: _localizationService.drawer__about),
       child: OBPrimaryColorContainer(
         child: ListView(
           // Important: Remove any padding from the ListView.
@@ -46,9 +46,7 @@ class OBAboutPageState extends State<OBAboutPage> {
           children: <Widget>[
             ListTile(
               leading: OBIcon(OBIcons.nativeInfo),
-              title: OBText(
-                'Okuna v1.0.0'
-              ),
+              title: OBText('Okuna v1.0.1'),
             ),
           ],
         ),

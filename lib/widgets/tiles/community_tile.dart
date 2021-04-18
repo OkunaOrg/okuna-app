@@ -28,13 +28,15 @@ class OBCommunityTile extends StatelessWidget {
       {this.onCommunityTilePressed,
       this.onCommunityTileDeleted,
       Key key,
-      this.size = OBCommunityTileSize.normal, this.trailing})
+      this.size = OBCommunityTileSize.normal,
+      this.trailing})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     String communityHexColor = community.color;
-    LocalizationService localizationService = OpenbookProvider.of(context).localizationService;
+    LocalizationService localizationService =
+        OpenbookProvider.of(context).localizationService;
     ThemeService themeService = OpenbookProvider.of(context).themeService;
     ThemeValueParserService themeValueParserService =
         OpenbookProvider.of(context).themeValueParserService;
@@ -95,8 +97,10 @@ class OBCommunityTile extends StatelessWidget {
       );
     }
 
-    String userAdjective = community.userAdjective ?? localizationService.community__member_capitalized;
-    String usersAdjective = community.usersAdjective ?? localizationService.community__members_capitalized;
+    String userAdjective = community.userAdjective ??
+        localizationService.community__member_capitalized;
+    String usersAdjective = community.usersAdjective ??
+        localizationService.community__members_capitalized;
     String membersPrettyCount = community.membersCount != null
         ? getPrettyCount(community.membersCount, localizationService)
         : null;
@@ -142,19 +146,21 @@ class OBCommunityTile extends StatelessWidget {
               ],
             ),
           ),
-          trailing == null ? SizedBox(
-            width: 20,
-          ) : Padding(
-            child: trailing,
-            padding: const EdgeInsets.all(20),
-          )
+          trailing == null
+              ? SizedBox(
+                  width: 20,
+                )
+              : Padding(
+                  child: trailing,
+                  padding: const EdgeInsets.all(20),
+                )
         ],
       ),
     );
 
     if (onCommunityTileDeleted != null && onCommunityTilePressed != null) {
       communityTile = Slidable(
-        delegate: new SlidableDrawerDelegate(),
+        actionPane: SlidableDrawerActionPane(),
         actionExtentRatio: 0.25,
         child: GestureDetector(
           onTap: () {
@@ -165,7 +171,8 @@ class OBCommunityTile extends StatelessWidget {
         secondaryActions: <Widget>[
           new IconSlideAction(
               caption: localizationService.community__tile_delete,
-              foregroundColor: themeValueParserService.parseColor(theme.primaryTextColor),
+              foregroundColor:
+                  themeValueParserService.parseColor(theme.primaryTextColor),
               color: Colors.transparent,
               icon: Icons.delete,
               onTap: () {

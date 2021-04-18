@@ -7,49 +7,51 @@ description: Social Network
 # Both the version and the builder number may be overridden in flutter
 # build by specifying --build-name and --build-number, respectively.
 # Read more about versioning at semver.org.
-version: 1.0.0+95
+version: 1.0.1+99
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
 
+publish_to: none
+
 dependencies:
   exif: ^1.0.2
   html: ^0.14.0+2
-  expandable: ^2.2.2+3
+  expandable: ^4.1.4
   uuid: ^2.0.1
-  flutter_image_compress: ^0.6.3
+  flutter_image_compress: ^0.7.0
   inview_notifier_list:
     git:
       url: https://github.com/OkunaOrg/inview_notifier_list.git
-      ref: c74749a052f91fbdd11fad959c2c59d0d10c7695
+      ref: d60972d4928463352781e027f20bd5eca0007cd9
   connectivity: ^0.4.4
   visibility_detector: ^0.1.5
   http_retry: ^0.1.1+3
-  video_thumbnail: ^0.1.5+1
-  flutter_ffmpeg: ^0.2.10
+  video_thumbnail: ^0.2.5+1
+  flutter_ffmpeg: ^0.3.0
   open_iconic_flutter: ^0.3.0
   retry: ^3.0.0+1
   shared_preferences: ^0.5.2
   flutter_markdown: ^0.2.0
-  file_picker: ^1.9.0
-  sentry: ^2.2.0
+  file_picker: ^2.1.5+1
+  sentry_flutter: ^4.0.1
   screen: ^0.0.5
   back_button_interceptor: ^4.0.1
   flutter_colorpicker: any
-  intercom_flutter: ^2.0.5+2
+  intercom_flutter: ^2.3.3
   device_info: ^0.4.0+1
   flutter_pagewise: ^1.2.2
   tinycolor: ^1.0.2
-  onesignal_flutter: ^2.2.0
+  onesignal_flutter: ^2.6.2
   flutter_advanced_networkimage:
     git:
       url: https://github.com/OkunaOrg/flutter_advanced_networkimage.git
       ref: bugfix/fix-breaking-master-change
   dcache: ^0.1.0
   validators: ^1.0.0+1
-  url_launcher: ^4.0.1
+  url_launcher: ^5.7.10
   uni_links: ^0.2.0
-  flutter_slidable: "^0.4.9"
+  flutter_slidable: "^0.5.7"
   flutter_cache_manager: ^1.4.1
   cached_network_image: ^2.2.0+1
   timeago: ^2.0.9
@@ -60,7 +62,6 @@ dependencies:
   flutter_secure_storage: ^3.1.2
   mime: ^0.9.6+2
   http: ^0.12.0
-  intl: ^0.16.0
   throttling: ^0.8.0
   wakelock: ^0.1.3
   rxdart: ^0.24.1
@@ -70,8 +71,8 @@ dependencies:
       ref: ricardo/develop2
       path: packages/video_player
   sprintf: "^4.0.0"
-  image_picker: 0.6.3+1
-  image_cropper: ^1.2.2
+  image_picker: 0.6.7+21
+  image_cropper: ^1.3.1
   shimmer: ^1.0.0
   share: ^0.6.4
   path: ^1.7.0
@@ -89,7 +90,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_launcher_icons: ^0.7.0
-  intl_translation: ^0.17.1
+  intl_translation: ^0.17.10+1
 
 flutter_icons:
   android: true
@@ -103,7 +104,6 @@ flutter_icons:
 
 # The following section is specific to Flutter.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -198,7 +198,7 @@ flutter:
       fonts:
         - asset: assets/fonts/Cocogoose-Pro-Semilight.ttf
           style: normal
-    - family: ''
+    - family: ""
       fonts:
         - asset: assets/fonts/NunitoSans-Regular.ttf
           weight: 400
