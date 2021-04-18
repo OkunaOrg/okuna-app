@@ -29,7 +29,7 @@ import 'package:Okuna/translation/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
 import 'package:flutter\_localizations/flutter\_localizations.dart';
-import 'package:sentry/sentry.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'dart:async';
 
 import 'delegates/es_es_localizations_delegate.dart';
@@ -265,7 +265,7 @@ Future<Null> main() async {
 
     try {
       sentryClient.captureException(
-        exception: error,
+        error,
         stackTrace: stackTrace,
       );
       print('Error sent to sentry.io: $error');

@@ -1,6 +1,5 @@
 import 'package:Okuna/models/post.dart';
 import 'package:Okuna/models/post_comment.dart';
-import 'package:Okuna/models/theme.dart';
 import 'package:Okuna/models/user.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/localization.dart';
@@ -136,6 +135,7 @@ class OBPostCommentTextState extends State<OBPostCommentText> {
         maxlength: widget.postCommentMaxVisibleLength,
         getChild: _getPostCommentTranslateButton,
         hashtagsMap: widget.postComment.hashtagsMap,
+        links: widget.post.postLinksList.postLinks,
       );
     } else {
       return OBCollapsibleSmartText(
@@ -144,6 +144,7 @@ class OBPostCommentTextState extends State<OBPostCommentText> {
         maxlength: widget.postCommentMaxVisibleLength,
         getChild: _getPostCommentTranslateButton,
         hashtagsMap: widget.postComment.hashtagsMap,
+        links: widget.post.postLinksList.postLinks,
       );
     }
   }
