@@ -24,6 +24,9 @@
             <category android:name="android.intent.category.BROWSABLE" />
             <data android:scheme="https" />
         </intent>
+        <intent>
+            <action android:name="com.google.android.youtube.api.service.START" />
+        </intent>
     </queries>
 
     <!-- io.flutter.app.FlutterApplication is an android.app.Application that

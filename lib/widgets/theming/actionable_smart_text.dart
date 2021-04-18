@@ -144,15 +144,8 @@ class OBActionableTextState extends State<OBActionableSmartText> {
   }
 
   void _onLinkTapped(String link) {
-    PostLink postLink = widget.links.firstWhere(
-        (postLink) => postLink.link.toLowerCase().contains(link.toLowerCase()),
-        orElse: null);
-
-    print('Found post link');
-    print(postLink);
-
     try {
-      _urlLauncherService.launchUrl(postLink == null ? link : postLink.link);
+      _urlLauncherService.launchUrl(link);
     } on UrlLauncherUnsupportedUrlException {
       _toastService.info(message: 'Unsupported link', context: context);
     } catch (error) {

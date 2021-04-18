@@ -96,7 +96,7 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
         maxlength: MAX_LENGTH_LIMIT,
         getChild: _buildTranslationButton,
         hashtagsMap: widget.post.hashtagsMap,
-        links: widget.post.postLinksList.postLinks,
+        links: widget.post.postLinksList?.postLinks,
       );
     } else {
       return OBCollapsibleSmartText(
@@ -104,7 +104,7 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
         maxlength: MAX_LENGTH_LIMIT,
         getChild: _buildTranslationButton,
         hashtagsMap: widget.post.hashtagsMap,
-        links: widget.post.postLinksList.postLinks,
+        links: widget.post.postLinksList?.postLinks,
       );
     }
   }
