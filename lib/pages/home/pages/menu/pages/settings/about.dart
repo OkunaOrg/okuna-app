@@ -46,7 +46,7 @@ class OBAboutPageState extends State<OBAboutPage> {
           children: <Widget>[
             ListTile(
               leading: OBIcon(OBIcons.nativeInfo),
-              title: OBText('Okuna v1.0.1'),
+              title: OBText('Okuna v1.0.2'),
             ),
           ],
         ),

@@ -7,7 +7,7 @@ description: Social Network
 # Both the version and the builder number may be overridden in flutter
 # build by specifying --build-name and --build-number, respectively.
 # Read more about versioning at semver.org.
-version: 1.0.1+99
+version: 1.0.2+100
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -90,7 +90,10 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_launcher_icons: ^0.7.0
-  intl_translation: ^0.17.10+1
+  intl_translation:
+    git:
+      url: https://github.com/nt4f04uNd/intl_translation.git
+      ref: 198ba30710a7aeba94813389dac47c9092d11e6c
 
 flutter_icons:
   android: true
