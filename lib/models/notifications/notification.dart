@@ -60,7 +60,7 @@ class OBNotification extends UpdatableModel<OBNotification> {
           contentObjectData: json['content_object'], type: type);
     }
 
-    if (json.containsKey('read')) {
+    if (json.containsKey('read') && !read) {
       read = json['read'];
     }
 
