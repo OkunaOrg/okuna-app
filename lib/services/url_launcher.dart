@@ -7,8 +7,8 @@ class UrlLauncherService {
     if (canOpenUrl) {
       await launch(
         url,
-        universalLinksOnly: true,
         forceSafariVC: false,
+        forceWebView: false,
       );
     } else {
       try {
