@@ -6,9 +6,10 @@ import 'package:Okuna/services/theme.dart';
 import 'package:Okuna/services/theme_value_parser.dart';
 import 'package:Okuna/widgets/avatars/letter_avatar.dart';
 import 'package:Okuna/widgets/avatars/avatar.dart';
+import 'package:Okuna/widgets/progress_indicator.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:Okuna/libs/pretty_count.dart';
-import 'package:flutter_advanced_networkimage/provider.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:tinycolor/tinycolor.dart';
 
@@ -59,10 +60,36 @@ class OBCommunityTile extends StatelessWidget {
               fit: BoxFit.cover,
               colorFilter: new ColorFilter.mode(
                   Colors.black.withOpacity(0.60), BlendMode.darken),
-              image: AdvancedNetworkImage(community.cover,
-                  useDiskCache: true,
-                  fallbackAssetImage: COVER_PLACEHOLDER,
-                  retryLimit: 0)));
+              image: ExtendedImage.network(
+              community.cover,
+              cache: true,
+              timeLimit: const Duration(seconds: 5),
+              loadStateChanged: (ExtendedImageState state) {
+                switch (state.extendedImageLoadState) {
+                  case LoadState.loading:
+                    return Center(
+                      child: const OBProgressIndicator(),
+                    );
+                    break;
+                  case LoadState.completed:
+                    return null;
+                    break;
+                  case LoadState.failed:
+                    return Image.asset(
+                      COVER_PLACEHOLDER,
+                      fit: BoxFit.cover,
+                    );
+                    break;
+                  default:
+                    return Image.asset(
+                      COVER_PLACEHOLDER,
+                      fit: BoxFit.cover,
+                    );
+                    break;
+                }
+              },
+            ).image
+          ));
     } else {
       textColor = isCommunityColorDark ? Colors.white : Colors.black;
       bool communityColorIsNearWhite = communityColor.computeLuminance() > 0.9;

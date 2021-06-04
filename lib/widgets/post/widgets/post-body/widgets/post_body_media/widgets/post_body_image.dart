@@ -1,11 +1,8 @@
 import 'package:Okuna/models/post_image.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/widgets/icon.dart';
-import 'package:Okuna/widgets/progress_indicator.dart';
-import 'package:flutter_advanced_networkimage/provider.dart';
-import 'package:flutter_advanced_networkimage/transition.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'dart:math';
 
 class OBPostBodyImage extends StatelessWidget {
   final PostImage postImage;
@@ -46,16 +43,35 @@ class OBPostBodyImage extends StatelessWidget {
   }
 
   Widget _buildImageWidget({String imageUrl, double height, double width}) {
-    return Image(
-      height: height,
-      width: width,
-      fit: BoxFit.cover,
-      image: AdvancedNetworkImage(imageUrl,
-          useDiskCache: true,
-          fallbackAssetImage: 'assets/images/fallbacks/post-fallback.png',
-          retryLimit: 3,
-          timeoutDuration: const Duration(minutes: 1)),
-    );
+    return ExtendedImage.network(
+  imageUrl,
+  width: width,
+  height: height,
+  cache: true,
+  timeLimit: const Duration(minutes: 1),
+  loadStateChanged: (ExtendedImageState state) {
+      switch (state.extendedImageLoadState) {
+        case LoadState.loading:
+          return Center(child: CircularProgressIndicator());
+          break;
+        case LoadState.completed:
+          return null;
+          break;
+        case LoadState.failed:
+          return Image.asset(
+            "assets/images/fallbacks/post-fallback.png",
+            fit: BoxFit.cover,
+          );
+          break;
+        default:
+          return Image.asset(
+            "assets/images/fallbacks/post-fallback.png",
+            fit: BoxFit.cover,
+          );
+          break;  
+      }
+    },
+  );
   }
 
   Widget _buildExpandIcon() {

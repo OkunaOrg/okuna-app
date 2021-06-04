@@ -12,10 +12,9 @@ import 'package:Okuna/widgets/post/widgets/post-body/widgets/post_body_media/wid
 import 'package:Okuna/widgets/post/widgets/post-body/widgets/post_body_media/widgets/post_body_video.dart';
 import 'package:Okuna/widgets/progress_indicator.dart';
 import 'package:Okuna/widgets/theming/text.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:async/async.dart';
-import 'package:flutter_advanced_networkimage/provider.dart';
-import 'package:flutter_advanced_networkimage/transition.dart';
 
 class OBPostBodyMedia extends StatefulWidget {
   final Post post;
@@ -127,21 +126,37 @@ class OBPostBodyMediaState extends State<OBPostBodyMedia> {
 
   Widget _buildPostMediaItemsThumbnail() {
     String thumbnailUrl = widget.post.mediaThumbnail;
-
-    return TransitionToImage(
-      height: _mediaHeight,
+    return ExtendedImage.network(
+      thumbnailUrl,
       width: _mediaWidth,
-      loadingWidget: const Center(
-        child: const OBProgressIndicator(),
-      ),
+      height: _mediaHeight,
       fit: BoxFit.cover,
       alignment: Alignment.center,
-      image: AdvancedNetworkImage(thumbnailUrl,
-          useDiskCache: true,
-          fallbackAssetImage: 'assets/images/fallbacks/post-fallback.png',
-          retryLimit: 3,
-          timeoutDuration: const Duration(seconds: 5)),
-      duration: Duration(milliseconds: 100),
+      cache: true,
+      loadStateChanged: (ExtendedImageState state) {
+        switch (state.extendedImageLoadState) {
+          case LoadState.loading:
+            return const Center(
+              child: const OBProgressIndicator(),
+            );
+            break;
+          case LoadState.completed:
+            return null;
+            break;
+          case LoadState.failed:
+            return Image.asset(
+              'assets/images/fallbacks/post-fallback.png',
+              fit: BoxFit.fill,
+            );
+            break;
+          default:
+            return Image.asset(
+              'assets/images/fallbacks/post-fallback.png',
+              fit: BoxFit.fill,
+            );
+            break;  
+        }
+      },
     );
   }
 

@@ -27,7 +27,6 @@ import 'package:Okuna/services/universal_links/universal_links.dart';
 import 'package:Okuna/widgets/toast.dart';
 import 'package:Okuna/translation/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_advanced_networkimage/provider.dart';
 import 'package:flutter\_localizations/flutter\_localizations.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'dart:async';
@@ -67,7 +66,8 @@ class _MyAppState extends State<MyApp> {
   }
 
   void bootstrap() {
-    DiskCache().maxEntries = MAX_NETWORK_IMAGE_CACHE_ENTRIES;
+    
+    // DiskCache().maxEntries = MAX_NETWORK_IMAGE_CACHE_ENTRIES;
     //DiskCache().maxSizeBytes = MAX_NETWORK_IMAGE_CACHE_MB * 1000000; // 200mb
   }
 

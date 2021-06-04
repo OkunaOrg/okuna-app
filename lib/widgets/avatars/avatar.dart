@@ -1,7 +1,8 @@
 import 'dart:io';
 import 'package:Okuna/provider.dart';
+import 'package:Okuna/widgets/progress_indicator.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_advanced_networkimage/provider.dart';
 
 enum OBAvatarSize { extraSmall, small, medium, large, extraLarge }
 
@@ -76,14 +77,35 @@ class OBAvatar extends StatelessWidget {
         image: FileImage(avatarFile),
       );
     } else if (avatarUrl != null) {
-      finalAvatarImage = Image(
-          height: avatarSize,
-          width: avatarSize,
-          fit: BoxFit.cover,
-          image: AdvancedNetworkImage(avatarUrl,
-              useDiskCache: true,
-              fallbackAssetImage: DEFAULT_AVATAR_ASSET,
-              retryLimit: 0));
+      finalAvatarImage = ExtendedImage.network(
+        avatarUrl,
+        fit: BoxFit.cover,
+        height: avatarSize,
+        width: avatarSize,
+        cache: true,
+        loadStateChanged: (ExtendedImageState state) {
+          switch (state.extendedImageLoadState) {
+            case LoadState.loading:
+              return OBProgressIndicator();
+              break;
+            case LoadState.completed:
+              return null;
+              break;
+            case LoadState.failed:
+              return Image.asset(
+                DEFAULT_AVATAR_ASSET,
+                fit: BoxFit.cover,
+              );
+              break;
+            default:
+              return Image.asset(
+                DEFAULT_AVATAR_ASSET,
+                fit: BoxFit.cover,
+              );
+              break;  
+          }
+        },
+      );
 
       if (isZoomable) {
         finalAvatarImage = GestureDetector(

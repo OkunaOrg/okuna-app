@@ -3,8 +3,9 @@ import 'dart:io';
 import 'package:Okuna/models/post_video.dart';
 import 'package:Okuna/models/video_format.dart';
 import 'package:Okuna/provider.dart';
+import 'package:Okuna/widgets/progress_indicator.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_advanced_networkimage/provider.dart';
 
 class OBPostVideoPreview extends StatelessWidget {
   final File postVideoFile;
@@ -40,13 +41,35 @@ class OBPostVideoPreview extends StatelessWidget {
                 fit: BoxFit.cover,
               ));
             })
-        : _wrapImageWidgetForThumbnail(Image(
-            fit: BoxFit.cover,
-            image: AdvancedNetworkImage(postVideo.thumbnail,
-                useDiskCache: true,
-                fallbackAssetImage: 'assets/images/fallbacks/post-fallback.png',
-                retryLimit: 0),
-          ));
+        : _wrapImageWidgetForThumbnail(
+            ExtendedImage.network(
+              postVideo.thumbnail,
+              fit: BoxFit.cover,
+              cache: true,
+              loadStateChanged: (ExtendedImageState state) {
+                switch (state.extendedImageLoadState) {
+                  case LoadState.loading:
+                    return OBProgressIndicator();
+                    break;
+                  case LoadState.completed:
+                    return null;
+                    break;
+                  case LoadState.failed:
+                    return Image.asset(
+                      "assets/images/fallbacks/post-fallback.png",
+                      fit: BoxFit.cover,
+                    );
+                    break;
+                  default: 
+                    return Image.asset(
+                      "assets/images/fallbacks/post-fallback.png",
+                      fit: BoxFit.cover,
+                    );
+                    break;  
+                }
+              },
+            ),
+          );
 
     return Stack(
       children: <Widget>[

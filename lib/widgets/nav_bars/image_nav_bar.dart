@@ -1,8 +1,9 @@
 import 'package:Okuna/pages/home/pages/hashtag/widgets/cupertino_nav_bar.dart';
+import 'package:Okuna/widgets/progress_indicator.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_advanced_networkimage/provider.dart';
 
 //AutomaticKeepAliveClientMixin
 /// A coloured navigation bar, used in communities.
@@ -34,15 +35,36 @@ class OBImageNavBar extends StatelessWidget
           right: 0,
           left: 0,
           top: 0,
-          child: Image(
-            fit: BoxFit.cover,
-            gaplessPlayback: true,
-            image: AdvancedNetworkImage(imageSrc,
-                useDiskCache: true,
-                fallbackAssetImage: 'assets/images/fallbacks/post-fallback.png',
-                retryLimit: 3,
-                timeoutDuration: const Duration(minutes: 1)),
-          ),
+          child: ExtendedImage.network(
+                imageSrc,
+                fit: BoxFit.cover,
+                gaplessPlayback: true,
+                timeLimit: const Duration(minutes: 1),
+                clearMemoryCacheIfFailed: true,
+                cache: true,
+                loadStateChanged: (ExtendedImageState state) {
+                  switch (state.extendedImageLoadState) {
+                    case LoadState.loading:
+                      return OBProgressIndicator();
+                      break;
+                    case LoadState.completed:
+                      return null;
+                      break;
+                    case LoadState.failed:
+                      return Image.asset(
+                        'assets/images/fallbacks/post-fallback.png',
+                        fit: BoxFit.cover,
+                      );
+                      break;
+                    default:
+                      return Image.asset(
+                        'assets/images/fallbacks/post-fallback.png',
+                        fit: BoxFit.cover,
+                      );
+                      break;  
+                  }
+                },
+              ),
         ),
         OBCupertinoNavigationBar(
             border: null,

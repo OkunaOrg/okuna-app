@@ -1,10 +1,10 @@
 import 'package:Okuna/widgets/icon.dart';
 import 'package:Okuna/widgets/page_scaffold.dart';
+import 'package:Okuna/widgets/progress_indicator.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_advanced_networkimage/provider.dart';
 import 'package:photo_view/photo_view.dart';
-import 'package:pigment/pigment.dart';
 import "dart:math" show pi;
 
 class OBZoomablePhotoModal extends StatefulWidget {
@@ -61,7 +61,6 @@ class OBZoomablePhotoModalState extends State<OBZoomablePhotoModal>
 
   @override
   Widget build(BuildContext context) {
-
     return WillPopScope(
       child: OBCupertinoPageScaffold(
           backgroundColor: Colors.black26,
@@ -123,17 +122,34 @@ class OBZoomablePhotoModalState extends State<OBZoomablePhotoModal>
           key: Key(widget.imageUrl),
           enableRotation: false,
           scaleStateChangedCallback: _photoViewScaleStateChangedCallback,
-          imageProvider: AdvancedNetworkImage(widget.imageUrl,
-              retryLimit: 0,
-              useDiskCache: true,
-              getRealUrl: () {
-                return Future.delayed((Duration(milliseconds: 0)),() => widget.imageUrl);
+          imageProvider: ExtendedImage.network(
+              widget.imageUrl,
+              fit: BoxFit.cover,
+            cacheMaxAge: const Duration(days: 7),
+              cache: true,
+              loadStateChanged: (ExtendedImageState state) {
+                switch (state.extendedImageLoadState) {
+                  case LoadState.loading:
+                    return OBProgressIndicator();
+                    break;
+                  case LoadState.completed:
+                    return null;
+                    break;
+                  case LoadState.failed:
+                    return Image.asset(
+                      "assets/images/fallbacks/post-fallback.png",
+                      fit: BoxFit.cover,
+                    );
+                    break;
+                  default: 
+                    return Image.asset(
+                      "assets/images/fallbacks/post-fallback.png",
+                      fit: BoxFit.cover,
+                    );
+                    break;  
+                }
               },
-              cacheRule: CacheRule(
-                maxAge: const Duration(days: 7),
-                checksum: true,
-              ),
-              fallbackAssetImage: 'assets/images/fallbacks/post-fallback.png'),
+            ).image,
           maxScale: PhotoViewComputedScale.covered,
           minScale: PhotoViewComputedScale.contained,
         ),
