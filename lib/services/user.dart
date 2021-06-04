@@ -73,8 +73,8 @@ import 'package:Okuna/services/user_invites_api.dart';
 import 'package:Okuna/services/waitlist_service.dart';
 import 'package:crypto/crypto.dart';
 import 'package:device_info/device_info.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_advanced_networkimage/provider.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 export 'package:Okuna/services/httpie.dart';
@@ -248,7 +248,7 @@ class UserService {
   Future<void> clearCache() async {
     await _removeStoredFirstPostsData();
     await _removeStoredTopPostsData();
-    await DiskCache().clear();
+    clearMemoryImageCache();
     await clearTemporaryDirectories();
     Post.clearCache();
     User.clearNavigationCache();

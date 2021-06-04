@@ -2,8 +2,8 @@ import 'package:Okuna/models/hashtag.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/user_preferences.dart';
 import 'package:Okuna/widgets/theming/text.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_advanced_networkimage/provider.dart';
 
 class OBHashtag extends StatelessWidget {
   final Hashtag hashtag;
@@ -105,11 +105,13 @@ class OBHashtag extends StatelessWidget {
         child,
         Padding(
             padding: const EdgeInsets.only(left: 2),
-            child: Image(
-              height: 15,
-              image:
-                  AdvancedNetworkImage(hashtag.emoji.image, useDiskCache: true),
-            )),
+            child:  ExtendedImage.network(
+                hashtag.emoji.image,
+                height: 15,
+                clearMemoryCacheIfFailed: true,
+                cache: true
+              ),
+            ),
       ],
     );
   }

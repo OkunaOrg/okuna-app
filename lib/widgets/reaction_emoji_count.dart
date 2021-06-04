@@ -1,9 +1,8 @@
 import 'package:Okuna/models/reactions_emoji_count.dart';
-import 'package:Okuna/models/theme.dart';
-import 'package:Okuna/provider.dart';
+import 'package:Okuna/widgets/progress_indicator.dart';
 import 'package:Okuna/widgets/theming/text.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_advanced_networkimage/provider.dart';
 
 import 'buttons/button.dart';
 
@@ -25,9 +24,20 @@ class OBEmojiReactionButton extends StatelessWidget {
     var emoji = postReactionsEmojiCount.emoji;
 
     List<Widget> buttonRowItems = [
-      Image(
+      ExtendedImage.network(
+        emoji.image,
+        cache: true,
         height: size == OBEmojiReactionButtonSize.medium ? 18 : 14,
-        image: AdvancedNetworkImage(emoji.image, useDiskCache: true),
+        loadStateChanged: (ExtendedImageState state) {
+          switch (state.extendedImageLoadState) {
+            case LoadState.loading:
+              return OBProgressIndicator();
+              break;
+            default:
+              return null;
+              break;
+          }
+        },
       ),
       const SizedBox(
         width: 10.0,

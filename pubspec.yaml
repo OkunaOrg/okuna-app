@@ -43,6 +43,7 @@ dependencies:
   flutter_pagewise: ^2.0.1
   tinycolor: ^1.0.2
   onesignal_flutter: ^2.6.2
+  extended_image: ^4.0.0
   dcache: ^0.1.0
   validators: ^3.0.0
   url_launcher: ^6.0.5
