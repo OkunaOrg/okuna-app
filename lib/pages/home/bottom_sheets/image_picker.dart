@@ -14,6 +14,7 @@ class OBImagePickerBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _picker = ImagePicker();
     var provider = OpenbookProvider.of(context);
 
     LocalizationService localizationService = provider.localizationService;
@@ -47,9 +48,9 @@ class OBImagePickerBottomSheet extends StatelessWidget {
           bool permissionGranted = await provider.permissionService
               .requestCameraPermissions(context: context);
           if (permissionGranted) {
-            File pickedImage =
-                await ImagePicker.pickImage(source: ImageSource.camera);
-            Navigator.pop(context, pickedImage);
+            final pickedFile = await _picker.getImage(source: ImageSource.camera);
+            final File file = File(pickedFile.path);
+            Navigator.pop(context, file);
           }
         },
       )

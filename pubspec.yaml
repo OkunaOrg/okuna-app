@@ -15,8 +15,8 @@ environment:
 publish_to: none
 
 dependencies:
-  html: ^0.14.0+2
   exif: ^2.2.0
+  html: ^0.15.0
   expandable: ^5.0.1
   uuid: ^3.0.4
   flutter_image_compress: ^1.0.0
@@ -26,6 +26,7 @@ dependencies:
       ref: d60972d4928463352781e027f20bd5eca0007cd9
   connectivity: ^3.0.6
   visibility_detector: ^0.2.0
+  http_retry: ^0.2.0
   video_thumbnail: ^0.3.3
   flutter_ffmpeg: ^0.4.0
   open_iconic_flutter: ^0.3.0
