@@ -98,7 +98,7 @@ class OBMarkdown extends StatelessWidget {
                 color: accentColor,
                 borderRadius: new BorderRadius.circular(5.0)));
 
-    Function onTapLink = (String tappedLink) async {
+    Function onTapLink = (text, tappedLink, title) async {
       bool canLaunchUrl = await urlLauncherService.canLaunchUrl(tappedLink);
       if (canLaunchUrl) {
         urlLauncherService.launchUrl(tappedLink);
