@@ -13,6 +13,7 @@ class OBVideoPickerBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _picker = ImagePicker();
     var provider = OpenbookProvider.of(context);
 
     LocalizationService localizationService = provider.localizationService;
@@ -45,10 +46,10 @@ class OBVideoPickerBottomSheet extends StatelessWidget {
         onTap: () async {
           bool permissionGranted = await provider.permissionService
               .requestCameraPermissions(context: context);
-          if (permissionGranted) {
-            File pickedVideo =
-                await ImagePicker.pickVideo(source: ImageSource.camera);
-            Navigator.pop(context, pickedVideo);
+          if (permissionGranted) {    
+            final pickedFile = await _picker.getVideo(source: ImageSource.camera);
+            final File file = File(pickedFile.path);
+            Navigator.pop(context, file);
           }
         },
       )

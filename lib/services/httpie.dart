@@ -79,7 +79,7 @@ class HttpieService {
     Response response;
 
     try {
-      response = await client.post(url,
+      response = await client.post(Uri.parse(url),
           headers: finalHeaders, body: body, encoding: encoding);
     } catch (error) {
       _handleRequestError(error);
@@ -102,7 +102,7 @@ class HttpieService {
     Response response;
 
     try {
-      response = await client.put(url,
+      response = await client.put(Uri.parse(url),
           headers: finalHeaders, body: body, encoding: encoding);
     } catch (error) {
       _handleRequestError(error);
@@ -124,7 +124,7 @@ class HttpieService {
     Response response;
 
     try {
-      response = await client.patch(url,
+      response = await client.patch(Uri.parse(url),
           headers: finalHeaders, body: body, encoding: encoding);
     } catch (error) {
       _handleRequestError(error);
@@ -145,7 +145,7 @@ class HttpieService {
     Response response;
 
     try {
-      response = await client.delete(url, headers: finalHeaders);
+      response = await client.delete(Uri.parse(url), headers: finalHeaders);
     } catch (error) {
       _handleRequestError(error);
     }
@@ -230,7 +230,7 @@ class HttpieService {
     Response response;
 
     try {
-      response = await client.get(url, headers: finalHeaders);
+      response = await client.get(Uri.parse(url), headers: finalHeaders);
     } catch (error) {
       _handleRequestError(error);
     }

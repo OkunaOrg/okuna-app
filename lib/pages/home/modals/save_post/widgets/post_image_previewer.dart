@@ -2,8 +2,9 @@ import 'dart:io';
 
 import 'package:Okuna/models/post_image.dart';
 import 'package:Okuna/provider.dart';
+import 'package:Okuna/widgets/progress_indicator.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_advanced_networkimage/provider.dart';
 
 class OBPostImagePreviewer extends StatelessWidget {
   final PostImage postImage;
@@ -34,20 +35,41 @@ class OBPostImagePreviewer extends StatelessWidget {
         height: 200.0,
         width: 200,
         child: ClipRRect(
-            borderRadius: new BorderRadius.circular(avatarBorderRadius),
-            child: isFileImage
-                ? Image.file(
-                    postImageFile,
-                    fit: BoxFit.cover,
-                  )
-                : Image(
-                    fit: BoxFit.cover,
-                    image: AdvancedNetworkImage(postImage.image,
-                        useDiskCache: true,
-                        fallbackAssetImage:
-                            'assets/images/fallbacks/post-fallback.png',
-                        retryLimit: 0),
-                  )));
+          borderRadius: new BorderRadius.circular(avatarBorderRadius),
+          child: isFileImage
+              ? Image.file(
+                  postImageFile,
+                  fit: BoxFit.cover,
+                )
+              : ExtendedImage.network(
+                  postImage.image,
+                  fit: BoxFit.cover,
+                  cache: true,
+                  retries: 0,
+                  loadStateChanged: (ExtendedImageState state) {
+                    switch (state.extendedImageLoadState) {
+                      case LoadState.loading:
+                        return OBProgressIndicator();
+                        break;
+                      case LoadState.completed:
+                        return null;
+                        break;
+                      case LoadState.failed:
+                        return Image.asset(
+                          "assets/images/fallbacks/post-fallback.png",
+                          fit: BoxFit.cover,
+                        );
+                        break;
+                      default: 
+                        return Image.asset(
+                          "assets/images/fallbacks/post-fallback.png",
+                          fit: BoxFit.cover,
+                        );
+                        break;  
+                    }
+                  },
+                ),
+        ));
 
     if (onRemove == null) return imagePreview;
 

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:math';
+import 'package:extended_image/extended_image.dart';
 import 'package:retry/retry.dart';
 import 'package:Okuna/provider.dart';
 import 'package:Okuna/services/user_preferences.dart';
@@ -8,7 +9,6 @@ import 'package:Okuna/widgets/video_player/widgets/chewie/chewie_player.dart';
 import 'package:Okuna/widgets/video_player/widgets/video_player_controls.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_advanced_networkimage/provider.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
@@ -233,8 +233,10 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
                 decoration: BoxDecoration(
                     image: DecorationImage(
                   fit: BoxFit.cover,
-                  image: AdvancedNetworkImage(widget.thumbnailUrl,
-                      useDiskCache: true),
+                  image: ExtendedNetworkImageProvider(
+                    widget.thumbnailUrl,
+                    cache: true, 
+                  ),
                 )),
               )
             : const SizedBox(),

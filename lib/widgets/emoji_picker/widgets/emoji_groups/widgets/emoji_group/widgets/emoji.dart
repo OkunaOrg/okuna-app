@@ -1,7 +1,7 @@
 import 'package:Okuna/models/emoji.dart';
 import 'package:Okuna/models/emoji_group.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_advanced_networkimage/provider.dart';
 
 enum OBEmojiSize { small, medium, large }
 
@@ -21,7 +21,10 @@ class OBEmoji extends StatelessWidget {
     return IconButton(
         icon: Image(
           height: dimensions,
-          image: AdvancedNetworkImage(emoji.image, useDiskCache: true),
+          image: ExtendedNetworkImageProvider(
+            emoji.image,
+            cache: true,
+          ),
         ),
         onPressed: onEmojiPressed != null
             ? () {

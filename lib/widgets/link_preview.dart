@@ -14,8 +14,8 @@ import 'package:Okuna/widgets/progress_indicator.dart';
 import 'package:Okuna/widgets/theming/highlighted_box.dart';
 import 'package:Okuna/widgets/theming/secondary_text.dart';
 import 'package:Okuna/widgets/theming/text.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_advanced_networkimage/provider.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:async/async.dart';
 
@@ -364,13 +364,35 @@ class OBLinkPreviewState extends State<OBLinkPreview> {
           decoration: BoxDecoration(
               image: DecorationImage(
                   fit: BoxFit.cover,
-                  image: AdvancedNetworkImage(imageSource,
-                      header: headers,
-                      useDiskCache: true,
-                      fallbackAssetImage:
-                          'assets/images/fallbacks/post-fallback.png',
-                      retryLimit: 3,
-                      timeoutDuration: const Duration(minutes: 1)))),
+                  image:  ExtendedImage.network(
+                      imageSource,
+                      headers: headers,
+                      fit: BoxFit.cover,
+                      cache: true,
+                      loadStateChanged: (ExtendedImageState state) {
+                        switch (state.extendedImageLoadState) {
+                          case LoadState.loading:
+                            return OBProgressIndicator();
+                            break;
+                          case LoadState.completed:
+                            return null;
+                            break;
+                          case LoadState.failed:
+                            return Image.asset(
+                              "assets/images/fallbacks/post-fallback.png",
+                              fit: BoxFit.cover,
+                            );
+                            break;
+                          default: 
+                            return Image.asset(
+                              "assets/images/fallbacks/post-fallback.png",
+                              fit: BoxFit.cover,
+                            );
+                            break;  
+                        }
+                      },
+                    ).image,
+                  )),
         ),
       );
     }
