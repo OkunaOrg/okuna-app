@@ -2,16 +2,16 @@ import 'package:Okuna/models/badge.dart';
 import 'package:Okuna/models/badges_list.dart';
 
 class UserProfile {
-  final int id;
-  String name;
-  String avatar;
-  String cover;
-  String bio;
-  String url;
-  String location;
-  bool followersCountVisible;
-  bool communityPostsVisible;
-  List<Badge> badges;
+  final int? id;
+  String? name;
+  String? avatar;
+  String? cover;
+  String? bio;
+  String? url;
+  String? location;
+  bool? followersCountVisible;
+  bool? communityPostsVisible;
+  List<Badge>? badges;
 
   UserProfile({
     this.id,
@@ -56,7 +56,7 @@ class UserProfile {
     };
   }
 
-  static List<Badge> parseBadges(List<dynamic> badges) {
+  static List<Badge>? parseBadges(List<dynamic>? badges) {
     if (badges == null) return null;
     return BadgesList.fromJson(badges).badges;
   }

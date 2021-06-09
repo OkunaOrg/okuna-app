@@ -7,8 +7,8 @@ enum OBEmojiSize { small, medium, large }
 
 class OBEmoji extends StatelessWidget {
   final Emoji emoji;
-  final EmojiGroup emojiGroup;
-  final OnEmojiPressed onEmojiPressed;
+  final EmojiGroup? emojiGroup;
+  final OnEmojiPressed? onEmojiPressed;
   final OBEmojiSize size;
 
   OBEmoji(this.emoji,
@@ -25,13 +25,13 @@ class OBEmoji extends StatelessWidget {
         ),
         onPressed: onEmojiPressed != null
             ? () {
-                onEmojiPressed(emoji, emojiGroup);
+                onEmojiPressed!(emoji, emojiGroup);
               }
             : null);
   }
 
   double getIconDimensions(OBEmojiSize size) {
-    double iconSize;
+    late double iconSize;
 
     switch (size) {
       case OBEmojiSize.large:
@@ -50,4 +50,4 @@ class OBEmoji extends StatelessWidget {
   }
 }
 
-typedef void OnEmojiPressed(Emoji pressedEmoji, EmojiGroup emojiGroup);
+typedef void OnEmojiPressed(Emoji pressedEmoji, EmojiGroup? emojiGroup);

@@ -14,7 +14,7 @@ import 'package:rxdart/rxdart.dart';
 class PushNotificationsService {
   static const String oneSignalAppId = '66074bf4-9943-4504-a011-531c2635698b';
 
-  UserService _userService;
+  late UserService _userService;
 
   Stream<PushNotification> get pushNotification =>
       _pushNotificationSubject.stream;
@@ -25,7 +25,7 @@ class PushNotificationsService {
   final _pushNotificationOpenedSubject =
       PublishSubject<PushNotificationOpenedResult>();
 
-  OBStorage _pushNotificationsStorage;
+  late OBStorage _pushNotificationsStorage;
   static const String promptedUserForPermissionsStorageKey = 'promptedUser';
 
   void setStorageService(StorageService storageService) {
@@ -183,7 +183,7 @@ class PushNotificationsService {
   }
 
   Future _tagDeviceForPushNotifications() async {
-    User loggedInUser = _userService.getLoggedInUser();
+    User loggedInUser = _userService.getLoggedInUser()!;
     Device currentDevice = await _userService.getOrCreateCurrentDevice();
 
     String userId = _makeUserId(loggedInUser);
@@ -202,7 +202,7 @@ class PushNotificationsService {
   }
 
   String _makeUserId(User user) {
-    var bytes = utf8.encode(user.uuid + user.id.toString());
+    var bytes = utf8.encode(user.uuid! + user.id.toString());
     var digest = sha256.convert(bytes);
     return digest.toString();
   }
@@ -256,8 +256,8 @@ class PushNotificationsService {
 }
 
 class PushNotificationOpenedResult {
-  final PushNotification pushNotification;
-  final OSNotificationAction action;
+  final PushNotification? pushNotification;
+  final OSNotificationAction? action;
 
   const PushNotificationOpenedResult({this.pushNotification, this.action});
 }

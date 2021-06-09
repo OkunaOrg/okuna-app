@@ -9,9 +9,9 @@ import 'buttons/button.dart';
 
 class OBEmojiReactionButton extends StatelessWidget {
   final ReactionsEmojiCount postReactionsEmojiCount;
-  final bool reacted;
-  final ValueChanged<ReactionsEmojiCount> onPressed;
-  final ValueChanged<ReactionsEmojiCount> onLongPressed;
+  final bool? reacted;
+  final ValueChanged<ReactionsEmojiCount>? onPressed;
+  final ValueChanged<ReactionsEmojiCount>? onLongPressed;
   final OBEmojiReactionButtonSize size;
 
   const OBEmojiReactionButton(this.postReactionsEmojiCount,
@@ -22,7 +22,7 @@ class OBEmojiReactionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var emoji = postReactionsEmojiCount.emoji;
+    var emoji = postReactionsEmojiCount.emoji!;
 
     List<Widget> buttonRowItems = [
       Image(
@@ -35,7 +35,7 @@ class OBEmojiReactionButton extends StatelessWidget {
       OBText(
         postReactionsEmojiCount.getPrettyCount(),
         style: TextStyle(
-            fontWeight: reacted ? FontWeight.bold : FontWeight.normal,
+            fontWeight: (reacted == true) ? FontWeight.bold : FontWeight.normal,
             fontSize: size == OBEmojiReactionButtonSize.medium ? null : 12),
       )
     ];
@@ -47,10 +47,10 @@ class OBEmojiReactionButton extends StatelessWidget {
       minWidth: 50,
       child: buttonChild,
       onLongPressed: () {
-        if (onLongPressed != null) onLongPressed(postReactionsEmojiCount);
+        if (onLongPressed != null) onLongPressed!(postReactionsEmojiCount);
       },
       onPressed: () {
-        if (onPressed != null) onPressed(postReactionsEmojiCount);
+        if (onPressed != null) onPressed!(postReactionsEmojiCount);
       },
       type: OBButtonType.highlight,
     );

@@ -2,21 +2,21 @@
 import 'link_preview_image.dart';
 
 class LinkPreview {
-  String url;
-  String domain;
-  DateTime lastUpdated;
-  DateTime nextUpdate;
-  String contentType;
-  String mimeType;
-  bool redirected;
-  String redirectionUrl;
-  List<String> redirectionTrail;
-  String title;
-  String description;
-  String name;
-  bool trackersDetected;
-  LinkPreviewImage icon;
-  LinkPreviewImage image;
+  String? url;
+  String? domain;
+  DateTime? lastUpdated;
+  DateTime? nextUpdate;
+  String? contentType;
+  String? mimeType;
+  bool? redirected;
+  String? redirectionUrl;
+  List<String>? redirectionTrail;
+  String? title;
+  String? description;
+  String? name;
+  bool? trackersDetected;
+  LinkPreviewImage? icon;
+  LinkPreviewImage? image;
 
   LinkPreview({
     this.url,
@@ -37,8 +37,6 @@ class LinkPreview {
   });
 
   factory LinkPreview.fromJSON(Map<String, dynamic> json) {
-    if (json == null) return null;
-
     return LinkPreview(
       url: json['url'],
       domain: json['domain'],
@@ -58,12 +56,12 @@ class LinkPreview {
     );
   }
 
-  static LinkPreviewImage parsePreviewImage(Map previewImageData) {
+  static LinkPreviewImage? parsePreviewImage(Map<String, dynamic>? previewImageData) {
     if (previewImageData == null) return null;
     return LinkPreviewImage.fromJson(previewImageData);
   }
 
-  static DateTime parseDate(String created) {
+  static DateTime? parseDate(String? created) {
     if (created == null) return null;
     return DateTime.parse(created).toLocal();
   }

@@ -17,9 +17,9 @@ class OBCommunityNavBar extends StatelessWidget
         stream: community.updateSubject,
         initialData: community,
         builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
-          var community = snapshot.data;
+          var community = snapshot.data!;
 
-          String communityColor = community.color;
+          String communityColor = community.color!;
           ThemeValueParserService themeValueParserService =
               OpenbookProvider.of(context).themeValueParserService;
           Color color = themeValueParserService.parseColor(communityColor);
@@ -38,7 +38,7 @@ class OBCommunityNavBar extends StatelessWidget
             child: CupertinoNavigationBar(
               border: null,
               middle: OBText(
-                'c/' + community.name,
+                'c/' + community.name!,
                 style:
                     TextStyle(color: actionsColor, fontWeight: FontWeight.bold),
               ),

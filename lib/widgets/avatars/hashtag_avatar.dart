@@ -12,14 +12,14 @@ import 'package:tinycolor/tinycolor.dart';
 class OBHashtagAvatar extends StatelessWidget {
   final Hashtag hashtag;
   final OBAvatarSize size;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final bool isZoomable;
-  final double borderRadius;
-  final double customSize;
+  final double? borderRadius;
+  final double? customSize;
 
   const OBHashtagAvatar(
-      {Key key,
-      @required this.hashtag,
+      {Key? key,
+      required this.hashtag,
       this.size = OBAvatarSize.small,
       this.isZoomable = false,
       this.borderRadius,
@@ -33,7 +33,7 @@ class OBHashtagAvatar extends StatelessWidget {
         stream: hashtag.updateSubject,
         initialData: hashtag,
         builder: (BuildContext context, AsyncSnapshot<Hashtag> snapshot) {
-          Hashtag hashtag = snapshot.data;
+          Hashtag hashtag = snapshot.data!;
           bool hashtagHasImage = hashtag.hasImage();
 
           Widget avatar;
@@ -47,7 +47,7 @@ class OBHashtagAvatar extends StatelessWidget {
                 borderRadius: borderRadius,
                 customSize: customSize);
           } else {
-            String hashtagHexColor = hashtag.color;
+            String hashtagHexColor = hashtag.color!;
 
             OpenbookProviderState openbookProviderState = OpenbookProvider.of(context);
 
