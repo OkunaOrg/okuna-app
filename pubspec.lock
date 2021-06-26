@@ -35,7 +35,7 @@ packages:
       name: async
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.6.1"
+    version: "2.5.0"
   back_button_interceptor:
     dependency: "direct main"
     description:
@@ -227,8 +227,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: nullsafety
-      resolved-ref: bb30ed04e33d608a284677930d76ed274efa8996
+      ref: "0b2c9775f8ab375c47f812a459f276b9feb107b8"
+      resolved-ref: "0b2c9775f8ab375c47f812a459f276b9feb107b8"
       url: "https://github.com/jozsefsallai/flutter_advanced_networkimage.git"
     source: git
     version: "0.7.0"
@@ -778,7 +778,7 @@ packages:
       name: source_span
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.8.1"
+    version: "1.8.0"
   sprintf:
     dependency: "direct main"
     description:
@@ -848,7 +848,7 @@ packages:
       name: test_api
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.0"
+    version: "0.2.19"
   throttling:
     dependency: "direct main"
     description:

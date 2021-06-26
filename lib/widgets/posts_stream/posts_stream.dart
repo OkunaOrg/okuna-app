@@ -177,8 +177,12 @@ class OBPostsStreamState extends State<OBPostsStream>
       ));
     } else {
       streamItems.addAll(_buildStreamPosts());
-      if (_status != OBPostsStreamStatus.idle)
-        streamItems.add(_buildStatusTile()!);
+      if (_status != OBPostsStreamStatus.idle) {
+        Widget? statusTile = _buildStatusTile();
+        if (statusTile != null) {
+          streamItems.add(statusTile);
+        }
+      }
     }
 
     return Stack(

@@ -233,7 +233,7 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
                 decoration: BoxDecoration(
                     image: DecorationImage(
                   fit: BoxFit.cover,
-                  image: AdvancedNetworkImage(widget.thumbnailUrl,
+                  image: AdvancedNetworkImage(widget.thumbnailUrl!,
                       useDiskCache: true),
                 )),
               )

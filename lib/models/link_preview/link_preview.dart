@@ -46,7 +46,7 @@ class LinkPreview {
       mimeType: json['mimeType'],
       redirected: json['redirected'],
       redirectionUrl: json['redirectionUrl'],
-      redirectionTrail: json['redirectionTrail'],
+      redirectionTrail: json['redirectionTrail']?.cast<String>(),
       title: json['title'],
       description: json['description'],
       name: json['name'],

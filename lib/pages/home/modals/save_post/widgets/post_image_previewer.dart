@@ -42,7 +42,7 @@ class OBPostImagePreviewer extends StatelessWidget {
                   )
                 : Image(
                     fit: BoxFit.cover,
-                    image: AdvancedNetworkImage(postImage!.image,
+                    image: AdvancedNetworkImage(postImage!.image ?? '',
                         useDiskCache: true,
                         fallbackAssetImage:
                             'assets/images/fallbacks/post-fallback.png',

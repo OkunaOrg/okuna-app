@@ -50,7 +50,7 @@ class OBPostBodyImage extends StatelessWidget {
       height: height,
       width: width,
       fit: BoxFit.cover,
-      image: AdvancedNetworkImage(imageUrl,
+      image: AdvancedNetworkImage(imageUrl ?? '',
           useDiskCache: true,
           fallbackAssetImage: 'assets/images/fallbacks/post-fallback.png',
           retryLimit: 3,

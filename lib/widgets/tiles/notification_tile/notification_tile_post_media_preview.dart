@@ -20,7 +20,7 @@ class OBNotificationTilePostMediaPreview extends StatelessWidget {
             loadingWidget: const SizedBox(),
             fit: BoxFit.cover,
             alignment: Alignment.center,
-            image: AdvancedNetworkImage(post.mediaThumbnail,
+            image: AdvancedNetworkImage(post.mediaThumbnail ?? '',
                 useDiskCache: true,
                 fallbackAssetImage: 'assets/images/fallbacks/post-fallback.png',
                 retryLimit: 3,

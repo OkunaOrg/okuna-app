@@ -21,7 +21,7 @@ class OBEmoji extends StatelessWidget {
     return IconButton(
         icon: Image(
           height: dimensions,
-          image: AdvancedNetworkImage(emoji.image, useDiskCache: true),
+          image: AdvancedNetworkImage(emoji.image!, useDiskCache: true),
         ),
         onPressed: onEmojiPressed != null
             ? () {

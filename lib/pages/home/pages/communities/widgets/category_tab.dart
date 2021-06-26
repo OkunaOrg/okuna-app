@@ -23,7 +23,7 @@ class OBCategoryTab extends StatelessWidget {
       color: categoryColor,
       textColor: categoryColorIsDark ? Colors.white : Colors.black,
       imageProvider:
-      AdvancedNetworkImage(category.avatar, useDiskCache: true),
+      AdvancedNetworkImage(category.avatar ?? '', useDiskCache: true),
     );
   }
 }

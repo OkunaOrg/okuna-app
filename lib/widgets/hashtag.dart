@@ -108,7 +108,7 @@ class OBHashtag extends StatelessWidget {
             child: Image(
               height: 15,
               image:
-                  AdvancedNetworkImage(hashtag.emoji!.image, useDiskCache: true),
+                  AdvancedNetworkImage(hashtag.emoji!.image!, useDiskCache: true),
             )),
       ],
     );

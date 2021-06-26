@@ -146,7 +146,7 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader>
         _data.createdDraftPost = await _createPost();
       }
 
-      if (_data.remainingMediaToCompress != null && _data.remainingCompressedMediaToUpload.isNotEmpty) {
+      if (_data.remainingMediaToCompress != null && _data.remainingMediaToCompress!.isNotEmpty) {
         _setStatusMessage(
             _localizationService.post_uploader__compressing_media);
         _setStatus(OBPostUploaderStatus.compressingPostMedia);

@@ -42,7 +42,7 @@ class OBPostVideoPreview extends StatelessWidget {
             })
         : _wrapImageWidgetForThumbnail(Image(
             fit: BoxFit.cover,
-            image: AdvancedNetworkImage(postVideo!.thumbnail,
+            image: AdvancedNetworkImage(postVideo!.thumbnail ?? '',
                 useDiskCache: true,
                 fallbackAssetImage: 'assets/images/fallbacks/post-fallback.png',
                 retryLimit: 0),

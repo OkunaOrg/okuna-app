@@ -27,7 +27,7 @@ class OBEmojiReactionButton extends StatelessWidget {
     List<Widget> buttonRowItems = [
       Image(
         height: size == OBEmojiReactionButtonSize.medium ? 18 : 14,
-        image: AdvancedNetworkImage(emoji.image, useDiskCache: true),
+        image: AdvancedNetworkImage(emoji.image!, useDiskCache: true),
       ),
       const SizedBox(
         width: 10.0,

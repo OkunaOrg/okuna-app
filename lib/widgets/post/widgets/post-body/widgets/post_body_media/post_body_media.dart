@@ -136,7 +136,7 @@ class OBPostBodyMediaState extends State<OBPostBodyMedia> {
       ),
       fit: BoxFit.cover,
       alignment: Alignment.center,
-      image: AdvancedNetworkImage(thumbnailUrl,
+      image: AdvancedNetworkImage(thumbnailUrl ?? '',
           useDiskCache: true,
           fallbackAssetImage: 'assets/images/fallbacks/post-fallback.png',
           retryLimit: 3,

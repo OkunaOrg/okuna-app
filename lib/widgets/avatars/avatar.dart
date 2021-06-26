@@ -80,7 +80,7 @@ class OBAvatar extends StatelessWidget {
           height: avatarSize,
           width: avatarSize,
           fit: BoxFit.cover,
-          image: AdvancedNetworkImage(avatarUrl,
+          image: AdvancedNetworkImage(avatarUrl!,
               useDiskCache: true,
               fallbackAssetImage: DEFAULT_AVATAR_ASSET,
               retryLimit: 0));

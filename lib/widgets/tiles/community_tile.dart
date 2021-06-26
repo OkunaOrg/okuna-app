@@ -59,7 +59,7 @@ class OBCommunityTile extends StatelessWidget {
               fit: BoxFit.cover,
               colorFilter: new ColorFilter.mode(
                   Colors.black.withOpacity(0.60), BlendMode.darken),
-              image: AdvancedNetworkImage(community.cover,
+              image: AdvancedNetworkImage(community.cover!,
                   useDiskCache: true,
                   fallbackAssetImage: COVER_PLACEHOLDER,
                   retryLimit: 0)));
