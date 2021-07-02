@@ -1678,13 +1678,12 @@ class UserService {
     return UsersList.fromJson(json.decode(response.body));
   }
 
-  Future<Community> addCommunityAdministrator(
+  Future<void> addCommunityAdministrator(
       {required Community community, required User user}) async {
     HttpieResponse response =
         await _communitiesApiService.addCommunityAdministrator(
             communityName: community.name!, username: user.username!);
     _checkResponseIsCreated(response);
-    return Community.fromJSON(json.decode(response.body));
   }
 
   Future<void> removeCommunityAdministrator(

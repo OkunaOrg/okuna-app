@@ -173,9 +173,11 @@ class ModalService {
         await Navigator.of(context).push(CupertinoPageRoute<Circle>(
             fullscreenDialog: true,
             builder: (BuildContext context) {
-              return OBSaveConnectionsCircleModal(
-                autofocusNameTextField: true,
-              );
+              return Material(
+                child: OBSaveConnectionsCircleModal(
+                  autofocusNameTextField: true,
+                )
+              )
             }));
 
     return createdConnectionsCircle;

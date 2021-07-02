@@ -55,8 +55,6 @@ class OBUserPostHeader extends StatelessWidget {
             builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
               User postCreator = snapshot.data!;
 
-              if (!postCreator.hasProfileAvatar()) return const SizedBox();
-
               return OBAvatar(
                 size: OBAvatarSize.medium,
                 avatarUrl: postCreator.getProfileAvatar(),
