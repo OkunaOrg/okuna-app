@@ -42,13 +42,13 @@ class OBUserTile extends StatelessWidget {
       title: Row(children: <Widget>[
         OBText(
           user.username!,
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(fontWeight: FontWeight.bold)
         ),
         _getUserBadge(user)
       ]),
       subtitle: Row(
         children: [
-          OBSecondaryText(user.getProfileName()!),
+          Expanded(child: OBSecondaryText(user.getProfileName()!)),
           showFollowing && user.isFollowing != null && user.isFollowing!
               ? OBSecondaryText(
                   _localizationService.trans('user__tile_following'))
