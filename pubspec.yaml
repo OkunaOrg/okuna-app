@@ -43,7 +43,7 @@ dependencies:
   device_info: ^2.0.2
   flutter_pagewise: ^2.0.1
   tinycolor: ^1.0.2
-  onesignal_flutter: ^2.6.2
+  onesignal_flutter: ^3.0.0
   flutter_advanced_networkimage:
     git:
       url: https://github.com/jozsefsallai/flutter_advanced_networkimage.git
