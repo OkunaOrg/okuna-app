@@ -102,7 +102,7 @@ class OBPostCommentReactionsModalState
       return OBPostCommentReactionList(
         postComment: widget.postComment,
         post: widget.post,
-        emoji: reactionsEmojiCount!.emoji!,
+        emoji: reactionsEmojiCount.emoji!,
       );
     }).toList();
   }
@@ -115,7 +115,7 @@ class OBPostCommentReactionsModalState
 
       return Padding(
         padding: EdgeInsets.symmetric(vertical: 5),
-        child: Tab(icon: OBEmoji(reactionsEmojiCount!.emoji!)),
+        child: Tab(icon: OBEmoji(reactionsEmojiCount.emoji!)),
       );
     }).toList();
   }

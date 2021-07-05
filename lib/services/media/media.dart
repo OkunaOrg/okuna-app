@@ -221,7 +221,7 @@ class MediaService {
 
       if (croppedFile == null) return null;
 
-      result = MediaFile(croppedFile!, media.type);
+      result = MediaFile(croppedFile, media.type);
     }
 
     return result;

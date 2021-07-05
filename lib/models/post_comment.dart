@@ -107,14 +107,14 @@ class PostComment extends UpdatableModel<PostComment> {
       'is_muted': isMuted,
       'parent_comment': parentComment?.toJson(),
       'replies':
-          replies?.comments?.map((PostComment reply) => reply.toJson())?.toList(),
+          replies?.comments?.map((PostComment reply) => reply.toJson()).toList(),
       'hashtags': hashtagsList?.hashtags
           ?.map((Hashtag hashtag) => hashtag.toJson())
-          ?.toList(),
+          .toList(),
       'replies_count': repliesCount,
       'reactions_emoji_counts': reactionsEmojiCounts?.counts
           ?.map((ReactionsEmojiCount? reaction) => reaction?.toJson())
-          ?.toList(),
+          .toList(),
       'reaction': reaction?.toJson()
     };
   }

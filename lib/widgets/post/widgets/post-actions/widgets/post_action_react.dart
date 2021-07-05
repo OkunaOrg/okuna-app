@@ -59,7 +59,7 @@ class OBPostActionReactState extends State<OBPostActionReact> {
             hasReaction
                 ? CachedNetworkImage(
                     height: 18.0,
-                    imageUrl: reaction!.getEmojiImage()!,
+                    imageUrl: reaction.getEmojiImage()!,
                     errorWidget:
                         (BuildContext context, String url, dynamic error) {
                       return SizedBox(
@@ -75,7 +75,7 @@ class OBPostActionReactState extends State<OBPostActionReact> {
               width: 10.0,
             ),
             OBText(
-              hasReaction ? reaction!.getEmojiKeyword()! : _localizationService.post__action_react,
+              hasReaction ? reaction.getEmojiKeyword()! : _localizationService.post__action_react,
               style: TextStyle(
                 color: hasReaction ? Colors.white : null,
                 fontWeight: hasReaction ? FontWeight.bold : FontWeight.normal,

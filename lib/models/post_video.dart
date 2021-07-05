@@ -57,7 +57,7 @@ class PostVideo {
       'file': file,
       'thumbnail_height': thumbnailHeight,
       'thumbnail_width': thumbnailWidth,
-      'format_set': formatSet?.videoFormats?.map((OBVideoFormat format) => format.toJson())?.toList()
+      'format_set': formatSet?.videoFormats?.map((OBVideoFormat format) => format.toJson()).toList()
     };
   }
 }

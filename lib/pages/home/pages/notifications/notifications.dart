@@ -447,10 +447,10 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
     bool shouldMarkNotificationsAsRead = false,
   }) async {
     _setShouldMarkNotificationsAsRead(shouldMarkNotificationsAsRead);
-    await _generalNotificationsListController?.refresh(
+    await _generalNotificationsListController.refresh(
         shouldScrollToTop: shouldScrollToTop,
         shouldUseRefreshIndicator: shouldUseRefreshIndicator);
-    await _requestsNotificationsListController?.refresh(
+    await _requestsNotificationsListController.refresh(
         shouldScrollToTop: shouldScrollToTop,
         shouldUseRefreshIndicator: shouldUseRefreshIndicator);
     _setShouldMarkNotificationsAsRead(true);

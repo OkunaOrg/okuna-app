@@ -23,7 +23,7 @@ class OBVideoPlayer extends StatefulWidget {
   final Key? visibilityKey;
   final ChewieController? chewieController;
   final VideoPlayerController? videoPlayerController;
-  final bool isInDialog;
+  final bool? isInDialog;
   final bool autoPlay;
   final OBVideoPlayerController? controller;
   final double? height;
@@ -171,7 +171,7 @@ class OBVideoPlayerState extends State<OBVideoPlayer> {
 
     debugLog('Initializing video player');
     await _playerController?.initialize().timeout(Duration(seconds: 2));
-    if (_playerController?.value?.hasError == true) {
+    if (_playerController?.value.hasError == true) {
       debugLog('Player controller has error');
       throw OBVideoPlayerInitializationException('Player controller had error');
     }

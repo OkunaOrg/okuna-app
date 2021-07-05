@@ -118,16 +118,16 @@ class User extends UpdatableModel<User> {
       'is_member_of_communities': isMemberOfCommunities,
       'connected_circles': connectedCircles?.circles
           ?.map((Circle circle) => circle.toJson())
-          ?.toList(),
+          .toList(),
       'follow_lists': followLists?.lists
           ?.map((FollowsList followList) => followList.toJson())
-          ?.toList(),
+          .toList(),
       'communities_memberships': communitiesMemberships?.communityMemberships
           ?.map((CommunityMembership membership) => membership.toJson())
-          ?.toList(),
+          .toList(),
       'communities_invites': communitiesInvites?.communityInvites
           ?.map((CommunityInvite invite) => invite.toJson())
-          ?.toList(),
+          .toList(),
     };
   }
 

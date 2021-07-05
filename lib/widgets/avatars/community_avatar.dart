@@ -40,7 +40,7 @@ class OBCommunityAvatar extends StatelessWidget {
 
           if (communityHasAvatar) {
             avatar = OBAvatar(
-                avatarUrl: community?.avatar,
+                avatarUrl: community.avatar,
                 size: size,
                 onPressed: onPressed,
                 isZoomable: isZoomable,

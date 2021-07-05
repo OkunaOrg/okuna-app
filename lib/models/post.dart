@@ -78,11 +78,11 @@ class Post extends UpdatableModel<Post> {
       'creator_id': creatorId,
       'creator': creator?.toJson(),
       'circles':
-          circles?.circles?.map((Circle circle) => circle.toJson())?.toList(),
+          circles?.circles?.map((Circle circle) => circle.toJson()).toList(),
       'reactions_emoji_counts': reactionsEmojiCounts?.counts
           ?.map((ReactionsEmojiCount? reactionEmojiCount) =>
               reactionEmojiCount?.toJson())
-          ?.toList(),
+          .toList(),
       'reaction': reaction?.toJson(),
       'reactions_count': reactionsCount,
       'comments_count': commentsCount,
@@ -96,16 +96,16 @@ class Post extends UpdatableModel<Post> {
       'status': status?.code,
       'media': media?.postMedia
           ?.map((PostMedia mediaObj) => mediaObj.toJson())
-          ?.toList(),
+          .toList(),
       'comments': commentsList?.comments
           ?.map((PostComment comment) => comment.toJson())
-          ?.toList(),
+          .toList(),
       'hashtags': hashtagsList?.hashtags
           ?.map((Hashtag hashtag) => hashtag.toJson())
-          ?.toList(),
+          .toList(),
       'links': postLinksList?.postLinks
           ?.map((PostLink postLink) => postLink.toJson())
-          ?.toList(),
+          .toList(),
       'community': community?.toJson(),
       'is_muted': isMuted,
       'is_encircled': isEncircled,

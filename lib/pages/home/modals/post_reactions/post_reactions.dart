@@ -110,7 +110,7 @@ class OBPostReactionsModalState extends State<OBPostReactionsModal>
 
       return Padding(
         padding: EdgeInsets.symmetric(vertical: 5),
-        child: Tab(icon: OBEmoji(reactionsEmojiCount!.emoji!)),
+        child: Tab(icon: OBEmoji(reactionsEmojiCount.emoji!)),
       );
     }).toList();
   }

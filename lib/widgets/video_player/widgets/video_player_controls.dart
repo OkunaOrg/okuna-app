@@ -323,7 +323,7 @@ class OBVideoPlayerControlsState extends State<OBVideoPlayerControls> {
 
   Widget _buildPosition(Color iconColor) {
     final position = _latestValue != null && _latestValue!.position != null
-        ? _latestValue!.position!
+        ? _latestValue!.position
         : Duration.zero;
     final duration = _latestValue != null && _latestValue!.duration != null
         ? _latestValue!.duration!

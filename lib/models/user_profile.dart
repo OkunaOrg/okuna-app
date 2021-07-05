@@ -50,7 +50,7 @@ class UserProfile {
       'bio': bio,
       'url': url,
       'location': location,
-      'badges': badges?.map((Badge badge) => badge.toJson())?.toList(),
+      'badges': badges?.map((Badge badge) => badge.toJson()).toList(),
       'followers_count_visible': followersCountVisible,
       'community_posts_visible': communityPostsVisible,
     };

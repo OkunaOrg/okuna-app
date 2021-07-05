@@ -10,7 +10,7 @@ enum OBAvatarType { user, community }
 class OBAvatar extends StatelessWidget {
   final String? avatarUrl;
   final File? avatarFile;
-  final OBAvatarSize size;
+  final OBAvatarSize? size;
   final VoidCallback? onPressed;
   final double? borderWidth;
   final bool isZoomable;

@@ -65,7 +65,7 @@ class OBCommunityMembersCount extends StatelessWidget {
                         style: TextStyle(
                             fontSize: 16,
                             color: themeValueParserService
-                                .parseColor(theme!.secondaryTextColor)))
+                                .parseColor(theme.secondaryTextColor)))
                   ])),
                 ),
                 const SizedBox(

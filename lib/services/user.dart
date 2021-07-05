@@ -541,7 +541,7 @@ class UserService {
 
   Future<void> setStoredTopPosts(List<TopPost> topPosts) async {
     String topPostsData = json
-        .encode(topPosts.map((TopPost topPost) => topPost.toJson())?.toList());
+        .encode(topPosts.map((TopPost topPost) => topPost.toJson()).toList());
     await this._removeStoredTopPostsData();
     await this._storeTopPostsData(topPostsData);
   }

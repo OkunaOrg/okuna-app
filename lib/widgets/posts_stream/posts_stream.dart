@@ -392,7 +392,7 @@ class OBPostsStreamState extends State<OBPostsStream>
   }
 
   Future? _refresh() {
-    return _refreshIndicatorKey?.currentState?.show();
+    return _refreshIndicatorKey.currentState?.show();
   }
 
   Future<void> _refreshPosts() async {

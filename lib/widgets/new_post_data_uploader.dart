@@ -424,7 +424,7 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader>
     _data.media?.forEach((File mediaObject) {
       if (mediaObject.existsSync()) mediaObject.delete();
     });
-    _data.compressedMedia?.forEach((File mediaObject) => mediaObject.delete());
+    _data.compressedMedia.forEach((File mediaObject) => mediaObject.delete());
     if (_data.mediaThumbnail != _data.media?.first) {
       _data.mediaThumbnail?.delete();
     }

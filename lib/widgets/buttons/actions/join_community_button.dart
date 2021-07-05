@@ -54,7 +54,7 @@ class OBJoinCommunityButtonState extends State<OBJoinCommunityButton> {
 
         User loggedInUser = _userService.getLoggedInUser()!;
 
-        bool isMember = community.isMember(loggedInUser) ?? false;
+        bool isMember = community.isMember(loggedInUser);
 
         if (community.type == CommunityType.private && !isMember && !isInvited)
           return SizedBox();

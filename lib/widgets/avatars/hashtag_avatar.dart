@@ -40,7 +40,7 @@ class OBHashtagAvatar extends StatelessWidget {
 
           if (hashtagHasImage) {
             avatar = OBAvatar(
-                avatarUrl: hashtag?.image,
+                avatarUrl: hashtag.image,
                 size: size,
                 onPressed: onPressed,
                 isZoomable: isZoomable,

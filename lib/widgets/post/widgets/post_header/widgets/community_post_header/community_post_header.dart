@@ -178,7 +178,7 @@ class OBCommunityPostHeader extends StatelessWidget {
               community: community!,
               onPressed: () {
                 navigationService!.navigateToCommunity(
-                    community: community!, context: context!);
+                    community: community, context: context!);
               },
               size: OBAvatarSize.extraSmall,
             ),
