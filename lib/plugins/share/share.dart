@@ -17,10 +17,10 @@ class Share {
   });
 
   static Share fromReceived(Map received) {
-    late String text;
-    late String image;
-    late String video;
-    late String error;
+    String? text;
+    String? image;
+    String? video;
+    String? error;
 
     if (received.containsKey(TEXT)) {
       text = received[TEXT];
