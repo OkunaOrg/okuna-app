@@ -75,7 +75,7 @@ dependencies:
   image_picker: ^0.7.5+3
   image_cropper: ^1.4.0
   shimmer: ^2.0.0
-  share: ^2.0.4
+  share_plus: ^2.1.4
   path: ^1.8.0
   package_info: ^2.0.2
   flutter:
