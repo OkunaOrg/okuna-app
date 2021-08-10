@@ -36,7 +36,8 @@ class OBButton extends StatelessWidget {
       this.padding,
       this.textStyle,
       this.color,
-      this.textColor, this.onLongPressed});
+      this.textColor,
+      this.onLongPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +101,7 @@ class OBButton extends StatelessWidget {
               boxShadow: boxShadow ?? [],
               gradient: gradient,
               color: color,
-              borderRadius: BorderRadius.circular(50.0)),
+              borderRadius: BorderRadius.circular(15.0)),
           child: Material(
             color: Colors.transparent,
             textStyle: defaultTextStyle,

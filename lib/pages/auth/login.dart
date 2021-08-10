@@ -86,10 +86,11 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
           color: Colors.transparent,
           elevation: 0.0,
           child: Padding(
-            padding: EdgeInsets.only(bottom: 20.0 + MediaQuery
-                .of(context)
-                .viewInsets
-                .bottom, top: 20.0, left: 20.0, right: 20.0),
+            padding: EdgeInsets.only(
+                bottom: 20.0 + MediaQuery.of(context).viewInsets.bottom,
+                top: 20.0,
+                left: 20.0,
+                right: 20.0),
             child: Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -148,9 +149,8 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
       Navigator.pushReplacementNamed(
           context, '/'); //replace the underlying login splash screen too
     } on CredentialsMismatchError {
-      _setLoginFeedback(
-          _localizationService.trans(
-              'auth__login__credentials_mismatch_error'));
+      _setLoginFeedback(_localizationService
+          .trans('auth__login__credentials_mismatch_error'));
     } on HttpieRequestError {
       _setLoginFeedback(
           _localizationService.trans('auth__login__server_error'));
@@ -186,8 +186,8 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
   }
 
   Widget _buildForgotPasswordButton({@required BuildContext context}) {
-    String buttonText = _localizationService.trans(
-        'auth__login__forgot_password');
+    String buttonText =
+        _localizationService.trans('auth__login__forgot_password');
 
     return OBSecondaryButton(
       isFullWidth: true,
@@ -213,10 +213,6 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
 
     return Column(
       children: <Widget>[
-        Text(
-          '👋',
-          style: TextStyle(fontSize: 45.0, color: Colors.black),
-        ),
         const SizedBox(
           height: 20.0,
         ),
@@ -238,13 +234,13 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
     // the stream changes. Therefore a flag is used to bootstrap initial value
 
     String usernameInputLabel =
-    _localizationService.trans('auth__login__username_label');
+        _localizationService.trans('auth__login__username_label');
 
     String passwordInputLabel =
-    _localizationService.trans('auth__login__password_label');
+        _localizationService.trans('auth__login__password_label');
 
     EdgeInsetsGeometry inputContentPadding =
-    EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0);
+        EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0);
 
     return Form(
         key: _formKey,
@@ -266,8 +262,7 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
                                 contentPadding: inputContentPadding,
                                 labelText: usernameInputLabel,
                                 border: OutlineInputBorder(),
-                                errorMaxLines: 3
-                            ),
+                                errorMaxLines: 3),
                             autocorrect: false,
                             textInputAction: TextInputAction.next,
                             onFieldSubmitted: (v) => FocusScope.of(context)
@@ -301,9 +296,8 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
                             height: 20.0,
                           ),
                           Center(
-                              child: _buildForgotPasswordButton(
-                                  context: context)
-                          )
+                              child:
+                                  _buildForgotPasswordButton(context: context))
                         ],
                       )),
                 ),

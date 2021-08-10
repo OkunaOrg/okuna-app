@@ -24,12 +24,13 @@ class OBSplashLogo extends StatelessWidget {
         ),
         Padding(
           padding: EdgeInsets.only(top: 10),
-          child: Text('Okuna',
+          child: Text('SOMUS',
               style: TextStyle(
                   fontSize: 38.0,
-                  fontFamily: 'CogogooseProSemilight'
-                //color: Colors.white
-              )),
+                  fontFamily: 'CogogooseProSemilight',
+                  fontWeight: FontWeight.bold
+                  //color: Colors.white
+                  )),
         ),
       ],
     );

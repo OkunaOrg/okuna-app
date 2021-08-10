@@ -6,6 +6,7 @@ import 'package:Okuna/widgets/buttons/secondary_button.dart';
 import 'package:Okuna/widgets/buttons/success_button.dart';
 import 'package:Okuna/widgets/splash_logo.dart';
 import 'package:flutter/material.dart';
+import 'package:pigment/pigment.dart';
 
 class OBAuthSplashPage extends StatefulWidget {
   @override
@@ -30,7 +31,7 @@ class OBAuthSplashPageState extends State<OBAuthSplashPage> {
             image: DecorationImage(
                 image: new AssetImage('assets/images/splash-background.png'),
                 fit: BoxFit.cover),
-        color: Colors.white),
+            color: Pigment.fromString('#f2f2f2')),
         padding: EdgeInsets.symmetric(horizontal: 40.0),
         child: Center(child: SingleChildScrollView(child: _buildLogo())),
       ),
@@ -40,7 +41,7 @@ class OBAuthSplashPageState extends State<OBAuthSplashPage> {
 
   Widget _buildBottomBar() {
     return BottomAppBar(
-      color: Colors.white,
+      color: Pigment.fromString('#f2f2f2'),
       elevation: 0.0,
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
@@ -48,9 +49,7 @@ class OBAuthSplashPageState extends State<OBAuthSplashPage> {
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Expanded(
-              child: _buildCreateAccountButton(context: context)
-            ),
+            Expanded(child: _buildCreateAccountButton(context: context)),
             Expanded(
               child: _buildLoginButton(context: context),
             ),
@@ -69,7 +68,7 @@ class OBAuthSplashPageState extends State<OBAuthSplashPage> {
         const SizedBox(
           height: 20.0,
         ),
-        Text(headlineText,
+        Text('Powerful content',
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 22.0,
@@ -119,5 +118,4 @@ class OBAuthSplashPageState extends State<OBAuthSplashPage> {
       },
     );
   }
-
 }

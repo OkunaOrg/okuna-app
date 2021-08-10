@@ -24,7 +24,7 @@ class OBAvatar extends StatelessWidget {
   static const double AVATAR_SIZE_EXTRA_LARGE = 100.0;
   static const String DEFAULT_AVATAR_ASSET =
       'assets/images/fallbacks/avatar-fallback.jpg';
-  static const double avatarBorderRadius = 10.0;
+  static const double avatarBorderRadius = 500.0;
 
   static double getAvatarSize(OBAvatarSize size) {
     double avatarSize;
