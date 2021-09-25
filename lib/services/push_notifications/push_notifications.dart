@@ -86,7 +86,7 @@ class PushNotificationsService {
   Future subscribeToPushNotifications() async {
     bool permissionGranted = await this._getPermissionsState();
 
-    if (permissionGranted) {
+    if (!permissionGranted) {
       throw new Exception(
           'Tried to subscribe to push notifications without push notification permission');
     }
@@ -162,10 +162,10 @@ class PushNotificationsService {
   void _onSubscriptionChanged(OSSubscriptionStateChanges changes) {
     OSSubscriptionState toState = changes.to;
     OSSubscriptionState fromState = changes.from;
-    if (!fromState.subscribed && toState.subscribed) {
+    if (!fromState.isSubscribed && toState.isSubscribed) {
       // User just subscribed for notifications
       _onSubscribedToPushNotifications();
-    } else if (fromState.subscribed && !toState.subscribed) {
+    } else if (fromState.isSubscribed&& !toState.isSubscribed) {
       // User just unsubscribed for notifications
       _onUnsubscribedFromPushNotifications();
     }
